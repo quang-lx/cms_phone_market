@@ -138,20 +138,7 @@ class AdminServiceProvider extends ServiceProvider
             }
         );
 
-        $this->app->bind(
-            'Modules\Admin\Repositories\BannerRepository',
-            function () {
-                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentBannerRepository(new \Modules\Mon\Entities\Banner());
-                return $repository;
-            }
-        );
-        $this->app->bind(
-            'Modules\Admin\Repositories\PartnerRepository',
-            function () {
-                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentPartnerRepository(new \Modules\Mon\Entities\Partner());
-                return $repository;
-            }
-        );
+
 // add bindings
 
 

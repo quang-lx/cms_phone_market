@@ -24,7 +24,10 @@ class ComposerStaticInit15fea9611efec52d263d6a73ed5b6136
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Modules\\Api\\Database\\Seeders\\ApiDatabaseSeeder' => __DIR__ . '/../..' . '/Database/Seeders/ApiDatabaseSeeder.php',
         'Modules\\Api\\Entities\\ErrorCode' => __DIR__ . '/../..' . '/Entities/ErrorCode.php',
+        'Modules\\Api\\Http\\Controllers\\AppController' => __DIR__ . '/../..' . '/Http/Controllers/AppController.php',
         'Modules\\Api\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/Http/Controllers/AuthController.php',
+        'Modules\\Api\\Http\\Controllers\\MediaController' => __DIR__ . '/../..' . '/Http/Controllers/MediaController.php',
+        'Modules\\Api\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/Http/Controllers/UserController.php',
         'Modules\\Api\\Providers\\ApiServiceProvider' => __DIR__ . '/../..' . '/Providers/ApiServiceProvider.php',
         'Modules\\Api\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/Providers/EventServiceProvider.php',
         'Modules\\Api\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/Providers/RouteServiceProvider.php',
@@ -34,6 +37,9 @@ class ComposerStaticInit15fea9611efec52d263d6a73ed5b6136
         'Modules\\Api\\Repositories\\Eloquent\\Cached\\CachedEloquentApiRepository' => __DIR__ . '/../..' . '/Repositories/Eloquent/Cached/CachedEloquentApiRepository.php',
         'Modules\\Api\\Repositories\\Eloquent\\EloquentAccountRepository' => __DIR__ . '/../..' . '/Repositories/Eloquent/EloquentAccountRepository.php',
         'Modules\\Api\\Repositories\\Eloquent\\EloquentApiRepository' => __DIR__ . '/../..' . '/Repositories/Eloquent/EloquentApiRepository.php',
+        'Modules\\Api\\Transformers\\MediaShortTransformer' => __DIR__ . '/../..' . '/Transformers/MediaShortTransformer.php',
+        'Modules\\Api\\Transformers\\MediaTransformer' => __DIR__ . '/../..' . '/Transformers/MediaTransformer.php',
+        'Modules\\Api\\Transformers\\UserTransformer' => __DIR__ . '/../..' . '/Transformers/UserTransformer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

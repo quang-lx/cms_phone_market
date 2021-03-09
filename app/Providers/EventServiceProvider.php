@@ -2,18 +2,6 @@
 
 namespace App\Providers;
 
-use App\Events\AdminNotiCreated;
-use App\Events\NeedCreateUserSmsToken;
-use App\Events\UserRoadCreated;
-use App\Events\VbeeTTSResponsed;
-use App\Events\WarningPublished;
-use App\Events\WarningStatusUpdated;
-use App\Listeners\PushNotiToUserCreateWarning;
-use App\Listeners\PushNotiWhenAdminNotiCreated;
-use App\Listeners\PushNotiWhenWarningPublish;
-use App\Listeners\SendSmsToUserRegistered;
-use App\Listeners\SyncRoadToElastic;
-use App\Listeners\TTSWhenWarningPublish;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -30,24 +18,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        NeedCreateUserSmsToken::class => [
-            SendSmsToUserRegistered::class
-        ],
-        UserRoadCreated::class => [
-            SyncRoadToElastic::class
-        ],
-        WarningPublished::class=> [
-            TTSWhenWarningPublish::class
-        ],
-        VbeeTTSResponsed::class=> [
-            PushNotiWhenWarningPublish::class
-        ],
-        AdminNotiCreated::class => [
-            PushNotiWhenAdminNotiCreated::class
-        ],
-        WarningStatusUpdated::class => [
-            PushNotiToUserCreateWarning::class
-        ]
+
     ];
 
     /**

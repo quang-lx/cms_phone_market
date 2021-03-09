@@ -244,7 +244,7 @@ class MonServiceProvider extends ServiceProvider
         $adminTheme = 'backend';
 
         $frontendTheme = 'base';
-
+        $shopTheme = 'shop';
 
         //Language
         $langPath = base_path("themes/{$adminTheme}/lang");
@@ -252,6 +252,9 @@ class MonServiceProvider extends ServiceProvider
 
         $langPath = base_path("themes/{$frontendTheme}/lang");
         $this->app['translator']->addNamespace($frontendTheme, $langPath);
+
+        $langPath = base_path("themes/{$shopTheme}/lang");
+        $this->app['translator']->addNamespace($shopTheme, $langPath);
 
 
         $this->app['events']->listen(LoadingTranslations::class, function (LoadingTranslations $event) use ($frontendTheme) {

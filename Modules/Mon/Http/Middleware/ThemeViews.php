@@ -35,7 +35,11 @@ class ThemeViews
         $frontendTheme = 'base';
         $this->views->addNamespace($frontendTheme, base_path('themes/' . $frontendTheme . '/views'));
 
-        
+
+
+        $shopTheme = 'shop';
+        $this->views->addNamespace($shopTheme, base_path('themes/' . $shopTheme . '/views'));
+
         // Needed to clear the views cache.
         $this->views->getFinder()->flush();
 

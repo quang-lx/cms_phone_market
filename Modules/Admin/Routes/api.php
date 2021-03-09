@@ -144,37 +144,6 @@ Route::middleware('auth:api')->prefix('auth')->group(function (){
 });
 
 
-Route::middleware('auth:api')->prefix('/banner')->group(function (){
-    // alarm level
-
-    Route::get('/', [
-        'as' => 'api.banner.index',
-        'uses' => 'Banner\BannerController@index',
-
-    ]);
-    Route::delete('/{banner}', [
-        'as' => 'api.banner.destroy',
-        'uses' => 'Banner\BannerController@destroy',
-
-    ]);
-
-    Route::get('/{banner}', [
-        'as' => 'api.banner.find',
-        'uses' => 'Banner\BannerController@find',
-    ]);
-    Route::post('/{banner}/edit', [
-        'as' => 'api.banner.update',
-        'uses' => 'Banner\BannerController@update',
-
-    ]);
-    Route::post('/', [
-        'as' => 'api.banner.store',
-        'uses' => 'Banner\BannerController@store',
-
-    ]);
-});
-
-
 Route::middleware('auth:api')->prefix('/danh-muc')->group(function (){
     // alarm level
 
@@ -232,37 +201,6 @@ Route::middleware('auth:api')->prefix('/tin-tuc')->group(function (){
     Route::post('/', [
         'as' => 'api.news.store',
         'uses' => 'News\NewsController@store',
-
-    ]);
-
-});
-
-Route::middleware('auth:api')->prefix('/partner')->group(function (){
-    // alarm level
-
-    Route::get('/', [
-        'as' => 'api.partner.index',
-        'uses' => 'Partner\PartnerController@index',
-
-    ]);
-    Route::delete('/{partner}', [
-        'as' => 'api.partner.destroy',
-        'uses' => 'Partner\PartnerController@destroy',
-
-    ]);
-
-    Route::get('/{partner}', [
-        'as' => 'api.partner.find',
-        'uses' => 'Partner\PartnerController@find',
-    ]);
-    Route::post('/{partner}/edit', [
-        'as' => 'api.partner.update',
-        'uses' => 'Partner\PartnerController@update',
-
-    ]);
-    Route::post('/', [
-        'as' => 'api.partner.store',
-        'uses' => 'Partner\PartnerController@store',
 
     ]);
 

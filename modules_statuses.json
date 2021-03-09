@@ -2,5 +2,6 @@
     "Admin": true,
     "Api": true,
     "Media": true,
-    "Mon": true
+    "Mon": true,
+    "Shop": true
 }

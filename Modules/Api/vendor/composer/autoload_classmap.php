@@ -9,7 +9,10 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Modules\\Api\\Database\\Seeders\\ApiDatabaseSeeder' => $baseDir . '/Database/Seeders/ApiDatabaseSeeder.php',
     'Modules\\Api\\Entities\\ErrorCode' => $baseDir . '/Entities/ErrorCode.php',
+    'Modules\\Api\\Http\\Controllers\\AppController' => $baseDir . '/Http/Controllers/AppController.php',
     'Modules\\Api\\Http\\Controllers\\AuthController' => $baseDir . '/Http/Controllers/AuthController.php',
+    'Modules\\Api\\Http\\Controllers\\MediaController' => $baseDir . '/Http/Controllers/MediaController.php',
+    'Modules\\Api\\Http\\Controllers\\UserController' => $baseDir . '/Http/Controllers/UserController.php',
     'Modules\\Api\\Providers\\ApiServiceProvider' => $baseDir . '/Providers/ApiServiceProvider.php',
     'Modules\\Api\\Providers\\EventServiceProvider' => $baseDir . '/Providers/EventServiceProvider.php',
     'Modules\\Api\\Providers\\RouteServiceProvider' => $baseDir . '/Providers/RouteServiceProvider.php',
@@ -19,4 +22,7 @@ return array(
     'Modules\\Api\\Repositories\\Eloquent\\Cached\\CachedEloquentApiRepository' => $baseDir . '/Repositories/Eloquent/Cached/CachedEloquentApiRepository.php',
     'Modules\\Api\\Repositories\\Eloquent\\EloquentAccountRepository' => $baseDir . '/Repositories/Eloquent/EloquentAccountRepository.php',
     'Modules\\Api\\Repositories\\Eloquent\\EloquentApiRepository' => $baseDir . '/Repositories/Eloquent/EloquentApiRepository.php',
+    'Modules\\Api\\Transformers\\MediaShortTransformer' => $baseDir . '/Transformers/MediaShortTransformer.php',
+    'Modules\\Api\\Transformers\\MediaTransformer' => $baseDir . '/Transformers/MediaTransformer.php',
+    'Modules\\Api\\Transformers\\UserTransformer' => $baseDir . '/Transformers/UserTransformer.php',
 );

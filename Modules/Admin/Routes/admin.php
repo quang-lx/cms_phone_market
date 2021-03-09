@@ -120,25 +120,6 @@ Route::group(['prefix' => '/media'], function ( ) {
 
 });
 
-Route::group(['prefix' => '/banner'], function ( ) {
-
-    Route::get('/', [
-        'as' => 'admin.banner.index',
-        'uses' => 'Banner\BannerController@index',
-
-    ])->middleware('permission:admin.banner.index');
-    Route::get('/create', [
-        'as' => 'admin.banner.create',
-        'uses' => 'Banner\BannerController@create',
-
-    ])->middleware('permission:admin.banner.create');
-    Route::get('/{banner}/edit', [
-        'as' => 'admin.banner.edit',
-        'uses' => 'Banner\BannerController@edit',
-
-    ])->middleware('permission:admin.banner.edit');
-
-});
 
 
 
@@ -183,22 +164,3 @@ Route::group(['prefix' => '/tin-tuc'], function ( ) {
 
 });
 
-Route::group(['prefix' => '/partner'], function ( ) {
-
-    Route::get('/', [
-        'as' => 'admin.partner.index',
-        'uses' => 'Partner\PartnerController@index',
-
-    ])->middleware('permission:admin.partner.index');
-    Route::get('/create', [
-        'as' => 'admin.partner.create',
-        'uses' => 'Partner\PartnerController@create',
-
-    ])->middleware('permission:admin.partner.create');
-    Route::get('/{partner}/edit', [
-        'as' => 'admin.partner.edit',
-        'uses' => 'Partner\PartnerController@edit',
-
-    ])->middleware('permission:admin.partner.edit');
-
-});

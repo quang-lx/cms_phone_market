@@ -1,0 +1,20 @@
+{
+    "name": "Shop",
+    "alias": "shop",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 4,
+    "providers": [
+
+        "Modules\\Shop\\Providers\\ShopServiceProvider",
+        "Modules\\Shop\\Providers\\SidebarServiceProvider",
+        "Modules\\Shop\\Providers\\EventServiceProvider",
+        "Maatwebsite\\Sidebar\\SidebarServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "composers.php"
+    ],
+    "requires": []
+}
