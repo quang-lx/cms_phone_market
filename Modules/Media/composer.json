@@ -1,0 +1,25 @@
+{
+    "name": "webvi/media",
+    "description": "",
+    "authors": [
+        {
+            "name": "Webvi Việt Nam",
+            "email": "lienhe@webvi.vn"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Media\\Providers\\MediaServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Media\\": ""
+        }
+    }
+}

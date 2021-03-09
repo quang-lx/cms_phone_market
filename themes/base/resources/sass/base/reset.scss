@@ -1,0 +1,25 @@
+body, html {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul, li, h1, h2, h3, h4, h5, h6, p, article, figure {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul {
+	list-style: none;
+}
+button {
+	background-color: transparent;
+	border: none;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+a {
+	text-decoration: none !important;
+}

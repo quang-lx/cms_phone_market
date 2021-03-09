@@ -1,0 +1,161 @@
+#news-detail {
+  img,table {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+.race-schedules {
+ ul {
+   li {
+     &:hover {
+       h1 {
+         color: #E21E26;
+       }
+     }
+   }
+ }
+}
+.login {
+  max-width: 600px;
+  margin: 60px auto;
+  font-family: 'Roboto Condensed';
+  *, :after, :before {
+    box-sizing: border-box;
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    .card-header {
+      padding: .75rem 1.25rem;
+      margin-bottom: 0;
+      color: inherit;
+      background-color: rgba(0,0,0,.03);
+      border-bottom: 1px solid rgba(0,0,0,.125);
+      &:first-child {
+        border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+      }
+    }
+    .card-body {
+      flex: 1 1 auto;
+      padding: 1.25rem;
+    }
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  .col-form-label {
+    padding-top: calc(.375rem + 1px);
+    padding-bottom: calc(.375rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.5;
+  }
+  .col-md-4,.col-sm-4 {
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.0625rem + 2px);
+    padding: .375rem .75rem;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .text-md-right {
+    text-align: right!important;
+  }
+  button, input {
+    overflow: visible;
+    &:focus {
+      outline: none;
+    }
+  }
+  button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  .offset-md-4 {
+    margin-left: 33.3333333333%;
+  }
+  input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  .form-check {
+    position: relative;
+    display: block;
+  }
+  .form-check-label {
+    margin-bottom: 0;
+  }
+
+  .btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+  }
+
+  .btn, a {
+    transition: all .3s ease-out 0s;
+  }
+  .btn-primary {
+    color: #fff;
+    background-color: #E21E26;
+    border-color: #E21E26;
+  }
+  .btn-link {
+    font-weight: 400;
+    color: #E21E26;
+  }
+}

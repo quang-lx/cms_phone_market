@@ -1,0 +1,14 @@
+{
+    "name": "Media",
+    "alias": "media",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 1,
+    "providers": [
+        "Modules\\Media\\Providers\\MediaServiceProvider"
+    ],
+    "aliases": {},
+    "files": ["helpers.php"],
+    "requires": []
+}

@@ -1,0 +1,25 @@
+{
+    "name": "linhpv/mon",
+    "description": "",
+    "authors": [
+        {
+            "name": "Linh Pham",
+            "email": "phamlinh0208@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Mon\\Providers\\MonServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Mon\\": ""
+        }
+    }
+}

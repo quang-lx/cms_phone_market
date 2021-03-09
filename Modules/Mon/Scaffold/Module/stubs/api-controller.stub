@@ -1,0 +1,77 @@
+<?php
+
+namespace Modules\$MODULE_NAME$\Http\Controllers\Api\$CLASS_NAME$;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Modules\Mon\Entities\$CLASS_NAME$;
+use Modules\$MODULE_NAME$\Http\Requests\$CLASS_NAME$\Create$CLASS_NAME$Request;
+use Modules\$MODULE_NAME$\Http\Requests\$CLASS_NAME$\Update$CLASS_NAME$Request;
+use Modules\$MODULE_NAME$\Repositories\$CLASS_NAME$Repository;
+use Illuminate\Routing\Controller;
+use Modules\Mon\Http\Controllers\ApiController;
+use Modules\Mon\Auth\Contracts\Authentication;
+
+class $CLASS_NAME$Controller extends ApiController
+{
+    /**
+     * @var $CLASS_NAME$Repository
+     */
+    private $$LOWERCASE_CLASS_NAME$Repository;
+
+    public function __construct(Authentication $auth, $CLASS_NAME$Repository $$LOWERCASE_CLASS_NAME$)
+    {
+        parent::__construct($auth);
+
+        $this->$LOWERCASE_CLASS_NAME$Repository = $$LOWERCASE_CLASS_NAME$;
+    }
+
+
+    public function index(Request $request)
+    {
+        return $CLASS_NAME$Transformer::collection($this->$LOWERCASE_CLASS_NAME$Repository->serverPagingFor($request));
+    }
+
+
+    public function all(Request $request)
+    {
+        return $CLASS_NAME$Transformer::collection($this->$LOWERCASE_CLASS_NAME$Repository->newQueryBuilder()->get());
+    }
+
+
+    public function store(Create$CLASS_NAME$Request $request)
+    {
+        $this->$LOWERCASE_CLASS_NAME$Repository->create($request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('backend::$LOWERCASE_CLASS_NAME$.message.create success'),
+        ]);
+    }
+
+
+    public function find($CLASS_NAME$ $$LOWERCASE_CLASS_NAME$)
+    {
+        return new  $CLASS_NAME$FullTransformer($$LOWERCASE_CLASS_NAME$);
+    }
+
+    public function update($CLASS_NAME$ $$LOWERCASE_CLASS_NAME$, Update$CLASS_NAME$Request $request)
+    {
+        $this->$LOWERCASE_CLASS_NAME$Repository->update($$LOWERCASE_CLASS_NAME$, $request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('backend::$LOWERCASE_CLASS_NAME$.message.update success'),
+        ]);
+    }
+
+    public function destroy($CLASS_NAME$ $$LOWERCASE_CLASS_NAME$)
+    {
+        $this->$LOWERCASE_CLASS_NAME$Repository->destroy($$LOWERCASE_CLASS_NAME$);
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('backend::$LOWERCASE_CLASS_NAME$.message.delete success'),
+        ]);
+    }
+}

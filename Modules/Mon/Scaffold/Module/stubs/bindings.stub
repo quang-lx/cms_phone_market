@@ -1,0 +1,8 @@
+        $this->app->bind(
+            'Modules\$MODULE_NAME$\Repositories\$CLASS_NAME$Repository',
+            function () {
+                $repository = new \Modules\$MODULE_NAME$\Repositories\$ENTITY_TYPE$\$ENTITY_TYPE$$CLASS_NAME$Repository(new \Modules\Mon\Entities\$CLASS_NAME$());
+                return $repository;
+            }
+        );
+// add bindings

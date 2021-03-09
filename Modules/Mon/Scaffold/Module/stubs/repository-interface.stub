@@ -1,0 +1,9 @@
+<?php
+
+namespace Modules\$MODULE_NAME$\Repositories;
+
+use Modules\Mon\Repositories\BaseRepository;
+
+interface $CLASS_NAME$Repository extends BaseRepository
+{
+}

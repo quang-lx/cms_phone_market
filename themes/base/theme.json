@@ -1,0 +1,7 @@
+{
+    "name": "Base Theme",
+    "code": "base",
+    "version": "1.0.0",
+    "type": "frontend",
+    "description": "This is a basic theme."
+}

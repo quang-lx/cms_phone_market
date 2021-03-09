@@ -1,0 +1,63 @@
+.abs {
+	position: absolute;
+}
+.rel {
+	position: relative;
+}
+.bottom-16 {
+	bottom: 16px;
+}
+.left-16 {
+	left: 16px;
+}
+
+.bottom-0 {
+	bottom: 0px;
+}
+.bottom-300 {
+	bottom: 300px;
+}
+.right-0 {
+	right: 0px;
+}
+.top-0 {
+	top: 0px;
+}
+.left-snap {
+	left: calc(100% / 2 - 1232px / 2);
+<<<<<<< HEAD:public/html/scss/common/position.scss
+
+	@media screen and (max-width: 1232px) {
+		left: calc(100% / 2 - 100vw / 2);
+	}
+}
+.right-snap {
+	right: calc(100% / 2 - 1232px / 2);
+
+	@media screen and (max-width: 1232px) {
+		right: calc(100% / 2 - 100vw / 2);
+	}
+=======
+}
+.right-snap {
+	right: calc(100% / 2 - 1232px / 2);
+>>>>>>> c58e89fc77ac6af28666a6f197d14b95767d7037:themes/base/resources/sass/common/position.scss
+}
+.left-0 {
+	left: 0px;
+}
+.top-191 {
+	top: 191px;
+}
+.fixed {
+	position: fixed;
+}
+.top-80 {
+	top: 80px;
+}
+.top-8 {
+	top: 8px;
+}
+.postion-right-menu-home {
+	left: calc(100vw / 2 + (1232px / 2 - 305px));
+}
