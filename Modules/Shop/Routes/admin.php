@@ -16,4 +16,4 @@ Route::get('/test', [
     'as' => 'shop.dashboard.index',
     'uses' => 'HomeController@index',
 
-])->middleware('permission:shop.dashboard.index');
+]);
