@@ -40,7 +40,7 @@ class LoginController extends WebController
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/shop-admin';
 
     /**
      * Create a new controller instance.
@@ -69,61 +69,6 @@ class LoginController extends WebController
         return Socialite::driver('google')->redirect();
     }
 
-    public function googleCallback()
-    {
-        $gUser = Socialite::driver('google')->user();
-        $user = $this->user->findByAttributes(['google_id' => $gUser->id]);
-        if (!$user) {
-            $data = [
-                'facebook_id' => $gUser->getId(),
-                'name' => $gUser->getName(),
-                'email' => $gUser->getEmail(),
-                'password' => \Hash::make(str_random(12))
-            ];
-            $user = $this->user->create($data);
-            event(new Registered($user));
-        }
-        $this->guard()->login($user);
-        app(UserRepository::class)->update($user, ['last_login' => date('Y-m-d H:i:s')]);
-        return redirect()->intended($this->redirectPath());
-    }
-
-    public function facebook()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
-
-    public function facebookCallback(Request $request)
-    {
-        $fbUser = Socialite::driver('facebook')->user();
-        $user = $this->connectedAccountRepository->getUserBySocialAccount($fbUser->getId(), 'facebook');
-        if (!$user) {
-            $email = $fbUser->getEmail();
-            if (!$email) {
-                $email = $fbUser->getId().'@moncms.com';
-            }
-            $data = [
-                'name' => $fbUser->getName(),
-                'email' => $email,
-                'password' => Hash::make(Str::random(12))
-            ];
-            $user = $this->userRepository->createWithRoles($data, [1,2]);
-            $connectedAccountData = [
-                'provider' => ConnectedAccount::PROVIDER_FACEBOOK,
-                'user_id' => $user->id,
-
-                'account_id' => $fbUser->getId(),
-                'email' => $fbUser->getEmail(),
-                'first_name' => $fbUser->getName(),
-                'last_name' => $fbUser->getNickname(),
-            ];
-            $this->connectedAccountRepository->create($connectedAccountData);
-          //  event(new Registered($user));
-        }
-        $this->guard()->login($user);
-        app(UserRepository::class)->update($user, ['last_login' => date('Y-m-d H:i:s')]);
-        return redirect()->intended($this->redirectPath());
-    }
     /**
      * The user has been authenticated.
      *
@@ -152,7 +97,7 @@ class LoginController extends WebController
         }
         $previousPath = url()->previous();
 
-        if (in_array('admin',explode('/', $previousPath))) {
+        if (in_array('shop-admin',explode('/', $previousPath))) {
             return redirect($previousPath)->withSuccess(__('Logout successful!'));
         }
         return redirect()->route('home')->withSuccess(__('Logout successful!'));
@@ -176,7 +121,7 @@ class LoginController extends WebController
     public function showAdminLoginForm()
     {
         $this->seo()->setTitle(__('Login'));
-        return view('backend::login');
+        return view('shop::login');
     }
     /**
      * Validate the user login request.
