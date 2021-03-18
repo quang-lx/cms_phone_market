@@ -12,7 +12,7 @@ use Modules\Admin\Transformers\Auth\RoleNewTransformer;
 use Modules\Admin\Transformers\Auth\RoleTransformer;
 use Modules\Mon\Http\Controllers\ApiController;
 use Modules\Mon\Repositories\PermissionRepository;
-use Modules\Mon\Repositories\RoleRepository;
+use Modules\Admin\Repositories\RoleRepository;
 use Spatie\Permission\Models\Role;
 use Modules\Mon\Auth\Contracts\Authentication;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Console;
+namespace Modules\Shop\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -8,21 +8,21 @@ use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
 
 
-class GenerateAdminPermission extends Command
+class GenerateShopPermission extends Command
 {
     /**
      * The console command name.
      * php artisan admin:create-root-user email password
      * @var string
      */
-    protected $name = 'admin:gerenate-permission-route';
+    protected $name = 'shop:gerenate-permission-route';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Shop generate permission.';
 
     /**
      * Create a new command instance.
@@ -47,7 +47,7 @@ class GenerateAdminPermission extends Command
 
         foreach ($routeCollection as $route) {
             $routeName = $route->getName();
-            if ($this->startWith($routeName, 'admin')) {
+            if ($this->startWith($routeName, 'shop')) {
                 $permission = Permission::findOrCreate($routeName);
                 $tokens = explode('.', $routeName);
                 if (isset($tokens[1])) {
@@ -56,7 +56,7 @@ class GenerateAdminPermission extends Command
                 if (isset($tokens[2])) {
                     $permission->title = $tokens[2];
                 }
-                $permission->module = 'admin';
+                $permission->module = 'shop';
                 $permission->save();
             }
 

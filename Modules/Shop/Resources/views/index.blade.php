@@ -1,4 +1,4 @@
-@extends('backend::layouts.dashboard')
+@extends('shop::layouts.dashboard')
 
 @section('content')
     <div class="jumbotron" style="display:flex;justify-content: center;">

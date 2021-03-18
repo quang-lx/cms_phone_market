@@ -4,6 +4,9 @@ namespace Modules\Shop\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Shop\Console\GenerateShopPermission;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class ShopServiceProvider extends ServiceProvider
 {
@@ -15,7 +18,7 @@ class ShopServiceProvider extends ServiceProvider
     protected $defer = false;
 
     protected $commands = [
-
+        GenerateShopPermission::class
     ];
 
     /**
@@ -118,7 +121,18 @@ class ShopServiceProvider extends ServiceProvider
     }
     private function registerBindings()
     {
-
+        $this->app->bind(
+            'Modules\Shop\Repositories\RoleRepository',
+            function () {
+                return new \Modules\Shop\Repositories\Eloquent\RoleRepository(new Role());
+            }
+        );
+        $this->app->bind(
+            'Modules\Shop\Repositories\PermissionRepository',
+            function () {
+                return new \Modules\Shop\Repositories\Eloquent\PermissionRepository(new Permission());
+            }
+        );
 
 // add bindings
 

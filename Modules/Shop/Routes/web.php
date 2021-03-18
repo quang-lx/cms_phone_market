@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '/shop-admin'], function ( ) {
     Route::get('login', [
-        'as' => 'admin.login',
+        'as' => 'shop.login',
         'uses' => 'Auth\LoginController@showAdminLoginForm',
 
     ]);

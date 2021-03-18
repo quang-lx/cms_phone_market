@@ -9,7 +9,7 @@ use Modules\Admin\Http\Requests\Permission\CreatePermissionRequest;
 use Modules\Admin\Http\Requests\Permission\UpdatePermissionRequest;
 use Modules\Admin\Transformers\Auth\PermissionTransformer;
 use Modules\Mon\Http\Controllers\ApiController;
-use Modules\Mon\Repositories\PermissionRepository;
+use Modules\Admin\Repositories\PermissionRepository;
 use Spatie\Permission\Models\Permission;
 use Modules\Mon\Auth\Contracts\Authentication;
 

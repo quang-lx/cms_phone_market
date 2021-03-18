@@ -82,14 +82,20 @@ class Theme {
 
     public function currentTheme() {
         $locale = locale_prefix();
+
         if ($locale !== null) {
             $pattern = '/^'.$locale.'\/admin\/?/';
+            $patternShop = '/^'.$locale.'\/shop-admin\/?/';
         } else {
             $pattern = '/^admin\/?/';
+            $patternShop = '/^shop-admin\/?/';
         }
+
 
         if (preg_match($pattern, \Request::path())) {
             $theme ='backend';
+        } elseif (preg_match($patternShop, \Request::path())) {
+            $theme ='shop';
         } else {
             $theme = 'base';
         }

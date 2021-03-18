@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Admin\Console\CreateAdminUser;
 use Modules\Admin\Console\GenerateAdminPermission;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -123,6 +125,18 @@ class AdminServiceProvider extends ServiceProvider
     {
 
 
+        $this->app->bind(
+            'Modules\Admin\Repositories\RoleRepository',
+            function () {
+                return new \Modules\Admin\Repositories\Eloquent\RoleRepository(new Role());
+            }
+        );
+        $this->app->bind(
+            'Modules\Admin\Repositories\PermissionRepository',
+            function () {
+                return new \Modules\Admin\Repositories\Eloquent\PermissionRepository(new Permission());
+            }
+        );
         $this->app->bind(
             'Modules\Admin\Repositories\CategoryRepository',
             function () {
