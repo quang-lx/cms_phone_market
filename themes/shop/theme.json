@@ -1,6 +1,6 @@
 {
-  "name": "MonCMS Backend AminLTE Theme",
-  "code": "backend",
+  "name": "MonCMS Shop AminLTE Theme",
+  "code": "shop",
   "version": "1.0.0",
   "type": "admin",
   "description": "This is a adminlte theme."
