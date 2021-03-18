@@ -69,7 +69,7 @@ class RouteServiceProvider extends ServiceProvider
     {
 
         Route::prefix('shop-admin')
-            ->middleware(['web', 'admin'])
+            ->middleware(['web', 'shopadmin'])
            // ->middleware(['web'])
             ->namespace($this->namespace.'\Admin')
             ->group(__DIR__ . '/../Routes/admin.php');

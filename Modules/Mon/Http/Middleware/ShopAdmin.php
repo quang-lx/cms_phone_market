@@ -6,7 +6,7 @@ use Closure;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Entities\User;
 
-class Admin
+class ShopAdmin
 {
     /**
      * Handle an incoming request.
@@ -21,11 +21,11 @@ class Admin
         /** @var Authentication $auth */
         $auth = app(Authentication::class);
         if (!$auth->check()) {
-            return redirect()->guest(route('admin.login'))->withErrors('Vui lòng đăng nhập');
+            return redirect()->guest(route('shop.login'))->withErrors('Vui lòng đăng nhập');
         }
-        if ($auth->user()->type != User::TYPE_ADMIN ) {
+        if ($auth->user()->type != User::TYPE_SHOP ) {
             $auth->logout();
-            return redirect()->guest(route('admin.login'))->withErrors(['username' => 'Vui lòng đăng nhâp bằng tài khoản quản trị!']);
+            return redirect()->guest(route('shop.login'))->withErrors(['username' => 'Vui lòng đăng nhâp bằng tài khoản quản trị!']);
         }
         return $next($request);
     }

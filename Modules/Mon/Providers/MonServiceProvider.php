@@ -15,6 +15,7 @@ use Modules\Mon\Http\Middleware\ApiPermission;
 use Modules\Mon\Http\Middleware\ApiRole;
 use Modules\Mon\Http\Middleware\ApiToken;
 use Modules\Mon\Http\Middleware\SetLocale;
+use Modules\Mon\Http\Middleware\ShopAdmin;
 use Modules\Mon\Http\Middleware\ThemeViews;
 use Modules\Mon\Repositories\ConnectedAccountRepository;
 use Modules\Mon\Support\Settings;
@@ -46,6 +47,7 @@ class MonServiceProvider extends ServiceProvider
         'api.permission' => ApiPermission::class,
         'role' => RoleMiddleware::class,
         'permission' => PermissionMiddleware::class,
+        'shopadmin' => ShopAdmin::class,
     ];
 
     protected $groupMiddleware = [
