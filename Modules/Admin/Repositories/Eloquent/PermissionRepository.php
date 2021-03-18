@@ -72,6 +72,7 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
 	}
 	public function getAllPermission(Request $request, $relations) {
 		$query = $this->newQueryBuilder();
+        $query->where('module', MPermission::MODULE_ADMIN);
 		if ($relations) {
 			$query = $query->with($relations);
 		}
