@@ -2,11 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\DeleteExpiredWarning;
 use App\Console\Commands\GenerateI18NTranslation;
-use App\Console\Commands\SchedulerFbNoti;
-use App\Console\Commands\SttTest;
-use App\Console\Commands\SttVov;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,9 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         GenerateI18NTranslation::class,
-        SchedulerFbNoti::class,
-        SttVov::class,
-        DeleteExpiredWarning::class
+
 
     ];
 
@@ -33,9 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         #$schedule->command('gg-cloud:stt-vov')->withoutOverlapping();
-         $schedule->command('fbnoti-scheduler:run')->withoutOverlapping();
-         $schedule->command('warning:delete-expired')->everyFifteenMinutes();
+
     }
 
     /**

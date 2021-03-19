@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "laravel-chat-moncms",
+  "private_key_id": "70bcf62a04b8580111adaf5febe666338106453b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDCIGPihB6AAvyk\npPbDxpVAvvZJv9bRY9dG533ri+tVG61Clne4YqM+s1EIuGm0MkmbMucxRNWHp7Cp\na9s+Dtpx/ng2SRLR8tQ9h+6XugWzadxR5CdZ7MISzLuc9Ipa0AYHylu0zvcSOUh+\nP75mK0H82cilzDY57YTIcYjNsNbR8j47Cnqoe/9dxW1BNWHRa83rD0A1y9x96xKQ\nBGHPu/r7dWgvyW1N0fySGk02G4xvq9H2J1+Uwvf1CgEf/pAGrG1CgLyProydes5/\nH7GAWVax95L+bAvOBms7iU2BaKti3ZJ+X/VWJZpeMGwAa4LIPeRykBgrsGtvhu6u\nhe0paUJFAgMBAAECggEAWAJ3Rmq/qSmxgLOJbJjLcd8hqa3fpm6tWuf4nqGAv8Uc\nd+Pfwyh0+igxxNJWmetyk3owdpXOeQH9hdHwQ+JYBvZnabUXYzfEIWFPOlqL2xtT\nV40oigxcsElBhZcYYrONCFsl2IM8YHa39wTPPWK/N/NElGZQ71JPsNBIRXi269ct\nL54zLbrt5zi5YWM6y0zSyI8wmIg6Ors78mAbtKn8HPbW58ZLBCnLxeWujcgoByti\nBcLa6jH5aMTwY4F6BG4noNu4att89vTVDYkEz7BFHQ+pBiWACS2GYqG54ffR/94h\nd9OjQpoVJE5nJ8eRY7JNTkalS2LcAPLybm9bmtKWwQKBgQDoagJEoO8wx5fZD14l\nnpJZX9YjQL2gxUH8MDdpGoEVRLkGtVT+5hOEk80+Nl7lcHm2CVLQJ2LXQbu4fmfn\nNc3NIbKEhV8yAkacGScRkcsKaDZ+W1oHSh/XWV4lWxTFybt80izyEGWUbC5JcN/M\nOKrsv4YAUb1Ft1vMGSWUZksfMwKBgQDV07DscvTtLBvtk5xD7mgnTDSfcOmtbXtC\n7Cw/P91selRD/SrKrd8kLdlbwV4rnvE8uaS32D3FNXTxS4zBTbKLmJL/maW5BF+E\nraxepo0EEvvknOEpv3nP/NfIlUmpSd1IWkSzZk6jZELUNG71vXLWm9hvGOFM1oGK\nypLaiRh4pwKBgQDbgzyvKz2fWfTey7gFWhcqGO19EGnKTmU7VyMOvzzKJMWJQ32K\n3y3yG1NP/jR1Cl26hGXWOk0NuIUgBSwH4faGV9xvdDTsW9/rEYqn+obGRpWplIic\nt/MJB9x29ebRxO6zPyO6Yag/nkm9jcGi9qbhwydCZ/GXxk4KoHmxB0jOpwKBgFQT\nhcijNu0e3+hdlx8a2fdBvptGwYtAtivNQ2SnTwA9ZW7KWA4Tqd7G7GVotgd+2qoe\n8MadD0TAzTenljPXwjGjj4FTP9dtAcXgqBsbb+0/La5phRtuP45pg8tJ8AnRkmHF\npKfJvXf/j0tzRoH3uPTrmIGujcAxxAP3vSCSsX2XAoGBAMXOfFwB2KOe0JCZe9X0\nbde49zbc/LCfoBFI6g5WVswbwIFvIz4+Jb9R8DiTUKFe71FK0WijRFWDwJubrfjI\n5BnBTiotO1rsU706LVvKsRjdBVbIaxorDD6XK4Trta2T5ibWvpDho7oWP9hLfWy3\nfD/yCDr6RgSx4AteWAG7Of6k\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ct5ed@laravel-chat-moncms.iam.gserviceaccount.com",
+  "client_id": "113110225879490210852",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ct5ed%40laravel-chat-moncms.iam.gserviceaccount.com"
+}

@@ -33,6 +33,78 @@
         var AuthorizationHeaderValue = 'Bearer  {{ $jwt_token }}';
     </script>
 
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-messaging.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDNqlpz-TrolJci400vG9CIJyuRVVS6s6M",
+            authDomain: "laravel-chat-moncms.firebaseapp.com",
+            databaseURL: "https://laravel-chat-moncms-default-rtdb.firebaseio.com",
+            projectId: "laravel-chat-moncms",
+            storageBucket: "laravel-chat-moncms.appspot.com",
+            messagingSenderId: "712639579822",
+            appId: "1:712639579822:web:b12e7ff3e09e2f83028f3f"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+        // Retrieve Firebase Messaging object.
+        const messaging = firebase.messaging();
+
+        // Add the public key generated from the console here.
+
+
+        function sendTokenToServer(fcm_token) {
+            console.log(fcm_token);
+
+        }
+
+        function retreiveToken() {
+            messaging.getToken({vapidKey: 'BF7OcZsrkXARIo9joKxbXrCRnJEC5zUgfJeyekVdm5bB_c73YLXFhcEix2LgPRQ6QkEr12irbi-DBy6ngPR5xVE'}).then((currentToken) => {
+                if (currentToken) {
+                    // Send the token to your server and update the UI if necessary
+                    console.log(currentToken)
+                    // ...
+                } else {
+                    // Show permission request UI
+                    console.log('No registration token available. Request permission to generate one.');
+                    // ...
+                }
+            }).catch((err) => {
+                console.log('An error occurred while retrieving token. ', err);
+                // ...
+            });
+
+        }
+
+        retreiveToken();
+        messaging.onTokenRefresh(() => {
+            retreiveToken();
+
+
+        });
+
+        messaging.onMessage((payload) => {
+            console.log('Message received');
+            console.log(payload);
+
+            location.reload();
+        });
+
+    </script>
+
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

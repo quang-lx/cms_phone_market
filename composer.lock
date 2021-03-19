@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22367c8c5b7a2645f8db3c6a15798a98",
+    "content-hash": "f9497ee4868804488687853430db8b94",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -2150,16 +2150,16 @@
         },
         {
             "name": "kreait/firebase-php",
-            "version": "5.14.0",
+            "version": "5.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kreait/firebase-php.git",
-                "reference": "f07dc87d2ec3ea032e750c3059470466f76bc0bd"
+                "reference": "f94113dc4c6f2a4b7226aba973900c7f4346975b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kreait/firebase-php/zipball/f07dc87d2ec3ea032e750c3059470466f76bc0bd",
-                "reference": "f07dc87d2ec3ea032e750c3059470466f76bc0bd",
+                "url": "https://api.github.com/repos/kreait/firebase-php/zipball/f94113dc4c6f2a4b7226aba973900c7f4346975b",
+                "reference": "f94113dc4c6f2a4b7226aba973900c7f4346975b",
                 "shasum": ""
             },
             "require": {
@@ -2189,7 +2189,7 @@
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12.53",
                 "phpstan/phpstan-phpunit": "^0.12.6",
-                "phpunit/phpunit": "^8.5|^9.4.3",
+                "phpunit/phpunit": "^8.5",
                 "symfony/var-dumper": "^5.0"
             },
             "suggest": {
@@ -2226,7 +2226,18 @@
                 "google",
                 "sdk"
             ],
-            "time": "2020-12-13T19:46:29+00:00"
+            "support": {
+                "docs": "https://firebase-php.readthedocs.io",
+                "issues": "https://github.com/kreait/firebase-php/issues",
+                "source": "https://github.com/kreait/firebase-php"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/jeromegamez",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-06T23:45:39+00:00"
         },
         {
             "name": "kreait/firebase-tokens",
@@ -9186,5 +9197,6 @@
     "platform": {
         "php": "^7.3|^8.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
