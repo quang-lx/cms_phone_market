@@ -1,41 +1,41 @@
  
 
-## Install elasticsearch V7.3.1
+## install laravel
 ```
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.3.1-amd64.deb
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.3.1-amd64.deb.sha512
-shasum -a 512 -c elasticsearch-7.3.1-amd64.deb.sha512 
-sudo dpkg -i elasticsearch-7.3.1-amd64.deb
+composer install
+php artisan key:generate
+php artisan jwt:secret
 
 ```
- ### start/stop ES 
- SysV init vs systemdedit
- Elasticsearch is not started automatically after installation. How to start and stop Elasticsearch depends on whether your system uses SysV init or systemd (used by newer distributions). You can tell which is being used by running this command:
- 
-```
- ps -p 1
-```
- 
- Running Elasticsearch with systemd 
- To configure Elasticsearch to start automatically when the system boots up, run the following commands:
- 
-```
- sudo /bin/systemctl daemon-reload
- sudo /bin/systemctl enable elasticsearch.service
-```
- Elasticsearch can be started and stopped as follows:
- 
-```
- sudo systemctl start elasticsearch.service
- sudo systemctl stop elasticsearch.service
-```
-### create audio vov
-```
- nohup ffmpeg -i http://cdn.mediatech.vn/hntvRadio/joyfm.stream_aac/playlist.m3u8 -f segment -c copy -segment_time 10 -acodec libmp3lame /data/audio/_vov%03d.mp3 &
- ---30383
- 
- export GOOGLE_APPLICATION_CREDENTIALS="/var/www/mylane_web/google_cloud_cre.json"
+## create db & set database in .env
 
- nohup   php /var/www/mylane_web/artisan gg-cloud:stt-vov &
---- 1693
+ ### install backend theme - node v10
+ 
+```
+cd themes/backend
+npm install 
+npm run dev
+```
+ 
+## create admin user username: admin, password : 1
+ 
+```
+ php artisan admin:create-root-user admin 1
+```
+ 
+
+### Sinh code CRUD 
+```
+php artisan module:entity:scaffold Post Admin
+
+- tạo thêm transformer trong: Modules/Admin/Htp/Transformers 
+- khai báo router cho laravel trong /Modules/Admin/Routes/admin, api.php lưu ý permission dùng  https://github.com/spatie/laravel-permission
+
+Vue dùng https://element.eleme.io/#/en-US/component/table
+
+vue js vao folder themes/backend/
+vue router themes/backend/resources/js/routers
+vue component themes/backend/resources/js/components
+file đã ngôn ngữ : themes/backend/lang/vi/
+
 ```
