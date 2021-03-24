@@ -17,5 +17,6 @@ Route::group(['prefix' => '/$LOWERCASE_CLASS_NAME$'], function ( ) {
         'middleware' => 'permission:admin.$LOWERCASE_CLASS_NAME$.edit'
     ]);
 
-}
+
+});
 // append
