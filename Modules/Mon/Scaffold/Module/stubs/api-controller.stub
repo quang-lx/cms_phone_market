@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Mon\Entities\$CLASS_NAME$;
 use Modules\$MODULE_NAME$\Http\Requests\$CLASS_NAME$\Create$CLASS_NAME$Request;
+use Modules\$MODULE_NAME$\Transformers\$CLASS_NAME$Transformer;
 use Modules\$MODULE_NAME$\Http\Requests\$CLASS_NAME$\Update$CLASS_NAME$Request;
 use Modules\$MODULE_NAME$\Repositories\$CLASS_NAME$Repository;
 use Illuminate\Routing\Controller;
@@ -52,7 +53,7 @@ class $CLASS_NAME$Controller extends ApiController
 
     public function find($CLASS_NAME$ $$LOWERCASE_CLASS_NAME$)
     {
-        return new  $CLASS_NAME$FullTransformer($$LOWERCASE_CLASS_NAME$);
+        return new  $CLASS_NAME$Transformer($$LOWERCASE_CLASS_NAME$);
     }
 
     public function update($CLASS_NAME$ $$LOWERCASE_CLASS_NAME$, Update$CLASS_NAME$Request $request)

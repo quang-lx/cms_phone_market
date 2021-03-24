@@ -64,6 +64,7 @@ class EntityGenerator extends Generator
             $this->appendBindingsToServiceProviderFor($entity);
             $this->appendResourceRoutesToRoutesFileFor($entity);
             $this->appendResourceApiRoutesToRoutesFileFor($entity);
+            $this->generateTransformerFor($entity);
 //            $this->appendPermissionsFor($entity);
 //            $this->appendSidebarLinksFor($entity);
 //            $this->appendBackendTranslations($entity);
@@ -347,5 +348,29 @@ class EntityGenerator extends Generator
         $content = $this->getContentForStub('route-api.stub', $entity);
         $routeContent = str_replace('// append', $content, $routeContent);
         $this->finder->put($this->getModulesPath('Routes/api.php'), $routeContent);
+    }
+
+    /**
+     * Generate views for the given entity
+     *
+     * @param string $entity
+     */
+    private function generateTransformerFor($entity)
+    {
+        $lowerCasePluralEntity = strtolower(Str::plural($entity));
+
+        foreach ($this->views as $stub => $view) {
+            $view = str_replace('$ENTITY_NAME$', $lowerCasePluralEntity, $view);
+            $this->writeFile(
+                $this->getModulesPath($view),
+                $this->getContentForStub($stub, $entity)
+            );
+        }
+
+        $transformerStub = 'entity-transformer.stub';
+        $this->writeFile(
+            $this->getModulesPath(Str::replaceFirst('$CLASS_NAME$',$entity, 'Transformers/$CLASS_NAME$Transformer')),
+            $this->getContentForStub($transformerStub, $entity)
+        );
     }
 }

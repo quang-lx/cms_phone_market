@@ -1,0 +1,30 @@
+<?php
+
+namespace Modules\$MODULE_NAME$\Transformers;
+
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+
+class $CLASS_NAME$Transformer extends JsonResource
+{
+
+
+    public function toArray($request)
+    {
+        $data = [
+            'id' => $this->id,
+
+
+             'urls' => [
+                'delete_url' => route('api.$LOWERCASE_CLASS_NAME$.destroy', $this->id),
+            ],
+
+        ];
+
+
+        return $data;
+    }
+
+
+}
