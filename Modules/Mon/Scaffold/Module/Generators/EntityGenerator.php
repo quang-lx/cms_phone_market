@@ -63,6 +63,7 @@ class EntityGenerator extends Generator
 //            $this->generateLanguageFilesFor($entity);
             $this->appendBindingsToServiceProviderFor($entity);
             $this->appendResourceRoutesToRoutesFileFor($entity);
+            $this->appendResourceApiRoutesToRoutesFileFor($entity);
 //            $this->appendPermissionsFor($entity);
 //            $this->appendSidebarLinksFor($entity);
 //            $this->appendBackendTranslations($entity);
