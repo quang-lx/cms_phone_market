@@ -160,7 +160,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\DistrictRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentDistrictRepository(new \Modules\Mon\Entities\District());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

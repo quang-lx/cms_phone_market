@@ -23,6 +23,9 @@ import ShopRoleForm from './../components/auth/role/shop/form';
 import ProvinceList from './../components/province/index';
 import ProvinceForm from './../components/province/form';
 
+import DistrictList from './../components/district/index';
+import DistrictForm from './../components/district/form';
+
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -197,6 +200,32 @@ export default [
             pageTitle: 'province.label.update_province',
         },
     },
+
+    //
+
+    {
+        path: '/admin/district',
+        name: 'admin.district.index',
+        component: DistrictList,
+    },
+    {
+        path: '/admin/district/create',
+        name: 'admin.district.create',
+        component: DistrictForm,
+        props: {
+            pageTitle: 'district.label.create_district',
+        },
+    },
+
+    {
+        path: '/admin/district/:districtId/edit',
+        name: 'admin.district.edit',
+        component: DistrictForm,
+        props: {
+            pageTitle: 'district.label.update_district',
+        },
+    },
+
 
 
 
