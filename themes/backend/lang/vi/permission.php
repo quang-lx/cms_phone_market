@@ -25,7 +25,8 @@ return [
         'roles' => 'Nhóm quyền',
         'permissions' => 'Chức năng',
         'users' => 'Người dùng',
-        'province' => 'Tỉnh thành phố'
+        'province' => 'Tỉnh thành phố',
+        'district' => "Quận huyện"
 
     ]
 

@@ -202,5 +202,27 @@ Route::group(['prefix' => '/province'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/district'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.district.index',
+        'uses' => 'District\DistrictController@index',
+        'middleware' => 'permission:admin.district.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.district.create',
+        'uses' => 'District\DistrictController@create',
+        'middleware' => 'permission:admin.district.create'
+    ]);
+
+    Route::get('{district}/edit', [
+        'as' => 'admin.district.edit',
+        'uses' => 'District\DistrictController@edit',
+        'middleware' => 'permission:admin.district.edit'
+    ]);
+
+
+});
 // append
+
 

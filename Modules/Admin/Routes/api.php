@@ -230,5 +230,30 @@ Route::middleware('auth:api')->prefix('/provinces')->group(function (){
         'uses' => 'Province\ProvinceController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/districts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.district.index',
+        'uses' => 'District\DistrictController@index',
+    ]);
+    Route::post('/{district}/edit', [
+            'as' => 'api.district.update',
+            'uses' => 'District\DistrictController@update',
+        ]);
+   Route::get('/{district}', [
+              'as' => 'api.district.find',
+              'uses' => 'District\DistrictController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.district.store',
+        'uses' => 'District\DistrictController@store',
+    ]);
+
+    Route::delete('/{district}', [
+        'as' => 'api.district.destroy',
+        'uses' => 'District\DistrictController@destroy',
+    ]);
+});
 // append
+
 
