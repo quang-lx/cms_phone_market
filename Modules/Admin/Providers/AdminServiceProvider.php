@@ -153,7 +153,15 @@ class AdminServiceProvider extends ServiceProvider
         );
 
 
+        $this->app->bind(
+            'Modules\Admin\Repositories\ProvinceRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentProvinceRepository(new \Modules\Mon\Entities\Province());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 
