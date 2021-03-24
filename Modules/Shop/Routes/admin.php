@@ -12,7 +12,7 @@
 */
 use Illuminate\Support\Facades\Route;
 
-Route::get('/test', [
+Route::get('/', [
     'as' => 'shop.dashboard.index',
     'uses' => 'HomeController@index',
 

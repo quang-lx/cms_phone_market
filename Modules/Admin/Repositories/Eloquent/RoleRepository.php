@@ -13,7 +13,6 @@ class RoleRepository extends BaseRepository implements RoleInterface {
     {
         $permissions= $data['permissions'];
         unset($data['permissions']);
-        $data['module'] = MPermission::MODULE_ADMIN;
         $model = $this->model->create($data);
         $model->syncPermissions($this->parsePermission($permissions));
         return $model;
@@ -49,7 +48,7 @@ class RoleRepository extends BaseRepository implements RoleInterface {
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
-        $query->where('module', MPermission::MODULE_ADMIN);
+
         if ($relations) {
             $query = $query->with($relations);
         }
@@ -62,7 +61,9 @@ class RoleRepository extends BaseRepository implements RoleInterface {
                     ->orWhere('id', 'LIKE', "%{$keyword}%");
             });
         }
-
+        if ($request->get('module') !== null) {
+            $query->where('module', '=', $request->get('module'));
+        }
         if ($request->get('guard_name') !== null) {
             $query->where('guard_name', '=', $request->get('guard_name'));
         }

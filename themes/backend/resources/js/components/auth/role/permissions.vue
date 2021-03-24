@@ -36,16 +36,7 @@
 
 
                     <div class="row">
-                        <div class="col-sm-6 ">
-                            <el-select v-model="guard_name" :placeholder="$t('role.label.guard_name')" @change="queryServer" filterable style="width: 100% !important" clearable>
-                                <el-option
-                                        v-for="item in guards"
-                                        :key="'guards'+ item.value"
-                                        :label="item.label"
-                                        :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </div>
+
                         <div class=" col-sm-6">
                             <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                       v-model="searchQuery">
@@ -71,9 +62,6 @@
 
                     </el-table-column>
                     <el-table-column prop="name" :label="$t('permission.label.name')" sortable="custom">
-
-                    </el-table-column>
-                    <el-table-column prop="guard_name" :label="$t('permission.label.guard_name')" sortable="custom">
 
                     </el-table-column>
 

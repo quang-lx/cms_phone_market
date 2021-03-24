@@ -90,6 +90,23 @@ Route::group(['prefix' =>'/auth'], function (){
         'as' => 'admin.roles.edit',
         'uses' => 'Auth\RoleController@edit',
     ])->middleware('permission:admin.roles.edit');
+
+
+    //shop role
+    Route::get('/shop-roles', [
+        'as' => 'admin.shoproles.index',
+        'uses' => 'Auth\RoleController@index',
+
+    ])->middleware('permission:admin.shoproles.index');
+    Route::get('shop-roles/create', [
+        'as' => 'admin.shoproles.create',
+        'uses' => 'Auth\RoleController@create',
+    ])->middleware('permission:admin.shoproles.create');
+
+    Route::get('shop-roles/{role}/edit', [
+        'as' => 'admin.shoproles.edit',
+        'uses' => 'Auth\RoleController@edit',
+    ])->middleware('permission:admin.shoproles.edit');
 });
 Route::group(['prefix' => '/media'], function ( ) {
     Route::get('media', [

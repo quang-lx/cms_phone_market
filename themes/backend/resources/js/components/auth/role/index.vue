@@ -52,12 +52,12 @@
                                 <div class="sc-table">
 
                                     <el-table
-                                            :data="data"
-                                            stripe
-                                            style="width: 100%"
-                                            ref="dataTable"
-                                            v-loading.body="tableIsLoading"
-                                            @sort-change="handleSortChange">
+                                        :data="data"
+                                        stripe
+                                        style="width: 100%"
+                                        ref="dataTable"
+                                        v-loading.body="tableIsLoading"
+                                        @sort-change="handleSortChange">
                                         <el-table-column prop="id" :label="$t('role.label.id')" width="75"
                                                          sortable="custom">
 
@@ -65,7 +65,8 @@
                                         <el-table-column prop="name" :label="$t('role.label.name')" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="description" :label="$t('role.label.description')" sortable="custom">
+                                        <el-table-column prop="description" :label="$t('role.label.description')"
+                                                         sortable="custom">
 
                                         </el-table-column>
 
@@ -77,8 +78,9 @@
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
                                                 <edit-button
-                                                        :to="{name: 'admin.roles.edit', params: {roleId: scope.row.id}}"></edit-button>
-                                                <delete-button :scope="scope" :rows="data" v-if="scope.row.name != 'cms_login'"></delete-button>
+                                                    :to="{name: 'admin.roles.edit', params: {roleId: scope.row.id}}"></edit-button>
+                                                <delete-button :scope="scope" :rows="data"
+                                                               v-if="scope.row.name != 'cms_login'"></delete-button>
                                             </template>
                                         </el-table-column>
                                     </el-table>
@@ -108,50 +110,51 @@
 </template>
 
 <script>
-    import axios from 'axios';
+  import axios from 'axios';
 
-    export default {
+  export default {
 
-        data() {
-            return {
-                data: [],
-
-
-                columnsSearch: [],
-                listFilterColumn: [],
+    data() {
+      return {
+        data: [],
 
 
-            };
-        },
-        methods: {
-            queryServer(customProperties) {
+        columnsSearch: [],
+        listFilterColumn: [],
 
-                const properties = {
-                    page: this.meta.current_page,
-                    per_page: this.meta.per_page,
-                    order_by: this.order_meta.order_by,
-                    order: this.order_meta.order,
-                    search: this.searchQuery,
-                };
 
-                axios.get(route('api.roles.index', _.merge(properties, customProperties)))
-                    .then((response) => {
-                        this.tableIsLoading = false;
-                        this.tableIsLoading = false;
-                        this.data = response.data.data;
-                        this.meta = response.data.meta;
-                        this.links = response.data.links;
-                        this.order_meta.order_by = properties.order_by;
-                        this.order_meta.order = properties.order;
-                    });
-            }
+      };
+    },
+    methods: {
+      queryServer(customProperties) {
 
-        },
-        mounted() {
-            this.fetchData();
+        const properties = {
+          page: this.meta.current_page,
+          per_page: this.meta.per_page,
+          order_by: this.order_meta.order_by,
+          order: this.order_meta.order,
+          search: this.searchQuery,
+          module: 'admin',
+        };
 
-        },
-    }
+        axios.get(route('api.roles.index', _.merge(properties, customProperties)))
+        .then((response) => {
+          this.tableIsLoading = false;
+          this.tableIsLoading = false;
+          this.data = response.data.data;
+          this.meta = response.data.meta;
+          this.links = response.data.links;
+          this.order_meta.order_by = properties.order_by;
+          this.order_meta.order = properties.order;
+        });
+      }
+
+    },
+    mounted() {
+      this.fetchData();
+
+    },
+  }
 </script>
 
 <style scoped>

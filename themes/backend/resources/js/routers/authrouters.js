@@ -4,8 +4,6 @@ import PermissionForm from './../components/auth/permission/form';
 import Role from './../components/auth/role/index';
 import RoleForm from './../components/auth/role/form';
 
-import UserList from './../components/auth/user/index';
-import UserForm from './../components/auth/user/form';
 
 import AdminList from './../components/auth/admin/index';
 import AdminForm from './../components/auth/admin/form';
@@ -18,6 +16,8 @@ import CategoryForm from './../components/category/form';
 import NewsList from './../components/news/index';
 import NewsForm from './../components/news/form';
 
+import ShopRole from './../components/auth/role/shop/index';
+import ShopRoleForm from './../components/auth/role/shop/form';
 
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
@@ -66,6 +66,31 @@ export default [
         component: RoleForm,
         props: {
             pageTitle: 'role.label.update_role',
+        },
+    },
+
+
+    // role
+    {
+        path: '/admin/auth/shop-roles',
+        name: 'admin.shoproles.index',
+        component: ShopRole,
+    },
+    {
+        path: '/admin/auth/shop-roles/create',
+        name: 'admin.shoproles.create',
+        component: ShopRoleForm,
+        props: {
+            pageTitle: 'role.label.create_shoprole',
+        },
+    },
+
+    {
+        path: '/admin/auth/shop-roles/:roleId/edit',
+        name: 'admin.shoproles.edit',
+        component: ShopRoleForm,
+        props: {
+            pageTitle: 'role.label.update_shoprole',
         },
     },
 

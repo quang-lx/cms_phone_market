@@ -23,7 +23,7 @@ class ShopAdmin
         if (!$auth->check()) {
             return redirect()->guest(route('shop.login'))->withErrors('Vui lòng đăng nhập');
         }
-        if ($auth->user()->type != User::TYPE_ADMIN ) {
+        if ($auth->user()->type != User::TYPE_SHOP ) {
             $auth->logout();
             return redirect()->guest(route('shop.login'))->withErrors(['username' => 'Vui lòng đăng nhâp bằng tài khoản quản trị!']);
         }

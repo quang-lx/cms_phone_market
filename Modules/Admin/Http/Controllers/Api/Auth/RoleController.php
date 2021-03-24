@@ -43,7 +43,7 @@ class RoleController extends ApiController
 
     public function store(CreateRoleRequest $request)
     {
-        $role = $this->roleRepository->create($request->only('name', 'guard_name', 'permissions','description'));
+        $role = $this->roleRepository->create($request->only('name', 'guard_name', 'permissions','description', 'module'));
 
         return response()->json([
             'errors' => false,

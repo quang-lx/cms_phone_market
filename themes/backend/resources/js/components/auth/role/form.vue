@@ -116,6 +116,7 @@
                     name: '',
                     description: '',
                     guard_name: 'web',
+                    module: 'admin',
                     permissions: {},
 
                 },

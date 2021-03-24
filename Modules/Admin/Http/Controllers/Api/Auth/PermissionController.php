@@ -38,7 +38,7 @@ class PermissionController extends ApiController
 
     public function store(CreatePermissionRequest $request)
     {
-        $this->permissionRepository->create($request->only('name', 'guard_name'));
+        $this->permissionRepository->create($request->only('name', 'guard_name','module'));
 
         return response()->json([
             'errors' => false,
