@@ -48,10 +48,10 @@ class EntityGenerator extends Generator
                 $this->getMonModulePath("Entities/$entity"),
                 $this->getContentForStub($entityTypeStub, $entity)
             );
-            $this->writeFile(
-                $this->getMonModulePath("Entities/{$entity}Translation"),
-                $this->getContentForStub("{$entityType}-entity-translation.stub", $entity)
-            );
+//            $this->writeFile(
+//                $this->getMonModulePath("Entities/{$entity}Translation"),
+//                $this->getContentForStub("{$entityType}-entity-translation.stub", $entity)
+//            );
             if ($this->entityType == 'Eloquent') {
 //                $this->generateMigrationsFor($entity);
             }
@@ -331,5 +331,20 @@ class EntityGenerator extends Generator
         $d = new \DateTime(date('Y-m-d H:i:s.' . $micro, $t));
 
         return $d->format("Y_m_d_His");
+    }
+
+
+    /**
+     * Append the routes for the given entity to the routes file
+     *
+     * @param  string                                       $entity
+     * @throws FileNotFoundException
+     */
+    private function appendResourceApiRoutesToRoutesFileFor($entity)
+    {
+        $routeContent = $this->finder->get($this->getModulesPath('Routes/api.php'));
+        $content = $this->getContentForStub('route-api.stub', $entity);
+        $routeContent = str_replace('// append', $content, $routeContent);
+        $this->finder->put($this->getModulesPath('Routes/api.php'), $routeContent);
     }
 }

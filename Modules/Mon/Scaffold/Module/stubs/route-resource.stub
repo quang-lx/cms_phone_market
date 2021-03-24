@@ -1,32 +1,21 @@
+Route::group(['prefix' => '/admin.$LOWERCASE_CLASS_NAME$'], function ( ) {
 
-    $router->get('$PLURAL_LOWERCASE_CLASS_NAME$', [
-        'as' => 'admin.$LOWERCASE_MODULE_NAME$.$LOWERCASE_CLASS_NAME$.index',
-        'uses' => '$CLASS_NAME$Controller@index',
-        'middleware' => 'permission:$LOWERCASE_MODULE_NAME$.$PLURAL_LOWERCASE_CLASS_NAME$.index'
+    Route::get('/', [
+        'as' => 'admin.$LOWERCASE_CLASS_NAME$.index',
+        'uses' => '$CLASS_NAME$\$CLASS_NAME$Controller@index',
+        'middleware' => 'permission:admin.$LOWERCASE_CLASS_NAME$.index'
     ]);
-    $router->get('$PLURAL_LOWERCASE_CLASS_NAME$/create', [
-        'as' => 'admin.$LOWERCASE_MODULE_NAME$.$LOWERCASE_CLASS_NAME$.create',
-        'uses' => '$CLASS_NAME$Controller@create',
-        'middleware' => 'permission:$LOWERCASE_MODULE_NAME$.$PLURAL_LOWERCASE_CLASS_NAME$.create'
+    Route::get('create', [
+        'as' => 'admin.$LOWERCASE_CLASS_NAME$.create',
+        'uses' => '$CLASS_NAME$\$CLASS_NAME$Controller@create',
+        'middleware' => 'permission:admin.$LOWERCASE_CLASS_NAME$.create'
     ]);
-    $router->post('$PLURAL_LOWERCASE_CLASS_NAME$', [
-        'as' => 'admin.$LOWERCASE_MODULE_NAME$.$LOWERCASE_CLASS_NAME$.store',
-        'uses' => '$CLASS_NAME$Controller@store',
-        'middleware' => 'permission:$LOWERCASE_MODULE_NAME$.$PLURAL_LOWERCASE_CLASS_NAME$.create'
+
+    Route::get('{$LOWERCASE_CLASS_NAME$}/edit', [
+        'as' => 'admin.$LOWERCASE_CLASS_NAME$.edit',
+        'uses' => '$CLASS_NAME$\$CLASS_NAME$Controller@edit',
+        'middleware' => 'permission:admin.$LOWERCASE_CLASS_NAME$.edit'
     ]);
-    $router->get('$PLURAL_LOWERCASE_CLASS_NAME$/{$LOWERCASE_CLASS_NAME$}/edit', [
-        'as' => 'admin.$LOWERCASE_MODULE_NAME$.$LOWERCASE_CLASS_NAME$.edit',
-        'uses' => '$CLASS_NAME$Controller@edit',
-        'middleware' => 'permission:$LOWERCASE_MODULE_NAME$.$PLURAL_LOWERCASE_CLASS_NAME$.edit'
-    ]);
-    $router->put('$PLURAL_LOWERCASE_CLASS_NAME$/{$LOWERCASE_CLASS_NAME$}', [
-        'as' => 'admin.$LOWERCASE_MODULE_NAME$.$LOWERCASE_CLASS_NAME$.update',
-        'uses' => '$CLASS_NAME$Controller@update',
-        'middleware' => 'permission:$LOWERCASE_MODULE_NAME$.$PLURAL_LOWERCASE_CLASS_NAME$.edit'
-    ]);
-    $router->delete('$PLURAL_LOWERCASE_CLASS_NAME$/{$LOWERCASE_CLASS_NAME$}', [
-        'as' => 'admin.$LOWERCASE_MODULE_NAME$.$LOWERCASE_CLASS_NAME$.destroy',
-        'uses' => '$CLASS_NAME$Controller@destroy',
-        'middleware' => 'permission:$LOWERCASE_MODULE_NAME$.$PLURAL_LOWERCASE_CLASS_NAME$.destroy'
-    ]);
+
+}
 // append
