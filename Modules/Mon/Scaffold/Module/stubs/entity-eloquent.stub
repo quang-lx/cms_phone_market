@@ -2,14 +2,13 @@
 
 namespace Modules\Mon\Entities;
 
-use Dimsav\Translatable\Translatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class $CLASS_NAME$ extends Model
 {
-    use Translatable;
+    use  SoftDeletes;
 
     protected $table = '$LOWERCASE_MODULE_NAME$__$PLURAL_LOWERCASE_CLASS_NAME$';
-    public $translatedAttributes = [];
     protected $fillable = [];
 }
