@@ -206,4 +206,29 @@ Route::middleware('auth:api')->prefix('/tin-tuc')->group(function (){
 
 });
 
+Route::middleware('auth:api')->prefix('/provinces')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.province.index',
+        'uses' => 'Province\ProvinceController@index',
+    ]);
+    Route::post('/{province}/edit', [
+            'as' => 'api.province.update',
+            'uses' => 'Province\ProvinceController@update',
+        ]);
+   Route::get('/{province}', [
+              'as' => 'api.province.find',
+              'uses' => 'Province\ProvinceController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.province.store',
+        'uses' => 'Province\ProvinceController@store',
+    ]);
+
+    Route::delete('/{province}', [
+        'as' => 'api.province.destroy',
+        'uses' => 'Province\ProvinceController@destroy',
+    ]);
+});
 // append
+

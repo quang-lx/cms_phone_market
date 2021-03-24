@@ -181,4 +181,26 @@ Route::group(['prefix' => '/tin-tuc'], function ( ) {
 
 });
 
+Route::group(['prefix' => '/province'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.province.index',
+        'uses' => 'Province\ProvinceController@index',
+        'middleware' => 'permission:admin.province.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.province.create',
+        'uses' => 'Province\ProvinceController@create',
+        'middleware' => 'permission:admin.province.create'
+    ]);
+
+    Route::get('{province}/edit', [
+        'as' => 'admin.province.edit',
+        'uses' => 'Province\ProvinceController@edit',
+        'middleware' => 'permission:admin.province.edit'
+    ]);
+
+
+});
 // append
+

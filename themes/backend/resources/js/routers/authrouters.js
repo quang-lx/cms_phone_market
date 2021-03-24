@@ -19,6 +19,9 @@ import NewsForm from './../components/news/form';
 import ShopRole from './../components/auth/role/shop/index';
 import ShopRoleForm from './../components/auth/role/shop/form';
 
+import ProvinceList from './../components/province/index';
+import ProvinceForm from './../components/province/form';
+
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -164,6 +167,31 @@ export default [
             pageTitle: 'news.label.update_news',
         },
     },
+
+    //
+    {
+        path: '/admin/province',
+        name: 'admin.province.index',
+        component: ProvinceList,
+    },
+    {
+        path: '/admin/province/create',
+        name: 'admin.province.create',
+        component: ProvinceForm,
+        props: {
+            pageTitle: 'province.label.create_province',
+        },
+    },
+
+    {
+        path: '/admin/province/:provinceId/edit',
+        name: 'admin.province.edit',
+        component: ProvinceForm,
+        props: {
+            pageTitle: 'province.label.update_province',
+        },
+    },
+
 
 
 ];
