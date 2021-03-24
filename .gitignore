@@ -1,5 +1,6 @@
 /node_modules
 /public/hot
+/public/themes
 /public/storage
 /storage/*.key
 /storage/debugbar
