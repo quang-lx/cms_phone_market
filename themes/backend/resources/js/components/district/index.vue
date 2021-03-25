@@ -135,28 +135,6 @@
                 currentLocale: window.MonCMS.currentLocale || 'en',
                 categoryArr: window.MonCMS.districtListCategory,
                 statusArr: window.MonCMS.districtListStatus,
-                listFeatures: [
-                    {
-                        value: '',
-                        label: 'Tất cả'
-                    },
-                    {
-                        value: 'video',
-                        label: 'VIDEO'
-                    },
-                    {
-                        value: 'read',
-                        label: 'ĐỌC NHIỀU'
-                    },
-                    {
-                        value: 'hot',
-                        label: 'ĐẶC SẮC'
-                    },
-                    {
-                        value: 'featured',
-                        label: 'NỔI BẬT'
-                    },
-                ],
 
                 filter: {
                     category:'',
