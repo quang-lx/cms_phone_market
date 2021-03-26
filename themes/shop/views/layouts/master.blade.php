@@ -19,7 +19,7 @@
     {!! \Modules\Mon\Support\Facades\Theme::css('vendor/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') !!}
 
     {!! \Modules\Mon\Support\Facades\Theme::css('css/app.css') !!}
-    @include('backend::partials.globals')
+    @include('shop::partials.globals')
     @section('styles')
     @show
     @stack('css-stack')
@@ -54,20 +54,20 @@
             </li>
 
         </ul>
-        @include('backend::partials.top-nav')
+        @include('shop::partials.top-nav')
 
     </nav>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
 
-    @include('backend::partials.sidebar-nav')
+    @include('shop::partials.sidebar-nav')
 
     <div class="content-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    @include('backend::partials.notifications')
+                    @include('shop::partials.notifications')
                     @yield('content')
                     <router-view></router-view>
                 </div>
@@ -76,7 +76,7 @@
 
 
     </div>
-    @include('backend::partials.footer')
+    @include('shop::partials.footer')
 
 </div><!-- ./wrapper -->
 <script>
@@ -84,7 +84,7 @@
 
         locales: {!! json_encode(supported_locales()) !!},
         currentLocale: '{{app()->getLocale() }}',
-        adminPrefix: 'admin',
+        adminPrefix: 'shop-admin',
       googleApiKey: '{{env('GOOGLE_API_KEY')}}',
         appUrl: '{{env('APP_URL')}}',
         filesystem: '{{ config('config.filesystem.default') }}',
@@ -93,7 +93,7 @@
         user_token: '{{ $jwt_token }}',
         multipleLanguage: '{{config('mon.multiple_languages')}}',
         permissions: {!! json_encode($permissions) !!},
-        permissionDenied: '{{trans('backend::mon.message.permission_denied')}}',
+        permissionDenied: '{{trans('shop::mon.message.permission_denied')}}',
 
     };
 

@@ -6,7 +6,7 @@ namespace Modules\Shop\Events\Sidebar\Admin;
 use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
-use Modules\Admin\Sidebar\AbstractAdminSidebar;
+use Modules\Shop\Sidebar\AbstractAdminSidebar;
 
 class UserSidebarExtender extends AbstractAdminSidebar
 {
@@ -19,44 +19,24 @@ class UserSidebarExtender extends AbstractAdminSidebar
     public function extendWith(Menu $menu)
     {
 
-        $menu->group('system administration', function (Group $group) {
+        $menu->group('shop system administration', function (Group $group) {
             $group->hideHeading(true);
             $group->item(trans('backend::sidebar.system administration'), function (Item $item) {
                 $item->icon('fas fa-lock');
                 $item->weight(10);
                 $item->authorize(
-                    $this->auth->hasAccess('admin.admins.index')
+                    $this->auth->hasAccess('shop.roles.index')
                 );
-//                $item->item(trans('backend::sidebar.permissions'), function (Item $item) {
-//
-//                    $item->weight(0);
-//
-//                    $item->route('admin.permissions.index');
-//                    $item->authorize(
-//                        $this->auth->hasAccess('admin.permissions.index')
-//                    );
-//                });
+
                 $item->item(trans('backend::sidebar.roles'), function (Item $item) {
 
                     $item->weight(0);
 
-                    $item->route('admin.roles.index');
+                    $item->route('shop.roles.index');
                     $item->authorize(
-                        $this->auth->hasAccess('admin.roles.index')
+                        $this->auth->hasAccess('shop.roles.index')
                     );
                 });
-
-                $item->item(trans('backend::sidebar.admins'), function (Item $item) {
-
-                    $item->weight(0);
-
-                    $item->route('admin.admins.index');
-                    $item->authorize(
-                        $this->auth->hasAccess('admin.admins.index')
-                    );
-                });
-
-
 
 
             });

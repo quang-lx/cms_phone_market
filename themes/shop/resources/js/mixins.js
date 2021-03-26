@@ -17,6 +17,7 @@ const mixin = {
             links: {},
             searchQuery: '',
             tableIsLoading: false,
+            homeUrl: '/' + window.MonCMS.adminPrefix
 
         }
     },

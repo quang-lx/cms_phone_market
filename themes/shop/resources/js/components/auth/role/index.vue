@@ -6,7 +6,7 @@
                     <div class="col-12">
                         <el-breadcrumb separator="/">
                             <el-breadcrumb-item>
-                                <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                <a :href="homeUrl">{{ $t('mon.breadcrumb.home') }}</a>
                             </el-breadcrumb-item>
                             <el-breadcrumb-item>{{ $t('role.label.roles') }}
                             </el-breadcrumb-item>
@@ -134,7 +134,7 @@
                     search: this.searchQuery,
                 };
 
-                axios.get(route('api.roles.index', _.merge(properties, customProperties)))
+                axios.get(route('apishop.roles.index', _.merge(properties, customProperties)))
                     .then((response) => {
                         this.tableIsLoading = false;
                         this.tableIsLoading = false;

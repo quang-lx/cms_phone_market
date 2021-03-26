@@ -4,7 +4,7 @@ namespace Modules\Shop\Sidebar;
 
 use Maatwebsite\Sidebar\Menu;
 use Maatwebsite\Sidebar\SidebarExtender;
-use  Modules\Admin\Events\Sidebar\BuildingSidebar;
+use  Modules\Shop\Events\Sidebar\BuildingSidebar;
 use  Modules\Mon\Auth\Contracts\Authentication;
 
 abstract class AbstractAdminSidebar  implements SidebarExtender

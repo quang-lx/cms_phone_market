@@ -7,7 +7,7 @@ use Maatwebsite\Sidebar\Menu;
 use Maatwebsite\Sidebar\ShouldCache;
 use Maatwebsite\Sidebar\Sidebar;
 use Maatwebsite\Sidebar\Traits\CacheableTrait;
-use  Modules\Admin\Events\Sidebar\BuildingSidebar;
+use  Modules\Shop\Events\Sidebar\BuildingSidebar;
 
 class AdminSidebar implements Sidebar, ShouldCache
 {

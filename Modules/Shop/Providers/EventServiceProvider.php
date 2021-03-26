@@ -11,8 +11,7 @@ class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
         BuildingSidebar::class => [
-            UserSidebarExtender::class,
-
+            UserSidebarExtender::class
         ],
 
     ];

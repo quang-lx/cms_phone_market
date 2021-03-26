@@ -91,7 +91,7 @@
 
         locales: {!! json_encode(supported_locales()) !!},
         currentLocale: '{{app()->getLocale() }}',
-        adminPrefix: 'admin',
+        adminPrefix: 'shop-admin',
         filesystem: '{{ config('config.filesystem.default') }}',
         translations: '',
         editorUploadUrl: '{{route('api.media.editor.store')}}',
