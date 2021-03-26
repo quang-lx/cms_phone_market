@@ -2,7 +2,9 @@
 return [
     'label' => [
         'id' => 'ID',
-        'name' => 'Tên chức năng',
+        'name' => 'Chức năng',
+        'group' => 'Nhóm',
+        'title' => 'Mô tả',
         'guard_name' => 'Guard name',
         'created_at' => 'Ngày tạo',
         'updated_at' => 'Ngày cập nhật',
