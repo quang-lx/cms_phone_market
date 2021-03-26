@@ -20,5 +20,16 @@ Route::prefix('/app')->group(function () {
         'as' => 'api.app.provinces',
         'uses' => 'AppController@provinces',
     ]);
-
+    Route::get('/districts', [
+        'as' => 'api.app.districts',
+        'uses' => 'AppController@districts',
+    ]);
+    Route::get('/phoenixes', [
+        'as' => 'api.app.phoenixes',
+        'uses' => 'AppController@phoenixes',
+    ]);
+    Route::get('/area', [
+        'as' => 'api.app.area',
+        'uses' => 'AppController@allArea',
+    ]);
 });

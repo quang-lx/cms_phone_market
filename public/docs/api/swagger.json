@@ -622,7 +622,164 @@
                 }
             }
         },
+        "/app/districts": {
+            "get": {
 
+                "tags": [
+                    "app"
+                ],
+                "summary": "danh sach quan/huyen",
+                "description": "danh sach  quan/huyen",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "province_id",
+                        "description": "province_id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
+        "/app/phoenixes": {
+            "get": {
+
+                "tags": [
+                    "app"
+                ],
+                "summary": "danh sach xa/phuong",
+                "description": "danh sach  xa/phuong",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "district_id",
+                        "description": "district_id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
+        "/app/area": {
+            "get": {
+
+                "tags": [
+                    "app"
+                ],
+                "summary": "danh sach tinh huyen xa",
+                "description": "danh sach  tinh huyen xa",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
         "/user/update": {
             "post": {
                 "security": [
