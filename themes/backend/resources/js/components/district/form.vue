@@ -46,9 +46,9 @@
                       <div class="row">
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('district.label.name')"
+                            :label="$t('district.label.province')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('name'),
+                              'el-form-item is-error': form.errors.has('province_id'),
                             }"
                           >
                             <el-select v-model="modelForm.province_id" placeholder="Select">
