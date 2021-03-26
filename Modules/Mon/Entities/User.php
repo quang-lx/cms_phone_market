@@ -16,6 +16,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     const TYPE_USER = 2;
     const TYPE_SHOP = 3;
 
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_LOCK = 2;
+
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.
@@ -24,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      */
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
-        'fcm_token', 'lat', 'lng'
+        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id'
     ];
 
     /**
@@ -36,10 +40,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         'password', 'remember_token',
     ];
 
-    public function tokens()
-    {
-        return $this->hasMany(UserToken::class, 'user_id', 'id');
-    }
 
     /**
      * Lấy thông tin profile
@@ -51,40 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return $this->hasOne(Profile::class, 'user_id', 'id');
     }
 
-    /**
-     * Ứng dụng, tài khoản social được kết nối
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function connectedAccounts()
-    {
-        return $this->hasMany(ConnectedAccount::class, 'user_id', 'id');
-    }
 
-    /**
-     * Các thông tin đã đc xác thực của tài khoản
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function verifiedInformation()
-    {
-        return $this->hasOne(VerifiedInformation::class, 'user_id', 'id');
-    }
-
-    public function getFirstToken()
-    {
-        return $this->tokens()->first();
-    }
-
-    public function getFirstTokenKey()
-    {
-        $userToken = $this->tokens()->first();
-
-        if ($userToken === null) {
-            return '';
-        }
-
-        return $userToken->access_token;
-    }
 
     public function getJWTIdentifier()
     {
