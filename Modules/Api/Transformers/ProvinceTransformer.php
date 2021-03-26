@@ -5,7 +5,7 @@ namespace Modules\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserTransformer extends JsonResource
+class ProvinceTransformer extends JsonResource
 {
 
 
@@ -13,10 +13,7 @@ class UserTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
-            'username' => $this->username,
             'name' => $this->name,
-
-
         ];
 
 

@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/test/lock')->group(function () {
+Route::prefix('/app')->group(function () {
 
-    Route::get('/', [
-        'as' => 'api.app.testlock',
-        'uses' => 'AppController@testlock',
+    Route::get('/provinces', [
+        'as' => 'api.app.provinces',
+        'uses' => 'AppController@provinces',
     ]);
 
 });

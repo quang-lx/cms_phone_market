@@ -4,6 +4,8 @@ namespace Modules\Api\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Modules\Api\Repositories\AreaRepository;
+use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -105,6 +107,11 @@ class ApiServiceProvider extends ServiceProvider
 
     public function registerRepository()
     {
-
+        $this->app->bind(
+            AreaRepository::class,
+            function () {
+                return new CachedEloquentAreaRepository();
+            }
+        );
     }
 }

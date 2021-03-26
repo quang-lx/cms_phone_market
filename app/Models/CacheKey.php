@@ -6,5 +6,8 @@ namespace App\Models;
 
 class CacheKey
 {
-        const VOV='vov_%s_%s'; // vov_{vov id}_{fcm token}
+        const PROVINCE_ALL='PROVINCE_ALL';
+        const DISTRICT_ALL='DISTRICT_ALL';
+        const PHOENIX_ALL='PHOENIX_ALL';
+        const AREA_ALL='AREA_ALL';
 }
