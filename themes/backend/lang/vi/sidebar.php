@@ -33,7 +33,8 @@ return [
     'warning' => 'Cảnh báo',
     'fbnotification' => 'Notification',
     'banner' => 'Banner',
-    'partner' => 'Đối tác',
+    'shop_permissions' => 'Danh sách quyền',
+    'system shop' => 'Cửa hàng',
 
 
 ];

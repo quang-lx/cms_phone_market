@@ -1,3 +1,4 @@
+import ShopPermission from './../components/auth/permission/shop/index';
 import Permission from './../components/auth/permission/index';
 import PermissionForm from './../components/auth/permission/form';
 
@@ -26,6 +27,11 @@ import ProvinceForm from './../components/province/form';
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
+    {
+        path: '/admin/auth/shop-permissions',
+        name: 'admin.shoppermissions.shopindex',
+        component: ShopPermission,
+    },
     {
         path: '/admin/auth/permissions',
         name: 'admin.permissions.index',

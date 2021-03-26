@@ -60,6 +60,12 @@ Route::group(['prefix' =>'/auth'], function (){
         'uses' => 'Auth\UserController@edit',
     ])->middleware('permission:admin.users.edit');
     // permission
+    Route::get('/shop-permissions', [
+        'as' => 'admin.shoppermissions.shopindex',
+        'uses' => 'Auth\PermissionController@shopindex',
+
+    ])->middleware('permission:admin.shoppermissions.shopindex');
+
     Route::get('/permissions', [
         'as' => 'admin.permissions.index',
         'uses' => 'Auth\PermissionController@index',

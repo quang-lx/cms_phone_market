@@ -27,15 +27,7 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 $item->authorize(
                     $this->auth->hasAccess('admin.admins.index')
                 );
-//                $item->item(trans('backend::sidebar.permissions'), function (Item $item) {
-//
-//                    $item->weight(0);
-//
-//                    $item->route('admin.permissions.index');
-//                    $item->authorize(
-//                        $this->auth->hasAccess('admin.permissions.index')
-//                    );
-//                });
+
                 $item->item(trans('backend::sidebar.roles'), function (Item $item) {
 
                     $item->weight(0);
@@ -63,8 +55,33 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
 
         });
+        $menu->group('system shop', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('backend::sidebar.system shop'), function (Item $item) {
+                $item->icon('fas fa-store');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('admin.shoppermissions.shopindex')
+                );
+                $item->item(trans('backend::sidebar.shop_permissions'), function (Item $item) {
 
-        
+                    $item->weight(0);
+
+                    $item->route('admin.shoppermissions.shopindex');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.shoppermissions.shopindex')
+                    );
+                });
+
+
+
+
+
+            });
+
+
+        });
+
 
         return $menu;
 

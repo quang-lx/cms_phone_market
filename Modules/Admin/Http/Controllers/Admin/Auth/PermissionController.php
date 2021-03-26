@@ -9,6 +9,10 @@ use Modules\Mon\Http\Controllers\AdminController;
 
 class PermissionController extends AdminController
 {
+    public function shopindex()
+    {
+        return $this->view('admin::auth.permission.index');
+    }
     public function index()
     {
         return $this->view('admin::auth.permission.index');
