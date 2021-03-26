@@ -1,18 +1,20 @@
 <?php
 
-namespace Modules\Admin\Http\Requests\Province;
+namespace Modules\Admin\Http\Requests\District;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProvinceRequest extends FormRequest
+class CreateDistrictRequest extends FormRequest
 {
     public function rules()
     {
         return [
             'name' => 'required',
+            'province_id' => 'required',
+            'lat' => 'required',
+            'lng' => 'required', 
             'code' => 'required|between:1,3',
             'type' => 'required',
-            'phone_code' => 'required|between:1,10',
         ];
     }
 
@@ -30,11 +32,12 @@ class CreateProvinceRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống',
+            'province_id.required' => 'Thành phố không được để trống',
+            'lat.required' => 'lat không được để trống',
+            'lng.required' => 'lng không được để trống',
             'code.required' => 'Mã không được để trống',
             'code.between' => 'Mã phải có độ dài từ 1 đến 10 ký tự',
             'type.required' => 'Kiểu không được để trống',
-            'phone_code.required' => 'Phone code không được để trống',
-            'phone_code.between' => 'Phone code phải có độ dài từ 1 đến 10 ký tự',
         ];
     }
 

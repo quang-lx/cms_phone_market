@@ -30,7 +30,7 @@ class UpdateProvinceRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống',
-            'code.required' => 'Mã đã tồn tại',
+            'code.required' => 'Mã không được để trống',
             'code.between' => 'Mã phải có độ dài từ 1 đến 10 ký tự',
             'type.required' => 'Kiểu không được để trống',
             'phone_code.required' => 'Phone code không được để trống',
