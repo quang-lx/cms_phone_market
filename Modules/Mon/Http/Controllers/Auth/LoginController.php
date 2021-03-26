@@ -3,6 +3,7 @@
 namespace Modules\Mon\Http\Controllers\Auth;
 
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Http\Controllers\WebController;
 use Modules\Mon\Repositories\UserRepository;
@@ -132,11 +133,7 @@ class LoginController extends WebController
             return response()->json(['msg' => 'Logout successful!']);
         }
         $previousPath = url()->previous();
-
-        if (in_array('admin',explode('/', $previousPath))) {
-            return redirect($previousPath)->withSuccess(__('Logout successful!'));
-        }
-        return redirect()->route('home')->withSuccess(__('Logout successful!'));
+        return redirect($previousPath)->withSuccess(__('Logout successful!'));
     }
 
     /**
@@ -159,4 +156,5 @@ class LoginController extends WebController
         $this->seo()->setTitle(__('Login'));
         return view('backend::login');
     }
+
 }
