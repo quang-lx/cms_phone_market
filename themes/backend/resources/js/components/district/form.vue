@@ -276,7 +276,7 @@ export default {
     fetchProvince() {
       let routeUri = "";
         this.loading = true;
-        routeUri = route("api.province.index")+'?page=1&per_page=1000';
+        routeUri = route('api.district.index',{page: 1,per_page:1000 })
         axios.get(routeUri).then((response) => {
           this.loading = false;
           this.list_province = response.data.data;
