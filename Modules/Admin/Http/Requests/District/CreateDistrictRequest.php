@@ -36,7 +36,7 @@ class CreateDistrictRequest extends FormRequest
             'lat.required' => 'lat không được để trống',
             'lng.required' => 'lng không được để trống',
             'code.required' => 'Mã không được để trống',
-            'code.between' => 'Mã phải có độ dài từ 1 đến 10 ký tự',
+            'code.between' => 'Mã phải có độ dài từ 1 đến 3 ký tự',
             'type.required' => 'Kiểu không được để trống',
         ];
     }

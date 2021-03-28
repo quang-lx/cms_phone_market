@@ -2,11 +2,11 @@
 
 namespace Modules\Admin\Repositories\Eloquent;
 
-use Modules\Admin\Repositories\DistrictRepository;
-use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
+use Modules\Admin\Repositories\PhoenixRepository;
+use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
-class EloquentDistrictRepository extends BaseRepository implements DistrictRepository
+class EloquentPhoenixRepository extends BaseRepository implements PhoenixRepository
 {
     public function serverPagingFor(Request $request, $relations = null)
     {
@@ -14,24 +14,19 @@ class EloquentDistrictRepository extends BaseRepository implements DistrictRepos
         if ($relations) {
             $query = $query->with($relations);
         }
-
-        if ($request->get('province_id') !== null) {
-            $province_id = $request->get('province_id');
-            $query->where(function ($q) use ($province_id) {
-                $q->orWhere('province_id',$province_id);
-            });
-        }
-
+        
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');
             $query->where(function ($q) use ($keyword) {
                 $q->orWhere('name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('lat', 'LIKE', "%{$keyword}%")
-                    ->orWhere('lng', 'LIKE', "%{$keyword}%")
+                    ->orWhere('code', 'LIKE', "%{$keyword}%")
                     ->orWhere('code', 'LIKE', "%{$keyword}%")
                     ->orWhere('type', 'LIKE', "%{$keyword}%")
-                    ->orWhereHas('province', function($c) use ($keyword) {
-                        $c->where('name', 'LIKE', "%{$keyword}%");
+                    ->orWhereHas('district', function($c) use ($keyword) {
+                        $c->where('name', 'LIKE', "%{$keyword}%")
+                        ->orWhereHas('province', function($c) use ($keyword) {
+                            $c->where('name', 'LIKE', "%{$keyword}%");
+                        });
                     });
             });
         }

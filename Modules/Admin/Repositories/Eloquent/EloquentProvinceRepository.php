@@ -16,6 +16,14 @@ class EloquentProvinceRepository extends BaseRepository implements ProvinceRepos
             $query = $query->with($relations);
         }
 
+
+        if ($request->get('province_id') !== null) {
+            $province_id = $request->get('province_id');
+            $query->where(function ($q) use ($province_id) {
+                $q->orWhere('id',$province_id);
+            });
+        }
+
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');
             $query->where(function ($q) use ($keyword) {
