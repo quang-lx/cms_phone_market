@@ -34,13 +34,13 @@ class ErrorCode
     const ERR500 = 500;
     const SUCCESS = 0;
 
-    const ERR01_MSG = "Số điện thoại không hợp lệ";
+    const ERR01_MSG = "Tài khoản không hợp lệ";
     const ERR02_MSG = 'Mã xác thực không chính xác';
     const ERR03_MSG = 'Mã xác thực hết hạn, vui lòng nhận lại mã xác thực';
     const ERR04_MSG = 'Mật khẩu phải có ít nhất 8 ký tự';
     const ERR05_MSG = 'Mật khẩu tối đa 25 ký tự';
     const ERR06_MSG = 'Hai mật khẩu phải trùng khớp nhau';
-    const ERR07_MSG = 'Vui lòng nhập số điện thoại';
+    const ERR07_MSG = 'Vui lòng nhập Tài khoản';
     const ERR08_MSG = 'Vui lòng nhập mật khẩu';
     const ERR09_MSG = 'Vui lòng nhập lại mật khẩu';
     const ERR10_MSG = 'Vui lòng nhập mã xác thực';

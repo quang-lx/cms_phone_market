@@ -28,21 +28,18 @@ class AuthController extends ApiController
         if (empty($username)) {
             return $this->respond([], ErrorCode::ERR07_MSG, ErrorCode::ERR07);
         }
-        $usernameFormatted = validate_isdn($username);
-        if (empty($usernameFormatted)) {
-            return $this->respond([], ErrorCode::ERR01_MSG, ErrorCode::ERR01);
-        }
+
 
         // check db
-        $user = User::query()->where('username', $usernameFormatted)->first();
+        $user = User::query()->where('username', $username)->first();
         if ($user && $user->finish_reg) {
             return $this->respond([], ErrorCode::ERR12_MSG, ErrorCode::ERR12);
         }
         if (!$user) {
             $userData = [
-                'username' => $usernameFormatted,
-                'name' => $usernameFormatted,
-                'password' => $usernameFormatted,
+                'username' => $username,
+                'name' => $username,
+                'password' => $username,
                 'type' => User::TYPE_USER,
 
             ];
@@ -51,7 +48,7 @@ class AuthController extends ApiController
         }
 
         if ($user) {
-            event(new NeedCreateUserSmsToken($user->id, $usernameFormatted));
+            event(new NeedCreateUserSmsToken($user->id, $username));
             return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
         } else {
             return $this->respond([], ErrorCode::ERR500_MSG,ErrorCode::ERR500);
@@ -155,12 +152,6 @@ class AuthController extends ApiController
     }
 
     public function login(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'username' => new PhoneNumber()
-        ]);
-        if($validator->fails()){
-            return $this->respond([], ErrorCode::ERR01_MSG, ErrorCode::ERR01);
-        }
 
         $validator = Validator::make($request->all(), [
             'username' => 'required',
@@ -176,15 +167,15 @@ class AuthController extends ApiController
             return $this->respond([], ErrorCode::ERR08_MSG, ErrorCode::ERR08);
         }
 
-        $usernameFormatted = validate_isdn($request->get('username'));
+        $username = validate_isdn($request->get('username'));
         $password = $request->get('password');
         // check db
-        $user = User::query()->where('username', $usernameFormatted)->first();
+        $user = User::query()->where(['username' =>  $username, 'type' =>  User::TYPE_USER])->first();
         if (!$user) {
             return $this->respond([], ErrorCode::ERR14_MSG, ErrorCode::ERR14);
         }
 
-        if (!Auth::attempt(['username'=>$usernameFormatted, 'password' => $password])) {
+        if (!Auth::attempt(['username'=>$username, 'password' => $password])) {
             return $this->respond([], ErrorCode::ERR15_MSG, ErrorCode::ERR15);
         }
         $user = Auth::user();
