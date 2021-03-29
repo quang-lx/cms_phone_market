@@ -28,7 +28,8 @@ return [
         'permissions' => 'Chức năng',
         'users' => 'Người dùng',
         'province' => 'Tỉnh thành phố',
-        'district' => "Quận huyện"
+        'district' => "Quận huyện",
+        'phoenix' => "Xã phường"
 
     ]
 

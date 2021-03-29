@@ -1,18 +1,16 @@
 <?php
 
-namespace Modules\Admin\Http\Requests\District;
+namespace Modules\Admin\Http\Requests\Phoenix;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDistrictRequest extends FormRequest
+class UpdatePhoenixRequest extends FormRequest
 {
     public function rules()
     {
         return [
             'name' => 'required',
-            'province_id' => 'required',
-            'lat' => 'required',
-            'lng' => 'required', 
+            'district_id' => 'required',
             'code' => 'required|between:1,3',
             'type' => 'required',
         ];
@@ -32,9 +30,7 @@ class UpdateDistrictRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống',
-            'province_id.required' => 'Thành phố không được để trống',
-            'lat.required' => 'lat không được để trống',
-            'lng.required' => 'lng không được để trống',
+            'district_id.required' => 'Quận huyện không được để trống',
             'code.required' => 'Mã không được để trống',
             'code.between' => 'Mã phải có độ dài từ 1 đến 3 ký tự',
             'type.required' => 'Kiểu không được để trống',

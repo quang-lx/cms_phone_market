@@ -254,6 +254,31 @@ Route::middleware('auth:api')->prefix('/districts')->group(function (){
         'uses' => 'District\DistrictController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/phoenixes')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.phoenix.index',
+        'uses' => 'Phoenix\PhoenixController@index',
+    ]);
+    Route::post('/{phoenix}/edit', [
+            'as' => 'api.phoenix.update',
+            'uses' => 'Phoenix\PhoenixController@update',
+        ]);
+   Route::get('/{phoenix}', [
+              'as' => 'api.phoenix.find',
+              'uses' => 'Phoenix\PhoenixController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.phoenix.store',
+        'uses' => 'Phoenix\PhoenixController@store',
+    ]);
+
+    Route::delete('/{phoenix}', [
+        'as' => 'api.phoenix.destroy',
+        'uses' => 'Phoenix\PhoenixController@destroy',
+    ]);
+});
 // append
+
 
 

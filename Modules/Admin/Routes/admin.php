@@ -229,6 +229,28 @@ Route::group(['prefix' => '/district'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/phoenix'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.phoenix.index',
+        'uses' => 'Phoenix\PhoenixController@index',
+        'middleware' => 'permission:admin.phoenix.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.phoenix.create',
+        'uses' => 'Phoenix\PhoenixController@create',
+        'middleware' => 'permission:admin.phoenix.create'
+    ]);
+
+    Route::get('{phoenix}/edit', [
+        'as' => 'admin.phoenix.edit',
+        'uses' => 'Phoenix\PhoenixController@edit',
+        'middleware' => 'permission:admin.phoenix.edit'
+    ]);
+
+
+});
 // append
+
 
 

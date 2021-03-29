@@ -167,7 +167,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\PhoenixRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentPhoenixRepository(new \Modules\Mon\Entities\Phoenix());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

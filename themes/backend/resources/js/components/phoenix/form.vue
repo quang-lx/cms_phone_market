@@ -8,8 +8,8 @@
               <el-breadcrumb-item>
                 <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'admin.district.index' }"
-                >{{ $t("district.label.district") }}
+              <el-breadcrumb-item :to="{ name: 'admin.phoenix.index' }"
+                >{{ $t("phoenix.label.phoenix") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
             </el-breadcrumb>
@@ -44,14 +44,14 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="row">
-                        <div class="col-md-10">
+                          <div class="col-md-10">
                           <el-form-item
-                            :label="$t('district.label.province')"
+                            :label="$t('phoenix.label.province')"
                             :class="{
                               'el-form-item is-error': form.errors.has('province_id'),
                             }"
                           >
-                            <el-select v-model="modelForm.province_id" placeholder="Select">
+                            <el-select v-model="modelForm.province_id" @change="changeProvince" placeholder="Select">
                               <el-option
                                 v-for="item in list_province"
                                 :key="item.id"
@@ -69,7 +69,30 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('district.label.name')"
+                            :label="$t('phoenix.label.district')"
+                            :class="{
+                              'el-form-item is-error': form.errors.has('district_id'),
+                            }"
+                          >
+                            <el-select v-model="modelForm.district_id" placeholder="Select">
+                              <el-option
+                                v-for="item in list_district"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
+                            <div
+                              class="el-form-item__error"
+                              v-if="form.errors.has('district_id')"
+                              v-text="form.errors.first('district_id')"
+                            ></div>
+                          </el-form-item>
+                        </div>
+                        <div class="col-md-10">
+                          <el-form-item
+                            :label="$t('phoenix.label.name')"
                             :class="{
                               'el-form-item is-error': form.errors.has('name'),
                             }"
@@ -84,37 +107,7 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('district.label.lat')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('lat'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.lat"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('lat')"
-                              v-text="form.errors.first('lat')"
-                            ></div>
-                          </el-form-item>
-                        </div>
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('district.label.lng')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('lng'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.lng"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('lng')"
-                              v-text="form.errors.first('lng')"
-                            ></div>
-                          </el-form-item>
-                        </div>
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('district.label.code')"
+                            :label="$t('phoenix.label.code')"
                             :class="{
                               'el-form-item is-error': form.errors.has('code'),
                             }"
@@ -129,7 +122,7 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('district.label.type')"
+                            :label="$t('phoenix.label.type')"
                             :class="{
                               'el-form-item is-error': form.errors.has('type'),
                             }"
@@ -195,27 +188,27 @@ export default {
     return {
       form: new Form(),
       loading: false,
+      list_district: [],
       list_province: [],
       modelForm: {
         name: "",
-        province_id: "",
-        lat: "",
-        lng: "",
+        district_id: "",
         code: "",
         type: "",
+        province_id:""
       },
       listType: [
         {
-          value: "Quận",
-          label: "Quận",
+          value: "Phường",
+          label: "Phường",
         },
         {
-          value: "Huyện",
-          label: "Huyện",
+          value: "Xã",
+          label: "Xã",
         },
         {
-          value: "Thị Xã",
-          label: "Thị Xã",
+          value: "Thị trấn",
+          label: "Thị trấn",
         },
       ],
     };
@@ -233,7 +226,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "admin.district.index" });
+          this.$router.push({ name: "admin.phoenix.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -251,22 +244,23 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "admin.district.index" });
+          this.$router.push({ name: "admin.phoenix.index" });
         })
         .catch(() => {});
     },
 
     fetchData() {
       let routeUri = "";
-      if (this.$route.params.districtId !== undefined) {
+      if (this.$route.params.phoenixId !== undefined) {
         this.loading = true;
-        routeUri = route("api.district.find", {
-          district: this.$route.params.districtId,
+        routeUri = route("api.phoenix.find", {
+          phoenix: this.$route.params.phoenixId,
         });
         axios.get(routeUri).then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
           this.modelForm.is_new = false;
+          this.fetchDistrict(response.data.data.province_id)
         });
       } else {
         this.modelForm.is_new = true;
@@ -283,19 +277,35 @@ export default {
         });
     },
 
+    changeProvince(){
+      this.fetchDistrict(this.modelForm.province_id)
+      this.modelForm.district_id=""
+    },
+
+    fetchDistrict(value) {
+       let routeUri = "";
+        this.loading = true;
+        routeUri = route('api.district.index',{page: 1,per_page:1000,province_id:value })
+        axios.get(routeUri).then((response) => {
+          this.loading = false;
+          this.list_district = response.data.data;
+        });
+    },
+
     getRoute() {
-      if (this.$route.params.districtId !== undefined) {
-        return route("api.district.update", {
-          district: this.$route.params.districtId,
+      if (this.$route.params.phoenixId !== undefined) {
+        return route("api.phoenix.update", {
+          phoenix: this.$route.params.phoenixId,
         });
       }
-      return route("api.district.store");
+      return route("api.phoenix.store");
     },
   },
   mounted() {
     this.fetchData();
     this.fetchProvince();
   },
+
   computed: {},
 };
 </script>

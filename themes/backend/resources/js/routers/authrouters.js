@@ -26,6 +26,9 @@ import ProvinceForm from './../components/province/form';
 import DistrictList from './../components/district/index';
 import DistrictForm from './../components/district/form';
 
+import PhoenixList from './../components/phoenix/index';
+import PhoenixForm from './../components/phoenix/form';
+
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -223,6 +226,29 @@ export default [
         component: DistrictForm,
         props: {
             pageTitle: 'district.label.update_district',
+        },
+    },
+    //
+    {
+        path: '/admin/phoenix',
+        name: 'admin.phoenix.index',
+        component: PhoenixList,
+    },
+    {
+        path: '/admin/phoenix/create',
+        name: 'admin.phoenix.create',
+        component: PhoenixForm,
+        props: {
+            pageTitle: 'phoenix.label.create_phoenix',
+        },
+    },
+
+    {
+        path: '/admin/phoenix/:phoenixId/edit',
+        name: 'admin.phoenix.edit',
+        component: PhoenixForm,
+        props: {
+            pageTitle: 'phoenix.label.update_phoenix',
         },
     },
 
