@@ -229,6 +229,15 @@
                         "required": true,
                         "type": "string",
                         "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "in_change",
+                        "description": "set pass in change password, gia tri 0 | 1",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text",
+                        "default": "0"
                     }
                 ],
                 "responses": {
@@ -408,6 +417,70 @@
                         "in": "formData",
                         "name": "phone",
                         "description": "phone",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "path",
+                        "name": "user_id",
+                        "description": "user_id",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user_id": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/{user_id}/check-password": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "check password",
+                "description": "check password",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "description": "password",
                         "required": true,
                         "type": "string",
                         "format": "text"

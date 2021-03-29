@@ -61,9 +61,14 @@ Route::prefix('auth')->group(function () {
         'uses' => 'AuthController@forgotPassword',
 
     ]);
-    Route::post('/forgot-password-otp', [
+    Route::post('/{user}/forgot-password-otp', [
         'as' => 'api.auth.forgotPasswordOtp',
         'uses' => 'AuthController@forgotPasswordSendOtp',
+
+    ]);
+    Route::post('/{user}/check-password', [
+        'as' => 'api.auth.checkPassword',
+        'uses' => 'AuthController@checkPassword',
 
     ]);
 });

@@ -33,6 +33,7 @@ class ErrorCode
     const ERR25 = 25;
     const ERR26 = 26;
     const ERR27 = 27;
+    const ERR28 = 28;
 
     const ERR500 = 500;
     const SUCCESS = 0;
@@ -64,6 +65,7 @@ class ErrorCode
     const ERR25_MSG = 'Vui lòng nhập Số điện thoại';
     const ERR26_MSG = 'Vui lòng nhập Họ và tên';
     const ERR27_MSG = "Số điện thoại không hợp lệ";
+    const ERR28_MSG = "Mật khẩu không đúng";
 
     const ERR500_MSG = 'Hệ thống đang bận. Vui lòng thử lại';
     const SUCCESS_MSG = 'Thành công';

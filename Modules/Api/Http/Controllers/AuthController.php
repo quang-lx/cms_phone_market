@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
+use Modules\Api\Events\UserRegisted;
 use Modules\Api\Transformers\UserTransformer;
+use Modules\Mon\Entities\ConnectedAccount;
 use Modules\Mon\Entities\SmsToken;
 use Modules\Mon\Entities\User;
 use Modules\Mon\Http\Controllers\ApiController;
+use Modules\Mon\Http\Requests\GetInfoSocialRequest;
+use Modules\Mon\Repositories\UserRepository;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends ApiController
@@ -186,9 +190,14 @@ class AuthController extends ApiController
         $user->finish_reg = 1;
         $user->save();
 
-        auth()->login($user);
+        if ($request->get('in_change')) {
+            $data = ['user_id' => $user->id];
+        } else {
+            auth()->login($user);
 
-        $data = $this->getAuthUser($user);
+            $data = $this->getAuthUser($user);
+        }
+
 
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
@@ -291,6 +300,194 @@ class AuthController extends ApiController
 
         event(new NeedCreateUserSmsToken($user->id, $user->phone));
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
+    public function checkPassword(User $user, Request $request)
+    {
+        $password = $request->get('password');
+
+        if (empty($password)) {
+            return $this->respond([], ErrorCode::ERR08_MSG, ErrorCode::ERR08);
+        }
+
+        // check db
+
+        if (!$user->password != Hash::make($password)) {
+            return $this->respond([], ErrorCode::ERR28_MSG, ErrorCode::ERR28);
+        }
+        return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
+    public function loginSocial(GetInfoSocialRequest $request)
+    {
+        try{
+            if ($request->provider === ConnectedAccount::SERVICE_FACEBOOK) {
+                /**
+                 * @var $userSocial \Laravel\Socialite\Two\User
+                 */
+                $userSocial = Socialite::driver('facebook')->userFromToken($request->get('token'));
+                if (!$userSocial) {
+                    return response()->json([
+                        'success' => false
+                    ]);
+                }
+
+                $userAccount = ConnectedAccount::query()->where([
+                    'account_id' => $userSocial->id,
+                    'provider' => ConnectedAccount::SERVICE_FACEBOOK
+                ])->first();
+                if ($userAccount) {
+                    $user = $userAccount->user;
+                    if ($user) {
+                        auth()->login($user);
+                        $customClaims = [
+                            'user_id' => $user->id,
+                            'username' => $user->username,
+                            'email' => $user->email,
+                        ];
+                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
+                        $data['user'] = new UserTransformer($user);
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Đăng nhập facebook thành công',
+                            'data' => $data
+                        ]);
+                    }
+                } else {
+                    DB::beginTransaction();
+                    try {
+                        $userRepository = app(UserRepository::class);
+                        $user = $userRepository->create([
+                            'email' => $userSocial->email,
+                            'password' => bcrypt(rand(100000, 999999)),
+                            'name' => $userSocial->name,
+                            'username' => $userSocial->id,
+
+                        ]);
+                        event(new UserRegisted($user));
+                        ConnectedAccount::create([
+                            'email' => $userSocial->email,
+                            'account_id' => $userSocial->id,
+                            'token' => $request->token,
+                            'first_name' => $userSocial->name,
+                            'user_id' => $user->id,
+                            'provider' => ConnectedAccount::SERVICE_FACEBOOK
+                        ]);
+                        $message = 'Đăng ký thành công';
+                        DB::commit();
+                        auth()->login($user);
+                        $customClaims = [
+                            'user_id' => $user->id,
+                            'username' => $user->username,
+                            'email' => $user->email,
+                        ];
+                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
+                        $data['user'] = new UserTransformer($user);
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Đăng nhập thành công',
+                            'data' => $data
+                        ]);
+                    } catch (\Exception $exception) {
+                        \Log::info($exception->getMessage());
+                        DB::rollBack();
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Đăng nhập không thành công',
+                        ]);
+                    }
+
+                }
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Đăng nhập không thành công',
+                ]);
+            } else if ($request->provider === ConnectedAccount::SERVICE_GOOGLE) {
+                //$token = Socialite::driver('google')->getAccessTokenResponse($request->get('token'));
+                /**
+                 * @var $userSocial User
+                 */
+                $userSocial = Socialite::driver('google')->userFromToken($request->get('token'));
+                if (!$userSocial) {
+                    return response()->json([
+                        'success' => false
+                    ]);
+                }
+
+                $userAccount = ConnectedAccount::query()->where([
+                    'account_id' => $userSocial->id,
+                    'provider' => ConnectedAccount::SERVICE_GOOGLE
+                ])->first();
+                if ($userAccount) {
+                    $user = $userAccount->user;
+                    if ($user) {
+                        auth()->login($user);
+                        $customClaims = [
+                            'user_id' => $user->id,
+                            'username' => $user->username,
+                            'email' => $user->email,
+                        ];
+                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
+                        $data['user'] = new UserTransformer($user);
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Đăng nhập thành công',
+                            'data' => $data
+                        ]);
+                    }
+                } else {
+                    DB::beginTransaction();
+                    try {
+                        $userRepository = app(UserRepository::class);
+                        $user = $userRepository->create([
+                            'email' => $userSocial->email,
+                            'password' => bcrypt(rand(100000, 999999)),
+                            'name' => $userSocial->name,
+                            'username' => $userSocial->id,
+
+                        ]);
+                        event(new UserRegisted($user));
+                        ConnectedAccount::create([
+                            'email' => $userSocial->email,
+                            'account_id' => $userSocial->id,
+                            'token' => $request->token,
+                            'first_name' => $userSocial->name,
+                            'user_id' => $user->id,
+                            'provider' => ConnectedAccount::SERVICE_GOOGLE
+                        ]);
+                        $message = 'Đăng ký thành công';
+                        DB::commit();
+                        auth()->login($user);
+                        $customClaims = [
+                            'user_id' => $user->id,
+                            'username' => $user->username,
+                            'email' => $user->email,
+                        ];
+                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
+                        $data['user'] = new UserTransformer($user);
+                        return response()->json([
+                            'success' => true,
+                            'message' => 'Đăng nhập thành công',
+                            'data' => $data
+                        ]);
+                    } catch (\Exception $exception) {
+                        \Log::info($exception->getMessage());
+                        DB::rollBack();
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Đăng nhập không thành công',
+                        ]);
+                    }
+
+                }
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Đăng nhập facebook không thành công',
+                ]);
+            }
+        }catch (\Exception $exception) {
+            \Log::info($exception->getMessage());
+            abort(500, $exception->getMessage());
+        }
+
     }
 
 }
