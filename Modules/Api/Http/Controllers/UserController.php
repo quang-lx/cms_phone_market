@@ -19,8 +19,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends ApiController
 {
-
-
     public function update(Request $request)
     {
 
@@ -37,23 +35,20 @@ class UserController extends ApiController
         $user->save();
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
+
+    public function updateAvatar(Request $request)
+    {
+
+        $user = $this->auth->user();
+
+        $user->save();
+        return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
     public function logout(Request $request) {
         Auth::logout();
         return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 
     }
 
-    public function updateLocation(Request $request)
-    {
-
-        $fcmToken = $request->get('fcm_token');
-        $key = sprintf('location_%s', $fcmToken);
-        if ($lat = $request->get('fcm_token')) {
-            Redis::set($key, json_encode(['lat'=> $request->lat, 'lng' => $request->lng,'fcm_token' => $fcmToken]));
-
-        }
-
-        return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
-    }
 
 }

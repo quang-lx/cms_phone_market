@@ -61,6 +61,38 @@
                         "required": true,
                         "type": "string",
                         "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "name",
+                        "description": "name",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "phone",
+                        "description": "phone",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "description": "password",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "password_confirmation",
+                        "description": "password confirm",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
                     }
                 ],
                 "responses": {
@@ -100,8 +132,8 @@
                 "tags": [
                     "auth"
                 ],
-                "summary": "Verify Token",
-                "description": "Verify Token",
+                "summary": "Verify OTP",
+                "description": "Verify OTP",
                 "produces": [
                     "application/json",
                     "application/xml"
@@ -320,6 +352,70 @@
                         "in": "formData",
                         "name": "username",
                         "description": "username",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user_id": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/{user_id}/forgot-password-otp": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "forgot password send otp",
+                "description": "forgot password send otp",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "phone",
+                        "description": "phone",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "path",
+                        "name": "user_id",
+                        "description": "user_id",
                         "required": true,
                         "type": "string",
                         "format": "text"

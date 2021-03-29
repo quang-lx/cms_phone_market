@@ -30,6 +30,9 @@ class ErrorCode
     const ERR22 = 22;
     const ERR23 = 23;
     const ERR24 = 24;
+    const ERR25 = 25;
+    const ERR26 = 26;
+    const ERR27 = 27;
 
     const ERR500 = 500;
     const SUCCESS = 0;
@@ -58,6 +61,9 @@ class ErrorCode
     const ERR22_MSG = 'Vui lòng nhập thông tin điểm bắt đầu';
     const ERR23_MSG = 'Vui lòng nhập thông tin điểm kết thúc';
     const ERR24_MSG = 'Bạn đã hết số lần nhập mã OTP trong ngày. Vui lòng quay lại sau 24h hoặc gọi tới 19006059 để được hỗ trợ';
+    const ERR25_MSG = 'Vui lòng nhập Số điện thoại';
+    const ERR26_MSG = 'Vui lòng nhập Họ và tên';
+    const ERR27_MSG = "Số điện thoại không hợp lệ";
 
     const ERR500_MSG = 'Hệ thống đang bận. Vui lòng thử lại';
     const SUCCESS_MSG = 'Thành công';

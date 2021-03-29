@@ -33,3 +33,37 @@ Route::prefix('/app')->group(function () {
         'uses' => 'AppController@allArea',
     ]);
 });
+
+
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [
+        'as' => 'api.auth.login',
+        'uses' => 'AuthController@login',
+
+    ]);
+    Route::post('/register', [
+        'as' => 'api.auth.register',
+        'uses' => 'AuthController@register',
+
+    ]);
+    Route::post('/register/{user}/verify-token', [
+        'as' => 'api.auth.verifySmsToken',
+        'uses' => 'AuthController@verifySmsToken',
+
+    ]);
+    Route::post('/register/{user}/set-password', [
+        'as' => 'api.auth.storePassword',
+        'uses' => 'AuthController@storePassword',
+
+    ]);
+    Route::post('/forgot-password', [
+        'as' => 'api.auth.forgotPassword',
+        'uses' => 'AuthController@forgotPassword',
+
+    ]);
+    Route::post('/forgot-password-otp', [
+        'as' => 'api.auth.forgotPasswordOtp',
+        'uses' => 'AuthController@forgotPasswordSendOtp',
+
+    ]);
+});
