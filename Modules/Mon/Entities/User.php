@@ -52,6 +52,24 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Query\Builder|User withTrashed()
  * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
  * @mixin \Eloquent
+ * @property int $finish_reg
+ * @property int $status
+ * @property string|null $fcm_token
+ * @property string|null $lat
+ * @property string|null $lng
+ * @property string|null $phone
+ * @property int|null $province_id
+ * @property int|null $district_id
+ * @property int|null $phoenix_id
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDistrictId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFcmToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFinishReg($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLng($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoenixId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereProvinceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
  */
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {

@@ -8,18 +8,19 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 use Modules\Api\Entities\ErrorCode;
-use Modules\Api\Events\UserRegisted;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Entities\ConnectedAccount;
 use Modules\Mon\Entities\SmsToken;
 use Modules\Mon\Entities\User;
 use Modules\Mon\Http\Controllers\ApiController;
-use Modules\Mon\Http\Requests\GetInfoSocialRequest;
+use Modules\Api\Http\Requests\GetInfoSocialRequest;
 use Modules\Mon\Repositories\UserRepository;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -325,9 +326,8 @@ class AuthController extends ApiController
                  */
                 $userSocial = Socialite::driver('facebook')->userFromToken($request->get('token'));
                 if (!$userSocial) {
-                    return response()->json([
-                        'success' => false
-                    ]);
+                    return $this->respond([], ErrorCode::ERR500_MSG, ErrorCode::ERR500);
+
                 }
 
                 $userAccount = ConnectedAccount::query()->where([
@@ -338,18 +338,8 @@ class AuthController extends ApiController
                     $user = $userAccount->user;
                     if ($user) {
                         auth()->login($user);
-                        $customClaims = [
-                            'user_id' => $user->id,
-                            'username' => $user->username,
-                            'email' => $user->email,
-                        ];
-                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
-                        $data['user'] = new UserTransformer($user);
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Đăng nhập facebook thành công',
-                            'data' => $data
-                        ]);
+                        $data = $this->getAuthUser($user);
+                        return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
                     }
                 } else {
                     DB::beginTransaction();
@@ -362,7 +352,7 @@ class AuthController extends ApiController
                             'username' => $userSocial->id,
 
                         ]);
-                        event(new UserRegisted($user));
+
                         ConnectedAccount::create([
                             'email' => $userSocial->email,
                             'account_id' => $userSocial->id,
@@ -374,32 +364,18 @@ class AuthController extends ApiController
                         $message = 'Đăng ký thành công';
                         DB::commit();
                         auth()->login($user);
-                        $customClaims = [
-                            'user_id' => $user->id,
-                            'username' => $user->username,
-                            'email' => $user->email,
-                        ];
-                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
-                        $data['user'] = new UserTransformer($user);
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Đăng nhập thành công',
-                            'data' => $data
-                        ]);
+                        $data = $this->getAuthUser($user);
+                        return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
                     } catch (\Exception $exception) {
-                        \Log::info($exception->getMessage());
+                        Log::info($exception->getMessage());
                         DB::rollBack();
-                        return response()->json([
-                            'success' => false,
-                            'message' => 'Đăng nhập không thành công',
-                        ]);
+                        return $this->respond([], ErrorCode::ERR500_MSG, ErrorCode::ERR500);
+
                     }
 
                 }
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Đăng nhập không thành công',
-                ]);
+
             } else if ($request->provider === ConnectedAccount::SERVICE_GOOGLE) {
                 //$token = Socialite::driver('google')->getAccessTokenResponse($request->get('token'));
                 /**
@@ -407,9 +383,8 @@ class AuthController extends ApiController
                  */
                 $userSocial = Socialite::driver('google')->userFromToken($request->get('token'));
                 if (!$userSocial) {
-                    return response()->json([
-                        'success' => false
-                    ]);
+                    return $this->respond([], ErrorCode::ERR500_MSG, ErrorCode::ERR500);
+
                 }
 
                 $userAccount = ConnectedAccount::query()->where([
@@ -420,18 +395,9 @@ class AuthController extends ApiController
                     $user = $userAccount->user;
                     if ($user) {
                         auth()->login($user);
-                        $customClaims = [
-                            'user_id' => $user->id,
-                            'username' => $user->username,
-                            'email' => $user->email,
-                        ];
-                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
-                        $data['user'] = new UserTransformer($user);
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Đăng nhập thành công',
-                            'data' => $data
-                        ]);
+                        $data = $this->getAuthUser($user);
+                        return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
                     }
                 } else {
                     DB::beginTransaction();
@@ -444,7 +410,7 @@ class AuthController extends ApiController
                             'username' => $userSocial->id,
 
                         ]);
-                        event(new UserRegisted($user));
+
                         ConnectedAccount::create([
                             'email' => $userSocial->email,
                             'account_id' => $userSocial->id,
@@ -456,36 +422,23 @@ class AuthController extends ApiController
                         $message = 'Đăng ký thành công';
                         DB::commit();
                         auth()->login($user);
-                        $customClaims = [
-                            'user_id' => $user->id,
-                            'username' => $user->username,
-                            'email' => $user->email,
-                        ];
-                        $data['token'] = JWTAuth::fromUser($user, $customClaims);
-                        $data['user'] = new UserTransformer($user);
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Đăng nhập thành công',
-                            'data' => $data
-                        ]);
+                        $data = $this->getAuthUser($user);
+                        return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
                     } catch (\Exception $exception) {
-                        \Log::info($exception->getMessage());
+                        Log::info($exception->getMessage());
                         DB::rollBack();
-                        return response()->json([
-                            'success' => false,
-                            'message' => 'Đăng nhập không thành công',
-                        ]);
+                        return $this->respond([], ErrorCode::ERR500_MSG, ErrorCode::ERR500);
+
                     }
 
                 }
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Đăng nhập facebook không thành công',
-                ]);
+
             }
         }catch (\Exception $exception) {
-            \Log::info($exception->getMessage());
-            abort(500, $exception->getMessage());
+
+            return $this->respond([], $exception->getMessage(), ErrorCode::ERR500);
+
         }
 
     }

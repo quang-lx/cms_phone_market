@@ -71,4 +71,9 @@ Route::prefix('auth')->group(function () {
         'uses' => 'AuthController@checkPassword',
 
     ]);
+    Route::post('/login-social', [
+        'as' => 'api.auth.loginSocial',
+        'uses' => 'AuthController@loginSocial',
+
+    ]);
 });
