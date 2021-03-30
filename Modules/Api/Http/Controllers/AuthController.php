@@ -87,6 +87,10 @@ class AuthController extends ApiController
         if($validator->fails()){
             return $this->respond([], ErrorCode::ERR25_MSG, ErrorCode::ERR25);
         }
+
+        if(!$phone) {
+            return $this->respond([], ErrorCode::ERR27_MSG, ErrorCode::ERR27);
+        }
         // check db
         $user = User::query()->where('username', $username)->first();
         if ($user && $user->finish_reg) {
@@ -117,6 +121,14 @@ class AuthController extends ApiController
 
     public function verifySmsToken(User $user, Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'token' => 'required',
+        ]);
+        if($validator->fails()){
+            return $this->respond([], ErrorCode::ERR29_MSG, ErrorCode::ERR01);
+        }
+
+
         $token = $request->get('token');
         $smsToken = SmsToken::query()->where([
             'user_id' => $user->id,

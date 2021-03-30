@@ -50,12 +50,12 @@ class ErrorCode
     const ERR10_MSG = 'Vui lòng nhập mã xác thực';
     const ERR11_MSG = 'Hết phiên làm việc, vui lòng thử lại';
     const ERR12_MSG = 'Tài khoản đã tồn tại';
-    const ERR13_MSG = 'Mã xác thực không chính xác';
+    const ERR13_MSG = 'Mã OTP không hợp lệ';
     const ERR14_MSG = 'Tài khoản không tồn tại, vui lòng đăng ký để sử dụng dịch vụ';
     const ERR15_MSG = 'Tài khoản hoặc mật khẩu không chính xác';
     const ERR16_MSG = 'Vui lòng chọn file';
     const ERR17_MSG = 'File không đúng định dạng';
-    const ERR18_MSG = 'Mã hết hạn , vui lòng nhận lại mã xác thực';
+    const ERR18_MSG = 'Mã OTP hết hạn';
     const ERR19_MSG = 'Vui lòng nhập địa điểm cảnh báo';
     const ERR20_MSG = 'Vui lòng nhập nội dung chi tiết';
     const ERR21_MSG = 'Vui lòng gửi hình ảnh/video minh họa';
@@ -66,6 +66,7 @@ class ErrorCode
     const ERR26_MSG = 'Vui lòng nhập họ và tên';
     const ERR27_MSG = "Số điện thoại không hợp lệ";
     const ERR28_MSG = "Mật khẩu không đúng";
+    const ERR29_MSG = "Vui lòng nhập mã OTP";
 
     const ERR500_MSG = 'Hệ thống đang bận. Vui lòng thử lại';
     const SUCCESS_MSG = 'Thành công';
