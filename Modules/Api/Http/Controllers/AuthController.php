@@ -79,6 +79,14 @@ class AuthController extends ApiController
         if($validator->fails()){
             return $this->respond([], ErrorCode::ERR26_MSG, ErrorCode::ERR26);
         }
+
+        $phone = validate_isdn($request->get('phone'));
+        $validator = Validator::make($input, [
+            'phone' => 'required',
+        ]);
+        if($validator->fails()){
+            return $this->respond([], ErrorCode::ERR25_MSG, ErrorCode::ERR25);
+        }
         // check db
         $user = User::query()->where('username', $username)->first();
         if ($user && $user->finish_reg) {
@@ -88,7 +96,7 @@ class AuthController extends ApiController
             $userData = [
                 'username' => $username,
                 'name' => $name,
-                'phone' => validate_isdn($request->get('phone')),
+                'phone' => $phone,
                 'password' => Hash::make($password),
                 'type' => User::TYPE_USER,
                 'status' => User::STATUS_INACTIVE,
@@ -123,6 +131,7 @@ class AuthController extends ApiController
         $user->sms_verified_at = Carbon::now();
         $smsToken->used++;
         $user->finish_reg = 1;
+        $user->status= User::STATUS_ACTIVE;
         $user->save();
         $smsToken->save();
 

@@ -41,10 +41,10 @@ class ErrorCode
     const ERR01_MSG = "Tài khoản không hợp lệ";
     const ERR02_MSG = 'Mã xác thực không chính xác';
     const ERR03_MSG = 'Mã xác thực hết hạn, vui lòng nhận lại mã xác thực';
-    const ERR04_MSG = 'Mật khẩu phải có ít nhất 8 ký tự';
-    const ERR05_MSG = 'Mật khẩu tối đa 25 ký tự';
-    const ERR06_MSG = 'Hai mật khẩu phải trùng khớp nhau';
-    const ERR07_MSG = 'Vui lòng nhập Tài khoản';
+    const ERR04_MSG = 'Mật khẩu không hợp lệ';
+    const ERR05_MSG = 'Mật khẩu không hợp lệ';
+    const ERR06_MSG = 'Mật khẩu nhập lại không đúng';
+    const ERR07_MSG = 'Vui lòng nhập tên tài khoản';
     const ERR08_MSG = 'Vui lòng nhập mật khẩu';
     const ERR09_MSG = 'Vui lòng nhập lại mật khẩu';
     const ERR10_MSG = 'Vui lòng nhập mã xác thực';
@@ -62,8 +62,8 @@ class ErrorCode
     const ERR22_MSG = 'Vui lòng nhập thông tin điểm bắt đầu';
     const ERR23_MSG = 'Vui lòng nhập thông tin điểm kết thúc';
     const ERR24_MSG = 'Bạn đã hết số lần nhập mã OTP trong ngày. Vui lòng quay lại sau 24h hoặc gọi tới 19006059 để được hỗ trợ';
-    const ERR25_MSG = 'Vui lòng nhập Số điện thoại';
-    const ERR26_MSG = 'Vui lòng nhập Họ và tên';
+    const ERR25_MSG = 'Vui lòng nhập số điện thoại';
+    const ERR26_MSG = 'Vui lòng nhập họ và tên';
     const ERR27_MSG = "Số điện thoại không hợp lệ";
     const ERR28_MSG = "Mật khẩu không đúng";
 
