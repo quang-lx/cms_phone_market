@@ -65,15 +65,21 @@
                                         <el-table-column prop="id" :label="$t('company.label.id')" width="75" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="username" :label="$t('company.label.username')" sortable="custom"> </el-table-column>
-                                        <el-table-column prop="name" :label="$t('company.label.name')" sortable="custom">
+                                        <el-table-column prop="adminUser.username" :label="$t('company.label.username')" sortable="custom"> </el-table-column>
+                                        <el-table-column prop="name" :label="$t('company.label.name')" sortable="custom"/>
+                                        <el-table-column prop="address" :label="$t('company.label.address')" sortable="address"/>
+                                        <el-table-column prop="phone" :label="$t('company.label.phone')" sortable="address"/>
+
+
+                                        <el-table-column prop="status" :label="$t('company.label.status')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="updated_by" :label="$t('mon.updated_by')" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="email" :label="$t('company.label.email')" sortable="custom">
-
-                                        </el-table-column>
-
-                                        <el-table-column prop="updated_at" :label="$t('company.label.updated_at')" sortable="custom">
+                                        <el-table-column prop="updated_at" :label="$t('mon.updated_at')" sortable="custom">
 
                                         </el-table-column>
 

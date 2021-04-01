@@ -3,6 +3,7 @@ return [
     'label' => [
         'company' => 'Tài khoản cửa hàng',
         'id' => 'ID',
+        'username' => 'Username',
 
         'name' => 'Tên cửa hàng',
         'email' => 'Email',

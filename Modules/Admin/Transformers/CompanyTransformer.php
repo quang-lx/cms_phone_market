@@ -14,6 +14,7 @@ class CompanyTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
+            'adminUser' => $this->adminUser(),
             'username' => optional($this->adminUser())->username,
             'admin_id' => optional($this->adminUser())->id,
             'name' =>$this->name,
@@ -26,6 +27,7 @@ class CompanyTransformer extends JsonResource
             'level_name' =>$this->level_name,
             'created_by' =>$this->created_by,
             'deleted_by' =>$this->deleted_by,
+            'updated_at' =>$this->updated_at->format('H:i d/m/Y'),
             'address' =>$this->address,
 
              'urls' => [
