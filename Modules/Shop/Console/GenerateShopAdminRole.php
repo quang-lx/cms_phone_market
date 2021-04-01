@@ -42,6 +42,8 @@ class GenerateShopAdminRole extends Command
     public function handle()
     {
         $role = Role::findOrCreate(User::ROLE_SHOP_ADMIN  );
+        $role->module = 'shop';
+        $role->save();
         $this->assignAllRoleToSuper($role);
 
     }
