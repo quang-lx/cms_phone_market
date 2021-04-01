@@ -2,20 +2,28 @@
     <div>
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <el-breadcrumb separator="/">
-                            <el-breadcrumb-item>
-                                <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item :to="{name: 'admin.users.index'}">{{ $t('user.label.users') }}
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item> {{ $t(pageTitle) }}
-                            </el-breadcrumb-item>
-                        </el-breadcrumb>
-                    </div>
 
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <el-breadcrumb separator="/">
+                                    <el-breadcrumb-item>
+                                        <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                    </el-breadcrumb-item>
+                                    <el-breadcrumb-item :to="{name: 'admin.users.index'}">{{ $t('user.label.users') }}
+                                    </el-breadcrumb-item>
+                                    <el-breadcrumb-item> {{ $t(pageTitle) }}
+                                    </el-breadcrumb-item>
+                                </el-breadcrumb>
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
         </div>
 

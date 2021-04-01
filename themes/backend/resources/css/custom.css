@@ -21,6 +21,13 @@
     margin-top: -30px;
 }
 
+.content-header .card {
+    margin-bottom: 0;
+}
+.content-header .card-body {
+    padding: 1rem;
+}
+
 .el-form--label-top .el-form-item__label {
     float: none;
     display: inline-block;

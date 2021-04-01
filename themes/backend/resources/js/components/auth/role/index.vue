@@ -2,52 +2,56 @@
     <div>
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <el-breadcrumb separator="/">
-                            <el-breadcrumb-item>
-                                <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item>{{ $t('role.label.roles') }}
-                            </el-breadcrumb-item>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-sm-6 d-flex align-items-center">
+                                <el-breadcrumb separator="/">
+                                    <el-breadcrumb-item>
+                                        <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                    </el-breadcrumb-item>
+                                    <el-breadcrumb-item>{{ $t('role.label.roles') }}
+                                    </el-breadcrumb-item>
 
-                        </el-breadcrumb>
+                                </el-breadcrumb>
+
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
+                                                  v-model="searchQuery">
+                                        </el-input>
+                                    </div>
+                                    <div class="col-2">
+                                        <router-link :to="{name: 'admin.roles.create'}" class="float-sm-right">
+                                            <el-button type="primary"   class="btn ">
+                                                {{ $t('role.label.create_role') }}
+                                            </el-button>
+                                        </router-link>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
+
+
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row justify-content-end mb-2">
-                    <div class="col-md-4   ">
-                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
-                                  v-model="searchQuery">
-                        </el-input>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    {{ $t('role.label.roles') }}
-                                </h3>
-                                <div class="card-tools">
-                                    <ul class="nav nav-pills ml-auto">
-                                        <li class="nav-item">
-                                            <router-link :to="{name: 'admin.roles.create'}" class="float-sm-right">
-                                                <el-button type="primary" size="small" class="btn ">
-                                                    {{ $t('role.label.create_role') }}
-                                                </el-button>
-                                            </router-link>
-                                        </li>
 
-                                    </ul>
-                                </div>
-                            </div><!-- /.card-header -->
                             <div class="card-body">
                                 <div class="sc-table">
 

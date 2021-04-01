@@ -2,21 +2,26 @@
     <div>
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <el-breadcrumb separator="/">
-                            <el-breadcrumb-item>
-                                <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item :to="{name: 'admin.roles.index'}">{{ $t('role.label.roles') }}
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item>{{ $t('role.label.create_role') }}
-                            </el-breadcrumb-item>
-                        </el-breadcrumb>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <el-breadcrumb separator="/">
+                                    <el-breadcrumb-item>
+                                        <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                    </el-breadcrumb-item>
+                                    <el-breadcrumb-item :to="{name: 'admin.roles.index'}">{{ $t('role.label.roles') }}
+                                    </el-breadcrumb-item>
+                                    <el-breadcrumb-item>  {{ $t(pageTitle) }}
+                                    </el-breadcrumb-item>
+                                </el-breadcrumb>
 
+                            </div>
+
+                        </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
 
@@ -27,12 +32,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    {{ $t(pageTitle) }}
-                                </h3>
 
-                            </div><!-- /.card-header -->
                             <div class="card-body">
                                 <el-tabs>
                                     <el-tab-pane>
@@ -95,115 +95,115 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import Form from 'form-backend-validation';
-    import RolePermission from './role-permissions';
+  import axios from 'axios';
+  import Form from 'form-backend-validation';
+  import RolePermission from './role-permissions';
 
-    export default {
-        props: {
-            locales: {default: null},
-            pageTitle: {default: null, String},
-        },
-        components: {
-            RolePermission
-        },
-        data() {
-            return {
-                form: new Form(),
-                loading: false,
-                modelForm: {
-                    id: '',
-                    name: '',
-                    description: '',
-                    guard_name: 'web',
-                    module: 'admin',
-                    permissions: {},
-
-                },
-                permissions: [],
-                checkedPermissions: [],
-                checkAll: false,
-                isIndeterminate: true,
-                roleId: null
-            };
-        },
-        methods: {
-            onSubmit() {
-                this.form = new Form(_.merge(this.modelForm));
-                this.loading = true;
-
-                this.form.post(this.getRoute())
-                    .then((response) => {
-                        this.loading = false;
-                        this.$message({
-                            type: 'success',
-                            message: response.message,
-                        });
-                        this.$router.push({name: 'admin.roles.index'});
-                    })
-                    .catch((error) => {
-
-                        this.loading = false;
-                        this.$notify.error({
-                            title: this.$t('mon.error.Title'),
-                            message: this.getSubmitError(this.form.errors),
-                        });
-                    });
-            },
-            onCancel() {
-
-                this.$confirm(this.$t('mon.cancel.Are you sure to cancel?'), {
-                    confirmButtonText: this.$t('mon.cancel.Yes'),
-                    cancelButtonText: this.$t('mon.cancel.No'),
-                    type: 'warning'
-                }).then(() => {
-                    this.$router.push({name: 'admin.roles.index'});
-                }).catch(() => {
-
-                });
-
-
-            },
-
-
-            fetchData() {
-                this.loading = true;
-                let routeUri = '';
-                if (this.$route.params.roleId !== undefined) {
-                    routeUri = route('api.roles.find', {role: this.$route.params.roleId});
-                } else {
-                    routeUri = route('api.roles.find-new');
-                }
-                axios.get(routeUri)
-                    .then((response) => {
-                        this.loading = false;
-                        this.modelForm = response.data.data;
-                    });
-            },
-
-            getRoute() {
-                if (this.$route.params.roleId !== undefined) {
-                    return route('api.roles.update', {role: this.$route.params.roleId});
-                }
-                return route('api.roles.store');
-            },
-            reloadRemoveTable() {
-                this.$refs.removeTable.reloadData();
-            },
-            reloadAddTable() {
-                this.$refs.addTable.reloadData();
-            }
-
+  export default {
+    props: {
+      locales: {default: null},
+      pageTitle: {default: null, String},
+    },
+    components: {
+      RolePermission
+    },
+    data() {
+      return {
+        form: new Form(),
+        loading: false,
+        modelForm: {
+          id: '',
+          name: '',
+          description: '',
+          guard_name: 'web',
+          module: 'admin',
+          permissions: {},
 
         },
-        created() {
-            this.roleId = this.$route.params.roleId;
-        },
-        mounted() {
-            this.fetchData();
-        },
-        computed: {}
-    }
+        permissions: [],
+        checkedPermissions: [],
+        checkAll: false,
+        isIndeterminate: true,
+        roleId: null
+      };
+    },
+    methods: {
+      onSubmit() {
+        this.form = new Form(_.merge(this.modelForm));
+        this.loading = true;
+
+        this.form.post(this.getRoute())
+        .then((response) => {
+          this.loading = false;
+          this.$message({
+            type: 'success',
+            message: response.message,
+          });
+          this.$router.push({name: 'admin.roles.index'});
+        })
+        .catch((error) => {
+
+          this.loading = false;
+          this.$notify.error({
+            title: this.$t('mon.error.Title'),
+            message: this.getSubmitError(this.form.errors),
+          });
+        });
+      },
+      onCancel() {
+
+        this.$confirm(this.$t('mon.cancel.Are you sure to cancel?'), {
+          confirmButtonText: this.$t('mon.cancel.Yes'),
+          cancelButtonText: this.$t('mon.cancel.No'),
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({name: 'admin.roles.index'});
+        }).catch(() => {
+
+        });
+
+
+      },
+
+
+      fetchData() {
+        this.loading = true;
+        let routeUri = '';
+        if (this.$route.params.roleId !== undefined) {
+          routeUri = route('api.roles.find', {role: this.$route.params.roleId});
+        } else {
+          routeUri = route('api.roles.find-new');
+        }
+        axios.get(routeUri)
+        .then((response) => {
+          this.loading = false;
+          this.modelForm = response.data.data;
+        });
+      },
+
+      getRoute() {
+        if (this.$route.params.roleId !== undefined) {
+          return route('api.roles.update', {role: this.$route.params.roleId});
+        }
+        return route('api.roles.store');
+      },
+      reloadRemoveTable() {
+        this.$refs.removeTable.reloadData();
+      },
+      reloadAddTable() {
+        this.$refs.addTable.reloadData();
+      }
+
+
+    },
+    created() {
+      this.roleId = this.$route.params.roleId;
+    },
+    mounted() {
+      this.fetchData();
+    },
+    computed: {}
+  }
 </script>
 
 <style scoped>

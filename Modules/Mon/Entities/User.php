@@ -90,7 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      */
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
-        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id'
+        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id','is_admin_company'
     ];
 
     /**
