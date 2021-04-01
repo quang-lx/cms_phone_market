@@ -35,6 +35,7 @@ return [
     'banner' => 'Banner',
     'shop_permissions' => 'Danh sách quyền',
     'system shop' => 'Cửa hàng',
+    'company' => 'Tài khoản cửa hàng',
 
 
 ];

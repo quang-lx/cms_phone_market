@@ -30,7 +30,9 @@ return [
     ],
     'message' => [
         'permission_denied' => 'Không có quyền truy cập....'
-    ]
+    ],
+    'created_by' => 'Người tạo',
+    'updated_by' => 'Người cập nhật',
 
 
 ];

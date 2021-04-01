@@ -15,7 +15,10 @@ class AddCompanyLevel extends Migration
     {
         Schema::table('company', function (Blueprint $table) {
             $table->string('phone', 20)->nullable();
+            $table->string('email', 255)->nullable();
             $table->tinyInteger('level')->default(1)->nullable();
+            $table->tinyInteger('status')->default(0);
+            $table->text('address')->nullable();
         });
         Schema::table('users', function (Blueprint $table) {
 

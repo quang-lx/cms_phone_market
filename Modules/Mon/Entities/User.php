@@ -70,6 +70,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereProvinceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
+ * @property int|null $company_id
+ * @property int|null $is_admin_company
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCompanyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdminCompany($value)
  */
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
@@ -90,7 +94,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      */
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
-        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id','is_admin_company'
+        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id','is_admin_company','company_id'
     ];
 
     /**

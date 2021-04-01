@@ -15,6 +15,7 @@ class AddRelationUserCompany extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->bigInteger('company_id')->nullable()->index();
+            $table->timestamp('sms_verified_at')->nullable();
         });
         Schema::table('roles', function (Blueprint $table) {
 

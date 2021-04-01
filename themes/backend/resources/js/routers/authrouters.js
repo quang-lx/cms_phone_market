@@ -29,6 +29,8 @@ import DistrictForm from './../components/district/form';
 import PhoenixList from './../components/phoenix/index';
 import PhoenixForm from './../components/phoenix/form';
 
+import CompanyList from './../components/company/index';
+import CompanyForm from './../components/company/form';
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -253,6 +255,29 @@ export default [
     },
 
 
+//
+    {
+        path: '/admin/company',
+        name: 'admin.company.index',
+        component: CompanyList,
+    },
+    {
+        path: '/admin/company/create',
+        name: 'admin.company.create',
+        component: CompanyForm,
+        props: {
+            pageTitle: 'company.label.create_title',
+        },
+    },
+
+    {
+        path: '/admin/company/:companyId/edit',
+        name: 'admin.company.edit',
+        component: CompanyForm,
+        props: {
+            pageTitle: 'company.label.update_title',
+        },
+    },
 
 
 ];

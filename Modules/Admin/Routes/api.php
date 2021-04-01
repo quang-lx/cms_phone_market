@@ -278,7 +278,32 @@ Route::middleware('auth:api')->prefix('/phoenixes')->group(function (){
         'uses' => 'Phoenix\PhoenixController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/companies')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.company.index',
+        'uses' => 'Company\CompanyController@index',
+    ]);
+    Route::post('/{company}/edit', [
+            'as' => 'api.company.update',
+            'uses' => 'Company\CompanyController@update',
+        ]);
+   Route::get('/{company}', [
+              'as' => 'api.company.find',
+              'uses' => 'Company\CompanyController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.company.store',
+        'uses' => 'Company\CompanyController@store',
+    ]);
+
+    Route::delete('/{company}', [
+        'as' => 'api.company.destroy',
+        'uses' => 'Company\CompanyController@destroy',
+    ]);
+});
 // append
+
 
 
 

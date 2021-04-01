@@ -59,6 +59,10 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereProvinceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
+ * @property int|null $company_id
+ * @property int|null $is_admin_company
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCompanyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdminCompany($value)
  */
 class User extends Authenticatable
 {

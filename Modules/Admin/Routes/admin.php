@@ -250,7 +250,29 @@ Route::group(['prefix' => '/phoenix'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/company'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.company.index',
+        'uses' => 'Company\CompanyController@index',
+        'middleware' => 'permission:admin.company.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.company.create',
+        'uses' => 'Company\CompanyController@create',
+        'middleware' => 'permission:admin.company.create'
+    ]);
+
+    Route::get('{company}/edit', [
+        'as' => 'admin.company.edit',
+        'uses' => 'Company\CompanyController@edit',
+        'middleware' => 'permission:admin.company.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
