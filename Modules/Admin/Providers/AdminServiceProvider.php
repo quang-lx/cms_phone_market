@@ -194,6 +194,5 @@ class AdminServiceProvider extends ServiceProvider
 
 
 
-
     }
 }
