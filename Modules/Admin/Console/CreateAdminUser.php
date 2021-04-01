@@ -72,6 +72,7 @@ class CreateAdminUser extends Command
 //            'email_verified_at' => now(),
             'password' => Hash::make($password), // secret
             'remember_token' => Str::random(10),
+            'type' => User::TYPE_ADMIN
         ]);
         $user->assignRole($role);
         $user->assignRole($superAdminRole);
