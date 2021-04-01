@@ -15,6 +15,7 @@ class CompanyTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'username' => optional($this->adminUser())->username,
+            'admin_id' => optional($this->adminUser())->id,
             'name' =>$this->name,
             'phone' =>$this->phone,
             'description' =>$this->description,

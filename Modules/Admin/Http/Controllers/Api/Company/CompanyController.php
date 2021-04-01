@@ -63,7 +63,7 @@ class CompanyController extends ApiController {
 
         ], $this->paramForUserCompanyCreate($request));
 
-        $this->userRepository->create($userData);
+        $this->userRepository->createWithRoles($userData,[User::ROLE_SHOP_ADMIN]);
         return response()->json([
             'errors' => false,
             'message' => trans('backend::company.message.create success'),

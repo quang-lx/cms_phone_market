@@ -277,7 +277,7 @@
                 });
                 this.loadingPassword = true;
 
-                this.changepassForm.post(route('api.company.change-password', {company: this.$route.params.companyId}))
+                this.changepassForm.post(route('api.users.change-password', {user: this.modelForm.admin_id}))
                     .then((response) => {
                         this.loadingPassword = false;
                         this.$message({

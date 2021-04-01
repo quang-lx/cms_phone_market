@@ -4,6 +4,7 @@ namespace Modules\Shop\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Shop\Console\GenerateShopAdminRole;
 use Modules\Shop\Console\GenerateShopPermission;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -18,7 +19,8 @@ class ShopServiceProvider extends ServiceProvider
     protected $defer = false;
 
     protected $commands = [
-        GenerateShopPermission::class
+        GenerateShopPermission::class,
+        GenerateShopAdminRole::class
     ];
 
     /**

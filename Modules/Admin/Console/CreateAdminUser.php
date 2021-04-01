@@ -105,7 +105,7 @@ class CreateAdminUser extends Command
     public function assignAllRoleToSuper($role) {
         /** @var PermissionRepository $permissionRepository */
         $permissionRepository = app(PermissionRepository::class);
-        $permissions = $permissionRepository->newQueryBuilder()->get();
+        $permissions = $permissionRepository->newQueryBuilder()->where('module','admin')->get();
         $role->syncPermissions($permissions);
     }
 }
