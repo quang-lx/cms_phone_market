@@ -77,3 +77,29 @@ Route::middleware('auth:api')->prefix('auth')->group(function (){
 
 
 });
+
+Route::middleware('auth:api')->prefix('/shop')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.shop.index',
+        'uses' => 'Shop\ShopController@index',
+    ]);
+    Route::post('/{shop}/edit', [
+        'as' => 'api.shop.update',
+        'uses' => 'Shop\ShopController@update',
+    ]);
+    Route::get('/{shop}', [
+        'as' => 'api.shop.find',
+        'uses' => 'Shop\ShopController@find',
+    ]);
+    Route::post('/', [
+        'as' => 'api.shop.store',
+        'uses' => 'Shop\ShopController@store',
+    ]);
+
+    Route::delete('/{shop}', [
+        'as' => 'api.shop.destroy',
+        'uses' => 'Shop\ShopController@destroy',
+    ]);
+});
+// append

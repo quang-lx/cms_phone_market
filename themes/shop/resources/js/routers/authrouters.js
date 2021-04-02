@@ -7,7 +7,8 @@ import RoleForm from './../components/auth/role/form';
 import UserList from './../components/auth/user/index';
 import UserForm from './../components/auth/user/form';
 
-
+import ShopList from './../components/shop/index';
+import ShopForm from './../components/shop/form';
 
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
@@ -39,6 +40,28 @@ export default [
         },
     },
 
+    // shop
+    {
+        path: '/shop-admin/shop',
+        name: 'shop.shop.index',
+        component: ShopList,
+    },
+    {
+        path: '/shop-admin/shop/create',
+        name: 'shop.shop.create',
+        component: ShopForm,
+        props: {
+            pageTitle: 'shop.label.create_shop',
+        },
+    },
 
+    {
+        path: '/shop-admin/shop/:shopId/edit',
+        name: 'shop.shop.edit',
+        component: ShopForm,
+        props: {
+            pageTitle: 'shop.label.update_shop',
+        },
+    },
 
 ];
