@@ -302,7 +302,32 @@ Route::middleware('auth:api')->prefix('/companies')->group(function (){
         'uses' => 'Company\CompanyController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/pcategories')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.pcategory.index',
+        'uses' => 'Pcategory\PcategoryController@index',
+    ]);
+    Route::post('/{pcategory}/edit', [
+            'as' => 'api.pcategory.update',
+            'uses' => 'Pcategory\PcategoryController@update',
+        ]);
+   Route::get('/{pcategory}', [
+              'as' => 'api.pcategory.find',
+              'uses' => 'Pcategory\PcategoryController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.pcategory.store',
+        'uses' => 'Pcategory\PcategoryController@store',
+    ]);
+
+    Route::delete('/{pcategory}', [
+        'as' => 'api.pcategory.destroy',
+        'uses' => 'Pcategory\PcategoryController@destroy',
+    ]);
+});
 // append
+
 
 
 

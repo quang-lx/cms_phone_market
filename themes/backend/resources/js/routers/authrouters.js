@@ -32,6 +32,9 @@ import PhoenixForm from './../components/phoenix/form';
 import CompanyList from './../components/company/index';
 import CompanyForm from './../components/company/form';
 
+import PcategoryList from './../components/pcategory/index';
+import PcategoryForm from './../components/pcategory/form';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -276,6 +279,30 @@ export default [
         component: CompanyForm,
         props: {
             pageTitle: 'company.label.update_title',
+        },
+    },
+
+    //
+    {
+        path: '/admin/pcategory',
+        name: 'admin.pcategory.index',
+        component: PcategoryList,
+    },
+    {
+        path: '/admin/pcategory/create',
+        name: 'admin.pcategory.create',
+        component: PcategoryForm,
+        props: {
+            pageTitle: 'pcategory.label.create_pcategory',
+        },
+    },
+
+    {
+        path: '/admin/pcategory/:pcategoryId/edit',
+        name: 'admin.pcategory.edit',
+        component: PcategoryForm,
+        props: {
+            pageTitle: 'pcategory.label.update_pcategory',
         },
     },
 
