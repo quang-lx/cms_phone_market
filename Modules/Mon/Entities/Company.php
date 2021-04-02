@@ -53,9 +53,13 @@ class Company extends Model {
     const LEVEL_1 = 1;
     const LEVEL_2 = 2;
 
+    const APPROVE_STATUS_WAITTING= 0;
+    const APPROVE_STATUS_APPROVED= 1;
+    const APPROVE_STATUS_REJECT= 2;
+
     protected $table = 'company';
     protected $fillable = [
-        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email','updated_by'
+        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email','updated_by','approve_status'
     ];
 
 

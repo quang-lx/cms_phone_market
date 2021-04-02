@@ -20,14 +20,26 @@
                             </div>
                             <div class="col-sm-6 text-right">
                                 <div class="row">
-                                    <div class="col-10">
-                                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
+
+                                    <div class="col-4">
+
+                                        <el-select v-model="filter.status" placeholder="Lọc theo trạng thái" @change="onSearchChange()" clearable>
+                                            <el-option
+                                              v-for="item in listStatus"
+                                              :key="item.value"
+                                              :label="item.label"
+                                              :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+                                    <div class="col-6">
+                                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch" placeholder="Tên đăng nhập/Tên ch/SĐT/Email"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
                                     <div class="col-2">
                                         <router-link :to="{name: 'admin.company.create'}">
-                                            <el-button type="primary"  size="small"   class="btn btn-flat">
+                                            <el-button type="primary"    class="btn btn-flat">
                                                 {{ $t('company.label.create_title') }}
                                             </el-button>
                                         </router-link>
@@ -130,7 +142,19 @@
 
                 columnsSearch: [],
                 listFilterColumn: [],
-
+                listStatus : [
+                    {
+                        value: 0,
+                        label:'Khóa'
+                    },
+                    {
+                        value: 1,
+                        label:'Hoạt động'
+                    }
+                ],
+                filter: {
+                    status: ''
+                }
 
             };
         },
@@ -143,6 +167,7 @@
                     order_by: this.order_meta.order_by,
                     order: this.order_meta.order,
                     search: this.searchQuery,
+                    status: this.filter.status
                 };
 
                 axios.get(route('api.company.index', _.merge(properties, customProperties)))
@@ -155,9 +180,14 @@
                         this.order_meta.order_by = properties.order_by;
                         this.order_meta.order = properties.order;
                     });
-            }
+            },
+            onSearchChange() {
+                this.meta.current_page = 0;
+                this.queryServer({})
+            },
 
         },
+
         mounted() {
             this.fetchData();
 
