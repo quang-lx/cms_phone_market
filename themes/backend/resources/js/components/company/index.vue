@@ -67,7 +67,11 @@
                                         </el-table-column>
                                         <el-table-column prop="adminUser.username" :label="$t('company.label.username')" sortable="custom"> </el-table-column>
                                         <el-table-column prop="name" :label="$t('company.label.name')" sortable="custom"/>
-                                        <el-table-column prop="address" :label="$t('company.label.address')" sortable="address"/>
+                                        <el-table-column prop="address" :label="$t('company.label.address')" sortable="address">
+                                            <template slot-scope="scope">
+                                                <span class="dont-break-out">{{scope.row.address}}</span>
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column prop="phone" :label="$t('company.label.phone')" sortable="address"/>
 
 
