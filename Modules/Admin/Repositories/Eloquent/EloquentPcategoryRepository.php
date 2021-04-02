@@ -3,11 +3,26 @@
 namespace Modules\Admin\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
+use Modules\Admin\Events\Pcategory\PCategoryWasCreated;
+use Modules\Admin\Events\Pcategory\PCategoryWasUpdated;
 use Modules\Admin\Repositories\PcategoryRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
 class EloquentPcategoryRepository extends BaseRepository implements PcategoryRepository
 {
+    public function create($data)
+    {
+        $model = $this->model->create($data);
+        event(new PCategoryWasCreated($model, $data));
+        return $model;
+    }
+
+    public function update($model, $data)
+    {
+        $model->update($data);
+        event(new PCategoryWasUpdated($model, $data));
+        return $model;
+    }
     protected $categories;
     public function serverPagingFor(Request $request, $relations = null)
     {
