@@ -12,7 +12,7 @@
                                     <el-breadcrumb-item>
                                         <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
                                     </el-breadcrumb-item>
-                                    <el-breadcrumb-item  >{{ $t('listcompany.label.listcompany') }}
+                                    <el-breadcrumb-item  >{{ $t('company.label.company') }}
                                     </el-breadcrumb-item>
 
                                 </el-breadcrumb>
@@ -40,7 +40,7 @@
                                     <div class="col-2">
                                         <router-link :to="{name: 'admin.listcompany.create'}">
                                             <el-button type="primary"    class="btn btn-flat">
-                                                {{ $t('listcompany.label.create_title') }}
+                                                {{ $t('company.label.create_title') }}
                                             </el-button>
                                         </router-link>
                                     </div>
@@ -74,21 +74,21 @@
                                             ref="dataTable"
                                             v-loading.body="tableIsLoading"
                                             @sort-change="handleSortChange">
-                                        <el-table-column prop="id" :label="$t('listcompany.label.id')" width="75" sortable="custom">
+                                        <el-table-column prop="id" :label="$t('company.label.id')" width="75" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="adminUser.username" :label="$t('listcompany.label.username')" sortable="custom"> </el-table-column>
-                                        <el-table-column prop="name" :label="$t('listcompany.label.name')" sortable="custom"/>
-                                        <el-table-column prop="branchnumber" :label="$t('listcompany.label.branchnumber')" sortable="custom"/>
-                                        <el-table-column prop="address" :label="$t('listcompany.label.address')" sortable="address">
+                                        <el-table-column prop="adminUser.username" :label="$t('company.label.username')" sortable="custom"> </el-table-column>
+                                        <el-table-column prop="name" :label="$t('company.label.name')" sortable="custom"/>
+                                        <el-table-column prop="branchnumber" :label="$t('company.label.branchnumber')" sortable="custom"/>
+                                        <el-table-column prop="address" :label="$t('company.label.address')" sortable="address">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.address}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="phone" :label="$t('listcompany.label.phone')" sortable="address"/>
+                                        <el-table-column prop="phone" :label="$t('company.label.phone')" sortable="address"/>
 
 
-                                        <el-table-column prop="status" :label="$t('listcompany.label.status')" sortable="custom">
+                                        <el-table-column prop="status" :label="$t('company.label.status')" sortable="custom">
                                             <template slot-scope="scope">
                                                 <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
                                             </template>
