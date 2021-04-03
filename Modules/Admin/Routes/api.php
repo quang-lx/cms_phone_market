@@ -284,6 +284,10 @@ Route::middleware('auth:api')->prefix('/companies')->group(function (){
         'as' => 'api.company.index',
         'uses' => 'Company\CompanyController@index',
     ]);
+    Route::get('danh-sach', [
+        'as' => 'api.company.index1',
+        'uses' => 'Company\CompanyController@index1',
+    ]);
     Route::post('/{company}/edit', [
             'as' => 'api.company.update',
             'uses' => 'Company\CompanyController@update',

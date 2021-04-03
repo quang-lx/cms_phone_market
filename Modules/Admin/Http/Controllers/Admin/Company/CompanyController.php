@@ -25,6 +25,14 @@ class CompanyController extends AdminController
         return $this->view('admin::companies.index');
     }
 
+
+    public function index1()
+    {
+        //$companies = $this->company->all();
+
+        return $this->view('admin::companies.index1');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

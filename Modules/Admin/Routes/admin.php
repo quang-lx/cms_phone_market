@@ -257,6 +257,15 @@ Route::group(['prefix' => '/company'], function ( ) {
         'uses' => 'Company\CompanyController@index',
         'middleware' => 'permission:admin.company.index'
     ]);
+
+    Route::get('danh-sach', [
+        'as' => 'admin.company.index1',
+        'uses' => 'Company\CompanyController@index1',
+        'middleware' => 'permission:admin.company.index'
+
+    ]);
+
+
     Route::get('create', [
         'as' => 'admin.company.create',
         'uses' => 'Company\CompanyController@create',

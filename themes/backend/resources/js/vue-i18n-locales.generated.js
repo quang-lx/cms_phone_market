@@ -377,8 +377,10 @@ export default {
             "label": {
                 "company": "Tài khoản cửa hàng",
                 "id": "ID",
+                "username": "Username",
                 "name": "Tên cửa hàng",
                 "email": "Email",
+                "branchnumber": "Số chi nhánh",
                 "slug": "Đường dẫn",
                 "phone": "Số điện thoại",
                 "address": "Địa chỉ",
@@ -425,7 +427,9 @@ export default {
                 "permission_denied": "Không có quyền truy cập...."
             },
             "created_by": "Người tạo",
-            "updated_by": "Người cập nhật"
+            "updated_by": "Người cập nhật",
+            "updated_at": "Ngày cập nhật",
+            "created_at": "Ngày cập nhật"
         },
         "sidebar": {
             "system administration": "Quản trị",

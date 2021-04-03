@@ -7,7 +7,7 @@ return [
 
         'name' => 'Tên cửa hàng',
         'email' => 'Email',
-
+        'branchnumber' => "Số chi nhánh",
         'slug' => 'Đường dẫn',
         'phone' => 'Số điện thoại',
         'address' => 'Địa chỉ',
