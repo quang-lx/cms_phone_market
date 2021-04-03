@@ -14,7 +14,13 @@ class ShopTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
-
+//            'name' => $this->name,
+//            'district_id' => $this->district_id,
+//            'code' => $this->code,
+//            'type' => $this->type,
+//            'district'=>$this->district['name'],
+//            'province_id'=>$this->district->province['id'],
+//            'province'=>$this->district->province['name'],
 
              'urls' => [
                 'delete_url' => route('api.shop.destroy', $this->id),

@@ -4,12 +4,14 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Wildside\Userstamps\Userstamps;
 
 class Shop extends Model
 {
-    use  SoftDeletes;
+    use  SoftDeletes, Userstamps;
 
     protected $table = 'shop';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'id',
         'phone',
@@ -17,9 +19,15 @@ class Shop extends Model
         'address',
         'email',
         'status',
+        'company_id',
+        'created_by',
+        'updated_by',
+        'deleted_at',
+        'created_at',
+        'updated_at',
     ];
-    public function district()
+    public function company()
     {
-        return $this->belongsTo(District::class,'district_id');
+        return $this->belongsTo(Company::class,'company_id');
     }
 }

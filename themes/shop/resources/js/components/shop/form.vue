@@ -157,7 +157,6 @@
                     email: '',
                     status: 'publish',
 
-
                 },
                 locales: window.MonCMS.locales,
                 listStatus: [
@@ -223,16 +222,6 @@
 
                     });
             },
-            fetchTags() {
-                this.loading = true;
-
-                axios.get(route('api.tags.index'))
-                    .then((response) => {
-                        this.loading = false;
-                        this.listTag = response.data;
-
-                    });
-            },
 
             getRoute() {
                 if (this.$route.params.newsId !== undefined) {
@@ -241,23 +230,8 @@
                 return route('api.shop.store');
             },
 
-            fetchCategory() {
-                const properties = {
-                    page: 0,
-                    per_page: 1000,
-
-                };
-
-                axios.get(route('api.category.index', _.merge(properties, {})))
-                    .then((response) => {
-
-                        this.categoryArr = response.data.data;
-
-                    });
-            },
         },
         mounted() {
-            this.fetchCategory();
             if (this.$route.params.newsId !== undefined) {
                 this.fetchData();
             }

@@ -8,7 +8,10 @@ class UpdateShopRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required',
+            'phone' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +26,10 @@ class UpdateShopRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'name.required' => 'Tên không được để trống',
+            'phone.required' => 'Số điện thoại không được để trống',
+        ];
     }
 
     public function translationMessages()

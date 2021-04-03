@@ -12,6 +12,7 @@ use Modules\Shop\Repositories\ShopRepository;
 use Illuminate\Routing\Controller;
 use Modules\Mon\Http\Controllers\ApiController;
 use Modules\Mon\Auth\Contracts\Authentication;
+use Illuminate\Support\Facades\Auth;
 
 class ShopController extends ApiController
 {
@@ -42,7 +43,12 @@ class ShopController extends ApiController
 
     public function store(CreateShopRequest $request)
     {
-        $this->shopRepository->create($request->all());
+        $arrReq = $request->all();
+        $arrReq['company_id'] = Auth::user()->company_id;
+        $arrReq['status'] = $arrReq['status'] == 'publish' ? 1 : 0;
+
+//        $this->shopRepository->create($request->all());
+        $this->shopRepository->create($arrReq);
 
         return response()->json([
             'errors' => false,
