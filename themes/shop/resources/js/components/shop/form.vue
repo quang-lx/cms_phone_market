@@ -133,16 +133,9 @@
 
 <script>
     import axios from 'axios';
-    import moment from 'moment';
     import Form from 'form-backend-validation';
-    import Tinymce from '../utils/Tinymce';
-    import SingleFileSelector from '../../mixins/SingleFileSelector.js';
 
     export default {
-        mixins: [SingleFileSelector],
-        components: {
-            Tinymce,
-        },
         props: {
             pageTitle: {default: null, String},
         },
@@ -155,18 +148,18 @@
                     address: '',
                     phone: '',
                     email: '',
-                    status: 'publish',
+                    status: 1,
 
                 },
                 locales: window.MonCMS.locales,
                 listStatus: [
 
                     {
-                        value: 'publish',
+                        value: 1,
                         label: 'Hiển thị'
                     },
                     {
-                        value: 'hide',
+                        value: 0,
                         label: 'Ẩn'
                     }
                 ],
@@ -215,7 +208,7 @@
             fetchData() {
                 this.loading = true;
                 let locale = this.$route.params.locale ? this.$route.params.locale : 'en';
-                axios.get(route('api.shop.find', {news: this.$route.params.newsId}))
+                axios.get(route('api.shop.find', {shop: this.$route.params.shopId}))
                     .then((response) => {
                         this.loading = false;
                         this.modelForm = response.data.data;
@@ -224,15 +217,15 @@
             },
 
             getRoute() {
-                if (this.$route.params.newsId !== undefined) {
-                    return route('api.shop.update', {news: this.$route.params.newsId});
+                if (this.$route.params.shopId !== undefined) {
+                    return route('api.shop.update', {shop: this.$route.params.shopId});
                 }
                 return route('api.shop.store');
             },
 
         },
         mounted() {
-            if (this.$route.params.newsId !== undefined) {
+            if (this.$route.params.shopId !== undefined) {
                 this.fetchData();
             }
 

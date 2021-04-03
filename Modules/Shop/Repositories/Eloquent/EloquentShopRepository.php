@@ -2,7 +2,6 @@
 
 namespace Modules\Shop\Repositories\Eloquent;
 
-use App\Models\MPermission;
 use Illuminate\Http\Request;
 use Modules\Shop\Repositories\ShopRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
@@ -13,26 +12,30 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
-        $query->where('module', MPermission::MODULE_ADMIN);
         if ($relations) {
             $query = $query->with($relations);
+        }
+
+        if ($request->get('status') !== null) {
+            $status = $request->get('status');
+            $query->where('status', $status);
         }
 
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');
             $query->where(function ($q) use ($keyword) {
-                $q->where('name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('guard_name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('id', 'LIKE', "%{$keyword}%");
+                $q->orWhere('name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('phone', 'LIKE', "%{$keyword}%")
+                    ->orWhere('email', 'LIKE', "%{$keyword}%");
             });
         }
 
-        if ($request->get('guard_name') !== null) {
-            $query->where('guard_name', '=', $request->get('guard_name'));
-        }
+        if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
+            $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
 
-        if ($request->get('name') !== null) {
-            $query->where('name', '=', $request->get('name'));
+            $query->orderBy($request->get('order_by'), $order);
+        } else {
+            $query->orderBy('id', 'asc');
         }
 
         return $query->paginate($request->get('per_page', 10));

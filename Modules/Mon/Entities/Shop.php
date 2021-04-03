@@ -10,6 +10,9 @@ class Shop extends Model
 {
     use  SoftDeletes, Userstamps;
 
+    const STATUS_LOCK = 0;
+    const STATUS_ACTIVE = 1;
+
     protected $table = 'shop';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -29,5 +32,18 @@ class Shop extends Model
     public function company()
     {
         return $this->belongsTo(Company::class,'company_id');
+    }
+
+    public function getStatusNameAttribute($value) {
+        $statusName = '';
+        switch ($this->status) {
+            case self::STATUS_LOCK:
+                $statusName = 'Khóa';
+                break;
+            case self::STATUS_ACTIVE:
+                $statusName = 'Hoạt động';
+                break;
+        }
+        return $statusName;
     }
 }

@@ -330,6 +330,7 @@ export default {
         },
         "shop": {
             "label": {
+                "manager": "Quản lý chi nhánh cửa hàng",
                 "created_at": "Ngày tạo",
                 "title": "Thêm chi nhánh",
                 "create_new": "Tạo mới",
@@ -337,7 +338,13 @@ export default {
                 "address": "Địa chỉ",
                 "phone": "Số điện thoại",
                 "email": "Email",
-                "status": "Trạng thái"
+                "status": "Trạng thái",
+                "id": "ID"
+            },
+            "message": {
+                "create success": "Thêm mới chi nhánh thành công.",
+                "update success": "Cập nhật chi nhánh thành công.",
+                "delete success": "Xóa chi nhánh thành công."
             }
         },
         "sidebar": {

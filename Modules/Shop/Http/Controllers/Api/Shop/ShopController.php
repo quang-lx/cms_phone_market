@@ -52,7 +52,7 @@ class ShopController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::shop.message.create success'),
+            'message' => trans('shop::shop.message.create success'),
         ]);
     }
 
@@ -68,7 +68,7 @@ class ShopController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::shop.message.update success'),
+            'message' => trans('shop::shop.message.update success'),
         ]);
     }
 
@@ -78,7 +78,7 @@ class ShopController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::shop.message.delete success'),
+            'message' => trans('shop::shop.message.delete success'),
         ]);
     }
 }
