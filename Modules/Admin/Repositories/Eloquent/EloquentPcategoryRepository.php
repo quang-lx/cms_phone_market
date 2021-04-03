@@ -42,15 +42,14 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
         return $data->setCollection(collect($data_case));
     }
 
-    function formatCategories($data, $parent_id = null, $level = 0){
+    function formatCategories($data, $parent_id = null){
         $result = [];
 
         foreach($data as $key=>$item){
             if($item['parent_id'] == $parent_id){
-                $item['level'] = $level;
                 $result[] = $item;
                 unset($data[$key]);
-                $child = $this->formatCategories($data, $item['id'], $level + 1 );
+                $child = $this->formatCategories($data, $item['id']);
                 $result = array_merge($result, $child);
             }
         }

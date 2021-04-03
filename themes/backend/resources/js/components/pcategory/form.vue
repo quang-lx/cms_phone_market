@@ -187,11 +187,11 @@ export default {
       },
       listType: [
         {
-          value: "Hàng hóa",
+          value: "product",
           label: "Hàng hóa",
         },
         {
-          value: "Dịch vụ",
+          value: "service",
           label: "Dịch vụ",
         }
       ],
