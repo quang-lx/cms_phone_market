@@ -38,12 +38,24 @@ class Shop extends Model
         $statusName = '';
         switch ($this->status) {
             case self::STATUS_LOCK:
-                $statusName = 'Khóa';
+                $statusName = 'Không hoạt động';
                 break;
             case self::STATUS_ACTIVE:
                 $statusName = 'Hoạt động';
                 break;
         }
         return $statusName;
+    }
+    public function getStatusColorAttribute($value) {
+        $statusColor = '';
+        switch ($this->status) {
+            case self::STATUS_LOCK:
+                $statusColor = '#F5ABAB';
+                break;
+            case self::STATUS_ACTIVE:
+                $statusColor = '#219653';
+                break;
+        }
+        return $statusColor;
     }
 }

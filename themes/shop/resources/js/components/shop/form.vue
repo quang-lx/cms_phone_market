@@ -5,7 +5,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <el-breadcrumb separator="/">
-                            <el-breadcrumb-item> {{ $t('shop.label.title') }}
+                            <el-breadcrumb-item> {{ $t(pageTitle) }}
                             </el-breadcrumb-item>
                         </el-breadcrumb>
                     </div>
@@ -23,11 +23,11 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
-                                    {{ $t('shop.label.create_new') }}<span v-if="modelForm.name">: &nbsp{{modelForm.name}}</span>
+                                    {{ $t(pageTitle) }}<span v-if="modelForm.name">: &nbsp{{modelForm.name}}</span>
                                 </h3>
 
                             </div><!-- /.card-header -->
-                            <div class="card-body" style="padding-top:0px">
+                            <div class="card-body" style="padding-top:20px">
                                 <el-form
                                         ref="form"
                                         :model="modelForm"
@@ -156,11 +156,11 @@
 
                     {
                         value: 1,
-                        label: 'Hiển thị'
+                        label: 'Hoạt động'
                     },
                     {
                         value: 0,
-                        label: 'Ẩn'
+                        label: 'Không hoạt động'
                     }
                 ],
 

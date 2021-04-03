@@ -82,6 +82,8 @@
                                         </el-table-column>
                                         <el-table-column prop="name" :label="$t('shop.label.name')"
                                                          sortable="custom"/>
+                                        <el-table-column prop="email" :label="$t('shop.label.email')"
+                                                         sortable="custom"/>
                                         <el-table-column prop="address" :label="$t('shop.label.address')"
                                                          sortable="address">
                                             <template slot-scope="scope">
@@ -146,7 +148,7 @@
                 listStatus: [
                     {
                         value: 0,
-                        label: 'Khóa'
+                        label: 'Không hoạt động'
                     },
                     {
                         value: 1,

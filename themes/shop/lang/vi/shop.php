@@ -5,6 +5,8 @@ return [
         'created_at' => 'Ngày tạo',
         'title' => 'Thêm chi nhánh',
         'create_new' => 'Tạo mới',
+        'update_shop' => 'Cập nhật',
+        'create_shop' => 'Thêm mới',
         'name' => 'Tên chi nhánh',
         'address' => 'Địa chỉ',
         'phone' => 'Số điện thoại',
