@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Wildside\Userstamps\Userstamps;
 
 /**
  * Modules\Mon\Entities\User
@@ -77,7 +78,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
-    use Notifiable, HasRoles, SoftDeletes;
+    use Notifiable, HasRoles, SoftDeletes, Userstamps;
     const TYPE_ADMIN = 1;
     const TYPE_USER = 2;
     const TYPE_SHOP = 3;
