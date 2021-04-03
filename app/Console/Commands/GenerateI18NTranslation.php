@@ -8,28 +8,28 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class GenerateI18NTranslation extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+/*
+* The name and signature of the console command.
+*
+* @var string
+*/
     protected $signature = 'vue-i18n:generate {theme}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+/*
+* The console command description.
+*
+* @var string
+*/
     protected $description = "Generates a vue-i18n|vuex-i18n compatible js array out of project translations";
 
-    /**
-     * Execute the console command.
-     * @return mixed
-     * @throws \Exception
-     */
+/*
+* Execute the console command.
+* @return mixed
+* @throws \Exception
+*/
     public function handle()
     {
-        $root = base_path() . config('vue-i18n-generator.langPath');
+
         $config = config('vue-i18n-generator');
 
         // options
@@ -37,14 +37,15 @@ class GenerateI18NTranslation extends Command
 
         if ($themeName) {
             //themes/guest/resources/lang
-            $langPath = '/themes/' . $themeName . '/resources/lang';
+            $langPath = '/themes/' . $themeName . '/lang';
             $jsPath = '/themes/' . $themeName . '/resources/js/lang';
             $jsFile = '/themes/' . $themeName . '/resources/js/vue-i18n-locales.generated.js';
             $configs = array_merge(config('vue-i18n-generator'), compact('langPath', 'jsPath', 'jsFile'));
+
             Config::set('vue-i18n-generator', $configs);
 
         }
-
+        $root = base_path() . config('vue-i18n-generator.langPath');
 
         $data = (new Generator($config))
             ->generateFromPath($root);
@@ -58,10 +59,10 @@ class GenerateI18NTranslation extends Command
         }
     }
 
-    /**
-     * @param string $fileNameOption
-     * @return string
-     */
+/*
+* @param string $fileNameOption
+* @return string
+*/
     private function getFileName($fileNameOption)
     {
         if (isset($fileNameOption)) {

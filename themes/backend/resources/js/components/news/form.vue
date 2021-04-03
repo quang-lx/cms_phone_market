@@ -297,7 +297,7 @@
                             type: 'success',
                             message: response.message,
                         });
-                        this.$router.push({name: 'admin.news.index'});
+                        this.$router.push({name: 'shop.shop.index'});
                     })
                     .catch((error) => {
 
@@ -315,7 +315,7 @@
                     cancelButtonText: this.$t('mon.cancel.No'),
                     type: 'warning'
                 }).then(() => {
-                    this.$router.push({name: 'admin.news.index'});
+                    this.$router.push({name: 'shop.shop.index'});
                 }).catch(() => {
 
                 });
@@ -326,7 +326,7 @@
             fetchData() {
                 this.loading = true;
                 let locale = this.$route.params.locale? this.$route.params.locale: 'en';
-                axios.get(route('api.news.find', {news: this.$route.params.newsId }))
+                axios.get(route('api.shop.find', {news: this.$route.params.newsId }))
                     .then((response) => {
                         this.loading = false;
                         this.modelForm = response.data.data;
@@ -346,9 +346,9 @@
 
             getRoute() {
                 if (this.$route.params.newsId !== undefined) {
-                    return route('api.news.update', {news: this.$route.params.newsId});
+                    return route('api.shop.update', {news: this.$route.params.newsId});
                 }
-                return route('api.news.store');
+                return route('api.shop.store');
             },
 
             fetchCategory() {

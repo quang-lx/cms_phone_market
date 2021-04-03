@@ -39,3 +39,26 @@ Route::group(['prefix' =>'/auth'], function (){
 
 
 });
+
+Route::group(['prefix' => '/shop'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.shop.index',
+        'uses' => 'Shop\ShopController@index',
+        'middleware' => 'permission:shop.shop.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.shop.create',
+        'uses' => 'Shop\ShopController@create',
+        'middleware' => 'permission:shop.shop.create'
+    ]);
+
+    Route::get('{shop}/edit', [
+        'as' => 'shop.shop.edit',
+        'uses' => 'Shop\ShopController@edit',
+        'middleware' => 'permission:shop.shop.edit'
+    ]);
+
+
+});
+// append
