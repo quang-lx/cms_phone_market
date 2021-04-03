@@ -271,7 +271,29 @@ Route::group(['prefix' => '/company'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/pcategory'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.pcategory.index',
+        'uses' => 'Pcategory\PcategoryController@index',
+        'middleware' => 'permission:admin.pcategory.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.pcategory.create',
+        'uses' => 'Pcategory\PcategoryController@create',
+        'middleware' => 'permission:admin.pcategory.create'
+    ]);
+
+    Route::get('{pcategory}/edit', [
+        'as' => 'admin.pcategory.edit',
+        'uses' => 'Pcategory\PcategoryController@edit',
+        'middleware' => 'permission:admin.pcategory.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
