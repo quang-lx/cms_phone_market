@@ -4,6 +4,7 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Wildside\Userstamps\Userstamps;
 
 /**
  * Modules\Mon\Entities\Company
@@ -44,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class Company extends Model {
-    use  SoftDeletes;
+    use  SoftDeletes, Userstamps;
 
     const STATUS_LOCK = 0;
     const STATUS_ACTIVE = 1;
@@ -52,9 +53,13 @@ class Company extends Model {
     const LEVEL_1 = 1;
     const LEVEL_2 = 2;
 
+    const APPROVE_STATUS_WAITTING= 0;
+    const APPROVE_STATUS_APPROVED= 1;
+    const APPROVE_STATUS_REJECT= 2;
+
     protected $table = 'company';
     protected $fillable = [
-        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email'
+        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email','updated_by','approve_status'
     ];
 
 

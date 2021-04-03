@@ -33,6 +33,8 @@ return [
     ],
     'created_by' => 'Người tạo',
     'updated_by' => 'Người cập nhật',
+    'updated_at' => 'Ngày cập nhật',
+    'created_at' => 'Ngày cập nhật',
 
 
 ];

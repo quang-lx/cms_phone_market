@@ -123,6 +123,13 @@
                                                      v-if="form.errors.has('level')"
                                                      v-text="form.errors.first('level')"></div>
                                             </el-form-item>
+                                            <el-form-item :label="$t('company.label.address')"
+                                                          :class="{'el-form-item is-error': form.errors.has('address') }">
+                                                <el-input v-model="modelForm.address"></el-input>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('address')"
+                                                     v-text="form.errors.first('address')"></div>
+                                            </el-form-item>
                                         </div>
                                         <div class="col-md-6 pl-5">
                                             <el-form-item :label="$t('user.label.username')"
