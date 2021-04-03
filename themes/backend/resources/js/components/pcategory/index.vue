@@ -66,8 +66,11 @@
 
                                         </el-table-column>
                                         <el-table-column prop="image" :label="$t('pcategory.label.image')" sortable="custom"> </el-table-column>
-                                        <el-table-column prop="name" :label="$t('pcategory.label.name')" sortable="custom">
-
+                                        <el-table-column  prop="name" :label="$t('pcategory.label.name')" sortable="custom">
+                                        <template slot-scope="scope">
+                                            <span v-if="scope.row.level==0">{{scope.row.name}}</span>
+                                            <span class="pl-4" v-else>{{scope.row.name}}</span>
+                                            </template>
                                         </el-table-column>
                                         <el-table-column prop="type" :label="$t('pcategory.label.type')" sortable="custom">
 

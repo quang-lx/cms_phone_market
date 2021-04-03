@@ -8,7 +8,10 @@ class UpdatePcategoryRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required',
+            'type' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +26,10 @@ class UpdatePcategoryRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'name.required' => 'Tên không được để trống',
+            'type.required' => 'Kiểu không được để trống',
+        ];
     }
 
     public function translationMessages()

@@ -17,6 +17,7 @@ class PcategoryTransformer extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'parent_id' => $this->parent_id,
+            'level' => $this->level,
 
 
              'urls' => [

@@ -97,6 +97,10 @@
                               v-model="modelForm.parent_id"
                               placeholder="Select"
                             >
+                              <el-option
+                              >
+                              Chọn
+                              </el-option>
                     
                               <el-option
                                 v-for="item in list_pcategory"
@@ -249,7 +253,7 @@ export default {
     fetchPcategory() {
       let routeUri = "";
       this.loading = true;
-      routeUri = route("api.pcategory.index", { page: 1, per_page: 1000 });
+      routeUri = route("api.pcategory.index", { page: 1, per_page: 1000,parent_id:0,id_edit:this.$route.params.pcategoryId });
       axios.get(routeUri).then((response) => {
         this.loading = false;
         this.list_pcategory = response.data.data;

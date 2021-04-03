@@ -10,20 +10,8 @@ use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
 class EloquentPcategoryRepository extends BaseRepository implements PcategoryRepository
 {
-    public function create($data)
-    {
-        $model = $this->model->create($data);
-        event(new PCategoryWasCreated($model, $data));
-        return $model;
-    }
-
-    public function update($model, $data)
-    {
-        $model->update($data);
-        event(new PCategoryWasUpdated($model, $data));
-        return $model;
-    }
     protected $categories;
+    protected $cate;
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
@@ -36,22 +24,38 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
 
             $query->orderBy($request->get('order_by'), $order);
         } else {
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('created_at', 'asc');
         }
-        $this->categories = $query->paginate($request->get('per_page', 10));
-        $this->showCategories($this->categories->toArray()['data']);
-        dd($this->categories->toArray()['data']);
-        return $query->paginate($request->get('per_page', 10));
+
+        if ($request->get('parent_id') !== null) {
+            $id_edit = $request->get('id_edit');
+            $query->where(function ($q) use ($id_edit){
+                $q->where('parent_id',null);
+                $q->where('id','!=',$id_edit);
+            });
+            return  $data = $query->paginate($request->get('per_page', 10));
+        }
+        
+        $data = $query->paginate($request->get('per_page', 10));
+        $data_case= $this->formatCategories($data->getCollection());
+        // dd(1);
+        return $data->setCollection(collect($data_case));
     }
 
-    function showCategories($categories, $parent_id = null)
-    {
-        foreach ($categories as $key => $item) {
-            if ($item['parent_id'] == $parent_id) {
-                $this->categories[$key]['children'] = $item;
-                unset($this->categories[$key]);
-                $this->showCategories($categories, $item['id']);
+    function formatCategories($data, $parent_id = null, $level = 0){
+        $result = [];
+
+        foreach($data as $key=>$item){
+            if($item['parent_id'] == $parent_id){
+                $item['level'] = $level;
+                $result[] = $item;
+                unset($data[$key]);
+                $child = $this->formatCategories($data, $item['id'], $level + 1 );
+                $result = array_merge($result, $child);
             }
         }
+        // echo "<pre>";
+        // print_r($result);
+        return $result;
     }
 }
