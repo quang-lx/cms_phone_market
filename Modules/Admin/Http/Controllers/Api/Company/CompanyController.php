@@ -7,8 +7,10 @@ use Illuminate\Http\Response;
 use Modules\Mon\Entities\Company;
 use Modules\Admin\Http\Requests\Company\CreateCompanyRequest;
 use Modules\Admin\Transformers\CompanyTransformer;
+use Modules\Admin\Transformers\ListCompanyTransformer;
 use Modules\Admin\Http\Requests\Company\UpdateCompanyRequest;
 use Modules\Admin\Repositories\CompanyRepository;
+use Modules\Admin\Repositories\ListCompanyRepository;
 use Illuminate\Routing\Controller;
 use Modules\Mon\Entities\User;
 use Modules\Mon\Http\Controllers\ApiController;
@@ -18,18 +20,21 @@ use Modules\Mon\Repositories\UserRepository;
 class CompanyController extends ApiController {
     /**
      * @var CompanyRepository
+     * @var ListCompanyRepository
      */
     private $companyRepository;
+    private $listCompanyRepository;
 
     /**
      * @var UserRepository
      */
     private $userRepository;
 
-    public function __construct(Authentication $auth, CompanyRepository $company, UserRepository $userRepository) {
+    public function __construct(Authentication $auth, CompanyRepository $company, UserRepository $userRepository,ListCompanyRepository $listCompany) {
         parent::__construct($auth);
 
         $this->companyRepository = $company;
+        $this->listCompanyRepository = $listCompany;
         $this->userRepository = $userRepository;
     }
 
@@ -38,6 +43,9 @@ class CompanyController extends ApiController {
         return CompanyTransformer::collection($this->companyRepository->serverPagingFor($request));
     }
 
+    public function index1(Request $request) {
+        return ListCompanyTransformer::collection($this->listCompanyRepository->serverPagingFor($request));
+    }
 
     public function all(Request $request) {
         return CompanyTransformer::collection($this->companyRepository->newQueryBuilder()->get());

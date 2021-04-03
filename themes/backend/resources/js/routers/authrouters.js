@@ -30,6 +30,7 @@ import PhoenixList from './../components/phoenix/index';
 import PhoenixForm from './../components/phoenix/form';
 
 import CompanyList from './../components/company/index';
+import CompanyList1 from './../components/company/index1';
 import CompanyForm from './../components/company/form';
 
 import PcategoryList from './../components/pcategory/index';
@@ -264,6 +265,13 @@ export default [
         name: 'admin.company.index',
         component: CompanyList,
     },
+
+    {
+        path: '/admin/company/danh-sach',
+        name: 'admin.company.index1',
+        component: CompanyList1,
+    },
+
     {
         path: '/admin/company/create',
         name: 'admin.company.create',

@@ -106,4 +106,8 @@ class Company extends Model {
         }
         return $statusName;
     }
+
+    public function countShop() {
+        return $this->hasMany(Shop::class, 'company_id')->count();
+    }
 }
