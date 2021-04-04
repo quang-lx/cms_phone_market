@@ -30,7 +30,11 @@ import PhoenixList from './../components/phoenix/index';
 import PhoenixForm from './../components/phoenix/form';
 
 import CompanyList from './../components/company/index';
+import CompanyList1 from './../components/company/index1';
 import CompanyForm from './../components/company/form';
+
+import PcategoryList from './../components/pcategory/index';
+import PcategoryForm from './../components/pcategory/form';
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -261,6 +265,13 @@ export default [
         name: 'admin.company.index',
         component: CompanyList,
     },
+
+    {
+        path: '/admin/company/danh-sach',
+        name: 'admin.company.index1',
+        component: CompanyList1,
+    },
+
     {
         path: '/admin/company/create',
         name: 'admin.company.create',
@@ -276,6 +287,30 @@ export default [
         component: CompanyForm,
         props: {
             pageTitle: 'company.label.update_title',
+        },
+    },
+
+    //
+    {
+        path: '/admin/pcategory',
+        name: 'admin.pcategory.index',
+        component: PcategoryList,
+    },
+    {
+        path: '/admin/pcategory/create',
+        name: 'admin.pcategory.create',
+        component: PcategoryForm,
+        props: {
+            pageTitle: 'pcategory.label.create_pcategory',
+        },
+    },
+
+    {
+        path: '/admin/pcategory/:pcategoryId/edit',
+        name: 'admin.pcategory.edit',
+        component: PcategoryForm,
+        props: {
+            pageTitle: 'pcategory.label.update_pcategory',
         },
     },
 

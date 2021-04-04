@@ -29,8 +29,8 @@ return [
         'users' => 'Người dùng',
         'province' => 'Tỉnh thành phố',
         'district' => "Quận huyện",
-        'phoenix' => "Xã phường"
-
+        'phoenix' => "Xã phường",
+        'pcategory' => "Danh mục sản phẩm"
     ]
 
 ];
