@@ -10,7 +10,8 @@ class CreateShopRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|min:9|numeric',
+            'email' => 'email:rfc,dns'
         ];
     }
 
@@ -27,8 +28,10 @@ class CreateShopRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Tên không được để trống',
+            'name.required' => 'Tên chi nhánh không được để trống',
             'phone.required' => 'Số điện thoại không được để trống',
+            'phone.min' => 'Số điện thoại không hợp lệ',
+            'email.email' => 'Email không đúng định dạng',
         ];
     }
 

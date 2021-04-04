@@ -5,7 +5,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <el-breadcrumb separator="/">
-                            <el-breadcrumb-item> {{ $t('shop.label.title') }}
+                            <el-breadcrumb-item> {{ $t(pageTitle) }}
                             </el-breadcrumb-item>
                         </el-breadcrumb>
                     </div>
@@ -23,11 +23,11 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
-                                    {{ $t('shop.label.create_new') }}<span v-if="modelForm.name">: &nbsp{{modelForm.name}}</span>
+                                    {{ $t(pageTitle) }}<span v-if="modelForm.name">: &nbsp{{modelForm.name}}</span>
                                 </h3>
 
                             </div><!-- /.card-header -->
-                            <div class="card-body" style="padding-top:0px">
+                            <div class="card-body" style="padding-top:20px">
                                 <el-form
                                         ref="form"
                                         :model="modelForm"
@@ -133,16 +133,9 @@
 
 <script>
     import axios from 'axios';
-    import moment from 'moment';
     import Form from 'form-backend-validation';
-    import Tinymce from '../utils/Tinymce';
-    import SingleFileSelector from '../../mixins/SingleFileSelector.js';
 
     export default {
-        mixins: [SingleFileSelector],
-        components: {
-            Tinymce,
-        },
         props: {
             pageTitle: {default: null, String},
         },
@@ -155,19 +148,19 @@
                     address: '',
                     phone: '',
                     email: '',
-                    status: 'publish',
+                    status: 1,
 
                 },
                 locales: window.MonCMS.locales,
                 listStatus: [
 
                     {
-                        value: 'publish',
-                        label: 'Hiển thị'
+                        value: 1,
+                        label: 'Hoạt động'
                     },
                     {
-                        value: 'hide',
-                        label: 'Ẩn'
+                        value: 0,
+                        label: 'Không hoạt động'
                     }
                 ],
 
@@ -215,7 +208,7 @@
             fetchData() {
                 this.loading = true;
                 let locale = this.$route.params.locale ? this.$route.params.locale : 'en';
-                axios.get(route('api.shop.find', {news: this.$route.params.newsId}))
+                axios.get(route('api.shop.find', {shop: this.$route.params.shopId}))
                     .then((response) => {
                         this.loading = false;
                         this.modelForm = response.data.data;
@@ -224,15 +217,15 @@
             },
 
             getRoute() {
-                if (this.$route.params.newsId !== undefined) {
-                    return route('api.shop.update', {news: this.$route.params.newsId});
+                if (this.$route.params.shopId !== undefined) {
+                    return route('api.shop.update', {shop: this.$route.params.shopId});
                 }
                 return route('api.shop.store');
             },
 
         },
         mounted() {
-            if (this.$route.params.newsId !== undefined) {
+            if (this.$route.params.shopId !== undefined) {
                 this.fetchData();
             }
 

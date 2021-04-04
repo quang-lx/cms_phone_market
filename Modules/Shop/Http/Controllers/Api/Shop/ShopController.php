@@ -45,14 +45,13 @@ class ShopController extends ApiController
     {
         $arrReq = $request->all();
         $arrReq['company_id'] = Auth::user()->company_id;
-        $arrReq['status'] = $arrReq['status'] == 'publish' ? 1 : 0;
 
 //        $this->shopRepository->create($request->all());
         $this->shopRepository->create($arrReq);
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::shop.message.create success'),
+            'message' => trans('shop::shop.message.create success'),
         ]);
     }
 
@@ -68,7 +67,7 @@ class ShopController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::shop.message.update success'),
+            'message' => trans('shop::shop.message.update success'),
         ]);
     }
 
@@ -78,7 +77,7 @@ class ShopController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::shop.message.delete success'),
+            'message' => trans('shop::shop.message.delete success'),
         ]);
     }
 }
