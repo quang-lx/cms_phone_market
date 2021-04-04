@@ -278,6 +278,12 @@ Route::group(['prefix' => '/company'], function ( ) {
         'middleware' => 'permission:admin.company.edit'
     ]);
 
+    Route::get('chi-tiet/{company}', [
+        'as' => 'admin.company.detail',
+        'uses' => 'Company\CompanyController@detail',
+        'middleware' => 'permission:admin.company.detail'
+    ]);
+
 
 });
 Route::group(['prefix' => '/pcategory'], function ( ) {

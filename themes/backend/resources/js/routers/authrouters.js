@@ -32,6 +32,7 @@ import PhoenixForm from './../components/phoenix/form';
 import CompanyList from './../components/company/index';
 import CompanyList1 from './../components/company/index1';
 import CompanyForm from './../components/company/form';
+import CompanyDetail from './../components/company/DetailCompany/form';
 
 import PcategoryList from './../components/pcategory/index';
 import PcategoryForm from './../components/pcategory/form';
@@ -287,6 +288,15 @@ export default [
         component: CompanyForm,
         props: {
             pageTitle: 'company.label.update_title',
+        },
+    },
+
+    {
+        path: '/admin/company/chi-tiet/:companyId',
+        name: 'admin.company.detail',
+        component: CompanyDetail,
+        props: {
+            pageTitle: 'company.label.detail_title',
         },
     },
 
