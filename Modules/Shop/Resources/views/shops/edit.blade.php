@@ -1,4 +1,4 @@
-@extends('backend::layouts.master')
+@extends('shop::layouts.master')
 
 @section('content-header')
 

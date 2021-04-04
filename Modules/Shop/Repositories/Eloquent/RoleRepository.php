@@ -49,7 +49,7 @@ class RoleRepository extends BaseRepository implements RoleInterface {
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
-        $query->where('module', MPermission::MODULE_ADMIN);
+        $query->where('module', MPermission::MODULE_SHOP);
         if ($relations) {
             $query = $query->with($relations);
         }
