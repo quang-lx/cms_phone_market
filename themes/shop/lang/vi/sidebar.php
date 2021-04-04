@@ -33,7 +33,7 @@ return [
     'warning' => 'Cảnh báo',
     'fbnotification' => 'Notification',
     'banner' => 'Banner',
-    'partner' => 'Đối tác',
+    'shop management' => 'Quản lý chi nhánh',
 
 
 ];
