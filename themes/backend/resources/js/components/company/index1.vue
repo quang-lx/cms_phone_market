@@ -32,18 +32,12 @@
                                             </el-option>
                                         </el-select>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch" placeholder="Tên đăng nhập/Tên ch/SĐT/Email"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-                                    <div class="col-2">
-                                        <router-link :to="{name: 'admin.listcompany.create'}">
-                                            <el-button type="primary"    class="btn btn-flat">
-                                                {{ $t('company.label.create_title') }}
-                                            </el-button>
-                                        </router-link>
-                                    </div>
+
                                 </div>
 
 

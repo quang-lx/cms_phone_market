@@ -84,7 +84,15 @@ class UserSidebarExtender extends AbstractAdminSidebar
                     );
                 });
 
+                $item->item(trans('backend::sidebar.company info'), function (Item $item) {
 
+                    $item->weight(0);
+
+                    $item->route('admin.company.index1');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.company.index1')
+                    );
+                });
             });
 
 
