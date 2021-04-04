@@ -31,12 +31,6 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    prop="username"
-                    :label="$t('company.label.username')"
-                    sortable="custom"
-                  >
-                  </el-table-column>
-                  <el-table-column
                     prop="name"
                     :label="$t('company.label.name')"
                     sortable="custom"
