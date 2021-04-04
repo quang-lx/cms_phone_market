@@ -306,7 +306,7 @@ Route::middleware('auth:api')->prefix('/companies')->group(function (){
         'uses' => 'Company\CompanyController@destroy',
     ]);
 
-    Route::get('chi-tiet/{company}', [
+    Route::get('{company}/chi-tiet', [
         'as' => 'api.company.findCompany',
         'uses' => 'Company\CompanyController@findCompany',
     ]);

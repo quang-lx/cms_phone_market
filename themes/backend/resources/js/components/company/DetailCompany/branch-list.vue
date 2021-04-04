@@ -7,32 +7,28 @@
             <div class="card-body">
               <div class="sc-table">
                 <el-table
-                  :data="shop"
+                  :data="data"
                   stripe
                   style="width: 100%"
                   ref="dataTable"
                   v-loading.body="tableIsLoading"
                   @sort-change="handleSortChange"
                 >
-                   <el-table-column
+                  <el-table-column
                     prop="id"
                     :label="$t('company.label.id')"
                     width="75"
                     sortable="custom"
-                  > 
+                  >
                   </el-table-column>
-                  <el-table-column
-                    label="Ảnh"
-                    width="75"
-                    sortable="custom"
-                  >   <template slot-scope="scope">
+                  <el-table-column label="Ảnh" width="75" sortable="custom">
+                    <template slot-scope="scope">
                       <img
                         :src="scope.row.thumbnail.path_string"
                         v-if="scope.row.thumbnail"
                         width="100"
                       />
                     </template>
-                  
                   </el-table-column>
                   <el-table-column
                     prop="username"
@@ -116,7 +112,7 @@ import axios from "axios";
 
 export default {
   props: {
-    shop: { default: null },
+    company_id: { default: null },
   },
 
   data() {
@@ -129,6 +125,39 @@ export default {
         status: "",
       },
     };
+  },
+  methods: {
+    queryServer(customProperties) {
+      const properties = {
+        page: this.meta.current_page,
+        per_page: this.meta.per_page,
+        order_by: this.order_meta.order_by,
+        order: this.order_meta.order,
+        search: this.searchQuery,
+        status: this.filter.status,
+        company_id: this.company_id,
+      };
+
+      axios
+        .get(route("api.shop.index", _.merge(properties, customProperties)))
+        .then((response) => {
+          this.tableIsLoading = false;
+          this.tableIsLoading = false;
+          this.data = response.data.data;
+          this.meta = response.data.meta;
+          this.links = response.data.links;
+          this.order_meta.order_by = properties.order_by;
+          this.order_meta.order = properties.order;
+        });
+    },
+    onSearchChange() {
+      this.meta.current_page = 0;
+      this.queryServer({});
+    },
+  },
+
+  mounted() {
+    this.fetchData();
   },
 };
 </script>

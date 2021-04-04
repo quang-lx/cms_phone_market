@@ -292,7 +292,7 @@ export default [
     },
 
     {
-        path: '/admin/company/chi-tiet/:companyId',
+        path: '/admin/company/:companyId/chi-tiet',
         name: 'admin.company.detail',
         component: CompanyDetail,
         props: {

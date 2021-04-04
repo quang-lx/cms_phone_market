@@ -14,11 +14,13 @@ class ShopTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
+            'username' => $this->company->adminUser()->username,
             'name' => $this->name,
             'phone' => $this->phone,
             'email' => $this->email,
             'address' => $this->address,
             'status' => $this->status,
+            'status_color' =>$this->status_color,
             'status_name' =>$this->status_name,
             'status_color' =>$this->status_color,
             'company_id' => $this->company_id,

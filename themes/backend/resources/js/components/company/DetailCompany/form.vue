@@ -112,8 +112,7 @@
                     <div class="row mb-3" style="padding: 10px">
                       <div class="col-12">
                         <branch-list
-                          v-model="modelForm.shop"
-                          :shop="modelForm.shop"
+                          :company_id="this.$route.params.companyId"
                         />
                       </div>
                     </div>

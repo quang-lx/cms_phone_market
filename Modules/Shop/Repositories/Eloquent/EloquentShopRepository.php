@@ -29,6 +29,14 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
                     ->orWhere('email', 'LIKE', "%{$keyword}%");
             });
         }
+        
+        if ($request->get('company_id') !==null) {
+            $company_id = $request->get('company_id');
+            $keyword = $request->get('search');
+            $query->orWhereHas('company', function($c) use ($company_id) {
+                $c->where('id',$company_id);
+            });
+        }
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
