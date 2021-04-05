@@ -84,5 +84,5 @@ Route::prefix('otp')->group(function () {
         'uses' => 'AuthController@resendOtp',
 
     ]);
-     
+
 });
