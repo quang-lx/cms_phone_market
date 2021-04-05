@@ -68,6 +68,30 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
         });
 
+        $menu->group('shop management', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('ch::sidebar.user management'), function (Item $item) {
+                $item->icon('fas fa-user');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('shop.user.index')
+                );
+                $item->item(trans('ch::sidebar.user management'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('shop.user.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('shop.user.index')
+                    );
+                });
+
+
+            });
+
+
+        });
+
 
         return $menu;
 

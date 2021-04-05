@@ -102,4 +102,29 @@ Route::middleware('auth:api')->prefix('/shop')->group(function (){
         'uses' => 'Shop\ShopController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/users')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.user.index',
+        'uses' => 'User\UserController@index',
+    ]);
+    Route::post('/{user}/edit', [
+            'as' => 'api.user.update',
+            'uses' => 'User\UserController@update',
+        ]);
+   Route::get('/{user}', [
+              'as' => 'api.user.find',
+              'uses' => 'User\UserController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.user.store',
+        'uses' => 'User\UserController@store',
+    ]);
+
+    Route::delete('/{user}', [
+        'as' => 'api.user.destroy',
+        'uses' => 'User\UserController@destroy',
+    ]);
+});
 // append
+

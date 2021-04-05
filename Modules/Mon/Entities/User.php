@@ -135,4 +135,41 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             'email' => $this->email,
         ];
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class,'company_id');
+    }
+
+
+    public function shop()
+    {
+        return $this->belongsTo(Company::class,'shop_id');
+    }
+
+    public function getStatusNameAttribute($value) {
+        $statusName = '';
+        switch ($this->status) {
+            case self::STATUS_LOCK:
+                $statusName = 'Đã khóa';
+                break;
+            case self::STATUS_ACTIVE:
+                $statusName = 'Hoạt động';
+                break;
+        }
+        return $statusName;
+    }
+    public function getStatusColorAttribute($value) {
+        $statusColor = '';
+        switch ($this->status) {
+            case self::STATUS_LOCK:
+                $statusColor = '#F5ABAB';
+                break;
+            case self::STATUS_ACTIVE:
+                $statusColor = '#219653';
+                break;
+        }
+        return $statusColor;
+    }
+
 }

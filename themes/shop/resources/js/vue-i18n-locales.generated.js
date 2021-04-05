@@ -366,7 +366,8 @@ export default {
             "warning": "Cảnh báo",
             "fbnotification": "Notification",
             "banner": "Banner",
-            "partner": "Đối tác"
+            "shop management": "Quản lý chi nhánh",
+            "user management": "Quản lý tài khoản"
         },
         "user": {
             "label": {
@@ -386,7 +387,12 @@ export default {
                 "users": "Tài khoản",
                 "roles": "Nhóm quyền",
                 "change_password": "Đổi mật khẩu",
-                "admins": "Tài khoản quản trị"
+                "admins": "Tài khoản quản trị",
+                "manager": "Quản lý tài khoản",
+                "btn_add_user": "Thêm tài khoản",
+                "updated_by": "Người cập nhật",
+                "role": "Quyền",
+                "status": "Trạng thái"
             },
             "tabs": {
                 "data": "Thông tin chung",
