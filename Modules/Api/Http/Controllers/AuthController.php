@@ -340,7 +340,7 @@ class AuthController extends ApiController
     }
     public function loginSocial(GetInfoSocialRequest $request)
     {
-        try{
+//        try{
             if ($request->provider === ConnectedAccount::SERVICE_FACEBOOK) {
                 /**
                  * @var $userSocial \Laravel\Socialite\Two\User
@@ -456,11 +456,11 @@ class AuthController extends ApiController
                 }
 
             }
-        }catch (\Exception $exception) {
-
-            return $this->respond([], $exception->getMessage(), ErrorCode::ERR500);
-
-        }
+//        }catch (\Exception $exception) {
+//
+//            return $this->respond([], $exception->getMessage(), ErrorCode::ERR500);
+//
+//        }
 
     }
 
