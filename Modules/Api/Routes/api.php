@@ -77,3 +77,12 @@ Route::prefix('auth')->group(function () {
 
     ]);
 });
+Route::prefix('otp')->group(function () {
+
+    Route::post('/{user}/resend', [
+        'as' => 'api.otp.resend',
+        'uses' => 'AuthController@resendOtp',
+
+    ]);
+     
+});
