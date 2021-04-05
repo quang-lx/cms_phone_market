@@ -252,7 +252,7 @@ class AuthController extends ApiController
             return $this->respond([], ErrorCode::ERR08_MSG, ErrorCode::ERR08);
         }
 
-        $username = validate_isdn($request->get('username'));
+        $username =  ($request->get('username'));
         $password = $request->get('password');
         // check db
         $user = User::query()->where(['username' =>  $username, 'type' =>  User::TYPE_USER])->first();
