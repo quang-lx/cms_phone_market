@@ -5,6 +5,8 @@ namespace Modules\Mon\Entities;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
+use Modules\Media\Traits\MediaRelation;
+
 
 /**
  * Modules\Mon\Entities\Company
@@ -45,7 +47,7 @@ use Wildside\Userstamps\Userstamps;
  * @mixin \Eloquent
  */
 class Company extends Model {
-    use  SoftDeletes, Userstamps;
+    use  SoftDeletes, Userstamps,MediaRelation;
 
     const STATUS_LOCK = 0;
     const STATUS_ACTIVE = 1;
@@ -107,7 +109,16 @@ class Company extends Model {
         return $statusName;
     }
 
+    public function shop() {
+        return $this->hasMany(Shop::class, 'company_id');
+    }
+
     public function countShop() {
         return $this->hasMany(Shop::class, 'company_id')->count();
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('thumbnail')->first();
     }
 }

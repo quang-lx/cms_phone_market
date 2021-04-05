@@ -5,10 +5,11 @@ namespace Modules\Mon\Entities;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
+use Modules\Media\Traits\MediaRelation;
 
 class Shop extends Model
 {
-    use  SoftDeletes, Userstamps;
+    use  SoftDeletes, Userstamps, MediaRelation;
 
     const STATUS_LOCK = 0;
     const STATUS_ACTIVE = 1;
@@ -57,5 +58,9 @@ class Shop extends Model
                 break;
         }
         return $statusColor;
+    }
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('thumbnail')->first();
     }
 }

@@ -12,6 +12,13 @@ class ListCompanyTransformer extends JsonResource
 
     public function toArray($request)
     {
+        $shop = $this->shop()->get();
+        foreach ($shop as $key => $value) {
+            $shop[$key]['status_name'] = $value->status_name;
+            $shop[$key]['status_color'] = $value->status_color;
+            $shop[$key]['username'] = $this->adminUser()->username;
+            $shop[$key]['thumbnail'] = $value->thumbnail;
+        }
         $data = [
             'id' => $this->id,
             'adminUser' => $this->adminUser(),
@@ -31,10 +38,14 @@ class ListCompanyTransformer extends JsonResource
             'deleted_by' => $this->deleted_by,
             'updated_at' => $this->updated_at->format('H:i d/m/Y'),
             'address' => $this->address,
+            'approve_status' => $this->approve_status,
             'branchnumber' =>$this->countShop(),
+            'shop' => $shop,
+            'thumbnail' => $this->thumbnail,
             'urls' => [
                 'delete_url' => route('api.company.destroy', $this->id),
             ],
+            ''
 
         ];
 
