@@ -307,11 +307,12 @@ class AuthController extends ApiController
         if (empty($phone)) {
             return $this->respond([], ErrorCode::ERR25_MSG, ErrorCode::ERR25);
         }
-        $phone = validate_isdn($phone);
 
+        $phone = validate_isdn($phone);
+        
         // check db
 
-        if (!$user->phone != $phone) {
+        if ($user->phone != $phone) {
             return $this->respond([], ErrorCode::ERR27_MSG, ErrorCode::ERR27);
         }
         $countOtp = $this->countUserOtp($user->id);
