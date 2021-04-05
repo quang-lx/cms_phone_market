@@ -61,7 +61,7 @@ class Company extends Model {
 
     protected $table = 'company';
     protected $fillable = [
-        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email','updated_by','approve_status'
+        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email','updated_by','approve_status', 'priority'
     ];
 
 
