@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Events\Pcategory;
+namespace Modules\Admin\Events\PCategory;
 
 use Modules\Media\Repositories\StoringMedia;
 use Modules\Mon\Entities\Pcategory;

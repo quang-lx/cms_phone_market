@@ -3,15 +3,28 @@
 namespace Modules\Admin\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
-use Modules\Admin\Events\Pcategory\PCategoryWasCreated;
-use Modules\Admin\Events\Pcategory\PCategoryWasUpdated;
+use Modules\Admin\Events\PCategory\PCategoryWasCreated;
+use Modules\Admin\Events\PCategory\PCategoryWasUpdated;
 use Modules\Admin\Repositories\PcategoryRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
 class EloquentPcategoryRepository extends BaseRepository implements PcategoryRepository
 {
     protected $categories;
-    protected $cate;
+
+    public function create($data)
+    {
+        $model = $this->model->create($data);
+        event(new PCategoryWasCreated($model, $data));
+        return $model;
+    }
+
+    public function update($model, $data)
+    {
+        $model->update($data);
+        event(new PCategoryWasUpdated($model, $data));
+        return $model;
+    }
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
@@ -35,7 +48,7 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
             });
             return  $data = $query->paginate($request->get('per_page', 10));
         }
-        
+
         $data = $query->paginate($request->get('per_page', 10));
         $data_case= $this->formatCategories($data->getCollection());
         // dd(1);
