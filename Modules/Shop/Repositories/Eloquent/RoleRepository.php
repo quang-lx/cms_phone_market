@@ -2,6 +2,7 @@
 namespace Modules\Shop\Repositories\Eloquent;
 
 use App\Models\MPermission;
+use Illuminate\Support\Facades\Auth;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Modules\Shop\Repositories\RoleRepository as RoleInterface;
 use Illuminate\Http\Request;
@@ -50,6 +51,8 @@ class RoleRepository extends BaseRepository implements RoleInterface {
     {
         $query = $this->newQueryBuilder();
         $query->where('module', MPermission::MODULE_SHOP);
+        $query->where('company_id', Auth::user()->company_id);
+
         if ($relations) {
             $query = $query->with($relations);
         }
