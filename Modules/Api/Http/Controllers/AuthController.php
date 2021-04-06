@@ -213,6 +213,8 @@ class AuthController extends ApiController
         }
         $sessionKey = sprintf('user_%s_otp', $user->id);
         $otpSession = session($sessionKey);
+        Log::info($otp);
+        Log::info($otpSession);
         if ($otp != $otpSession) {
             return $this->respond([], ErrorCode::ERR02_MSG, ErrorCode::ERR02);
         }
