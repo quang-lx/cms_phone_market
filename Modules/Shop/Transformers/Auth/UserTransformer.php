@@ -11,6 +11,7 @@ class UserTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
+            'status' => $this->status,
             'username' => $this->username,
             'name' => $this->name,
             'email' => $this->email,

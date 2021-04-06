@@ -26,7 +26,7 @@ class UserTransformer extends JsonResource
             'status_color' =>$this->status_color,
             'status' =>$this->status,
             'updated_by' =>$this->updated_by,
-            'role' =>$this->company_id,
+            'role' =>$this->roles,
             'shop_id' =>$this->shop_id,
             'created_name' =>$this->created_name,
 

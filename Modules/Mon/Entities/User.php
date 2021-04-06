@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Wildside\Userstamps\Userstamps;
@@ -156,6 +157,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             case self::STATUS_ACTIVE:
                 $statusName = 'Hoạt động';
                 break;
+            case self::STATUS_INACTIVE:
+                $statusName = 'Chưa hoạt động';
+                break;
         }
         return $statusName;
     }
@@ -171,5 +175,12 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         }
         return $statusColor;
     }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id',
+            'role_id')
+            ->withPivot('role_id','model_id');
+    }
+
 
 }

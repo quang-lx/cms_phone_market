@@ -86,7 +86,7 @@
                                                          sortable="custom"/>
                                         <el-table-column prop="email" :label="$t('user.label.email')"
                                                          sortable="custom"/>
-                                        <el-table-column prop="role" :label="$t('user.label.role')"
+                                        <el-table-column prop="role[0].name" :label="$t('user.label.role')"
                                                          sortable="custom"/>
 
 
@@ -149,11 +149,15 @@
                 listStatus: [
                     {
                         value: 0,
-                        label: 'Đã khóa'
+                        label: 'Chưa hoạt động'
                     },
                     {
                         value: 1,
                         label: 'Hoạt động'
+                    },
+                    {
+                        value: 2,
+                        label: 'Đã khóa'
                     }
                 ],
                 filter: {

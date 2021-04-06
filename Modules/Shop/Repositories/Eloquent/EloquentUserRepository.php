@@ -4,8 +4,13 @@ namespace Modules\Shop\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Modules\Mon\Entities\User;
+use Modules\Mon\Events\UserWasCreated;
+use Modules\Mon\Events\UserWasUpdated;
 use Modules\Shop\Repositories\UserRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
+use Ramsey\Uuid\Uuid;
 
 class EloquentUserRepository extends BaseRepository implements UserRepository
 {
@@ -52,9 +57,83 @@ class EloquentUserRepository extends BaseRepository implements UserRepository
         $query = $this->newQueryBuilder();
 
         foreach($data as $key=>$item){
-            $item['created_name'] = $query->select('name')->where('id' , $item['created_by'])->first()->name;
+            $temp = $query->select('name')->where('id' , $item['updated_by'])->first();
+            if (isset($temp->name)){
+                $item['created_name'] = $temp->name;
+            }
+
             $result[] = $item;
         }
         return $result;
+    }
+
+    public function changePassword($model, $data) {
+        $this->checkForNewPassword($data);
+        $model->update($data);
+        return $model;
+    }
+
+    /**
+     * Create a user and assign roles to it
+     * @param  array $data
+     * @param  array $roles
+     * @return User
+     */
+    public function createWithRoles($data, $roles)
+    {
+        $this->checkForNewPassword($data);
+
+        $user = $this->model->create((array)$data);
+        event(new UserWasCreated($user, $data));
+        if (!empty($roles)) {
+            $user->assignRole($roles);
+        }
+
+        return $user;
+    }
+    /**
+     * @param $userId
+     * @param $data
+     * @param $roles
+     * @internal param $user
+     * @return mixed
+     */
+    public function updateAndSyncRoles($model, $data, $roles)
+    {
+        unset($data['password']);
+        $model->update($data);
+
+        event(new UserWasUpdated($model, $data));
+
+        if (!empty($roles)) {
+            $model->syncRoles($roles);
+        }
+        return $model;
+    }
+    /**
+     * Check if there is a new password given
+     * If not, unset the password field
+     * @param array $data
+     */
+    private function checkForNewPassword(array &$data)
+    {
+        if (array_key_exists('password', $data) === false) {
+            return;
+        }
+
+        if ($data['password'] === '' || $data['password'] === null) {
+            unset($data['password']);
+
+            return;
+        }
+
+        $data['password'] = Hash::make($data['password']);
+    }
+    public function generateTokenFor(User $user)
+    {
+        return app(\Modules\Mon\Repositories\UserTokenRepository::class)->create([
+            'user_id' => $user->id,
+            'access_token' => Uuid::uuid4()->toString()
+        ]);
     }
 }

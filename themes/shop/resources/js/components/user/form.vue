@@ -130,6 +130,24 @@
                                                                      v-text="form.errors.first('email')"></div>
                                                             </el-form-item>
 
+                                                            <el-form-item :label="$t('user.label.status')"
+                                                                          :class="{'el-form-item is-error': form.errors.has(  'status') }">
+
+                                                                <el-select v-model="modelForm.status" :placeholder="$t('user.label.status')"
+                                                                           filterable style="width: 100% !important">
+                                                                    <el-option
+                                                                            v-for="item in listStatus"
+                                                                            :key="'status'+ item.value"
+                                                                            :label="item.label"
+                                                                            :value="item.value">
+                                                                    </el-option>
+
+                                                                </el-select>
+                                                                <div class="el-form-item__error"
+                                                                     v-if="form.errors.has('status')"
+                                                                     v-text="form.errors.first('status')"></div>
+                                                            </el-form-item>
+
                                                             <div v-if="modelForm.is_new">
                                                                 <el-form-item :label="$t('user.label.password')"
                                                                               :class="{'el-form-item is-error': form.errors.has('password') }">
@@ -224,13 +242,29 @@
                     phone: '',
                     roles: [],
                     is_new: false,
-                    type: 1
+                    type: 1,
+                    status: 1
 
                 },
                 roles: [],
                 checkAll: false,
                 isIndeterminate: false,
-                changePassDialogVisible: false
+                changePassDialogVisible: false,
+                listStatus: [
+
+                    {
+                        value: 1,
+                        label: 'Hoạt động'
+                    },
+                    {
+                        value: 0,
+                        label: 'Chưa hoạt động'
+                    },
+                    {
+                        value: 2,
+                        label: 'Đã khóa'
+                    }
+                ],
             };
         },
         methods: {
@@ -312,16 +346,16 @@
             },
 
             fetchRoles() {
-                axios.get(route('apishop.roles.allByCompany'))
+                axios.get(route('apishop.roles.index'))
                     .then((response) => {
                         this.roles = response.data.data;
                     });
             },
             getRoute() {
                 if (this.$route.params.userId !== undefined) {
-                    return route('api.users.update', {user: this.$route.params.userId});
+                    return route('api.user.update', {user: this.$route.params.userId});
                 }
-                return route('api.users.store');
+                return route('api.user.store');
             },
             handleCheckAllChange(val) {
                 this.modelForm.roles = val ? this.roles.map(item => item.id) : [];

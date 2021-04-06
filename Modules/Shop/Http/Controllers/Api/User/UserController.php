@@ -4,7 +4,9 @@ namespace Modules\Shop\Http\Controllers\Api\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Modules\Mon\Entities\User;
+use Modules\Mon\Repositories\ProfileRepository;
 use Modules\Shop\Http\Requests\User\CreateUserRequest;
 use Modules\Shop\Transformers\UserTransformer;
 use Modules\Shop\Http\Requests\User\UpdateUserRequest;
@@ -19,12 +21,18 @@ class UserController extends ApiController
      * @var UserRepository
      */
     private $userRepository;
+    private $profileRepository;
 
-    public function __construct(Authentication $auth, UserRepository $user)
+    public function __construct(
+        Authentication $auth,
+        UserRepository $user,
+        ProfileRepository $profileRepository
+    )
     {
         parent::__construct($auth);
 
         $this->userRepository = $user;
+        $this->profileRepository = $profileRepository;
     }
 
 
@@ -42,7 +50,21 @@ class UserController extends ApiController
 
     public function store(CreateUserRequest $request)
     {
-        $this->userRepository->create($request->all());
+        $username = $request->get('username');
+        $data = $request->all();
+        if($request->get('type') == User::TYPE_USER) {
+            $usernameFormatted = validate_isdn($username);
+            $data['username'] = $usernameFormatted;
+        }
+
+        $data['company_id'] = Auth::user()->company_id;
+        $data['status'] = User::STATUS_ACTIVE;
+        $data['sms_verified_at'] = now();
+        $data['finish_reg'] = 1;
+
+        $user = $this->userRepository->createWithRoles($data, $request->get('roles') );
+        $data['user_id'] = $user->id;
+        $this->profileRepository->create($data);
 
         return response()->json([
             'errors' => false,
@@ -58,7 +80,23 @@ class UserController extends ApiController
 
     public function update(User $user, UpdateUserRequest $request)
     {
-        $this->userRepository->update($user, $request->all());
+        $username = $request->get('username');
+        $usernameFormatted = validate_isdn($username);
+        $data = $request->all();
+
+        if ($user->type == User::TYPE_USER) {
+            $data['username'] = $usernameFormatted;
+        }
+
+        $this->userRepository->updateAndSyncRoles($user, $data, $request->get('roles'));
+        $profile = $user->profile()->first();
+
+        if ($profile) {
+            $this->profileRepository->update($profile, $data);
+        } else {
+            $data['user_id'] = $user->id;
+            $this->profileRepository->create($data);
+        }
 
         return response()->json([
             'errors' => false,
