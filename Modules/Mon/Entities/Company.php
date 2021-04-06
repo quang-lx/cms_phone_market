@@ -5,6 +5,8 @@ namespace Modules\Mon\Entities;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
+use Modules\Media\Traits\MediaRelation;
+
 
 /**
  * Modules\Mon\Entities\Company
@@ -45,7 +47,7 @@ use Wildside\Userstamps\Userstamps;
  * @mixin \Eloquent
  */
 class Company extends Model {
-    use  SoftDeletes, Userstamps;
+    use  SoftDeletes, Userstamps,MediaRelation;
 
     const STATUS_LOCK = 0;
     const STATUS_ACTIVE = 1;
@@ -59,7 +61,7 @@ class Company extends Model {
 
     protected $table = 'company';
     protected $fillable = [
-        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email','updated_by','approve_status'
+        'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by','address','phone','email','updated_by','approve_status', 'priority'
     ];
 
 
@@ -107,7 +109,16 @@ class Company extends Model {
         return $statusName;
     }
 
+    public function shop() {
+        return $this->hasMany(Shop::class, 'company_id');
+    }
+
     public function countShop() {
         return $this->hasMany(Shop::class, 'company_id')->count();
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('thumbnail')->first();
     }
 }

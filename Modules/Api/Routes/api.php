@@ -77,3 +77,27 @@ Route::prefix('auth')->group(function () {
 
     ]);
 });
+Route::prefix('otp')->group(function () {
+
+    Route::post('/{user}/resend', [
+        'as' => 'api.otp.resend',
+        'uses' => 'AuthController@resendOtp',
+
+    ]);
+
+});
+
+
+Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
+
+
+    Route::post('update', [
+        'uses' => 'UserController@update',
+        'as' => 'apife.user.update',
+    ]);
+
+    Route::post('logout', [
+        'uses' => 'UserController@logout',
+        'as' => 'apife.user.logout',
+    ]);
+});

@@ -37,6 +37,7 @@ return [
     'system shop' => 'Cửa hàng',
     'company' => 'Tài khoản cửa hàng',
     'company info' => 'Thông tin cửa hàng',
+    'pcategory' => 'Danh mục sản phẩm',
 
 
 ];

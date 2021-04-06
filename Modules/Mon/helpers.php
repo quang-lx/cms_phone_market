@@ -158,7 +158,7 @@ if (!function_exists('validate_isdn')) {
 if (!function_exists('gen_sms_token')) {
     function gen_sms_token() {
         return 2021;
-        return mt_rand(1000,9999);
+//        return mt_rand(1000,9999);
     }
 }
 

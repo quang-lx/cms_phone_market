@@ -77,7 +77,7 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 $item->item(trans('backend::sidebar.company'), function (Item $item) {
 
                     $item->weight(0);
-
+                    $item->isActiveWhen('/admin/company');
                     $item->route('admin.company.index');
                     $item->authorize(
                         $this->auth->hasAccess('admin.company.index')
@@ -87,10 +87,19 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 $item->item(trans('backend::sidebar.company info'), function (Item $item) {
 
                     $item->weight(0);
-
+                    $item->isActiveWhen('/admin/company/danh-sach');
                     $item->route('admin.company.index1');
                     $item->authorize(
                         $this->auth->hasAccess('admin.company.index1')
+                    );
+                });
+                $item->item(trans('backend::sidebar.pcategory'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('admin.pcategory.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.pcategory.index')
                     );
                 });
             });

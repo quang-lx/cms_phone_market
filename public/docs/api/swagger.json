@@ -216,6 +216,14 @@
                     },
                     {
                         "in": "formData",
+                        "name": "token",
+                        "description": "token",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
                         "name": "password",
                         "description": "password",
                         "required": true,

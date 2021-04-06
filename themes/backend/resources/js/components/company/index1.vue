@@ -32,12 +32,18 @@
                                             </el-option>
                                         </el-select>
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-6">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch" placeholder="Tên đăng nhập/Tên ch/SĐT/Email"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-
+                                    <div class="col-2">
+                                        <router-link :to="{name: 'admin.company.create'}">
+                                            <el-button type="primary"    class="btn btn-flat">
+                                                {{ $t('company.label.create_title') }}
+                                            </el-button>
+                                        </router-link>
+                                    </div>
                                 </div>
 
 
@@ -97,7 +103,7 @@
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
                                                 <edit-button
-                                                        :to="{name: 'admin.listcompany.edit', params: {listcompanyId: scope.row.id}}"></edit-button>
+                                                        :to="{name: 'admin.company.edit', params: {companyId: scope.row.id}}"></edit-button>
                                                 <delete-button :scope="scope" :rows="data"></delete-button>
                                             </template>
                                         </el-table-column>

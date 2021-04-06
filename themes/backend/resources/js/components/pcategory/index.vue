@@ -20,14 +20,14 @@
                             </div>
                             <div class="col-sm-6 text-right">
                                 <div class="row">
-                                    <div class="col-10">
+                                    <div class="col-sm-9">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-sm-3">
                                         <router-link :to="{name: 'admin.pcategory.create'}">
-                                            <el-button type="primary"  size="small"   class="btn btn-flat">
+                                            <el-button type="primary"      class="btn btn-flat">
                                                 {{ $t('pcategory.label.create_pcategory') }}
                                             </el-button>
                                         </router-link>
@@ -65,7 +65,12 @@
                                         <el-table-column prop="id" :label="$t('pcategory.label.id')" width="75" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="image" :label="$t('pcategory.label.image')" sortable="custom"> </el-table-column>
+                                        <el-table-column prop=""  :label="$t('pcategory.label.image')" >
+                                            <template slot-scope="scope">
+                                                <img :src="scope.row.thumbnail.path_string" v-if="scope.row.thumbnail"
+                                                     width="100" height="100" style="object-fit:contain"/>
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column  prop="name" :label="$t('pcategory.label.name')" sortable="custom">
                                         <template slot-scope="scope">
                                             <span  class="pl-4"  v-if="scope.row.parent_id">{{scope.row.name}}</span>

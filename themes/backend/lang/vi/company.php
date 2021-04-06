@@ -17,6 +17,7 @@ return [
 
         'create_title' => 'Tạo tài khoản',
         'update_title' => 'Cập nhật',
+        'detail_title' => 'Chi tiết'
     ],
 
     'message' => [

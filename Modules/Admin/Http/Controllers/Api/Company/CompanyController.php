@@ -100,4 +100,8 @@ class CompanyController extends ApiController {
             'message' => trans('backend::company.message.delete success'),
         ]);
     }
+    
+    public function findCompany(Company $company) {
+        return new  ListCompanyTransformer($company);
+    }
 }

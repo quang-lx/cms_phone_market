@@ -43,7 +43,7 @@ class SendSmsToUserRegistered implements ShouldQueue
         SmsToken::create($smsTokenData);
         $content = sprintf("%s la ma xac thuc cua ban tren My Lane. Ma co hieu luc trong vong 3 phut.", $smsToken);
         $content = sprintf("%s la ma xac minh dang ky Baotrixemay cua ban", $smsToken);
-        $result = $this->smsClient->sendToPhone($userPhone, $content);
-        Log::info('sms token result', (array)$result);
+//        $result = $this->smsClient->sendToPhone($userPhone, $content);
+//        Log::info('sms token result', (array)$result);
     }
 }

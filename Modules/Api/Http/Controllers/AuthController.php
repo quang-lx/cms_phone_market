@@ -147,6 +147,9 @@ class AuthController extends ApiController
         $user->save();
         $smsToken->save();
 
+        $sessionKey = sprintf('user_%s_otp', $user->id);
+        Redis::set($sessionKey, $token);
+
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
     public function countUserOtp($userId) {
@@ -172,6 +175,7 @@ class AuthController extends ApiController
     public function storePassword(User $user, Request $request)
     {
         $password = $request->get('password');
+        $otp = $request->get('token');
 
         $validator = Validator::make($request->all(), [
             'password' => 'required',
@@ -208,13 +212,27 @@ class AuthController extends ApiController
             return $this->respond([], ErrorCode::ERR06_MSG, ErrorCode::ERR06);
         }
 
-        $user->password = Hash::make($password);
-        $user->finish_reg = 1;
-        $user->save();
+
 
         if ($request->get('in_change')) {
             $data = ['user_id' => $user->id];
+            if ($otp != $this->getAccessToken($user)) {
+                return $this->respond([], ErrorCode::ERR02_MSG, ErrorCode::ERR02);
+            }
+            $user->password = Hash::make($password);
+            $user->finish_reg = 1;
+            $user->save();
         } else {
+            $sessionKey = sprintf('user_%s_otp', $user->id);
+            $otpSession = Redis::get($sessionKey);
+
+            if ($otp != $otpSession) {
+                return $this->respond([], ErrorCode::ERR02_MSG, ErrorCode::ERR02);
+            }
+
+            $user->password = Hash::make($password);
+            $user->finish_reg = 1;
+            $user->save();
             auth()->login($user);
 
             $data = $this->getAuthUser($user);
@@ -226,16 +244,19 @@ class AuthController extends ApiController
     public function getAuthUser($user) {
         $data = [];
 
-        $customClaims = [
-            'user_id' => $user->id,
-            'username' => $user->username,
-        ];
-        $data['token'] = JWTAuth::fromUser($user, $customClaims);
+
+        $data['token'] = $this->getAccessToken($user);
         $data['user'] = new UserTransformer($user);
 
         return $data;
     }
-
+    public function getAccessToken($user) {
+        $customClaims = [
+            'user_id' => $user->id,
+            'username' => $user->username,
+        ];
+        return JWTAuth::fromUser($user, $customClaims);
+    }
     public function login(Request $request) {
 
         $validator = Validator::make($request->all(), [
@@ -252,7 +273,7 @@ class AuthController extends ApiController
             return $this->respond([], ErrorCode::ERR08_MSG, ErrorCode::ERR08);
         }
 
-        $username = validate_isdn($request->get('username'));
+        $username =  ($request->get('username'));
         $password = $request->get('password');
         // check db
         $user = User::query()->where(['username' =>  $username, 'type' =>  User::TYPE_USER])->first();
@@ -307,11 +328,12 @@ class AuthController extends ApiController
         if (empty($phone)) {
             return $this->respond([], ErrorCode::ERR25_MSG, ErrorCode::ERR25);
         }
+
         $phone = validate_isdn($phone);
 
         // check db
 
-        if (!$user->phone != $phone) {
+        if ($user->phone != $phone) {
             return $this->respond([], ErrorCode::ERR27_MSG, ErrorCode::ERR27);
         }
         $countOtp = $this->countUserOtp($user->id);
@@ -340,7 +362,7 @@ class AuthController extends ApiController
     }
     public function loginSocial(GetInfoSocialRequest $request)
     {
-        try{
+//        try{
             if ($request->provider === ConnectedAccount::SERVICE_FACEBOOK) {
                 /**
                  * @var $userSocial \Laravel\Socialite\Two\User
@@ -456,11 +478,11 @@ class AuthController extends ApiController
                 }
 
             }
-        }catch (\Exception $exception) {
-
-            return $this->respond([], $exception->getMessage(), ErrorCode::ERR500);
-
-        }
+//        }catch (\Exception $exception) {
+//
+//            return $this->respond([], $exception->getMessage(), ErrorCode::ERR500);
+//
+//        }
 
     }
 

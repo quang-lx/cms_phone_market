@@ -17,7 +17,7 @@ class PcategoryTransformer extends JsonResource
             'name' => $this->name,
             'type' => $this->type,
             'parent_id' => $this->parent_id,
-
+            'thumbnail' => $this->thumbnail,
              'urls' => [
                 'delete_url' => route('api.pcategory.destroy', $this->id),
             ],

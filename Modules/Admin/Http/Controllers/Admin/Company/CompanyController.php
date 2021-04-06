@@ -56,5 +56,10 @@ class CompanyController extends AdminController
         return $this->view('admin::companies.edit', compact('company'));
     }
 
+    public function detail(Company $company)
+    {
+        return $this->view('admin::companies.detail', compact('company'));
+    }
+
 
 }

@@ -305,6 +305,11 @@ Route::middleware('auth:api')->prefix('/companies')->group(function (){
         'as' => 'api.company.destroy',
         'uses' => 'Company\CompanyController@destroy',
     ]);
+
+    Route::get('{company}/chi-tiet', [
+        'as' => 'api.company.findCompany',
+        'uses' => 'Company\CompanyController@findCompany',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/pcategories')->group(function (){
 
