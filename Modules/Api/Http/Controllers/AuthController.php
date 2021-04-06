@@ -148,7 +148,7 @@ class AuthController extends ApiController
         $smsToken->save();
 
         $sessionKey = sprintf('user_%s_otp', $user->id);
-        session([$sessionKey => $token]);
+        Redis::set($sessionKey, $token);
 
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
@@ -212,7 +212,7 @@ class AuthController extends ApiController
             return $this->respond([], ErrorCode::ERR06_MSG, ErrorCode::ERR06);
         }
         $sessionKey = sprintf('user_%s_otp', $user->id);
-        $otpSession = session($sessionKey);
+        $otpSession = Redis::get($sessionKey);
         Log::info($otp);
         Log::info($otpSession);
         if ($otp != $otpSession) {
