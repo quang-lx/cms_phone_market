@@ -20,6 +20,11 @@ class EloquentListCompanyRepository extends BaseRepository implements ListCompan
             $query->where('status', $status);
         }
 
+        if ($request->get('level') !== null) {
+            $level = $request->get('level');
+            $query->where('level', $level);
+        }
+
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');
             $query->where(function ($q) use ($keyword) {
