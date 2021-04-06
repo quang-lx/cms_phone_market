@@ -211,21 +211,28 @@ class AuthController extends ApiController
         if($validator->fails()){
             return $this->respond([], ErrorCode::ERR06_MSG, ErrorCode::ERR06);
         }
-        $sessionKey = sprintf('user_%s_otp', $user->id);
-        $otpSession = Redis::get($sessionKey);
-        Log::info($otp);
-        Log::info($otpSession);
-        if ($otp != $otpSession) {
-            return $this->respond([], ErrorCode::ERR02_MSG, ErrorCode::ERR02);
-        }
 
-        $user->password = Hash::make($password);
-        $user->finish_reg = 1;
-        $user->save();
+
 
         if ($request->get('in_change')) {
             $data = ['user_id' => $user->id];
+            if ($otp != $this->getAccessToken($user)) {
+                return $this->respond([], ErrorCode::ERR02_MSG, ErrorCode::ERR02);
+            }
+            $user->password = Hash::make($password);
+            $user->finish_reg = 1;
+            $user->save();
         } else {
+            $sessionKey = sprintf('user_%s_otp', $user->id);
+            $otpSession = Redis::get($sessionKey);
+
+            if ($otp != $otpSession) {
+                return $this->respond([], ErrorCode::ERR02_MSG, ErrorCode::ERR02);
+            }
+
+            $user->password = Hash::make($password);
+            $user->finish_reg = 1;
+            $user->save();
             auth()->login($user);
 
             $data = $this->getAuthUser($user);
@@ -237,16 +244,19 @@ class AuthController extends ApiController
     public function getAuthUser($user) {
         $data = [];
 
-        $customClaims = [
-            'user_id' => $user->id,
-            'username' => $user->username,
-        ];
-        $data['token'] = JWTAuth::fromUser($user, $customClaims);
+
+        $data['token'] = $this->getAccessToken($user);
         $data['user'] = new UserTransformer($user);
 
         return $data;
     }
-
+    public function getAccessToken($user) {
+        $customClaims = [
+            'user_id' => $user->id,
+            'username' => $user->username,
+        ];
+        return JWTAuth::fromUser($user, $customClaims);
+    }
     public function login(Request $request) {
 
         $validator = Validator::make($request->all(), [
