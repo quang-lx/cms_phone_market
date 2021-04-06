@@ -147,6 +147,9 @@ class AuthController extends ApiController
         $user->save();
         $smsToken->save();
 
+        $sessionKey = sprintf('user_%s_otp', $user->id);
+        session([$sessionKey => $token]);
+
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
     public function countUserOtp($userId) {
@@ -172,6 +175,7 @@ class AuthController extends ApiController
     public function storePassword(User $user, Request $request)
     {
         $password = $request->get('password');
+        $otp = $request->get('token');
 
         $validator = Validator::make($request->all(), [
             'password' => 'required',
@@ -206,6 +210,11 @@ class AuthController extends ApiController
         ]);
         if($validator->fails()){
             return $this->respond([], ErrorCode::ERR06_MSG, ErrorCode::ERR06);
+        }
+        $sessionKey = sprintf('user_%s_otp', $user->id);
+        $otpSession = session($sessionKey);
+        if ($otp != $otpSession) {
+            return $this->respond([], ErrorCode::ERR02_MSG, ErrorCode::ERR02);
         }
 
         $user->password = Hash::make($password);
@@ -309,7 +318,7 @@ class AuthController extends ApiController
         }
 
         $phone = validate_isdn($phone);
-        
+
         // check db
 
         if ($user->phone != $phone) {
