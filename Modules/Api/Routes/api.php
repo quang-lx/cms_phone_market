@@ -86,3 +86,18 @@ Route::prefix('otp')->group(function () {
     ]);
 
 });
+
+
+Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
+
+
+    Route::post('update', [
+        'uses' => 'UserController@update',
+        'as' => 'apife.user.update',
+    ]);
+
+    Route::post('logout', [
+        'uses' => 'UserController@logout',
+        'as' => 'apife.user.logout',
+    ]);
+});
