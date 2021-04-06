@@ -10,7 +10,7 @@ return [
         'updated_at' => 'Ngày cập nhật',
         'password_confirmation' => 'Xác nhận mật khẩu',
         'password' => 'Mật khẩu',
-        'create_user' => 'Tạo người dùng',
+        'create_user' => 'Tạo tài khoản',
 
         'update_user' => 'Cập nhật',
         'create_admin' => 'Tạo quản trị',

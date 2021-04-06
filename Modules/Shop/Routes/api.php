@@ -26,6 +26,11 @@ Route::middleware('auth:api')->prefix('auth')->group(function (){
         'uses' => 'Auth\RoleController@all',
 
     ]);
+    Route::get('/roles/allByCompany', [
+        'as' => 'apishop.roles.allByCompany',
+        'uses' => 'Auth\RoleController@allByCompany',
+
+    ]);
     Route::get('/roles', [
         'as' => 'apishop.roles.index',
         'uses' => 'Auth\RoleController@index',
