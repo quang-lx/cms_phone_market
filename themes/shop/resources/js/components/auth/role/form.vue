@@ -138,7 +138,7 @@
                             type: 'success',
                             message: response.message,
                         });
-                        this.$router.push({name: 'admin.roles.index'});
+                        this.$router.push({name: 'shop.roles.index'});
                     })
                     .catch((error) => {
 
@@ -156,7 +156,7 @@
                     cancelButtonText: this.$t('mon.cancel.No'),
                     type: 'warning'
                 }).then(() => {
-                    this.$router.push({name: 'admin.roles.index'});
+                    this.$router.push({name: 'shop.roles.index'});
                 }).catch(() => {
 
                 });
@@ -169,9 +169,9 @@
                 this.loading = true;
                 let routeUri = '';
                 if (this.$route.params.roleId !== undefined) {
-                    routeUri = route('api.roles.find', {role: this.$route.params.roleId});
+                    routeUri = route('apishop.roles.find', {role: this.$route.params.roleId});
                 } else {
-                    routeUri = route('api.roles.find-new');
+                    routeUri = route('apishop.roles.find-new');
                 }
                 axios.get(routeUri)
                     .then((response) => {
@@ -182,9 +182,9 @@
 
             getRoute() {
                 if (this.$route.params.roleId !== undefined) {
-                    return route('api.roles.update', {role: this.$route.params.roleId});
+                    return route('apishop.roles.update', {role: this.$route.params.roleId});
                 }
-                return route('api.roles.store');
+                return route('apishop.roles.store');
             },
             reloadRemoveTable() {
                 this.$refs.removeTable.reloadData();

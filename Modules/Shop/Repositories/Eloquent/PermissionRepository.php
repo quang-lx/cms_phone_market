@@ -12,6 +12,8 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
+        $query->where('module', MPermission::MODULE_SHOP);
+
         if ($relations) {
             $query = $query->with($relations);
         }
@@ -69,7 +71,8 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
     public function getAllPermission(Request $request, $relations)
     {
         $query = $this->newQueryBuilder();
-        $query->where('module', MPermission::MODULE_ADMIN);
+        $query->where('module', MPermission::MODULE_SHOP);
+
         if ($relations) {
             $query = $query->with($relations);
         }

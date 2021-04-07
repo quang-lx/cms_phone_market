@@ -14,7 +14,8 @@ class RoleRepository extends BaseRepository implements RoleInterface {
     {
         $permissions= $data['permissions'];
         unset($data['permissions']);
-        $data['module'] = MPermission::MODULE_ADMIN;
+        $data['module'] = MPermission::MODULE_SHOP;
+        $data['company_id'] = Auth::user()->company_id;
         $model = $this->model->create($data);
         $model->syncPermissions($this->parsePermission($permissions));
         return $model;

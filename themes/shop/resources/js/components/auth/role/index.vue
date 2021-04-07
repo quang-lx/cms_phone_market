@@ -38,7 +38,7 @@
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
                                         <li class="nav-item">
-                                            <router-link :to="{name: 'admin.roles.create'}" class="float-sm-right">
+                                            <router-link :to="{name: 'shop.roles.create'}" class="float-sm-right">
                                                 <el-button type="primary" size="small" class="btn ">
                                                     {{ $t('role.label.create_role') }}
                                                 </el-button>

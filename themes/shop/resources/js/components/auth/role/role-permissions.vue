@@ -77,7 +77,7 @@
                     in_role: (this.type === 'add')? 0: 1
                 };
 
-                axios.get(route('api.permissions.all-by-group', _.merge({}, customProperties)))
+                axios.get(route('apishop.permissions.all-by-group', _.merge({}, customProperties)))
                     .then((response) => {
 
                         this.groupPermissions = response.data;
