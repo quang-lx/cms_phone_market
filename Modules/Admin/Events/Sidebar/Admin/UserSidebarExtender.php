@@ -55,6 +55,29 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
 
         });
+
+        $menu->group('product shop', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('backend::sidebar.product management'), function (Item $item) {
+                $item->icon('fas fa-list-alt');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('admin.pcategory.index')
+                );
+
+                $item->item(trans('backend::sidebar.pcategory'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('admin.pcategory.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.pcategory.index')
+                    );
+                });
+
+            });
+        });
+
         $menu->group('system shop', function (Group $group) {
             $group->hideHeading(true);
             $group->item(trans('backend::sidebar.system shop'), function (Item $item) {
@@ -72,7 +95,6 @@ class UserSidebarExtender extends AbstractAdminSidebar
                         $this->auth->hasAccess('admin.shoppermissions.shopindex')
                     );
                 });
-
 
                 $item->item(trans('backend::sidebar.company'), function (Item $item) {
 
@@ -93,13 +115,14 @@ class UserSidebarExtender extends AbstractAdminSidebar
                         $this->auth->hasAccess('admin.company.index1')
                     );
                 });
-                $item->item(trans('backend::sidebar.pcategory'), function (Item $item) {
+
+                $item->item(trans('backend::sidebar.company priority'), function (Item $item) {
 
                     $item->weight(0);
-
-                    $item->route('admin.pcategory.index');
+                    $item->isActiveWhen('/admin/company/uu-tien');
+                    $item->route('admin.company.priority');
                     $item->authorize(
-                        $this->auth->hasAccess('admin.pcategory.index')
+                        $this->auth->hasAccess('admin.company.priority')
                     );
                 });
             });

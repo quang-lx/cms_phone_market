@@ -37,7 +37,9 @@ return [
     'system shop' => 'Cửa hàng',
     'company' => 'Tài khoản cửa hàng',
     'company info' => 'Thông tin cửa hàng',
-    'pcategory' => 'Danh mục sản phẩm',
+    'company priority' => 'Cài đặt ưu tiên',
+    'pcategory' => 'Danh mục',
+    'product management' => 'Quản trị sản phẩm',
 
 
 ];
