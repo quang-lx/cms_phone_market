@@ -17,6 +17,18 @@ class Pcategory extends Model
         'type',
         'parent_id'
     ];
+    public function getTypeNameAttribute($value) {
+        $statusName = '';
+        switch ($this->type) {
+            case 'product':
+                $statusName = 'Hàng hóa';
+                break;
+            case 'service':
+                $statusName = 'Dịch vụ';
+                break;
+        }
+        return $statusName;
+    }
     public function getThumbnailAttribute()
     {
         return $this->filesByZone('thumbnail')->first();

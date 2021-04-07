@@ -61,5 +61,10 @@ class CompanyController extends AdminController
         return $this->view('admin::companies.detail', compact('company'));
     }
 
+    public function priority()
+    {
+        return $this->view('admin::companies.priority');
+    }
+
 
 }

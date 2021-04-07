@@ -284,6 +284,12 @@ Route::group(['prefix' => '/company'], function ( ) {
         'middleware' => 'permission:admin.company.detail'
     ]);
 
+    Route::get('uu-tien', [
+        'as' => 'admin.company.priority',
+        'uses' => 'Company\CompanyController@priority',
+        'middleware' => 'permission:admin.company.priority'
+    ]);
+
 
 });
 Route::group(['prefix' => '/pcategory'], function ( ) {

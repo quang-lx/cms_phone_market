@@ -77,7 +77,7 @@
                                             <span v-else>{{scope.row.name}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="type" :label="$t('pcategory.label.type')" sortable="custom">
+                                        <el-table-column prop="type_name" :label="$t('pcategory.label.type_name')" sortable="custom">
 
                                         </el-table-column>
 

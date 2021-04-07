@@ -98,8 +98,10 @@
                               placeholder="Select"
                             >
                               <el-option
+                                label="Chọn"
+                                value=""
                               >
-                              Chọn
+                              
                               </el-option>
                     
                               <el-option
