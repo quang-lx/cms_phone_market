@@ -51,4 +51,52 @@ class UserController extends ApiController
     }
 
 
+	public function changePassword(Request $request)
+	{
+		$user = Auth::user();
+		$password = $request->get('password');
+
+		$validator = Validator::make($request->all(), [
+			'password' => 'required',
+		]);
+		if($validator->fails()){
+			return $this->respond([], ErrorCode::ERR08_MSG, ErrorCode::ERR08);
+		}
+
+		$validator = Validator::make($request->all(), [
+			'password_confirmation' => 'required',
+		]);
+		if($validator->fails()){
+			return $this->respond([], ErrorCode::ERR09_MSG, ErrorCode::ERR09);
+		}
+
+		$validator = Validator::make($request->all(), [
+			'password' => 'min:8',
+		]);
+		if($validator->fails()){
+			return $this->respond([], ErrorCode::ERR04_MSG, ErrorCode::ERR04);
+		}
+
+		$validator = Validator::make($request->all(), [
+			'password' => 'max:25',
+		]);
+		if($validator->fails()){
+			return $this->respond([], ErrorCode::ERR05_MSG, ErrorCode::ERR05);
+		}
+
+		$validator = Validator::make($request->all(), [
+			'password' => 'confirmed',
+		]);
+		if($validator->fails()){
+			return $this->respond([], ErrorCode::ERR06_MSG, ErrorCode::ERR06);
+		}
+
+		$data = ['user_id' => $user->id];
+		$user->password = Hash::make($password);
+		$user->finish_reg = 1;
+		$user->save();
+
+		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
+
 }
