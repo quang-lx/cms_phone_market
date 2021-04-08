@@ -61,4 +61,26 @@ Route::group(['prefix' => '/shop'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/user'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.user.index',
+        'uses' => 'User\UserController@index',
+        'middleware' => 'permission:shop.user.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.user.create',
+        'uses' => 'User\UserController@create',
+        'middleware' => 'permission:shop.user.create'
+    ]);
+
+    Route::get('{user}/edit', [
+        'as' => 'shop.user.edit',
+        'uses' => 'User\UserController@edit',
+        'middleware' => 'permission:shop.user.edit'
+    ]);
+
+
+});
 // append
+

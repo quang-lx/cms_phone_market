@@ -21,7 +21,7 @@ class UserTransformer extends Resource
             'email_verified_at' => $this->email_verified_at,
             'activated' => $this->activated,
             'last_login' => $this->last_login,
-            'created_at' => $this->created_at->format('Y-m-d')
+            'created_at' => $this->created_at->format('Y-m-d'),
         ];
     }
 }
