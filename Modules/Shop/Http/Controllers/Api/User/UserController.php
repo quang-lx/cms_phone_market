@@ -52,10 +52,6 @@ class UserController extends ApiController
     {
         $username = $request->get('username');
         $data = $request->all();
-        if($request->get('type') == User::TYPE_USER) {
-            $usernameFormatted = validate_isdn($username);
-            $data['username'] = $usernameFormatted;
-        }
 
         $data['company_id'] = Auth::user()->company_id;
         $data['status'] = User::STATUS_ACTIVE;
@@ -83,10 +79,6 @@ class UserController extends ApiController
         $username = $request->get('username');
         $usernameFormatted = validate_isdn($username);
         $data = $request->all();
-
-        if ($user->type == User::TYPE_USER) {
-            $data['username'] = $usernameFormatted;
-        }
 
         $this->userRepository->updateAndSyncRoles($user, $data, $request->get('roles'));
         $profile = $user->profile()->first();

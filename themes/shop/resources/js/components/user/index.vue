@@ -86,8 +86,19 @@
                                                          sortable="custom"/>
                                         <el-table-column prop="email" :label="$t('user.label.email')"
                                                          sortable="custom"/>
-                                        <el-table-column prop="role[0].name" :label="$t('user.label.role')"
-                                                         sortable="custom"/>
+                                        <el-table-column prop="" :label="$t('user.label.role')"
+                                                         sortable="custom"
+                                                         >
+                                        <template slot-scope="scope">
+                                               <span
+                                                v-for="(item, index) in scope.row.role"
+                                                :key="index"
+                                               >
+                                               <span v-if="scope.row.role.length-1==index">{{item.name}}</span>
+                                               <span v-else>{{item.name}},</span>
+                                               </span>
+                                            </template>
+                                        </el-table-column>
 
 
                                         <el-table-column prop="status" :label="$t('user.label.status')"

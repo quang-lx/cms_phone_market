@@ -46,25 +46,7 @@ class EloquentUserRepository extends BaseRepository implements UserRepository
         } else {
             $query->orderBy('id', 'asc');
         }
-        $data = $query->paginate($request->get('per_page', 10));
-
-        $data_update= $this->getCreatedName($data->getCollection());
-        return $data->setCollection(collect($data_update));
-    }
-
-    function getCreatedName($data){
-        $result = [];
-        $query = $this->newQueryBuilder();
-
-        foreach($data as $key=>$item){
-            $temp = $query->select('name')->where('id' , $item['updated_by'])->first();
-            if (isset($temp->name)){
-                $item['created_name'] = $temp->name;
-            }
-
-            $result[] = $item;
-        }
-        return $result;
+        return $query->paginate($request->get('per_page', 10));
     }
 
     public function changePassword($model, $data) {

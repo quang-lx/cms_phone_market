@@ -28,7 +28,7 @@ class UserTransformer extends JsonResource
             'updated_by' =>$this->updated_by,
             'role' =>$this->roles,
             'shop_id' =>$this->shop_id,
-            'created_name' =>$this->created_name,
+            'created_name' => optional($this->creator)->name,
 
              'urls' => [
                 'delete_url' => route('api.user.destroy', $this->id),

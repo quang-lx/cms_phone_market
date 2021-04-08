@@ -176,11 +176,5 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return $statusColor;
     }
 
-    public function roles(){
-        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id',
-            'role_id')
-            ->withPivot('role_id','model_id');
-    }
-
 
 }
