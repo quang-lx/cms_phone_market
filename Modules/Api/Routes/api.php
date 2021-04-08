@@ -100,4 +100,8 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
         'uses' => 'UserController@logout',
         'as' => 'apife.user.logout',
     ]);
+	Route::post('change-password', [
+		'uses' => 'UserController@changePassword',
+		'as' => 'apife.user.changePassword',
+	]);
 });
