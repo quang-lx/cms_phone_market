@@ -34,7 +34,7 @@ class RoleController extends ApiController
 
     public function all(Request $request)
     {
-        return RoleTransformer::collection($this->roleRepository->newQueryBuilder()->get());
+        return RoleTransformer::collection($this->roleRepository->serverPagingFor($request));
     }
     public function index(Request $request)
     {

@@ -90,86 +90,73 @@
                                 >
                                     <div class="row">
                                         <div class="col-md-12">
+                                            <el-form-item :label="$t('user.label.username')"
+                                                          :class="{'el-form-item is-error': form.errors.has('username') }">
+                                                <el-input v-model="modelForm.username"
+                                                          autocomplete="off"></el-input>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('username')"
+                                                     v-text="form.errors.first('username')"></div>
+                                            </el-form-item>
+                                            <el-form-item :label="$t('user.label.name')"
+                                                          :class="{'el-form-item is-error': form.errors.has('name') }">
+                                                <el-input v-model="modelForm.name"></el-input>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('name')"
+                                                     v-text="form.errors.first('name')"></div>
+                                            </el-form-item>
 
-                                            <el-tabs>
-                                                <el-tab-pane :label="$t('user.tabs.data')">
-                                                            <span slot="label"
-                                                                  :class="{'error' : form.errors.any()}">
-                                                                {{ $t('user.tabs.data') }}
-                                                            </span>
-                                                    <div class="row">
-                                                        <div class="col-md-10">
-                                                            <el-form-item :label="$t('user.label.username')"
-                                                                          :class="{'el-form-item is-error': form.errors.has('username') }">
-                                                                <el-input v-model="modelForm.username"
-                                                                          autocomplete="off"></el-input>
-                                                                <div class="el-form-item__error"
-                                                                     v-if="form.errors.has('username')"
-                                                                     v-text="form.errors.first('username')"></div>
-                                                            </el-form-item>
-                                                            <el-form-item :label="$t('user.label.name')"
-                                                                          :class="{'el-form-item is-error': form.errors.has('name') }">
-                                                                <el-input v-model="modelForm.name"></el-input>
-                                                                <div class="el-form-item__error"
-                                                                     v-if="form.errors.has('name')"
-                                                                     v-text="form.errors.first('name')"></div>
-                                                            </el-form-item>
+                                            <el-form-item :label="$t('user.label.email')"
+                                                          :class="{'el-form-item is-error': form.errors.has('email') }">
+                                                <el-input v-model="modelForm.email"
+                                                          autocomplete="off"></el-input>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('email')"
+                                                     v-text="form.errors.first('email')"></div>
+                                            </el-form-item>
 
-                                                            <el-form-item :label="$t('user.label.email')"
-                                                                          :class="{'el-form-item is-error': form.errors.has('email') }">
-                                                                <el-input v-model="modelForm.email"
-                                                                          autocomplete="off"></el-input>
-                                                                <div class="el-form-item__error"
-                                                                     v-if="form.errors.has('email')"
-                                                                     v-text="form.errors.first('email')"></div>
-                                                            </el-form-item>
+                                            <div v-if="modelForm.is_new">
+                                                <el-form-item :label="$t('user.label.password')"
+                                                              :class="{'el-form-item is-error': form.errors.has('password') }">
+                                                    <el-input v-model="modelForm.password"
+                                                              autocomplete="off"
+                                                              type="password"></el-input>
+                                                    <div class="el-form-item__error"
+                                                         v-if="form.errors.has('password')"
+                                                         v-text="form.errors.first('password')"></div>
+                                                </el-form-item>
+                                                <el-form-item
+                                                    :label="$t('user.label.password_confirmation')"
+                                                    :class="{'el-form-item is-error': form.errors.has('password_confirmation') }">
+                                                    <el-input v-model="modelForm.password_confirmation"
+                                                              autocomplete="off"
+                                                              type="password"></el-input>
+                                                    <div class="el-form-item__error"
+                                                         v-if="form.errors.has('password_confirmation')"
+                                                         v-text="form.errors.first('password_confirmation')"></div>
+                                                </el-form-item>
+                                            </div>
 
-                                                            <div v-if="modelForm.is_new">
-                                                                <el-form-item :label="$t('user.label.password')"
-                                                                              :class="{'el-form-item is-error': form.errors.has('password') }">
-                                                                    <el-input v-model="modelForm.password"
-                                                                              autocomplete="off"
-                                                                              type="password"></el-input>
-                                                                    <div class="el-form-item__error"
-                                                                         v-if="form.errors.has('password')"
-                                                                         v-text="form.errors.first('password')"></div>
-                                                                </el-form-item>
-                                                                <el-form-item
-                                                                    :label="$t('user.label.password_confirmation')"
-                                                                    :class="{'el-form-item is-error': form.errors.has('password_confirmation') }">
-                                                                    <el-input v-model="modelForm.password_confirmation"
-                                                                              autocomplete="off"
-                                                                              type="password"></el-input>
-                                                                    <div class="el-form-item__error"
-                                                                         v-if="form.errors.has('password_confirmation')"
-                                                                         v-text="form.errors.first('password_confirmation')"></div>
-                                                                </el-form-item>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </el-tab-pane>
-                                                <el-tab-pane :label="$t('user.tabs.roles')">
-                                                    <el-checkbox style="margin-bottom:20px"
-                                                                 :indeterminate="isIndeterminate"
-                                                                 v-model="checkAll"
-                                                                 @change="handleCheckAllChange" border
-                                                                 size="medium">
-                                                        {{ $t('mon.all') }}
+                                            <h3  style="font-size: 1.1rem;font-weight: 400;margin: 0;">{{$t('user.tabs.roles')}}</h3> <hr>
+                                            <div style="margin-left:200px">
+                                                <el-checkbox style="margin-bottom:20px"
+                                                             :indeterminate="isIndeterminate"
+                                                             v-model="checkAll"
+                                                             @change="handleCheckAllChange" border
+                                                             size="medium">
+                                                    {{ $t('mon.all') }}
+                                                </el-checkbox>
+
+                                                <el-checkbox-group v-model="modelForm.roles"
+                                                                   @change="handleCheckedChange">
+                                                    <el-checkbox v-for="item in roles" :label="item.id"
+                                                                 :key="'role-'+ item.id"
+                                                                 border size="medium">{{item.name}}
                                                     </el-checkbox>
-
-                                                    <el-checkbox-group v-model="modelForm.roles"
-                                                                       @change="handleCheckedChange">
-                                                        <el-checkbox v-for="item in roles" :label="item.id"
-                                                                     :key="'role-'+ item.id"
-                                                                     border size="medium">{{item.name}}
-                                                        </el-checkbox>
-                                                    </el-checkbox-group>
+                                                </el-checkbox-group>
+                                            </div>
 
 
-                                                </el-tab-pane>
-
-
-                                            </el-tabs>
                                         </div>
 
                                     </div>
@@ -306,7 +293,7 @@
             },
 
             fetchRoles() {
-                axios.get(route('api.roles.all'))
+                axios.get(route('api.roles.all', {module: 'admin', per_page: 1000}))
                     .then((response) => {
                         this.roles = response.data.data;
                     });

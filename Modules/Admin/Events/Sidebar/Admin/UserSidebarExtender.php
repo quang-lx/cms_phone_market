@@ -84,17 +84,17 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 $item->icon('fas fa-store');
                 $item->weight(10);
                 $item->authorize(
-                    $this->auth->hasAccess('admin.shoppermissions.shopindex')
+                    $this->auth->hasAccess('admin.company.index')
                 );
-                $item->item(trans('backend::sidebar.shop_permissions'), function (Item $item) {
-
-                    $item->weight(0);
-
-                    $item->route('admin.shoppermissions.shopindex');
-                    $item->authorize(
-                        $this->auth->hasAccess('admin.shoppermissions.shopindex')
-                    );
-                });
+//                $item->item(trans('backend::sidebar.shop_permissions'), function (Item $item) {
+//
+//                    $item->weight(0);
+//
+//                    $item->route('admin.shoppermissions.shopindex');
+//                    $item->authorize(
+//                        $this->auth->hasAccess('admin.shoppermissions.shopindex')
+//                    );
+//                });
 
                 $item->item(trans('backend::sidebar.company'), function (Item $item) {
 
