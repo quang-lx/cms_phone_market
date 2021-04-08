@@ -8,7 +8,12 @@ class UpdateBrandRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required',
+            'type' => 'required',
+            'category_id' => 'required',
+            'status' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +28,12 @@ class UpdateBrandRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'name.required' => 'Tên không được để trống',
+            'type.required' => 'Kiểu không được để trống',
+            'category_id.required' => 'Danh mục không được để trống',
+            'status.required' => 'Trạng thái không được để trống',
+        ];
     }
 
     public function translationMessages()

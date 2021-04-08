@@ -88,11 +88,11 @@
                           <el-form-item
                             :label="$t('brand.label.category')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('category'),
+                              'el-form-item is-error': form.errors.has('category_id'),
                             }"
                           >
                             <el-select
-                              v-model="modelForm.category"
+                              v-model="modelForm.category_id"
                               multiple
                               placeholder="Select"
                             >
@@ -104,6 +104,11 @@
                               >
                               </el-option>
                             </el-select>
+                               <div
+                              class="el-form-item__error"
+                              v-if="form.errors.has('category_id')"
+                              v-text="form.errors.first('category_id')"
+                            ></div>
                           </el-form-item>
                         </div>
                         <div class="col-md-10">
@@ -178,13 +183,11 @@ export default {
       loading: false,
       list_district: [],
       list_province: [],
-      options: [
-    
-      ],
+      options: [],
       modelForm: {
         name: "",
         type: "",
-        category: [],
+        category_id: [],
         status: "",
       },
       listService: [
@@ -223,7 +226,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          // this.$router.push({ name: "admin.brand.index" });
+          this.$router.push({ name: "admin.brand.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -257,8 +260,7 @@ export default {
           this.loading = false;
           this.modelForm = response.data.data;
           this.modelForm.is_new = false;
-          this.changeType()
-          this.modelForm.category= response.data.data.category
+          this.getCateUpdate()
 
         });
       } else {
@@ -267,7 +269,18 @@ export default {
     },
 
     changeType() {
-      this.modelForm.category=[]
+      this.modelForm.category_id=[]
+      let routeUri = "";
+        routeUri = route("api.pcategory.index", {
+          type: this.modelForm.type,
+        });
+        axios.get(routeUri).then((response) => {
+          this.loading = false;
+          this.options = response.data.data;
+        });
+    },
+
+     getCateUpdate() {
       let routeUri = "";
         routeUri = route("api.pcategory.index", {
           type: this.modelForm.type,

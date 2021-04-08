@@ -67,17 +67,23 @@
                                         </el-table-column>
                                         <el-table-column prop="name"  :label="$t('brand.label.name')" >
                                         </el-table-column>
-                                        <el-table-column  prop="type" :label="$t('brand.label.type')" sortable="custom">
+                                        <el-table-column  prop="type_name" :label="$t('brand.label.type')" sortable="custom">
                                         </el-table-column>
-                                        <el-table-column prop="status" :label="$t('brand.label.status')" sortable="custom">
-
+                                       <el-table-column prop="status" :label="$t('company.label.status')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
+                                            </template>
                                         </el-table-column>
                                          <el-table-column prop="" :label="$t('brand.label.category')" sortable="custom">
                                              <template slot-scope="scope">
                                                <span
                                                 v-for="(item, index) in scope.row.category"
                                             :key="index"
-                                               >{{item}}</span>
+                                               >
+                                               <span v-if="scope.row.category.length-1 == index"> {{item.name}}</span>
+                                               <span v-else> {{item.name}},</span>
+                                              
+                                               </span>
                                             </template>
                                         </el-table-column>
 
