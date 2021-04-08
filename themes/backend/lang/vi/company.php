@@ -13,7 +13,7 @@ return [
         'address' => 'Địa chỉ',
         'description' => 'Miêu tả',
         'status' => 'Trạng thái',
-        'level' => 'Cấp cửa hàng',
+        'level' => 'Cấp độ ưu tiên',
 
         'create_title' => 'Tạo tài khoản',
         'update_title' => 'Cập nhật',

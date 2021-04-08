@@ -40,6 +40,14 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
             $query->orderBy('created_at', 'asc');
         }
 
+        if ($request->get('type') !== null) {
+            $type = $request->get('type');
+            $query->where(function ($q) use ($type) {
+                $q->orWhere('type',$type);
+            });
+            return  $data = $query->get();
+        }
+
         if ($request->get('parent_id') !== null) {
             $id_edit = $request->get('id_edit');
             $query->where(function ($q) use ($id_edit){

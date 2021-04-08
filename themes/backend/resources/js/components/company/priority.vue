@@ -63,7 +63,7 @@
             <div class="card">
               <div class="card-body">
                 <el-dialog
-                  title="Shipping address"
+                  title="Cài đặt cửa hàng ưu tiên"
                   :visible.sync="dialogFormVisible"
                 >
                   <el-form :model="form">
@@ -72,6 +72,7 @@
                       :label-width="formLabelWidth"
                     >
                       <el-input
+                      :disabled="true"
                         v-model="form.name"
                         autocomplete="off"
                       ></el-input>
@@ -138,23 +139,6 @@
                       sortable="custom"
                     />
                     <el-table-column
-                      prop="address"
-                      :label="$t('company.label.address')"
-                      sortable="address"
-                    >
-                      <template slot-scope="scope">
-                        <span class="dont-break-out">{{
-                          scope.row.address
-                        }}</span>
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      prop="phone"
-                      :label="$t('company.label.phone')"
-                      sortable="address"
-                    />
-
-                    <el-table-column
                       prop="status"
                       :label="$t('company.label.status')"
                       sortable="custom"
@@ -195,11 +179,8 @@
 
                     <el-table-column prop="actions" width="130">
                       <template slot-scope="scope">
-                        <i
-                          class="el-icon-arrow-up"
-                          :scope="scope"
-                          @click="showDataModal(scope.row)"
-                        ></i>
+                        <el-button  :scope="scope"
+                          @click="showDataModal(scope.row)" type="primary" icon="el-icon-arrow-up"></el-button>
                       </template>
                     </el-table-column>
                   </el-table>
@@ -335,7 +316,7 @@ export default {
           this.loading = false;
           this.$message({
             type: "success",
-            message: response.message,
+            message: response.data.message,
           });
             this.queryServer({});
         })

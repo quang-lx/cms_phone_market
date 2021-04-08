@@ -335,7 +335,32 @@ Route::middleware('auth:api')->prefix('/pcategories')->group(function (){
         'uses' => 'Pcategory\PcategoryController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/brands')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.brand.index',
+        'uses' => 'Brand\BrandController@index',
+    ]);
+    Route::post('/{brand}/edit', [
+            'as' => 'api.brand.update',
+            'uses' => 'Brand\BrandController@update',
+        ]);
+   Route::get('/{brand}', [
+              'as' => 'api.brand.find',
+              'uses' => 'Brand\BrandController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.brand.store',
+        'uses' => 'Brand\BrandController@store',
+    ]);
+
+    Route::delete('/{brand}', [
+        'as' => 'api.brand.destroy',
+        'uses' => 'Brand\BrandController@destroy',
+    ]);
+});
 // append
+
 
 
 

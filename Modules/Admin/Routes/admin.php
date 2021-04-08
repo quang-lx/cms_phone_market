@@ -313,7 +313,29 @@ Route::group(['prefix' => '/pcategory'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/brand'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.brand.index',
+        'uses' => 'Brand\BrandController@index',
+        'middleware' => 'permission:admin.brand.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.brand.create',
+        'uses' => 'Brand\BrandController@create',
+        'middleware' => 'permission:admin.brand.create'
+    ]);
+
+    Route::get('{brand}/edit', [
+        'as' => 'admin.brand.edit',
+        'uses' => 'Brand\BrandController@edit',
+        'middleware' => 'permission:admin.brand.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

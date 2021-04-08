@@ -197,7 +197,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\BrandRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentBrandRepository(new \Modules\Mon\Entities\Brand());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

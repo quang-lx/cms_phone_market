@@ -386,7 +386,7 @@ export default {
                 "address": "Địa chỉ",
                 "description": "Miêu tả",
                 "status": "Trạng thái",
-                "level": "Cấp cửa hàng",
+                "level": "Cấp độ ưu tiên",
                 "create_title": "Tạo tài khoản",
                 "update_title": "Cập nhật",
                 "detail_title": "Chi tiết"
@@ -452,7 +452,10 @@ export default {
             "shop_permissions": "Danh sách quyền",
             "system shop": "Cửa hàng",
             "company": "Tài khoản cửa hàng",
-            "company info": "Thông tin cửa hàng"
+            "company info": "Thông tin cửa hàng",
+            "company priority": "Cài đặt ưu tiên",
+            "pcategory": "Danh mục",
+            "product management": "Quản trị sản phẩm"
         },
         "pcategory": {
             "label": {
