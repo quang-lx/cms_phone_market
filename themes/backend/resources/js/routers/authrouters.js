@@ -348,7 +348,7 @@ export default [
         name: 'admin.brand.create',
         component: BrandForm,
         props: {
-            pageTitle: 'brand.label.create_brand',
+            pageTitle: 'brand.label.create_title',
         },
     },
 
@@ -357,7 +357,7 @@ export default [
         name: 'admin.brand.edit',
         component: BrandForm,
         props: {
-            pageTitle: 'brand.label.update_brand',
+            pageTitle: 'brand.label.update_title',
         },
     },
 

@@ -8,8 +8,8 @@
               <el-breadcrumb-item>
                 <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'admin.phoenix.index' }"
-                >{{ $t("phoenix.label.phoenix") }}
+              <el-breadcrumb-item :to="{ name: 'admin.brand.index' }"
+                >{{ $t("brand.label.brand") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
             </el-breadcrumb>
@@ -45,7 +45,7 @@
                       <div class="row">
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('phoenix.label.name')"
+                            :label="$t('brand.label.name')"
                             :class="{
                               'el-form-item is-error': form.errors.has('name'),
                             }"
@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('phoenix.label.type')"
+                            :label="$t('brand.label.type')"
                             :class="{
                               'el-form-item is-error': form.errors.has('type'),
                             }"
@@ -86,13 +86,13 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('phoenix.label.type')"
+                            :label="$t('brand.label.category')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('type'),
+                              'el-form-item is-error': form.errors.has('category'),
                             }"
                           >
                             <el-select
-                              v-model="value1"
+                              v-model="modelForm.category"
                               multiple
                               placeholder="Select"
                             >
@@ -108,7 +108,7 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('phoenix.label.status')"
+                            :label="$t('brand.label.status')"
                             :class="{
                               'el-form-item is-error': form.errors.has(
                                 'status'
@@ -181,12 +181,10 @@ export default {
       options: [
     
       ],
-      value1: [],
-      value2: [],
       modelForm: {
         name: "",
         type: "",
-        categories: "",
+        category: [],
         status: "",
       },
       listService: [
@@ -225,7 +223,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "admin.phoenix.index" });
+          // this.$router.push({ name: "admin.brand.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -243,23 +241,25 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "admin.phoenix.index" });
+          this.$router.push({ name: "admin.brand.index" });
         })
         .catch(() => {});
     },
 
     fetchData() {
       let routeUri = "";
-      if (this.$route.params.phoenixId !== undefined) {
+      if (this.$route.params.brandId !== undefined) {
         this.loading = true;
-        routeUri = route("api.phoenix.find", {
-          phoenix: this.$route.params.phoenixId,
+        routeUri = route("api.brand.find", {
+          brand: this.$route.params.brandId,
         });
         axios.get(routeUri).then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
           this.modelForm.is_new = false;
-          this.fetchDistrict(response.data.data.province_id);
+          this.changeType()
+          this.modelForm.category= response.data.data.category
+
         });
       } else {
         this.modelForm.is_new = true;
@@ -267,6 +267,7 @@ export default {
     },
 
     changeType() {
+      this.modelForm.category=[]
       let routeUri = "";
         routeUri = route("api.pcategory.index", {
           type: this.modelForm.type,
