@@ -46,18 +46,20 @@ use Modules\Media\Traits\MediaRelation;
  * @method static \Illuminate\Database\Query\Builder|Company withoutTrashed()
  * @mixin \Eloquent
  */
-class Brand extends Model {
-    use  SoftDeletes, Userstamps,MediaRelation;
+class Brand extends Model
+{
+    use  SoftDeletes, Userstamps, MediaRelation;
 
     const STATUS_LOCK = 0;
     const STATUS_ACTIVE = 1;
 
     protected $table = 'brand';
     protected $fillable = [
-        'name', 'type', 'status','created_by', 'deleted_by','updated_by'
+        'name', 'type', 'status', 'created_by', 'deleted_by', 'updated_by'
     ];
 
-    public function getStatusNameAttribute($value) {
+    public function getStatusNameAttribute($value)
+    {
         $statusName = '';
         switch ($this->status) {
             case self::STATUS_LOCK:
@@ -69,7 +71,8 @@ class Brand extends Model {
         }
         return $statusName;
     }
-    public function getStatusColorAttribute($value) {
+    public function getStatusColorAttribute($value)
+    {
         $statusColor = '';
         switch ($this->status) {
             case self::STATUS_LOCK:
@@ -81,7 +84,8 @@ class Brand extends Model {
         }
         return $statusColor;
     }
-    public function getTypeNameAttribute($value) {
+    public function getTypeNameAttribute($value)
+    {
         $statusName = '';
         switch ($this->type) {
             case 'product':
@@ -95,9 +99,10 @@ class Brand extends Model {
     }
     public function BrandPcategory()
     {
-        return $this->hasMany(BrandPcategory::class,'brand_id');
+        return $this->hasMany(BrandPcategory::class, 'brand_id');
     }
-
-
-
+    public function pcategories()
+    {
+        return $this->belongsToMany(Pcategory::class, 'brand_pcategory', 'brand_id', 'pcategory_id');
+    }
 }

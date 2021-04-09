@@ -15,7 +15,7 @@ class EloquentBrandRepository extends BaseRepository implements BrandRepository
         foreach ($data['category_id'] as $key => $value) {
            array_push($brand_pcategory,['brand_id'=>$brand_id,'pcategory_id'=>$value]);
         }
-        BrandPcategory::insert($brand_pcategory);
+        $this->model->pcategories()->sync($brand_pcategory);
     }
 
     public function update($model, $data)
@@ -27,7 +27,7 @@ class EloquentBrandRepository extends BaseRepository implements BrandRepository
            array_push($brand_pcategory,['brand_id'=>$brand_id,'pcategory_id'=>$value]);
         }
         BrandPcategory::where('brand_id', $brand_id)->delete();
-        BrandPcategory::insert($brand_pcategory);
+        $model->pcategories()->sync($brand_pcategory);
     }
 
     public function destroy($model)
