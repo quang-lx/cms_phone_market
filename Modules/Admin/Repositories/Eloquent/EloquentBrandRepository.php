@@ -10,31 +10,20 @@ class EloquentBrandRepository extends BaseRepository implements BrandRepository
 {
     public function create($data)
     {
-        $brand_pcategory=[];
-        $brand_id = $this->model->create($data)->id;
-        foreach ($data['category_id'] as $key => $value) {
-           array_push($brand_pcategory,['brand_id'=>$brand_id,'pcategory_id'=>$value]);
-        }
-        $this->model->pcategories()->sync($brand_pcategory);
+     
+        $model =  $this->model->create($data);
+        $model->pcategories()->sync($data['category_id']);
     }
 
     public function update($model, $data)
     {
         $model->update($data);
-        $brand_pcategory=[];
-        $brand_id = $model->id;
-        foreach ($data['category_id'] as $key => $value) {
-           array_push($brand_pcategory,['brand_id'=>$brand_id,'pcategory_id'=>$value]);
-        }
-        BrandPcategory::where('brand_id', $brand_id)->delete();
-        $model->pcategories()->sync($brand_pcategory);
+        $model->pcategories()->sync($data['category_id']);
     }
 
     public function destroy($model)
     {
-        $brand_id = $model->id;
-        BrandPcategory::where('brand_id', $brand_id)->delete();
-        return $model->delete();
+        return $model->pcategories()->detach();
     }
 
     public function serverPagingFor(Request $request, $relations = null)
