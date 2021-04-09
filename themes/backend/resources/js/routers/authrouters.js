@@ -38,6 +38,9 @@ import CompanyPriority from './../components/company/priority';
 import PcategoryList from './../components/pcategory/index';
 import PcategoryForm from './../components/pcategory/form';
 
+import BrandList from './../components/brand/index';
+import BrandForm from './../components/brand/form';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -331,6 +334,30 @@ export default [
         component: PcategoryForm,
         props: {
             pageTitle: 'pcategory.label.update_pcategory',
+        },
+    },
+
+    //
+    {
+        path: '/admin/brand',
+        name: 'admin.brand.index',
+        component: BrandList,
+    },
+    {
+        path: '/admin/brand/create',
+        name: 'admin.brand.create',
+        component: BrandForm,
+        props: {
+            pageTitle: 'brand.label.create_title',
+        },
+    },
+
+    {
+        path: '/admin/brand/:brandId/edit',
+        name: 'admin.brand.edit',
+        component: BrandForm,
+        props: {
+            pageTitle: 'brand.label.update_title',
         },
     },
 

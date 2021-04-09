@@ -373,6 +373,24 @@ export default {
             "allow all": "Chọn tất cả",
             "deny all": "Từ chối tất cả"
         },
+        "brand": {
+            "label": {
+                "id": "ID",
+                "brand": "Nhãn hàng",
+                "name": "Tên nhãn hàng",
+                "type": "Loại dịch vụ",
+                "category": "Danh mục",
+                "status": "Trạng thái",
+                "create_title": "Tạo nhãn",
+                "update_title": "Cập nhật nhãn",
+                "detail_title": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo nhãn thành công.",
+                "update success": "Cập nhật nhãn thành công.",
+                "delete success": "Xóa nhãn thành công."
+            }
+        },
         "company": {
             "label": {
                 "company": "Tài khoản cửa hàng",
@@ -386,7 +404,7 @@ export default {
                 "address": "Địa chỉ",
                 "description": "Miêu tả",
                 "status": "Trạng thái",
-                "level": "Cấp cửa hàng",
+                "level": "Cấp độ ưu tiên",
                 "create_title": "Tạo tài khoản",
                 "update_title": "Cập nhật",
                 "detail_title": "Chi tiết"
@@ -452,7 +470,10 @@ export default {
             "shop_permissions": "Danh sách quyền",
             "system shop": "Cửa hàng",
             "company": "Tài khoản cửa hàng",
-            "company info": "Thông tin cửa hàng"
+            "company info": "Thông tin cửa hàng",
+            "company priority": "Cài đặt ưu tiên",
+            "pcategory": "Danh mục",
+            "product management": "Quản trị sản phẩm"
         },
         "pcategory": {
             "label": {
