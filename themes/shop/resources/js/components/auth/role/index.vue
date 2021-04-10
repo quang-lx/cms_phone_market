@@ -77,7 +77,7 @@
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
                                                 <edit-button
-                                                        :to="{name: 'admin.roles.edit', params: {roleId: scope.row.id}}"></edit-button>
+                                                        :to="{name: 'shop.roles.edit', params: {roleId: scope.row.id}}"></edit-button>
                                                 <delete-button :scope="scope" :rows="data" v-if="scope.row.name != 'cms_login'"></delete-button>
                                             </template>
                                         </el-table-column>

@@ -50,11 +50,11 @@ class UserController extends ApiController
 
     public function store(CreateUserRequest $request)
     {
-        $username = $request->get('username');
         $data = $request->all();
 
         $data['company_id'] = Auth::user()->company_id;
         $data['status'] = User::STATUS_ACTIVE;
+        $data['type'] = User::TYPE_USER;
         $data['sms_verified_at'] = now();
         $data['finish_reg'] = 1;
 
@@ -76,8 +76,6 @@ class UserController extends ApiController
 
     public function update(User $user, UpdateUserRequest $request)
     {
-        $username = $request->get('username');
-        $usernameFormatted = validate_isdn($username);
         $data = $request->all();
 
         $this->userRepository->updateAndSyncRoles($user, $data, $request->get('roles'));

@@ -275,7 +275,10 @@
                 this.form.post(this.getRoute())
                     .then((response) => {
                         this.loading = false;
-
+                        this.$message({
+                            type: 'success',
+                            message: response.message,
+                        });
                         window.location.href =  route('shop.user.index') + '?msg=' + response.message
                     })
                     .catch((error) => {
