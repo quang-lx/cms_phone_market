@@ -1093,7 +1093,14 @@
                     }
                 ],
                 "parameters": [
-
+                    {
+                        "in": "formData",
+                        "name": "old_password",
+                        "description": "old_password",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
                     {
                         "in": "formData",
                         "name": "password",
