@@ -53,7 +53,13 @@ class UserController extends ApiController
 
 	public function changePassword(Request $request)
 	{
-		$user = Auth::user();
+        $oldPassword = $request->get('old_password');
+
+        if (empty($oldPassword)) {
+            return $this->respond([], ErrorCode::ERR30_MSG, ErrorCode::ERR08);
+        }
+
+        $user = Auth::user();
 		$password = $request->get('password');
 
 		$validator = Validator::make($request->all(), [
@@ -90,6 +96,10 @@ class UserController extends ApiController
 		if($validator->fails()){
 			return $this->respond([], ErrorCode::ERR06_MSG, ErrorCode::ERR06);
 		}
+
+        if (!Hash::check($oldPassword, $user->password)) {
+            return $this->respond([], ErrorCode::ERR28_MSG, ErrorCode::ERR28);
+        }
 
 		$data = ['user_id' => $user->id];
 		$user->password = Hash::make($password);
