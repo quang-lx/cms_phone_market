@@ -473,7 +473,8 @@ export default {
             "company info": "Thông tin cửa hàng",
             "company priority": "Cài đặt ưu tiên",
             "pcategory": "Danh mục",
-            "product management": "Quản trị sản phẩm"
+            "product management": "Quản trị sản phẩm",
+            "brand": "Nhãn hàng"
         },
         "pcategory": {
             "label": {

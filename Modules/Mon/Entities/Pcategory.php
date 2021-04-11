@@ -33,4 +33,9 @@ class Pcategory extends Model
     {
         return $this->filesByZone('thumbnail')->first();
     }
+
+    public function brand()
+    {
+        return $this->belongsToMany(Pcategory::class, 'brand_pcategory', 'pcategory_id','brand_id');
+    }
 }
