@@ -17,30 +17,16 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         $user = $this->route()->parameter('user');
-        $userType =$this->request->get('type');
-
-
         $rules = [
             'name'=>"required",
             'email' => "required|unique:users,email,{$user->id}|email",
-            'password_confirmation' => 'same:password'
+            'password_confirmation' => 'same:password',
+            'username' => ['required',"unique:users,username,{$user->id}"],
         ];
-
-        if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}", new PhoneNumber()];
-        } else {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}"];
-        }
         return $rules;
     }
     protected function prepareForValidation(): void
     {
-        $userType =$this->request->get('type');
-        if ($userType == User::TYPE_USER) {
-            $username =$this->request->get('username');
-            $usernameFormatted = validate_isdn($username);
-            $this->merge(['username' => $usernameFormatted]);
-        }
     }
     /**
      * Get custom attributes for validator errors.
