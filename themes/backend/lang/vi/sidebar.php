@@ -40,6 +40,7 @@ return [
     'company priority' => 'Cài đặt ưu tiên',
     'pcategory' => 'Danh mục',
     'product management' => 'Quản trị sản phẩm',
+    'brand' => 'Nhãn hàng',
 
 
 ];
