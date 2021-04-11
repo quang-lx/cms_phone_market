@@ -59,7 +59,6 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
 
         $data = $query->paginate($request->get('per_page', 10));
         $data_case= $this->formatCategories($data->getCollection());
-        // dd(1);
         return $data->setCollection(collect($data_case));
     }
 
@@ -74,8 +73,12 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
                 $result = array_merge($result, $child);
             }
         }
-        // echo "<pre>";
-        // print_r($result);
         return $result;
+    }
+
+    public function destroy($model)
+    {
+        $model->delete();
+        return $model->brand()->detach();
     }
 }

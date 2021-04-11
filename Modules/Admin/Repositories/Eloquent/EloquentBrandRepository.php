@@ -23,6 +23,7 @@ class EloquentBrandRepository extends BaseRepository implements BrandRepository
 
     public function destroy($model)
     {
+        $model->delete();
         return $model->pcategories()->detach();
     }
 
