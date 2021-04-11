@@ -13,6 +13,8 @@ import ShopForm from './../components/shop/form';
 import UserList2 from './../components/user/index';
 import UserForm2 from './../components/user/form';
 
+import ProductList from './../components/product/index';
+import ProductForm from './../components/product/form';
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -88,6 +90,30 @@ export default [
         component: UserForm2,
         props: {
             pageTitle: 'user.label.update_user',
+        },
+    },
+
+    // product
+    {
+        path: '/shop-admin/product',
+        name: 'shop.product.index',
+        component: ProductList,
+    },
+    {
+        path: '/shop-admin/product/create',
+        name: 'shop.product.create',
+        component: ProductForm,
+        props: {
+            pageTitle: 'product.label.create_product',
+        },
+    },
+
+    {
+        path: '/shop-admin/product/:productId/edit',
+        name: 'shop.product.edit',
+        component: ProductForm,
+        props: {
+            pageTitle: 'product.label.update_product',
         },
     },
 

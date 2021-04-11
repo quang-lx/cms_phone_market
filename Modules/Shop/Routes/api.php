@@ -131,5 +131,30 @@ Route::middleware('auth:api')->prefix('/users')->group(function (){
         'uses' => 'User\UserController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/products')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.product.index',
+        'uses' => 'Product\ProductController@index',
+    ]);
+    Route::post('/{product}/edit', [
+            'as' => 'api.product.update',
+            'uses' => 'Product\ProductController@update',
+        ]);
+   Route::get('/{product}', [
+              'as' => 'api.product.find',
+              'uses' => 'Product\ProductController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.product.store',
+        'uses' => 'Product\ProductController@store',
+    ]);
+
+    Route::delete('/{product}', [
+        'as' => 'api.product.destroy',
+        'uses' => 'Product\ProductController@destroy',
+    ]);
+});
 // append
+
 
