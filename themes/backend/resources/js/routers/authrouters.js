@@ -41,6 +41,8 @@ import PcategoryForm from './../components/pcategory/form';
 import BrandList from './../components/brand/index';
 import BrandForm from './../components/brand/form';
 
+import AccountList from './../components/account/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -360,6 +362,14 @@ export default [
             pageTitle: 'brand.label.update_title',
         },
     },
+
+     //
+     {
+        path: '/admin/account',
+        name: 'admin.account.index',
+        component: AccountList,
+    },
+
 
 
 ];

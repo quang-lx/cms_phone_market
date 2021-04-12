@@ -334,7 +334,29 @@ Route::group(['prefix' => '/brand'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/account'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.account.index',
+        'uses' => 'Account\AccountController@index',
+        'middleware' => 'permission:admin.account.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.account.create',
+        'uses' => 'Account\AccountController@create',
+        'middleware' => 'permission:admin.account.create'
+    ]);
+
+    Route::get('{account}/edit', [
+        'as' => 'admin.account.edit',
+        'uses' => 'Account\AccountController@edit',
+        'middleware' => 'permission:admin.account.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
