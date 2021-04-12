@@ -1207,7 +1207,7 @@
             }
         },
         "/user/profile": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "Bearer": []
