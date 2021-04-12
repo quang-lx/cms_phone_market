@@ -25,9 +25,7 @@ class UpdateUserRequest extends FormRequest
         ];
         return $rules;
     }
-    protected function prepareForValidation(): void
-    {
-    }
+
     /**
      * Get custom attributes for validator errors.
      *

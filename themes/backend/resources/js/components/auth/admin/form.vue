@@ -33,7 +33,8 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
-                                    {{ $t(pageTitle) }}<span v-if="modelForm.username">: &nbsp{{modelForm.username}}</span>
+                                    {{ $t(pageTitle) }}<span
+                                    v-if="modelForm.username">: &nbsp{{modelForm.username}}</span>
                                 </h3>
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
@@ -63,7 +64,8 @@
                                                       :class="{'el-form-item is-error': changepassForm.errors.has('password') }">
                                             <el-input v-model="modelForm.password" autocomplete="off"
                                                       type="password"></el-input>
-                                            <div class="el-form-item__error" v-if="changepassForm.errors.has('password')"
+                                            <div class="el-form-item__error"
+                                                 v-if="changepassForm.errors.has('password')"
                                                  v-text="changepassForm.errors.first('password')"></div>
                                         </el-form-item>
                                         <el-form-item :label="$t('user.label.password_confirmation')"
@@ -114,6 +116,18 @@
                                                      v-if="form.errors.has('email')"
                                                      v-text="form.errors.first('email')"></div>
                                             </el-form-item>
+                                            <el-form-item :label="$t('company.label.status')"
+                                                          :class="{'el-form-item is-error': form.errors.has('status') }">
+                                                <el-radio-group v-model="modelForm.status">
+                                                    <el-radio v-for="item in listStatus" :label="item.value"
+                                                              :key="item.lable">{{item.label}}
+                                                    </el-radio>
+
+                                                </el-radio-group>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('status')"
+                                                     v-text="form.errors.first('status')"></div>
+                                            </el-form-item>
 
                                             <div v-if="modelForm.is_new">
                                                 <el-form-item :label="$t('user.label.password')"
@@ -137,7 +151,9 @@
                                                 </el-form-item>
                                             </div>
 
-                                            <h3  style="font-size: 1.1rem;font-weight: 400;margin: 0;">{{$t('user.tabs.roles')}}</h3> <hr>
+                                            <h3 style="font-size: 1.1rem;font-weight: 400;margin: 0;">
+                                                {{$t('user.tabs.roles')}}</h3>
+                                            <hr>
                                             <div style="margin-left:200px">
                                                 <el-checkbox style="margin-bottom:20px"
                                                              :indeterminate="isIndeterminate"
@@ -184,146 +200,158 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import Form from 'form-backend-validation';
+  import axios from 'axios';
+  import Form from 'form-backend-validation';
 
-    export default {
-        props: {
-            locales: {default: null},
-            pageTitle: {default: null, String},
-        },
-        data() {
-            return {
-                form: new Form(),
-                changepassForm: new Form(),
-                loading: false,
-                loadingPassword: false,
-                modelForm: {
-                    username: '',
-                    name: '',
-                    email: '',
-                    phone: '',
-                    roles: [],
-                    is_new: false,
-                    type: 1
-
-                },
-                roles: [],
-                checkAll: false,
-                isIndeterminate: false,
-                changePassDialogVisible: false
-            };
-        },
-        methods: {
-            onSubmit() {
-                this.form = new Form(_.merge(this.modelForm, {}));
-                this.loading = true;
-
-                this.form.post(this.getRoute())
-                    .then((response) => {
-                        this.loading = false;
-
-                        window.location.href =  route('admin.admins.index') + '?msg=' + response.message
-                    })
-                    .catch((error) => {
-
-                        this.loading = false;
-                        this.$notify.error({
-                            title: this.$t('mon.error.Title'),
-                            message: this.getSubmitError(this.form.errors),
-                        });
-                    });
-            },
-            changePassword() {
-                this.changepassForm = new Form({
-                    password: this.modelForm.password,
-                    password_confirmation: this.modelForm.password_confirmation
-                });
-                this.loadingPassword = true;
-
-                this.changepassForm.post(route('api.users.change-password', {user: this.$route.params.userId}))
-                    .then((response) => {
-                        this.loadingPassword = false;
-                        this.$message({
-                            type: 'success',
-                            message: response.message,
-                        });
-                        this.changePassDialogVisible = false;
-                    })
-                    .catch((error) => {
-                        this.loadingPassword = false;
-                        this.$notify.error({
-                            title: this.$t('mon.error.Title'),
-                            message: this.getSubmitError(this.changepassForm.errors),
-                        });
-                    });
-            },
-            onCancel() {
-
-                this.$confirm(this.$t('mon.cancel.Are you sure to cancel?'), {
-                    confirmButtonText: this.$t('mon.cancel.Yes'),
-                    cancelButtonText: this.$t('mon.cancel.No'),
-                    type: 'warning'
-                }).then(() => {
-                    this.$router.push({name: 'admin.admins.index'});
-                }).catch(() => {
-
-                });
-
-
-            },
-
-
-            fetchData() {
-
-
-                let routeUri = '';
-                if (this.$route.params.userId !== undefined) {
-                    this.loading = true;
-                    routeUri = route('api.users.find', {user: this.$route.params.userId});
-                    axios.get(routeUri)
-                        .then((response) => {
-                            this.loading = false;
-                            this.modelForm = response.data.data;
-                            this.modelForm.is_new = false;
-                        });
-                } else {
-                    this.modelForm.is_new = true;
-                }
-            },
-
-            fetchRoles() {
-                axios.get(route('api.roles.all', {module: 'admin', per_page: 1000}))
-                    .then((response) => {
-                        this.roles = response.data.data;
-                    });
-            },
-            getRoute() {
-                if (this.$route.params.userId !== undefined) {
-                    return route('api.users.update', {user: this.$route.params.userId});
-                }
-                return route('api.users.store');
-            },
-            handleCheckAllChange(val) {
-                this.modelForm.roles = val ? this.roles.map(item => item.id) : [];
-                this.isIndeterminate = false;
-            },
-            handleCheckedChange(value) {
-
-                let checkedCount = value.length;
-                this.checkAll = checkedCount === this.roles.length;
-                this.isIndeterminate = checkedCount > 0 && checkedCount < this.roles.length;
-            }
-
+  export default {
+    props: {
+      locales: {default: null},
+      pageTitle: {default: null, String},
+    },
+    data() {
+      return {
+        form: new Form(),
+        changepassForm: new Form(),
+        loading: false,
+        loadingPassword: false,
+        modelForm: {
+          username: '',
+          name: '',
+          status: 1,
+          email: '',
+          phone: '',
+          roles: [],
+          is_new: false,
+          type: 1
 
         },
-        mounted() {
-            this.fetchData();
-            this.fetchRoles();
+        listStatus: [
 
-        },
-        computed: {}
-    }
+          {
+            value: 1,
+            label: 'Hoạt động'
+          },
+          {
+            value: 2,
+            label: 'Khóa'
+          }
+        ],
+        roles: [],
+        checkAll: false,
+        isIndeterminate: false,
+        changePassDialogVisible: false
+      };
+    },
+    methods: {
+      onSubmit() {
+        this.form = new Form(_.merge(this.modelForm, {}));
+        this.loading = true;
+
+        this.form.post(this.getRoute())
+        .then((response) => {
+          this.loading = false;
+
+          window.location.href = route('admin.admins.index') + '?msg=' + response.message
+        })
+        .catch((error) => {
+
+          this.loading = false;
+          this.$notify.error({
+            title: this.$t('mon.error.Title'),
+            message: this.getSubmitError(this.form.errors),
+          });
+        });
+      },
+      changePassword() {
+        this.changepassForm = new Form({
+          password: this.modelForm.password,
+          password_confirmation: this.modelForm.password_confirmation
+        });
+        this.loadingPassword = true;
+
+        this.changepassForm.post(route('api.users.change-password', {user: this.$route.params.userId}))
+        .then((response) => {
+          this.loadingPassword = false;
+          this.$message({
+            type: 'success',
+            message: response.message,
+          });
+          this.changePassDialogVisible = false;
+        })
+        .catch((error) => {
+          this.loadingPassword = false;
+          this.$notify.error({
+            title: this.$t('mon.error.Title'),
+            message: this.getSubmitError(this.changepassForm.errors),
+          });
+        });
+      },
+      onCancel() {
+
+        this.$confirm(this.$t('mon.cancel.Are you sure to cancel?'), {
+          confirmButtonText: this.$t('mon.cancel.Yes'),
+          cancelButtonText: this.$t('mon.cancel.No'),
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({name: 'admin.admins.index'});
+        }).catch(() => {
+
+        });
+
+
+      },
+
+
+      fetchData() {
+
+
+        let routeUri = '';
+        if (this.$route.params.userId !== undefined) {
+          this.loading = true;
+          routeUri = route('api.users.find', {user: this.$route.params.userId});
+          axios.get(routeUri)
+          .then((response) => {
+            this.loading = false;
+            this.modelForm = response.data.data;
+            this.modelForm.is_new = false;
+          });
+        } else {
+          this.modelForm.is_new = true;
+        }
+      },
+
+      fetchRoles() {
+        axios.get(route('api.roles.all', {module: 'admin', per_page: 1000}))
+        .then((response) => {
+          this.roles = response.data.data;
+        });
+      },
+      getRoute() {
+        if (this.$route.params.userId !== undefined) {
+          return route('api.users.update', {user: this.$route.params.userId});
+        }
+        return route('api.users.store');
+      },
+      handleCheckAllChange(val) {
+        this.modelForm.roles = val ? this.roles.map(item => item.id) : [];
+        this.isIndeterminate = false;
+      },
+      handleCheckedChange(value) {
+
+        let checkedCount = value.length;
+        this.checkAll = checkedCount === this.roles.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.roles.length;
+      }
+
+
+    },
+    mounted() {
+      this.fetchData();
+      this.fetchRoles();
+
+    },
+    computed: {}
+  }
 </script>
 
 <style scoped>

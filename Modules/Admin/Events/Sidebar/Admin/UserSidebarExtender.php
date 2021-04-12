@@ -139,6 +139,37 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
         });
 
+	    $menu->group('news', function (Group $group) {
+		    $group->hideHeading(true);
+		    $group->item(trans('backend::sidebar.news'), function (Item $item) {
+			    $item->icon('fas fa-newspaper');
+			    $item->weight(10);
+			    $item->authorize(
+				    $this->auth->hasAccess('admin.news.index')
+			    );
+
+			    $item->item(trans('backend::sidebar.category'), function (Item $item) {
+
+				    $item->weight(0);
+
+				    $item->route('admin.category.index');
+				    $item->authorize(
+					    $this->auth->hasAccess('admin.category.index')
+				    );
+			    });
+			    $item->item(trans('backend::sidebar.news'), function (Item $item) {
+
+				    $item->weight(0);
+
+				    $item->route('admin.news.index');
+				    $item->authorize(
+					    $this->auth->hasAccess('admin.news.index')
+				    );
+			    });
+
+		    });
+	    });
+
 
         return $menu;
 

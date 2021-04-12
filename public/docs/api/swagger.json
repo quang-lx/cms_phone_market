@@ -31,6 +31,10 @@
         {
             "name": "media",
             "description": "Operations about media"
+        },
+        {
+            "name": "shop",
+            "description": "Operations about Cửa hàng"
         }
 
     ],
@@ -39,6 +43,68 @@
         "https"
     ],
     "paths": {
+        "/app/shop/nearest": {
+            "get": {
+                "tags": [
+                    "shop"
+                ],
+                "summary": "shop nearest",
+                "description": "shop nearest",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "lat",
+                        "description": "lat",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "lng",
+                        "description": "lng",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/register": {
             "post": {
                 "tags": [
@@ -1036,10 +1102,58 @@
 
                     {
                         "in": "formData",
+                        "name": "name",
+                        "description": "name",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "phone",
+                        "description": "phone",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "gender",
+                        "description": "gender 1: nam, 2 : nu",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "email",
+                        "description": "email",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "birthday",
+                        "description": "birthday YYYY-MM-DD, 2021-01-22",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
                         "name": "fcm_token",
                         "description": "Fcm token",
                         "required": false,
                         "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "avatar",
+                        "description": "avatar",
+                        "required": false,
+                        "type": "integer",
                         "format": "text"
                     }
                 ],
@@ -1206,7 +1320,59 @@
                 }
             }
         },
+        "/user/profile": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "user profile",
+                "description": "user profile",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
 
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
         "/news/list": {
             "get": {
 

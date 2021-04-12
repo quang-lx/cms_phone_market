@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Media\Traits\MediaRelation;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -79,7 +80,7 @@ use Wildside\Userstamps\Userstamps;
  */
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
-    use Notifiable, HasRoles, SoftDeletes, Userstamps;
+    use Notifiable, HasRoles, SoftDeletes, Userstamps, MediaRelation;
     const TYPE_ADMIN = 1;
     const TYPE_USER = 2;
     const TYPE_SHOP = 3;
@@ -98,7 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      */
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
-        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id','is_admin_company','company_id','shop_id'
+        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id','is_admin_company','company_id','shop_id','rank','birthday','gender'
     ];
 
     /**
@@ -172,9 +173,15 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             case self::STATUS_ACTIVE:
                 $statusColor = '#219653';
                 break;
+	        case self::STATUS_INACTIVE:
+		        $statusColor = 'red';
+		        break;
         }
         return $statusColor;
     }
-
+	public function getAvatarAttribute()
+	{
+		return $this->filesByZone('avatar')->first();
+	}
 
 }

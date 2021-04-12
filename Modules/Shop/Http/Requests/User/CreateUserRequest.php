@@ -9,12 +9,12 @@ use Modules\Mon\Entities\User;
 
 class CreateUserRequest extends FormRequest
 {
-    protected function prepareForValidation(): void
-    {
-    }
+
     public function rules()
     {
         $rules = [
+
+
             'name' => 'required',
             'email' => 'required|unique:users|email',
             'password' => 'required',

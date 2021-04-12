@@ -23,27 +23,16 @@ class UserController extends ApiController
     {
 
         $user = $this->auth->user();
-        if ($fcmToken = $request->get('fcm_token')) {
-            $user->fcm_token = $fcmToken;
-        }
-        if ($lat = $request->get('lat')) {
+        $user->update($request->only('email', 'name', 'phone', 'gender', 'birthday'));
+	    if (  $avatar = $request->get('avatar')) {
+		    $zone= 'avatar';
+		    $fileSync[$avatar] = ['mediable_type' => get_class($user), 'zone' => $zone];
+		    $user->filesByZone($zone)->sync($fileSync);
 
-        }
-        if ($lng = $request->get('lng')) {
-
-        }
-        $user->save();
+	    }
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
-    public function updateAvatar(Request $request)
-    {
-
-        $user = $this->auth->user();
-
-        $user->save();
-        return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
-    }
     public function logout(Request $request) {
         Auth::logout();
         return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
@@ -108,5 +97,9 @@ class UserController extends ApiController
 
 		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
-
+	public function profile(Request $request)
+	{
+		$user = $this->auth->user();
+		return $this->respond(new UserTransformer($user),ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 }

@@ -42,21 +42,8 @@ class EloquentNewsRepository extends BaseRepository implements NewsRepository
             });
         }
 
-        if ($filterFeatured = $request->get('filter_feature')) {
-            switch ($filterFeatured) {
-                case  'video':
-                    $query->where('flag_video', 1);
-                    break;
-                case  'read':
-                    $query->where('flag_most_read', 1);
-                    break;
-                case  'hot':
-                    $query->where('flag_hot', 1);
-                    break;
-                case  'featured':
-                    $query->where('flag_featured', 1);
-                    break;
-            }
+        if ($status = $request->get('status')) {
+             $query->where('status', $status);
         }
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';

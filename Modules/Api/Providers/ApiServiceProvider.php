@@ -4,8 +4,10 @@ namespace Modules\Api\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Modules\Api\Repositories\ApiShopRepository;
 use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
+use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -113,5 +115,11 @@ class ApiServiceProvider extends ServiceProvider
                 return new CachedEloquentAreaRepository();
             }
         );
+	    $this->app->bind(
+		    ApiShopRepository::class,
+		    function () {
+			    return new EloquentApiShopRepository();
+		    }
+	    );
     }
 }

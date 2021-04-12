@@ -32,6 +32,10 @@ Route::prefix('/app')->group(function () {
         'as' => 'api.app.area',
         'uses' => 'AppController@allArea',
     ]);
+	Route::get('shop/nearest', [
+		'uses' => 'ShopController@shopNearest',
+		'as' => 'apife.shop.shopNearest',
+	]);
 });
 
 
@@ -104,4 +108,17 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
 		'uses' => 'UserController@changePassword',
 		'as' => 'apife.user.changePassword',
 	]);
+	Route::get('profile', [
+		'uses' => 'UserController@profile',
+		'as' => 'apife.user.profile',
+	]);
 });
+
+Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
+	Route::post('file', [
+		'uses' => 'MediaController@store',
+		'as' => 'apife.media.store',
+	]);
+});
+
+
