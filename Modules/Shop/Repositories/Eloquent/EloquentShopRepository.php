@@ -3,11 +3,13 @@
 namespace Modules\Shop\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
+use Modules\Mon\Entities\ProductPrice;
 use Modules\Shop\Repositories\ShopRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
 class EloquentShopRepository extends BaseRepository implements ShopRepository
 {
+
 
     public function serverPagingFor(Request $request, $relations = null)
     {
@@ -29,7 +31,7 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
                     ->orWhere('email', 'LIKE', "%{$keyword}%");
             });
         }
-        
+
         if ($request->get('company_id') !==null) {
             $company_id = $request->get('company_id');
             $keyword = $request->get('search');

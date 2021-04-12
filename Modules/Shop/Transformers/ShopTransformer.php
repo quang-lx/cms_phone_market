@@ -30,7 +30,6 @@ class ShopTransformer extends JsonResource
             'lng' => $this->lng,
             'place' => $this->place,
 
-
              'urls' => [
                 'delete_url' => route('api.shop.destroy', $this->id),
             ],

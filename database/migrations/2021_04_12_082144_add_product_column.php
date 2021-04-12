@@ -14,8 +14,8 @@ class AddProductColumn extends Migration
     public function up()
     {
 	    Schema::table('product', function (Blueprint $table) {
-	    	$table->integer('amount');
-	    	$table->double('price', 12,2);
+	    	$table->integer('amount')->nullable();
+	    	$table->double('price', 12,2)->nullable();
 		    $table->bigInteger('created_by')->nullable();
 		    $table->bigInteger('updated_by')->nullable();
 		    $table->bigInteger('deleted_by')->nullable();

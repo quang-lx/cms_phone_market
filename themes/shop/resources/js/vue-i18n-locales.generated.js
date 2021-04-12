@@ -1,33 +1,5 @@
 export default {
     "en": {
-        "auth": {
-            "failed": "These credentials do not match our records.",
-            "throttle": "Too many login attempts. Please try again in {seconds} seconds.",
-            "label": {
-                "sign in to start your session": "Sign in to start your session",
-                "remember me": "Remember Me",
-                "sign in": "Sign in"
-            }
-        },
-        "media": {
-            "label": {
-                "media": "Media",
-                "choose_file": "Choose file",
-                "created_at": "Created at",
-                "filename": "Filename",
-                "move": "Move",
-                "upload file": "Upload file",
-                "title": "Title",
-                "description": "Description"
-            },
-            "folders": {
-                "create_resource": "Create folder",
-                "folder_name": "Folder name"
-            },
-            "insert": "Insert image",
-            "remove_media": "Remove media",
-            "Browse": "Browse"
-        },
         "mon": {
             "button": {
                 "save": "Save",
@@ -48,28 +20,6 @@ export default {
             },
             "message": {
                 "permission_denied": "Permission denied...."
-            }
-        },
-        "permission": {
-            "label": {
-                "id": "ID",
-                "name": "Name",
-                "guard_name": "Guard name",
-                "created_at": "Created at",
-                "updated_at": "Updated at",
-                "create_permission": "Create Permission",
-                "update_permission": "Update Permission",
-                "permissions": "Permissions"
-            },
-            "message": {
-                "create success": "Create Permission Success.",
-                "update success": "Update Permission Success.",
-                "delete success": "Delete Permission Success."
-            }
-        },
-        "profile": {
-            "label": {
-                "profile": "Profile"
             }
         },
         "role": {
@@ -101,6 +51,25 @@ export default {
             "allow all": "Allow all",
             "deny all": "Deny all"
         },
+        "media": {
+            "label": {
+                "media": "Media",
+                "choose_file": "Choose file",
+                "created_at": "Created at",
+                "filename": "Filename",
+                "move": "Move",
+                "upload file": "Upload file",
+                "title": "Title",
+                "description": "Description"
+            },
+            "folders": {
+                "create_resource": "Create folder",
+                "folder_name": "Folder name"
+            },
+            "insert": "Insert image",
+            "remove_media": "Remove media",
+            "Browse": "Browse"
+        },
         "sidebar": {
             "system administration": "System administration",
             "roles and permission": "Roles and permission",
@@ -117,6 +86,23 @@ export default {
             "constructor": "Constructor",
             "resource": "Resource",
             "partner": "Partner"
+        },
+        "permission": {
+            "label": {
+                "id": "ID",
+                "name": "Name",
+                "guard_name": "Guard name",
+                "created_at": "Created at",
+                "updated_at": "Updated at",
+                "create_permission": "Create Permission",
+                "update_permission": "Update Permission",
+                "permissions": "Permissions"
+            },
+            "message": {
+                "create success": "Create Permission Success.",
+                "update success": "Update Permission Success.",
+                "delete success": "Delete Permission Success."
+            }
         },
         "user": {
             "label": {
@@ -145,64 +131,50 @@ export default {
                 "delete success": "Delete User Success.",
                 "change password success": "Change password success."
             }
-        }
-    },
-    "vi": {
+        },
+        "profile": {
+            "label": {
+                "profile": "Profile"
+            }
+        },
         "auth": {
             "failed": "These credentials do not match our records.",
             "throttle": "Too many login attempts. Please try again in {seconds} seconds.",
             "label": {
-                "sign in to start your session": "Đăng nhập để bắt đầu phiên của bạn",
-                "remember me": "Nhớ tài khoản",
-                "sign in": "Đăng nhập"
+                "sign in to start your session": "Sign in to start your session",
+                "remember me": "Remember Me",
+                "sign in": "Sign in"
             }
-        },
-        "category": {
+        }
+    },
+    "vi": {
+        "product": {
             "label": {
-                "category": "Chuyên mục ",
                 "id": "ID",
-                "title": "Tên",
-                "0": "type",
-                "slug": "Đường dẫn",
-                "1": "parent_id",
-                "2": "order",
-                "description": "Miêu tả",
-                "status": "Trạng thái",
-                "create_category": "Tạo Chuyên mục ",
-                "update_category": "Cập nhật"
+                "name": "Tên sản phẩm",
+                "description": "Mô tả",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "create_product": "Thêm sản phẩm",
+                "update_product": "Chỉnh sửa sản phẩm",
+                "list": "Quản lý sản phẩm",
+                "manager": "Quản lý sản phẩm",
+                "btn_add_product": "Thêm sản phẩm",
+                "updated_by": "Người cập nhật",
+                "status": "Trạng thái sẵn sàng",
+                "p_state": "Tình trạng sản phẩm",
+                "p_weight": "Cân nặng",
+                "s_long": "Chiều dài",
+                "s_width": "Chiều rộng",
+                "s_height": "Chiều cao",
+                "brand_id": "Thương hiệu"
             },
             "message": {
-                "create success": "Tạo Chuyên mục  thành công.",
-                "update success": "Cập nhật Chuyên mục  thành công.",
-                "delete success": "Xóa Chuyên mục  thành công."
+                "create success": "Tạo sản phẩm thành công.",
+                "update success": "Cập nhật sản phẩm thành công.",
+                "delete success": "Xóa sản phẩm thành công.",
+                "not allow self delete": "Không cho phép xóa sản phẩm bạn đang đăng nhập."
             }
-        },
-        "media": {
-            "label": {
-                "media": "Media",
-                "choose_file": "Tải file lên",
-                "move": "Move",
-                "upload file": "Upload file",
-                "filename": "Tên tệp",
-                "width": "Chiều rộng",
-                "height": "Chiều cao",
-                "title": "Tiêu đề",
-                "description": "Mô tả",
-                "path": "Đường dẫn",
-                "file size": "Kích thước",
-                "type file": "Loại tệp",
-                "created_at": "Ngày tạo"
-            },
-            "folders": {
-                "create_resource": "Tạo folder",
-                "folder_name": "Tên folder"
-            },
-            "messages": {
-                "selected items deleted": "Tệp vừa được xóa"
-            },
-            "insert": "Insert image",
-            "remove_media": "Remove media",
-            "Browse": "Chọn file"
         },
         "mon": {
             "button": {
@@ -235,69 +207,6 @@ export default {
                 "permission_denied": "Không có quyền truy cập...."
             }
         },
-        "news": {
-            "label": {
-                "news": "Tin tức",
-                "category": "Danh mục",
-                "category_id": "Danh mục",
-                "id": "ID",
-                "title": "Tiêu đề",
-                "slug": "Đường dẫn",
-                "description": "Mô tả ngắn",
-                "content": "Nội dung",
-                "status": "Trạng thái",
-                "author": "Tác giả",
-                "from_source": "Nguồn tin",
-                "create_news": "Tạo tin tức",
-                "update_news": "Cập nhật",
-                "tags": "Thẻ tag",
-                "flag_hot": "Mục hot",
-                "flag_featured": "Mục tiêu biểu",
-                "flag_most_read": "Mục đọc nhiều nhất",
-                "flag_video": "Mục video",
-                "meta_keywords": "Thẻ mô tả từ khóa",
-                "meta_title": "Thẻ mô tả tiêu đề",
-                "meta_description": "Thẻ tóm tắt nội dung"
-            },
-            "message": {
-                "create success": "Tạo tin tức thành công.",
-                "update success": "Cập nhật tin tức thành công.",
-                "delete success": "Xóa tin tức thành công."
-            }
-        },
-        "permission": {
-            "label": {
-                "id": "ID",
-                "name": "Tên chức năng",
-                "guard_name": "Guard name",
-                "created_at": "Ngày tạo",
-                "updated_at": "Ngày cập nhật",
-                "create_permission": "Thêm mới",
-                "update_permission": "Cập nhật",
-                "permissions": "Danh sách chức năng"
-            },
-            "message": {
-                "create success": "Thêm mới chức năng thành công.",
-                "update success": "Cập nhật chức năng thành công.",
-                "delete success": "Xóa chức năng thành công."
-            },
-            "group_mapping": {
-                "admins": "Quản trị viên",
-                "category": "Danh mục",
-                "dashboard": "Trang admin",
-                "login": "Đăng nhập",
-                "media": "Media",
-                "news": "Tin tức",
-                "roles": "Nhóm quyền",
-                "permissions": "Chức năng",
-                "users": "Người dùng"
-            }
-        },
-        "profile": {
-            "label": {
-                "profile": "Profile"
-            }
-        },
         "role": {
             "label": {
                 "id": "ID",
@@ -328,6 +237,104 @@ export default {
             "allow all": "Chọn tất cả",
             "deny all": "Từ chối tất cả"
         },
+        "media": {
+            "label": {
+                "media": "Media",
+                "choose_file": "Tải file lên",
+                "move": "Move",
+                "upload file": "Upload file",
+                "filename": "Tên tệp",
+                "width": "Chiều rộng",
+                "height": "Chiều cao",
+                "title": "Tiêu đề",
+                "description": "Mô tả",
+                "path": "Đường dẫn",
+                "file size": "Kích thước",
+                "type file": "Loại tệp",
+                "created_at": "Ngày tạo"
+            },
+            "folders": {
+                "create_resource": "Tạo folder",
+                "folder_name": "Tên folder"
+            },
+            "messages": {
+                "selected items deleted": "Tệp vừa được xóa"
+            },
+            "insert": "Insert image",
+            "remove_media": "Remove media",
+            "Browse": "Chọn file"
+        },
+        "news": {
+            "label": {
+                "news": "Tin tức",
+                "category": "Danh mục",
+                "category_id": "Danh mục",
+                "id": "ID",
+                "title": "Tiêu đề",
+                "slug": "Đường dẫn",
+                "description": "Mô tả ngắn",
+                "content": "Nội dung",
+                "status": "Trạng thái",
+                "author": "Tác giả",
+                "from_source": "Nguồn tin",
+                "create_news": "Tạo tin tức",
+                "update_news": "Cập nhật",
+                "tags": "Thẻ tag",
+                "flag_hot": "Mục hot",
+                "flag_featured": "Mục tiêu biểu",
+                "flag_most_read": "Mục đọc nhiều nhất",
+                "flag_video": "Mục video",
+                "meta_keywords": "Thẻ mô tả từ khóa",
+                "meta_title": "Thẻ mô tả tiêu đề",
+                "meta_description": "Thẻ tóm tắt nội dung"
+            },
+            "message": {
+                "create success": "Tạo tin tức thành công.",
+                "update success": "Cập nhật tin tức thành công.",
+                "delete success": "Xóa tin tức thành công."
+            }
+        },
+        "category": {
+            "label": {
+                "category": "Chuyên mục ",
+                "id": "ID",
+                "title": "Tên",
+                "0": "type",
+                "slug": "Đường dẫn",
+                "1": "parent_id",
+                "2": "order",
+                "description": "Miêu tả",
+                "status": "Trạng thái",
+                "create_category": "Tạo Chuyên mục ",
+                "update_category": "Cập nhật"
+            },
+            "message": {
+                "create success": "Tạo Chuyên mục  thành công.",
+                "update success": "Cập nhật Chuyên mục  thành công.",
+                "delete success": "Xóa Chuyên mục  thành công."
+            }
+        },
+        "sidebar": {
+            "system administration": "Quản trị",
+            "roles and permission": "Roles and permission",
+            "admins": "Tài khoản quản trị",
+            "users": "Người dùng",
+            "roles": "Nhóm quyền",
+            "permissions": "Quyền",
+            "media": "Media",
+            "alarm group": "DM cảnh báo",
+            "alarmlevel": "Mức độ",
+            "alarmtype": "Sự cố",
+            "news group": "Tin tức",
+            "category": "Danh mục tin",
+            "news": "Tin tức",
+            "warning": "Cảnh báo",
+            "fbnotification": "Notification",
+            "banner": "Banner",
+            "shop management": "Quản lý chi nhánh",
+            "user management": "Quản lý tài khoản",
+            "product management": "Quản lý sản phẩm"
+        },
         "shop": {
             "label": {
                 "manager": "Quản lý chi nhánh cửa hàng",
@@ -349,25 +356,33 @@ export default {
                 "delete success": "Xóa chi nhánh thành công."
             }
         },
-        "sidebar": {
-            "system administration": "Quản trị",
-            "roles and permission": "Roles and permission",
-            "admins": "Tài khoản quản trị",
-            "users": "Người dùng",
-            "roles": "Nhóm quyền",
-            "permissions": "Quyền",
-            "media": "Media",
-            "alarm group": "DM cảnh báo",
-            "alarmlevel": "Mức độ",
-            "alarmtype": "Sự cố",
-            "news group": "Tin tức",
-            "category": "Danh mục tin",
-            "news": "Tin tức",
-            "warning": "Cảnh báo",
-            "fbnotification": "Notification",
-            "banner": "Banner",
-            "shop management": "Quản lý chi nhánh",
-            "user management": "Quản lý tài khoản"
+        "permission": {
+            "label": {
+                "id": "ID",
+                "name": "Tên chức năng",
+                "guard_name": "Guard name",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "create_permission": "Thêm mới",
+                "update_permission": "Cập nhật",
+                "permissions": "Danh sách chức năng"
+            },
+            "message": {
+                "create success": "Thêm mới chức năng thành công.",
+                "update success": "Cập nhật chức năng thành công.",
+                "delete success": "Xóa chức năng thành công."
+            },
+            "group_mapping": {
+                "admins": "Quản trị viên",
+                "category": "Danh mục",
+                "dashboard": "Trang admin",
+                "login": "Đăng nhập",
+                "media": "Media",
+                "news": "Tin tức",
+                "roles": "Nhóm quyền",
+                "permissions": "Chức năng",
+                "users": "Người dùng"
+            }
         },
         "user": {
             "label": {
@@ -380,7 +395,7 @@ export default {
                 "updated_at": "Ngày cập nhật",
                 "password_confirmation": "Xác nhận mật khẩu",
                 "password": "Mật khẩu",
-                "create_user": "Tạo người dùng",
+                "create_user": "Tạo tài khoản",
                 "update_user": "Cập nhật",
                 "create_admin": "Tạo quản trị",
                 "update_admin": "Cập nhật quản trị",
@@ -405,6 +420,20 @@ export default {
                 "delete success": "Xóa tài khoản thành công.",
                 "change password success": "Đổi mật khẩu thành công.",
                 "not allow self delete": "Không cho phép xóa tài khoản bạn đang đăng nhập."
+            }
+        },
+        "profile": {
+            "label": {
+                "profile": "Profile"
+            }
+        },
+        "auth": {
+            "failed": "These credentials do not match our records.",
+            "throttle": "Too many login attempts. Please try again in {seconds} seconds.",
+            "label": {
+                "sign in to start your session": "Đăng nhập để bắt đầu phiên của bạn",
+                "remember me": "Nhớ tài khoản",
+                "sign in": "Đăng nhập"
             }
         }
     }

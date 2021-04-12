@@ -23,6 +23,8 @@ class Product extends Model
         's_height',
         'brand_id',
         'company_id',
+	    'amount',
+	    'price',
     ];
 
     public function company()
@@ -33,5 +35,8 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+    public function prices() {
+    	return $this->hasMany(ProductPrice::class, 'product_id');
     }
 }
