@@ -26,22 +26,10 @@ class UpdateUserRequest extends FormRequest
             'password_confirmation' => 'same:password'
         ];
 
-        if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}", new PhoneNumber()];
-        } else {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}"];
-        }
+	    $rules['username'] = ['required',"unique:users,username,{$user->id}"];
         return $rules;
     }
-    protected function prepareForValidation(): void
-    {
-        $userType =$this->request->get('type');
-        if ($userType == User::TYPE_USER) {
-            $username =$this->request->get('username');
-            $usernameFormatted = validate_isdn($username);
-            $this->merge(['username' => $usernameFormatted]);
-        }
-    }
+   
     /**
      * Get custom attributes for validator errors.
      *

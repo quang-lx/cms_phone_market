@@ -9,15 +9,7 @@ use Modules\Mon\Entities\User;
 
 class CreateUserRequest extends FormRequest
 {
-    protected function prepareForValidation(): void
-    {
-        $userType =$this->request->get('type');
-        if ($userType == User::TYPE_USER) {
-            $username =$this->request->get('username');
-            $usernameFormatted = validate_isdn($username);
-            $this->merge(['username' => $usernameFormatted]);
-        }
-    }
+
     public function rules()
     {
         $userType =$this->request->get('type');
@@ -31,11 +23,7 @@ class CreateUserRequest extends FormRequest
             'password_confirmation' => 'same:password'
         ];
 
-        if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required','unique:users', new PhoneNumber()];
-        }else {
-            $rules['username'] = ['required',"unique:users,username"];
-        }
+	    $rules['username'] = ['required',"unique:users,username"];
         return $rules;
     }
 

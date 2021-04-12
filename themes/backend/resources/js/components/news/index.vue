@@ -8,7 +8,7 @@
                             <el-breadcrumb-item>
                                 <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
                             </el-breadcrumb-item>
-                            <el-breadcrumb-item  >{{ $t('news.label.news') }}
+                            <el-breadcrumb-item>{{ $t('news.label.news') }}
                             </el-breadcrumb-item>
 
                         </el-breadcrumb>
@@ -24,16 +24,17 @@
                 <div class="row justify-content-end mb-2">
                     <div class="col-md-8">
 
-                        <el-radio-group v-model="filter.filter_feature"   @change="fetchData">
-                            <el-radio v-for="item in listFeatures"
+                        <el-radio-group v-model="filter.status" @change="fetchData">
+                            <el-radio v-for="item in listStatus"
                                       :key="'status-'+ item.value"
                                       border
-                                      :label="item.value"  >{{item.label}}
+                                      :label="item.value">{{item.label}}
                             </el-radio>
                         </el-radio-group>
                     </div>
                     <div class="col-md-4   ">
-                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch" placeholder="Nhập ID, tiêu đề, người tạo"
+                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
+                                  placeholder="Nhập ID, tiêu đề, người tạo"
                                   v-model="searchQuery">
                         </el-input>
                     </div>
@@ -50,7 +51,7 @@
                                     <ul class="nav nav-pills ml-auto">
                                         <li class="nav-item">
                                             <router-link :to="{name: 'admin.news.create'}">
-                                                <el-button type="primary"  size="small"   class="btn btn-flat">
+                                                <el-button type="primary" size="small" class="btn btn-flat">
                                                     {{ $t('news.label.create_news') }}
                                                 </el-button>
                                             </router-link>
@@ -63,13 +64,14 @@
                                 <div class="sc-table">
 
                                     <el-table
-                                      :data="data"
-                                      stripe
-                                      style="width: 100%"
-                                      ref="dataTable"
-                                      v-loading.body="tableIsLoading"
-                                      @sort-change="handleSortChange">
-                                        <el-table-column prop="id" :label="$t('news.label.id')" width="75" sortable="custom">
+                                        :data="data"
+                                        stripe
+                                        style="width: 100%"
+                                        ref="dataTable"
+                                        v-loading.body="tableIsLoading"
+                                        @sort-change="handleSortChange">
+                                        <el-table-column prop="id" :label="$t('news.label.id')" width="75"
+                                                         sortable="custom">
 
                                         </el-table-column>
                                         <el-table-column prop="" label="Ảnh đại diện">
@@ -81,15 +83,18 @@
                                         <el-table-column prop="title" :label="$t('news.label.title')" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="category_id" :label="$t('news.label.category_id')" sortable="custom">
+                                        <el-table-column prop="category_id" :label="$t('news.label.category_id')"
+                                                         sortable="custom">
                                             <template slot-scope="scope">
                                                 <span v-if="scope.row.category">{{scope.row.category.title}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="author" :label="$t('news.label.author')" sortable="custom">
+                                        <el-table-column prop="author" :label="$t('news.label.author')"
+                                                         sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="status" :label="$t('category.label.status')" sortable="status">
+                                        <el-table-column prop="status" :label="$t('category.label.status')"
+                                                         sortable="status">
                                             <template slot-scope="scope">
                                                 <span class="badge bg-success" v-if="scope.row.status == 'publish'">Hiển thị</span>
                                                 <span class="badge bg-danger" v-else>Ẩn</span>
@@ -99,14 +104,14 @@
                                         <el-table-column prop="created_by" label="Người tạo" sortable="custom">
 
                                         </el-table-column>
-<el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom">
+                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom">
 
                                         </el-table-column>
 
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
                                                 <edit-button
-                                                  :to="{name: 'admin.news.edit', params: {newsId: scope.row.id}}"></edit-button>
+                                                    :to="{name: 'admin.news.edit', params: {newsId: scope.row.id}}"></edit-button>
                                                 <delete-button :scope="scope" :rows="data"></delete-button>
                                             </template>
                                         </el-table-column>
@@ -138,84 +143,76 @@
 </template>
 
 <script>
-    import axios from 'axios';
+  import axios from 'axios';
 
-    export default {
+  export default {
 
-        data() {
-            return {
-                data: [],
-
-
-                currentLocale: window.MonCMS.currentLocale || 'en',
-                categoryArr: window.MonCMS.newsListCategory,
-                statusArr: window.MonCMS.newsListStatus,
-                listFeatures: [
-                    {
-                        value: '',
-                        label: 'Tất cả'
-                    },
-                    {
-                        value: 'video',
-                        label: 'VIDEO'
-                    },
-                    {
-                        value: 'read',
-                        label: 'ĐỌC NHIỀU'
-                    },
-                    {
-                        value: 'hot',
-                        label: 'ĐẶC SẮC'
-                    },
-                    {
-                        value: 'featured',
-                        label: 'NỔI BẬT'
-                    },
-                ],
-
-                filter: {
-                    category:'',
-                    status: '',
-                    filter_feature: '',
-                    locale: window.MonCMS.currentLocale || 'en'
-                },
-                listLocales: window.MonCMS.locales
+    data() {
+      return {
+        data: [],
 
 
-            };
+        currentLocale: window.MonCMS.currentLocale || 'en',
+        categoryArr: window.MonCMS.newsListCategory,
+        statusArr: window.MonCMS.newsListStatus,
+
+        listStatus: [
+          {
+            value: '',
+            label: 'Tất cả'
+          },
+          {
+            value: 'publish',
+            label: 'Hiển thị'
+          },
+          {
+            value: 'hide',
+            label: 'Ẩn'
+          }
+        ],
+        filter: {
+          category: '',
+          status: '',
+          filter_feature: '',
+          locale: window.MonCMS.currentLocale || 'en'
         },
-        methods: {
-            queryServer(customProperties) {
-                    console.log(this.filter.locale);
-                const properties = {
-                    page: this.meta.current_page,
-                    per_page: this.meta.per_page,
-                    order_by: this.order_meta.order_by,
-                    order: this.order_meta.order,
-                    search: this.searchQuery,
-
-                    filter_feature: this.filter.filter_feature,
-
-                };
-
-                axios.get(route('api.news.index', _.merge(properties, customProperties)))
-                    .then((response) => {
-                        this.tableIsLoading = false;
-                        this.data = response.data.data;
-                        this.meta = response.data.meta;
-                        this.links = response.data.links;
-                        this.order_meta.order_by = properties.order_by;
-                        this.order_meta.order = properties.order;
-                    });
-            }
+        listLocales: window.MonCMS.locales
 
 
-        },
-        mounted() {
-            this.fetchData();
+      };
+    },
+    methods: {
+      queryServer(customProperties) {
+        console.log(this.filter.locale);
+        const properties = {
+          page: this.meta.current_page,
+          per_page: this.meta.per_page,
+          order_by: this.order_meta.order_by,
+          order: this.order_meta.order,
+          search: this.searchQuery,
 
-        },
-    }
+          status: this.filter.status,
+
+        };
+
+        axios.get(route('api.news.index', _.merge(properties, customProperties)))
+        .then((response) => {
+          this.tableIsLoading = false;
+          this.data = response.data.data;
+          this.meta = response.data.meta;
+          this.links = response.data.links;
+          this.order_meta.order_by = properties.order_by;
+          this.order_meta.order = properties.order;
+        });
+      }
+
+
+    },
+    mounted() {
+      this.fetchData();
+
+    },
+  }
 </script>
 
 <style scoped>
