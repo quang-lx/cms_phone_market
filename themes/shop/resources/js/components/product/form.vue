@@ -247,6 +247,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <multiple-media zone="product_collection"
+                                                            label="Ảnh/Video"
+                                                            @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
+                                                            @fileUnselected="unselectFile($event, 'modelForm')"
+                                                            @fileSorted="fileSorted($event, 'modelForm')"
+                                                            entity="Modules\Mon\Entities\Product"
+                                                            :entity-id="$route.params.productId"></multiple-media>
+                                        </div>
+                                    </div>
 
 
                                 </el-form>
@@ -277,11 +288,14 @@
   import Form from 'form-backend-validation';
   import Tinymce from '../utils/Tinymce';
   import SingleFileSelector from '../../mixins/SingleFileSelector.js';
+  import MultipleMedia from '../media/js/components/MultipleMedia';
+  import MultipleFileSelector from '../../mixins/MultipleFileSelector.js';
 
   export default {
-    mixins: [SingleFileSelector],
+    mixins: [SingleFileSelector, MultipleFileSelector],
     components: {
       Tinymce,
+      MultipleMedia
     },
     props: {
       pageTitle: {default: null, String},
@@ -303,26 +317,27 @@
           product_prices: []
 
         },
+        medias_multi: {},
         locales: window.MonCMS.locales,
         brandArr: [],
         listStatus: [
           {
-            value: '1',
+            value: 1,
             label: 'Có'
           },
           {
-            value: '0',
+            value: 0,
             label: 'Không'
           },
 
         ],
         listState: [
           {
-            value: '1',
+            value: 1,
             label: 'Mới'
           },
           {
-            value: '2',
+            value: 2,
             label: '99%'
           },
 

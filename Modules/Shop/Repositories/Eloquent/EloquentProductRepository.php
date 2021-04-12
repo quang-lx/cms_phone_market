@@ -3,6 +3,8 @@
 namespace Modules\Shop\Repositories\Eloquent;
 
 use Modules\Mon\Entities\ProductPrice;
+use Modules\Shop\Events\Product\ProductWasCreated;
+use Modules\Shop\Events\Product\ProductWasUpdated;
 use Modules\Shop\Repositories\ProductRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
@@ -15,6 +17,8 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		$data['amount'] =10;
 		$model = $this->model->create($data);
 		$this->syncPrice($model, $data['product_prices']);
+		event(new ProductWasCreated($model, $data));
+
 		return $model;
 	}
 
@@ -24,6 +28,8 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		$data['amount'] =10;
 		$model->update($data);
 		$this->syncPrice($model, $data['product_prices']);
+		event(new ProductWasUpdated($model, $data));
+
 		return $model;
 	}
 

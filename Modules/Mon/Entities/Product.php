@@ -4,10 +4,11 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Media\Traits\MediaRelation;
 
 class Product extends Model
 {
-    // use  SoftDeletes;
+     use  SoftDeletes, MediaRelation;
 
     protected $table = 'product';
     protected $fillable = [
