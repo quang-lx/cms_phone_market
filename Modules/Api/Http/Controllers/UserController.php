@@ -23,7 +23,7 @@ class UserController extends ApiController
     {
 
         $user = $this->auth->user();
-        $user->update($request->all());
+        $user->update($request->only('email', 'name', 'phone', 'gender', 'birthday'));
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
