@@ -14,6 +14,16 @@ class AccountTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'created_at' => $this->created_at->format('d-m-Y'),
+            'status' => $this->status,
+            'status_name' => $this->status_name,
+            'updated_by' => $this->findCreatedBy()['name'],
+            'updated_at' => $this->updated_at->format('d-m-Y'),
+            'create_category' => 'Tạo Chuyên mục ',
+            'update_category' => 'Cập nhật',
 
 
              'urls' => [

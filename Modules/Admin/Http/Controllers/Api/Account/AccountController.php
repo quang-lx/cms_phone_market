@@ -4,7 +4,7 @@ namespace Modules\Admin\Http\Controllers\Api\Account;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Modules\Mon\Entities\Account;
+use Modules\Mon\Entities\User;
 use Modules\Admin\Http\Requests\Account\CreateAccountRequest;
 use Modules\Admin\Transformers\AccountTransformer;
 use Modules\Admin\Http\Requests\Account\UpdateAccountRequest;
