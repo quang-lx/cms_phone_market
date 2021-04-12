@@ -4,7 +4,9 @@ namespace Modules\Mon\Http\Controllers\Auth;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
 use Modules\Mon\Auth\Contracts\Authentication;
+use Modules\Mon\Entities\User;
 use Modules\Mon\Http\Controllers\WebController;
 use Modules\Mon\Repositories\UserRepository;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -156,5 +158,22 @@ class LoginController extends WebController
         $this->seo()->setTitle(__('Login'));
         return view('backend::login');
     }
+	protected function validateLogin(Request $request)
+	{
+		$request->validate([
+			$this->username() => [
+				'required',
+				'string',
+				Rule::exists('users')->where(function ($query) {
+					return $query->where('status', User::STATUS_ACTIVE);
+				}),
+			],
+			'password' => 'required|string',
 
+		],[
+			'username.required' => 'Vui lòng nhập đủ thông tin',
+			'password.required' => 'Vui lòng nhập đủ thông tin',
+			'username.exists' => 'Tài khoản đang bị khóa',
+		]);
+	}
 }

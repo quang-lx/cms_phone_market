@@ -6,8 +6,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Modules\Mon\Auth\Contracts\Authentication;
+use Modules\Mon\Entities\User;
 use Modules\Mon\Http\Controllers\WebController;
 use Modules\Mon\Repositories\ConnectedAccountRepository;
 use Modules\Mon\Repositories\UserRepository;
@@ -189,11 +191,19 @@ class LoginController extends WebController
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => 'required|string',
+            $this->username() => [
+            	'required',
+	            'string',
+	            Rule::exists('users')->where(function ($query) {
+		            return $query->where('status', User::STATUS_ACTIVE);
+	            }),
+	            ],
             'password' => 'required|string',
+
         ],[
             'username.required' => 'Vui lòng nhập đủ thông tin',
             'password.required' => 'Vui lòng nhập đủ thông tin',
+            'username.exists' => 'Tài khoản đang bị khóa',
         ]);
     }
     /**
