@@ -109,3 +109,10 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
 		'as' => 'apife.user.profile',
 	]);
 });
+
+Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
+	Route::post('file', [
+		'uses' => 'MediaController@store',
+		'as' => 'apife.media.store',
+	]);
+});
