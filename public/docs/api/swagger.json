@@ -1081,6 +1081,14 @@
                         "required": false,
                         "type": "string",
                         "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "avatar",
+                        "description": "avatar",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
                     }
                 ],
                 "responses": {

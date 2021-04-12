@@ -24,17 +24,15 @@ class UserController extends ApiController
 
         $user = $this->auth->user();
         $user->update($request->only('email', 'name', 'phone', 'gender', 'birthday'));
+	    if (  $avatar = $request->get('avatar')) {
+		    $zone= 'avatar';
+		    $fileSync[$avatar] = ['mediable_type' => get_class($user), 'zone' => $zone];
+		    $user->filesByZone($zone)->sync($fileSync);
+
+	    }
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
-    public function updateAvatar(Request $request)
-    {
-
-        $user = $this->auth->user();
-
-        $user->save();
-        return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
-    }
     public function logout(Request $request) {
         Auth::logout();
         return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
