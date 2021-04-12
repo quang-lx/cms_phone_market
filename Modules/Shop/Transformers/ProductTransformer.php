@@ -15,7 +15,7 @@ class ProductTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'name' => $this->name,
-            'sku' => $this->phone,
+            'sku' => $this->sku,
             'status' => $this->status,
             'status_color' =>$this->status_color,
             'status_name' =>$this->status_name,
@@ -29,11 +29,12 @@ class ProductTransformer extends JsonResource
             'company_id' => $this->company_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-	        'product_prices' => $this->prices,
+            'amount' => $this->amount,
+            'price' => $this->price,
+            'category_id' => $this->category_id,
 
 
-
-	        'urls' => [
+             'urls' => [
                 'delete_url' => route('api.product.destroy', $this->id),
             ],
 
