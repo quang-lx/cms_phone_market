@@ -17,16 +17,12 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         $user = $this->route()->parameter('user');
-        $userType =$this->request->get('type');
-
-
         $rules = [
             'name'=>"required",
             'email' => "required|unique:users,email,{$user->id}|email",
-            'password_confirmation' => 'same:password'
+            'password_confirmation' => 'same:password',
+            'username' => ['required',"unique:users,username,{$user->id}"],
         ];
-
-	    $rules['username'] = ['required',"unique:users,username,{$user->id}"];
         return $rules;
     }
 

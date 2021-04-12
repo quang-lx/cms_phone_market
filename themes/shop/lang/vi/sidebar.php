@@ -35,6 +35,7 @@ return [
     'banner' => 'Banner',
     'shop management' => 'Quản lý chi nhánh',
     'user management' => 'Quản lý tài khoản',
+    'product management' => 'Quản lý sản phẩm',
 
 
 

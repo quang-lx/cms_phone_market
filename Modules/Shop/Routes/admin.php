@@ -82,5 +82,27 @@ Route::group(['prefix' => '/user'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/product'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.product.index',
+        'uses' => 'Product\ProductController@index',
+        'middleware' => 'permission:shop.product.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.product.create',
+        'uses' => 'Product\ProductController@create',
+        'middleware' => 'permission:shop.product.create'
+    ]);
+
+    Route::get('{product}/edit', [
+        'as' => 'shop.product.edit',
+        'uses' => 'Product\ProductController@edit',
+        'middleware' => 'permission:shop.product.edit'
+    ]);
+
+
+});
 // append
+
 

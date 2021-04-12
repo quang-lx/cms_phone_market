@@ -12,18 +12,15 @@ class CreateUserRequest extends FormRequest
 
     public function rules()
     {
-        $userType =$this->request->get('type');
-
         $rules = [
 
 
             'name' => 'required',
             'email' => 'required|unique:users|email',
             'password' => 'required',
-            'password_confirmation' => 'same:password'
+            'password_confirmation' => 'same:password',
+            'username' => ['required',"unique:users,username"],
         ];
-
-	    $rules['username'] = ['required',"unique:users,username"];
         return $rules;
     }
 
