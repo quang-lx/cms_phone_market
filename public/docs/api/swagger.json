@@ -1038,7 +1038,7 @@
                         "in": "formData",
                         "name": "name",
                         "description": "name",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -1046,7 +1046,7 @@
                         "in": "formData",
                         "name": "phone",
                         "description": "phone",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -1054,7 +1054,7 @@
                         "in": "formData",
                         "name": "gender",
                         "description": "gender 1: nam, 2 : nu",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -1062,7 +1062,7 @@
                         "in": "formData",
                         "name": "email",
                         "description": "email",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -1070,7 +1070,7 @@
                         "in": "formData",
                         "name": "birthday",
                         "description": "birthday YYYY-MM-DD, 2021-01-22",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
