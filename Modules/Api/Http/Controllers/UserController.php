@@ -23,16 +23,7 @@ class UserController extends ApiController
     {
 
         $user = $this->auth->user();
-        if ($fcmToken = $request->get('fcm_token')) {
-            $user->fcm_token = $fcmToken;
-        }
-        if ($lat = $request->get('lat')) {
-
-        }
-        if ($lng = $request->get('lng')) {
-
-        }
-        $user->save();
+        $user->update($request->all());
         return $this->respond(['user_id' => $user->id], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
@@ -108,5 +99,9 @@ class UserController extends ApiController
 
 		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
-
+	public function profile(Request $request)
+	{
+		$user = $this->auth->user();
+		return $this->respond(new UserTransformer($user),ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 }

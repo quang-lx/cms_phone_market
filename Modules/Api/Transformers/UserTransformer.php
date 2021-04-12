@@ -15,7 +15,12 @@ class UserTransformer extends JsonResource
             'id' => $this->id,
             'username' => $this->username,
             'name' => $this->name,
-
+	        'birthday' => $this->birthday,
+	        'rank' => $this->rank,
+	        'phone' => $this->phone,
+	        'gender' => $this->gender,
+	        'email' => $this->email,
+	        'avatar' => $this->avatar? new MediaShortTransformer($this->avatar): null
 
         ];
 

@@ -104,4 +104,8 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
 		'uses' => 'UserController@changePassword',
 		'as' => 'apife.user.changePassword',
 	]);
+	Route::post('profile', [
+		'uses' => 'UserController@profile',
+		'as' => 'apife.user.profile',
+	]);
 });
