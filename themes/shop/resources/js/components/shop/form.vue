@@ -29,11 +29,11 @@
                             </div><!-- /.card-header -->
                             <div class="card-body" style="padding-top:20px">
                                 <el-form
-                                        ref="form"
-                                        :model="modelForm"
-                                        label-width="200px"
-                                        label-position="left"
-                                        v-loading.body="loading"
+                                    ref="form"
+                                    :model="modelForm"
+                                    label-width="200px"
+                                    label-position="left"
+                                    v-loading.body="loading"
                                 >
                                     <div class="row">
                                         <div class="col-md-6" style="padding-top:10px;padding-right:30px">
@@ -62,13 +62,14 @@
                                                     <el-form-item :label="$t('shop.label.status')"
                                                                   :class="{'el-form-item is-error': form.errors.has(  'status') }">
 
-                                                        <el-select v-model="modelForm.status" :placeholder="$t('shop.label.status')"
+                                                        <el-select v-model="modelForm.status"
+                                                                   :placeholder="$t('shop.label.status')"
                                                                    filterable style="width: 100% !important">
                                                             <el-option
-                                                                    v-for="item in listStatus"
-                                                                    :key="'status'+ item.value"
-                                                                    :label="item.label"
-                                                                    :value="item.value">
+                                                                v-for="item in listStatus"
+                                                                :key="'status'+ item.value"
+                                                                :label="item.label"
+                                                                :value="item.value">
                                                             </el-option>
 
                                                         </el-select>
@@ -108,6 +109,44 @@
 
 
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <el-form-item label="Địa chỉ trên bản đồ"
+                                                          :class="{'el-form-item is-error': form.errors.has(  'place') }">
+
+                                                <gmap-autocomplete
+                                                    ref="location"
+                                                    placeholder=""
+                                                    :select-first-on-enter="true"
+                                                    class="el-input__inner"
+
+                                                    :value="modelForm.place"
+                                                    :id="modelForm.id? modelForm.id: 'location'"
+                                                    @focusout="(place) => {
+                                            $refs.location.$refs.input.value=modelForm.place;}"
+                                                    @place_changed="setPlace">
+                                                </gmap-autocomplete>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('place')"
+                                                     v-text="form.errors.first('place')"></div>
+                                            </el-form-item>
+
+
+                                        </div>
+                                        <div class="col-md-12">
+                                            <Gmap-Map style="width: 100%; height: 300px;" :zoom="10"
+                                                      :center="{lat:21.0227788, lng:105.8194541}">
+
+                                                <Gmap-Marker
+
+                                                    :position="{
+                                                lat : parseFloat( modelForm.lat ),
+                                                lng : parseFloat( modelForm.lng )
+                                            }"
+                                                ></Gmap-Marker>
+                                            </Gmap-Map>
+                                        </div>
+                                    </div>
                                 </el-form>
                             </div><!-- /.card-body -->
                             <div class="card-footer d-flex justify-content-end">
@@ -132,107 +171,123 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import Form from 'form-backend-validation';
+  import axios from 'axios';
+  import Form from 'form-backend-validation';
+  import Vue from 'vue'
+  import * as VueGoogleMaps from 'vue2-google-maps'
 
-    export default {
-        props: {
-            pageTitle: {default: null, String},
-        },
-        data() {
-            return {
-                form: new Form(),
-                loading: false,
-                modelForm: {
-                    name: '',
-                    address: '',
-                    phone: '',
-                    email: '',
-                    status: 1,
-
-                },
-                locales: window.MonCMS.locales,
-                listStatus: [
-
-                    {
-                        value: 1,
-                        label: 'Hoạt động'
-                    },
-                    {
-                        value: 0,
-                        label: 'Không hoạt động'
-                    }
-                ],
-
-
-            };
-        },
-        methods: {
-            onSubmit() {
-                this.form = new Form(_.merge(this.modelForm, {}));
-                this.loading = true;
-
-                this.form.post(this.getRoute())
-                    .then((response) => {
-                        this.loading = false;
-                        this.$message({
-                            type: 'success',
-                            message: response.message,
-                        });
-                        this.$router.push({name: 'shop.shop.index'});
-                    })
-                    .catch((error) => {
-
-                        this.loading = false;
-                        this.$notify.error({
-                            title: this.$t('mon.error.Title'),
-                            message: this.getSubmitError(this.form.errors),
-                        });
-                    });
-            },
-            onCancel() {
-
-                this.$confirm(this.$t('mon.cancel.Are you sure to cancel?'), {
-                    confirmButtonText: this.$t('mon.cancel.Yes'),
-                    cancelButtonText: this.$t('mon.cancel.No'),
-                    type: 'warning'
-                }).then(() => {
-                    this.$router.push({name: 'shop.shop.index'});
-                }).catch(() => {
-
-                });
-
-
-            },
-
-            fetchData() {
-                this.loading = true;
-                let locale = this.$route.params.locale ? this.$route.params.locale : 'en';
-                axios.get(route('api.shop.find', {shop: this.$route.params.shopId}))
-                    .then((response) => {
-                        this.loading = false;
-                        this.modelForm = response.data.data;
-
-                    });
-            },
-
-            getRoute() {
-                if (this.$route.params.shopId !== undefined) {
-                    return route('api.shop.update', {shop: this.$route.params.shopId});
-                }
-                return route('api.shop.store');
-            },
+  Vue.use(VueGoogleMaps, {
+    load: {
+      key: window.MonCMS.googleApiKey,
+      libraries: 'places'
+    },
+  });
+  export default {
+    props: {
+      pageTitle: {default: null, String},
+    },
+    data() {
+      return {
+        form: new Form(),
+        loading: false,
+        modelForm: {
+          name: '',
+          address: '',
+          phone: '',
+          email: '',
+          status: 1,
+          lat: '',
+          lng: '',
+          place: ''
 
         },
-        mounted() {
-            if (this.$route.params.shopId !== undefined) {
-                this.fetchData();
-            }
+        locales: window.MonCMS.locales,
+        listStatus: [
 
-        },
-        computed: {},
+          {
+            value: 1,
+            label: 'Hoạt động'
+          },
+          {
+            value: 0,
+            label: 'Không hoạt động'
+          }
+        ],
 
-    }
+
+      };
+    },
+    methods: {
+      setPlace(place) {
+        this.modelForm.place = place.name;
+        this.modelForm.lat = place.geometry.location.lat();
+        this.modelForm.lng = place.geometry.location.lng();
+      },
+      onSubmit() {
+        this.form = new Form(_.merge(this.modelForm, {}));
+        this.loading = true;
+
+        this.form.post(this.getRoute())
+        .then((response) => {
+          this.loading = false;
+          this.$message({
+            type: 'success',
+            message: response.message,
+          });
+          this.$router.push({name: 'shop.shop.index'});
+        })
+        .catch((error) => {
+
+          this.loading = false;
+          this.$notify.error({
+            title: this.$t('mon.error.Title'),
+            message: this.getSubmitError(this.form.errors),
+          });
+        });
+      },
+      onCancel() {
+
+        this.$confirm(this.$t('mon.cancel.Are you sure to cancel?'), {
+          confirmButtonText: this.$t('mon.cancel.Yes'),
+          cancelButtonText: this.$t('mon.cancel.No'),
+          type: 'warning'
+        }).then(() => {
+          this.$router.push({name: 'shop.shop.index'});
+        }).catch(() => {
+
+        });
+
+
+      },
+
+      fetchData() {
+        this.loading = true;
+        let locale = this.$route.params.locale ? this.$route.params.locale : 'en';
+        axios.get(route('api.shop.find', {shop: this.$route.params.shopId}))
+        .then((response) => {
+          this.loading = false;
+          this.modelForm = response.data.data;
+
+        });
+      },
+
+      getRoute() {
+        if (this.$route.params.shopId !== undefined) {
+          return route('api.shop.update', {shop: this.$route.params.shopId});
+        }
+        return route('api.shop.store');
+      },
+
+    },
+    mounted() {
+      if (this.$route.params.shopId !== undefined) {
+        this.fetchData();
+      }
+
+    },
+    computed: {},
+
+  }
 </script>
 
 <style scoped>
@@ -315,7 +370,7 @@
 
     .btn-warning:hover,
     .btn-warning:active,
-    .btn-warning.hover {
+    .btn-shop.hover {
         background-color: #e08e0b;
         color: white;
     }

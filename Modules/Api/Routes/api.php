@@ -32,6 +32,10 @@ Route::prefix('/app')->group(function () {
         'as' => 'api.app.area',
         'uses' => 'AppController@allArea',
     ]);
+	Route::get('shop/nearest', [
+		'uses' => 'ShopController@shopNearest',
+		'as' => 'apife.shop.shopNearest',
+	]);
 });
 
 
@@ -116,3 +120,5 @@ Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
 		'as' => 'apife.media.store',
 	]);
 });
+
+

@@ -56,7 +56,7 @@ class ErrorCode
     const ERR16_MSG = 'Vui lòng chọn file';
     const ERR17_MSG = 'File không đúng định dạng';
     const ERR18_MSG = 'Mã OTP hết hạn';
-    const ERR19_MSG = 'Vui lòng nhập địa điểm cảnh báo';
+    const ERR19_MSG = 'Vui lòng nhập địa điểm';
     const ERR20_MSG = 'Vui lòng nhập nội dung chi tiết';
     const ERR21_MSG = 'Vui lòng gửi hình ảnh/video minh họa';
     const ERR22_MSG = 'Vui lòng nhập thông tin điểm bắt đầu';
