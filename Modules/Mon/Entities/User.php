@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Media\Traits\MediaRelation;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -79,7 +80,7 @@ use Wildside\Userstamps\Userstamps;
  */
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
-    use Notifiable, HasRoles, SoftDeletes, Userstamps;
+    use Notifiable, HasRoles, SoftDeletes, Userstamps, MediaRelation;
     const TYPE_ADMIN = 1;
     const TYPE_USER = 2;
     const TYPE_SHOP = 3;
