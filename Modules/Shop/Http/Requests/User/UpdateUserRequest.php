@@ -29,7 +29,7 @@ class UpdateUserRequest extends FormRequest
 	    $rules['username'] = ['required',"unique:users,username,{$user->id}"];
         return $rules;
     }
-   
+
     /**
      * Get custom attributes for validator errors.
      *

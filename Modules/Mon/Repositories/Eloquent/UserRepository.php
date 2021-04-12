@@ -130,6 +130,10 @@ class UserRepository extends BaseRepository implements UserInterface
                     ->orWhere('username', 'LIKE', "%{$keyword}%");
             });
         }
+	    if ($request->get('status') !== null) {
+		    $status = $request->get('status');
+		    $query->where('status', $status);
+	    }
         $type = $request->get('type', User::TYPE_USER);
         $query->where('type', $type);
 

@@ -172,6 +172,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             case self::STATUS_ACTIVE:
                 $statusColor = '#219653';
                 break;
+	        case self::STATUS_INACTIVE:
+		        $statusColor = 'red';
+		        break;
         }
         return $statusColor;
     }

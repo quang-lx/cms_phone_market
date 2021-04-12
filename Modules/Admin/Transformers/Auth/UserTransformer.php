@@ -15,7 +15,8 @@ class UserTransformer extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => optional($this->profile)->phone,
-
+	        'status_name' => $this->status_name,
+	        'status_color' => $this->status_color,
             'created_at' => optional($this->created_at)->format('d-m-Y'),
             'updated_at' =>optional($this->updated_at)->format('d-m-Y'),
             'urls' => [
