@@ -383,7 +383,32 @@ Route::middleware('auth:api')->prefix('/accounts')->group(function (){
         'uses' => 'Account\AccountController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/problems')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.problem.index',
+        'uses' => 'Problem\ProblemController@index',
+    ]);
+    Route::post('/{problem}/edit', [
+            'as' => 'api.problem.update',
+            'uses' => 'Problem\ProblemController@update',
+        ]);
+   Route::get('/{problem}', [
+              'as' => 'api.problem.find',
+              'uses' => 'Problem\ProblemController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.problem.store',
+        'uses' => 'Problem\ProblemController@store',
+    ]);
+
+    Route::delete('/{problem}', [
+        'as' => 'api.problem.destroy',
+        'uses' => 'Problem\ProblemController@destroy',
+    ]);
+});
 // append
+
 
 
 

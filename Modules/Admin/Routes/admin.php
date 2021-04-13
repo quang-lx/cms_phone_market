@@ -355,7 +355,29 @@ Route::group(['prefix' => '/account'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/problem'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.problem.index',
+        'uses' => 'Problem\ProblemController@index',
+        'middleware' => 'permission:admin.problem.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.problem.create',
+        'uses' => 'Problem\ProblemController@create',
+        'middleware' => 'permission:admin.problem.create'
+    ]);
+
+    Route::get('{problem}/edit', [
+        'as' => 'admin.problem.edit',
+        'uses' => 'Problem\ProblemController@edit',
+        'middleware' => 'permission:admin.problem.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
