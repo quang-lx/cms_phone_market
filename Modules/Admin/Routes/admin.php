@@ -376,7 +376,29 @@ Route::group(['prefix' => '/problem'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/homesetting'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.homesetting.index',
+        'uses' => 'HomeSetting\HomeSettingController@index',
+        'middleware' => 'permission:admin.homesetting.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.homesetting.create',
+        'uses' => 'HomeSetting\HomeSettingController@create',
+        'middleware' => 'permission:admin.homesetting.create'
+    ]);
+
+    Route::get('{homesetting}/edit', [
+        'as' => 'admin.homesetting.edit',
+        'uses' => 'HomeSetting\HomeSettingController@edit',
+        'middleware' => 'permission:admin.homesetting.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

@@ -407,7 +407,32 @@ Route::middleware('auth:api')->prefix('/problems')->group(function (){
         'uses' => 'Problem\ProblemController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/homesettings')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.homesetting.index',
+        'uses' => 'HomeSetting\HomeSettingController@index',
+    ]);
+    Route::post('/{homesetting}/edit', [
+            'as' => 'api.homesetting.update',
+            'uses' => 'HomeSetting\HomeSettingController@update',
+        ]);
+   Route::get('/{homesetting}', [
+              'as' => 'api.homesetting.find',
+              'uses' => 'HomeSetting\HomeSettingController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.homesetting.store',
+        'uses' => 'HomeSetting\HomeSettingController@store',
+    ]);
+
+    Route::delete('/{homesetting}', [
+        'as' => 'api.homesetting.destroy',
+        'uses' => 'HomeSetting\HomeSettingController@destroy',
+    ]);
+});
 // append
+
 
 
 

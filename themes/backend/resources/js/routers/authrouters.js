@@ -47,6 +47,8 @@ import AccountList from './../components/account/index';
 import ProblemList from './../components/problem/index';
 import ProblemForm from './../components/problem/form';
 
+import HomeSettingList from './../components/homesetting/index';
+
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -399,5 +401,10 @@ export default [
             pageTitle: 'problem.label.update_item',
         },
     },
-
+  //
+    {
+        path: '/admin/homesetting',
+        name: 'admin.homesetting.index',
+        component: HomeSettingList,
+    },
 ];
