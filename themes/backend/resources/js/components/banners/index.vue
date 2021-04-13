@@ -27,7 +27,7 @@
                                     </div>
                                     <div class="col-2">
                                         <router-link :to="{name: 'admin.banners.create'}">
-                                            <el-button type="primary"  size="small"   class="btn btn-flat">
+                                            <el-button type="primary"    class="btn btn-flat">
                                                 {{ $t('banners.label.create_title') }}
                                             </el-button>
                                         </router-link>

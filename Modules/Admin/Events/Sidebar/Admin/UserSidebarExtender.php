@@ -193,6 +193,15 @@ class UserSidebarExtender extends AbstractAdminSidebar
                         $this->auth->hasAccess('admin.homesetting.index')
                     );
                 });
+                $item->item(trans('backend::sidebar.banner'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('admin.banners.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.banners.index')
+                    );
+                });
 
 
             });
