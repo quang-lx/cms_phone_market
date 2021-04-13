@@ -219,12 +219,19 @@ class AdminServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
+            'Modules\Admin\Repositories\HomeSettingRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentHomeSettingRepository(new \Modules\Mon\Entities\HomeSetting());
+                return $repository;
+            }
+        );
+        $this->app->bind(
             'Modules\Admin\Repositories\BannersRepository',
             function () {
                 $repository = new \Modules\Admin\Repositories\Eloquent\EloquentBannersRepository(new \Modules\Mon\Entities\Banners());
                 return $repository;
             }
-        );
+        ); 
 // add bindings
 
 
