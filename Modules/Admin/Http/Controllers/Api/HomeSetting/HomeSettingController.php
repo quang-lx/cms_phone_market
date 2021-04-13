@@ -42,7 +42,7 @@ class HomeSettingController extends ApiController
 
     public function store(CreateHomeSettingRequest $request)
     {
-        $this->homesettingRepository->create($request->all());
+        $this->homesettingRepository->store($request->all());
 
         return response()->json([
             'errors' => false,

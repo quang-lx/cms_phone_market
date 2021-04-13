@@ -53,7 +53,7 @@
                     v-loading.body="loading"
                 >
                     <draggable
-                        :list="modelForm.data"
+                        :list="modelForm.blocks"
                         group="partSelected"
                         handle=".handle-sort"
                         class="parts-selected-part"
@@ -61,7 +61,7 @@
                         :forceFallback="true"
                         drag-class="part-selected-drag"
                     >
-                    <div class="card" v-for="(item, key) in modelForm.data" :key="key">
+                    <div class="card" v-for="(item, key) in modelForm.blocks" :key="key">
                         <div class="card-body" >
                     <div class="row"  >
                         <div class="col-1  d-flex justify-content-center align-items-center" style="border-right: 1px solid;margin-right: 10px;">
@@ -71,35 +71,45 @@
                             </div>
                         </div>
                         <div class="col-10">
-
+                            <el-form-item
+                              label="Loại"
+                              :class="{'el-form-item is-error': form.errors.has('blocks.'+key + '.type')}">
+                                <el-select v-model="item.type" placeholder="Chọn loại">
+                                    <el-option
+                                      v-for="item in listType"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                                <div
+                                  class="el-form-item__error"
+                                  v-if="form.errors.has('blocks.'+key + '.type')"
+                                  v-text="form.errors.first('blocks.'+key + '.type')"
+                                ></div>
+                            </el-form-item>
                                     <el-form-item
                                         label="Tiêu đề"
-                                        :class="{'el-form-item is-error': form.errors.has(key + '.name')}">
-                                        <el-input v-model="item.name"></el-input>
+                                        :class="{'el-form-item is-error': form.errors.has('blocks.'+'blocks.'+key + '.title')}">
+                                        <el-input v-model="item.title"></el-input>
                                         <div
                                             class="el-form-item__error"
-                                            v-if="form.errors.has(key + '.name')"
-                                            v-text="form.errors.first(key + '.name')"
+                                            v-if="form.errors.has('blocks.'+key + '.title')"
+                                            v-text="form.errors.first('blocks.'+key + '.title')"
                                         ></div>
                                     </el-form-item>
-                                    <el-form-item
-                                        label="Loại"
-                                        :class="{'el-form-item is-error': form.errors.has(key + '.type')}">
-                                        <el-select v-model="item.type" placeholder="Chọn loại">
-                                            <el-option
-                                                v-for="item in listType"
-                                                :key="item.value"
-                                                :label="item.label"
-                                                :value="item.value"
-                                            >
-                                            </el-option>
-                                        </el-select>
-                                        <div
-                                            class="el-form-item__error"
-                                            v-if="form.errors.has(key + '.type')"
-                                            v-text="form.errors.first(key + '.type')"
-                                        ></div>
-                                    </el-form-item>
+                            <el-form-item
+                              label="Nội dung (ID cách nhau bởi dấu phẩy)"
+                              :class="{'el-form-item is-error': form.errors.has('blocks.'+key + '.content')}">
+                                <el-input v-model="item.content"></el-input>
+                                <div
+                                  class="el-form-item__error"
+                                  v-if="form.errors.has('blocks.'+key + '.content')"
+                                  v-text="form.errors.first('blocks.'+key + '.content')"
+                                ></div>
+                            </el-form-item>
+
                                 </div><!-- /.card-body -->
                             </div>
                         </div>
@@ -141,7 +151,7 @@
         form: new Form(),
         loading: false,
         modelForm: {
-          data: []
+            blocks: []
         },
         listType: [
           {
@@ -179,8 +189,8 @@
         .then((response) => {
           this.tableIsLoading = false;
           this.tableIsLoading = false;
-          this.modelForm.data = response.data.data;
-          if (this.modelForm.data.length == 0) {
+          this.modelForm.blocks = response.data.data;
+          if (this.modelForm.blocks.length == 0) {
             this.addBlock()
           }
           this.meta = response.data.meta;
@@ -190,7 +200,7 @@
         });
       },
       addBlock() {
-        this.modelForm.data.push({
+        this.modelForm.blocks.push({
           title: '',
           type: '',
           content: ''
@@ -208,7 +218,7 @@
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "admin.homesetting.index" });
+          window.location.href = route('admin.homesetting.index');
         })
         .catch((error) => {
           this.loading = false;

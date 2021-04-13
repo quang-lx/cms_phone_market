@@ -18,9 +18,6 @@ class HomeSettingTransformer extends JsonResource
 	        'type' => $this->type,
 	        'content' => $this->content,
 	        'order_' => $this->order_,
-             'urls' => [
-                'delete_url' => route('api.homesetting.destroy', $this->id),
-            ],
 
         ];
 

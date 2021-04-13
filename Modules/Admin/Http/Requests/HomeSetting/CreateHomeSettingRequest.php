@@ -8,7 +8,11 @@ class CreateHomeSettingRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        $rules = [
+            'blocks.*.*' => 'required'
+        ];
+
+        return $rules;
     }
 
     public function translationRules()
@@ -23,7 +27,15 @@ class CreateHomeSettingRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        $messages= [];
+        $blocks = $this->input('blocks');
+        foreach ($blocks as $key => $value) {
+            $messages['blocks.' . $key .'.type.required'] = "Loại không được để trống";
+            $messages['blocks.' . $key .'.title.required'] = "Tiêu đề không được để trống";
+            $messages['blocks.' . $key .'.content.required'] = "Nội dung không được để trống";
+
+        }
+        return $messages;
     }
 
     public function translationMessages()

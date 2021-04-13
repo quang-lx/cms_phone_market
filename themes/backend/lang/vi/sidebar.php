@@ -42,6 +42,8 @@ return [
     'product management' => 'Quản trị sản phẩm',
     'brand' => 'Nhãn hàng',
     'problem' => 'Vấn đề',
+    'setting' => 'Cài đặt',
+    'homesetting' => 'Màn home',
 
 
 ];
