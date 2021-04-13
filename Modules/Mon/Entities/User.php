@@ -182,6 +182,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 	public function getAvatarAttribute()
 	{
 		return $this->filesByZone('avatar')->first();
+    }
+    
+    public function findCreatedBy()
+	{
+		return $this->find($this->created_by);
 	}
 
 }

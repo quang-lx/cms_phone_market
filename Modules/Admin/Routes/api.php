@@ -359,7 +359,32 @@ Route::middleware('auth:api')->prefix('/brands')->group(function (){
         'uses' => 'Brand\BrandController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/accounts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.account.index',
+        'uses' => 'Account\AccountController@index',
+    ]);
+    Route::post('/{account}/edit', [
+            'as' => 'api.account.update',
+            'uses' => 'Account\AccountController@update',
+        ]);
+   Route::get('/{account}', [
+              'as' => 'api.account.find',
+              'uses' => 'Account\AccountController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.account.store',
+        'uses' => 'Account\AccountController@store',
+    ]);
+
+    Route::delete('/{account}', [
+        'as' => 'api.account.destroy',
+        'uses' => 'Account\AccountController@destroy',
+    ]);
+});
 // append
+
 
 
 
