@@ -394,6 +394,7 @@ Route::group(['prefix' => '/homesetting'], function ( ) {
         'uses' => 'HomeSetting\HomeSettingController@edit',
         'middleware' => 'permission:admin.homesetting.edit'
     ]);
+});
 Route::group(['prefix' => '/banners'], function ( ) {
 
     Route::get('/', [
