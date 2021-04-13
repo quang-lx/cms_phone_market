@@ -376,7 +376,29 @@ Route::group(['prefix' => '/problem'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/banners'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.banners.index',
+        'uses' => 'Banners\BannersController@index',
+        'middleware' => 'permission:admin.banners.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.banners.create',
+        'uses' => 'Banners\BannersController@create',
+        'middleware' => 'permission:admin.banners.create'
+    ]);
+
+    Route::get('{banners}/edit', [
+        'as' => 'admin.banners.edit',
+        'uses' => 'Banners\BannersController@edit',
+        'middleware' => 'permission:admin.banners.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

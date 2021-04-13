@@ -407,7 +407,32 @@ Route::middleware('auth:api')->prefix('/problems')->group(function (){
         'uses' => 'Problem\ProblemController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/banners')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.banners.index',
+        'uses' => 'Banners\BannersController@index',
+    ]);
+    Route::post('/{banners}/edit', [
+            'as' => 'api.banners.update',
+            'uses' => 'Banners\BannersController@update',
+        ]);
+   Route::get('/{banners}', [
+              'as' => 'api.banners.find',
+              'uses' => 'Banners\BannersController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.banners.store',
+        'uses' => 'Banners\BannersController@store',
+    ]);
+
+    Route::delete('/{banners}', [
+        'as' => 'api.banners.destroy',
+        'uses' => 'Banners\BannersController@destroy',
+    ]);
+});
 // append
+
 
 
 

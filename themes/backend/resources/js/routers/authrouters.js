@@ -47,6 +47,8 @@ import AccountList from './../components/account/index';
 import ProblemList from './../components/problem/index';
 import ProblemForm from './../components/problem/form';
 
+import BannersList from './../components/banners/index';
+import BannersForm from './../components/banners/form';
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -397,6 +399,30 @@ export default [
         component: ProblemForm,
         props: {
             pageTitle: 'problem.label.update_item',
+        },
+    },
+
+    //
+    {
+        path: '/admin/banners',
+        name: 'admin.banners.index',
+        component: BannersList,
+    },
+    {
+        path: '/admin/banners/create',
+        name: 'admin.banners.create',
+        component: BannersForm,
+        props: {
+            pageTitle: 'banners.label.update_title',
+        },
+    },
+
+    {
+        path: '/admin/banners/:bannersId/edit',
+        name: 'admin.banners.edit',
+        component: BannersForm,
+        props: {
+            pageTitle: 'banners.label.update_title',
         },
     },
 
