@@ -8,6 +8,8 @@ use Modules\Api\Repositories\ApiShopRepository;
 use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
 use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
+use Modules\Api\Repositories\Eloquent\EloquentHomeSettingRepository;
+use Modules\Api\Repositories\HomeSettingRepository;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -119,6 +121,12 @@ class ApiServiceProvider extends ServiceProvider
 		    ApiShopRepository::class,
 		    function () {
 			    return new EloquentApiShopRepository();
+		    }
+	    );
+	    $this->app->bind(
+		    HomeSettingRepository::class,
+		    function () {
+			    return new EloquentHomeSettingRepository();
 		    }
 	    );
     }
