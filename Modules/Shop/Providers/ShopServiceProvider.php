@@ -4,8 +4,11 @@ namespace Modules\Shop\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Mon\Entities\Pcategory;
 use Modules\Shop\Console\GenerateShopAdminRole;
 use Modules\Shop\Console\GenerateShopPermission;
+use Modules\Shop\Repositories\Eloquent\EloquentPcategoryRepository;
+use Modules\Shop\Repositories\PcategoryRepository;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -157,7 +160,13 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
-        $this->app->bind(
+         $this->app->bind(
+		   PcategoryRepository::class,
+		    function () {
+			    return new EloquentPcategoryRepository(new Pcategory());
+		    }
+	    );
+	     $this->app->bind(
             'Modules\Shop\Repositories\CompanyRepository',
             function () {
                 $repository = new \Modules\Shop\Repositories\Eloquent\EloquentCompanyRepository(new \Modules\Mon\Entities\Company());

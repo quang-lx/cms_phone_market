@@ -22,16 +22,7 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row justify-content-end mb-2">
-                    <div class="col-md-8">
 
-                        <el-radio-group v-model="filter.filter_feature"   @change="fetchData">
-                            <el-radio v-for="item in listFeatures"
-                                      :key="'status-'+ item.value"
-                                      border
-                                      :label="item.value"  >{{item.label}}
-                            </el-radio>
-                        </el-radio-group>
-                    </div>
                     <div class="col-md-4   ">
                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch" placeholder="Nhập ID, tiêu đề, người tạo"
                                   v-model="searchQuery">
@@ -44,7 +35,7 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
-                                    {{ $t('product.label.product') }}
+                                    {{ $t('shop.label.product') }}
                                 </h3>
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
@@ -78,24 +69,10 @@
                                                      width="100"/>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="title" :label="$t('product.label.title')" sortable="custom">
+                                        <el-table-column prop="name" :label="$t('product.label.name')" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="category_id" :label="$t('product.label.category_id')" sortable="custom">
-                                            <template slot-scope="scope">
-                                                <span v-if="scope.row.category">{{scope.row.category.title}}</span>
-                                            </template>
-                                        </el-table-column>
-                                        <el-table-column prop="author" :label="$t('product.label.author')" sortable="custom">
 
-                                        </el-table-column>
-                                        <el-table-column prop="status" :label="$t('category.label.status')" sortable="status">
-                                            <template slot-scope="scope">
-                                                <span class="badge bg-success" v-if="scope.row.status == 'publish'">Hiển thị</span>
-                                                <span class="badge bg-danger" v-else>Ẩn</span>
-                                            </template>
-
-                                        </el-table-column>
                                         <el-table-column prop="created_by" label="Người tạo" sortable="custom">
 
                                         </el-table-column>
@@ -148,30 +125,6 @@
 
 
                 currentLocale: window.MonCMS.currentLocale || 'en',
-                categoryArr: window.MonCMS.productListCategory,
-                statusArr: window.MonCMS.productListStatus,
-                listFeatures: [
-                    {
-                        value: '',
-                        label: 'Tất cả'
-                    },
-                    {
-                        value: 'video',
-                        label: 'VIDEO'
-                    },
-                    {
-                        value: 'read',
-                        label: 'ĐỌC NHIỀU'
-                    },
-                    {
-                        value: 'hot',
-                        label: 'ĐẶC SẮC'
-                    },
-                    {
-                        value: 'featured',
-                        label: 'NỔI BẬT'
-                    },
-                ],
 
                 filter: {
                     category:'',

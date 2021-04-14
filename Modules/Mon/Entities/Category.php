@@ -62,4 +62,10 @@ class Category extends Model
     {
         return $this->filesByZone('thumbnail')->first();
     }
+
+    public function subcategory(){
+
+        return $this->hasMany(Category::class, 'parent_id');
+
+    }
 }

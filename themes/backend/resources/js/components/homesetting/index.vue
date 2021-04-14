@@ -64,7 +64,7 @@
                     <div class="card" v-for="(item, key) in modelForm.blocks" :key="key">
                         <div class="card-body" >
                     <div class="row"  >
-                        <div class="col-1  d-flex justify-content-center align-items-center" style="border-right: 1px solid;margin-right: 10px;">
+                        <div class="col-1  d-flex justify-content-center align-items-center" >
                             <div class="drag-item-bt z-index-2 handle-sort d-flex justify-content-center align-items-center">
                                 <i class="fa fa-arrows-alt back-to-step-icon drag-drop-icon"
                                    aria-hidden="true"></i>
@@ -111,8 +111,15 @@
                             </el-form-item>
 
                                 </div><!-- /.card-body -->
+                        <div class="col-1  d-flex justify-content-center align-items-center"  v-if="modelForm.blocks.length>1" >
+                            <div class=" z-index-2   d-flex justify-content-center align-items-center">
+                                <i class="fa fa-times back-to-step-icon drag-drop-icon" @click="removeBlock(key)"
+                                   aria-hidden="true"></i>
                             </div>
                         </div>
+                            </div>
+                        </div>
+
                     </div>
                     </draggable>
                 </el-form>
@@ -205,6 +212,9 @@
           type: '',
           content: ''
         })
+      },
+      removeBlock(key) {
+        this.modelForm.blocks.splice(key,1)
       },
       onSubmit() {
         this.form = new Form(_.merge(this.modelForm, {}));

@@ -13,10 +13,12 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 
 	public function create($data)
 	{
-		//LinhPV fake amount
-		$data['amount'] =10;
+
 		$model = $this->model->create($data);
-		$this->syncPrice($model, $data['product_prices']);
+//		$this->syncPrice($model, $data['product_prices']);
+		if (isset($data['category_id']) && is_array($data['category_id'])) {
+			$model->pcategories()->sync($data['category_id']);
+		}
 		event(new ProductWasCreated($model, $data));
 
 		return $model;
@@ -24,10 +26,12 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 
 	public function update($model, $data)
 	{
-		//LinhPV fake amount
-		$data['amount'] =10;
+
 		$model->update($data);
-		$this->syncPrice($model, $data['product_prices']);
+//		$this->syncPrice($model, $data['product_prices']);
+		if (isset($data['category_id']) && is_array($data['category_id'])) {
+			$model->pcategories()->sync($data['category_id']);
+		}
 		event(new ProductWasUpdated($model, $data));
 
 		return $model;

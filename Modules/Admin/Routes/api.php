@@ -152,6 +152,11 @@ Route::middleware('auth:api')->prefix('/danh-muc')->group(function (){
         'uses' => 'Category\CategoryController@index',
 
     ]);
+    Route::get('/tree', [
+        'as' => 'api.category.tree',
+        'uses' => 'Category\CategoryController@tree',
+
+    ]);
     Route::delete('/{category}', [
         'as' => 'api.category.destroy',
         'uses' => 'Category\CategoryController@destroy',
