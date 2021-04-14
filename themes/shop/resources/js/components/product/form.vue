@@ -235,6 +235,18 @@
 
 
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <multiple-media zone="product_collection"
+                                                            label="Ảnh/Video"
+                                                            @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
+                                                            @fileUnselected="unselectFile($event, 'modelForm')"
+                                                            @fileSorted="fileSorted($event, 'modelForm')"
+                                                            entity="Modules\Mon\Entities\Product"
+                                                            :entity-id="$route.params.productId"></multiple-media>
+                                        </div>
+                                    </div>
+
 
 
                                 </el-form>
@@ -265,11 +277,14 @@
   import Form from 'form-backend-validation';
   import Tinymce from '../utils/Tinymce';
   import SingleFileSelector from '../../mixins/SingleFileSelector.js';
+  import MultipleMedia from '../media/js/components/MultipleMedia';
+  import MultipleFileSelector from '../../mixins/MultipleFileSelector.js';
 
   export default {
-    mixins: [SingleFileSelector],
+    mixins: [SingleFileSelector, MultipleFileSelector],
     components: {
       Tinymce,
+      MultipleMedia
     },
     props: {
       pageTitle: {default: null, String},
@@ -280,7 +295,7 @@
           children: 'children',
           label: 'label'
         },
-
+        medias_multi: {},
         form: new Form(),
         loading: false,
         modelForm: {

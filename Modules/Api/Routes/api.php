@@ -122,3 +122,11 @@ Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
 });
 
 
+Route::prefix('/home')->group(function () {
+
+	Route::get('/', [
+		'as' => 'apife.home.index',
+		'uses' => 'HomeController@index',
+	]);
+
+});

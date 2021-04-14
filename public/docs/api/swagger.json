@@ -16,6 +16,10 @@
     "basePath": "/api-fe",
     "tags": [
         {
+            "name": "home",
+            "description": "Home"
+        },
+        {
             "name": "app",
             "description": "App Setting"
         },
@@ -43,6 +47,53 @@
         "https"
     ],
     "paths": {
+        "/home": {
+            "get": {
+                "tags": [
+                    "home"
+                ],
+                "summary": "Home Block",
+                "description": "Home Block",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
         "/app/shop/nearest": {
             "get": {
                 "tags": [
