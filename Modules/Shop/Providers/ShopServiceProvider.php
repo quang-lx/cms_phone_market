@@ -166,7 +166,15 @@ class ShopServiceProvider extends ServiceProvider
 			    return new EloquentPcategoryRepository(new Pcategory());
 		    }
 	    );
+        $this->app->bind(
+            'Modules\Shop\Repositories\CompanyRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentCompanyRepository(new \Modules\Mon\Entities\Company());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 
