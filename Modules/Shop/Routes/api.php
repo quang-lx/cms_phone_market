@@ -155,6 +155,34 @@ Route::middleware('auth:api')->prefix('/products')->group(function (){
         'uses' => 'Product\ProductController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/companies')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.company.index',
+        'uses' => 'Company\CompanyController@index',
+    ]);
+    Route::post('/edit', [
+            'as' => 'apishop.company.update',
+            'uses' => 'Company\CompanyController@update',
+        ]);
+    Route::post('/', [
+        'as' => 'apishop.company.store',
+        'uses' => 'Company\CompanyController@store',
+    ]);
+
+    Route::delete('/{company}', [
+        'as' => 'apishop.company.destroy',
+        'uses' => 'Company\CompanyController@destroy',
+    ]);
+
+    Route::get('/chi-tiet', [
+        'as' => 'apishop.company.find',
+        'uses' => 'Company\CompanyController@find',
+    ]);
+
+    
+});
 // append
+
 
 

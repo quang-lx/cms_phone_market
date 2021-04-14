@@ -16,6 +16,9 @@ import UserForm2 from './../components/user/form';
 import ProductList from './../components/product/index';
 import ProductForm from './../components/product/form';
 
+import CompanyList from './../components/company/index';
+import CompanyForm from './../components/company/form';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -114,6 +117,21 @@ export default [
         component: ProductForm,
         props: {
             pageTitle: 'product.label.update_product',
+        },
+    },
+
+    // company
+    {
+        path: '/shop-admin/company',
+        name: 'shop.company.index',
+        component: CompanyList,
+    },
+    {
+        path: '/shop-admin/company/edit',
+        name: 'shop.company.edit',
+        component: CompanyForm,
+        props: {
+            pageTitle: 'company.label.update_title',
         },
     },
 

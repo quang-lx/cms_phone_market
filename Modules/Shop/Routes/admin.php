@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Web Admin Routes
+| Web shop Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -103,6 +103,28 @@ Route::group(['prefix' => '/product'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/company'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.company.index',
+        'uses' => 'Company\CompanyController@index',
+        'middleware' => 'permission:shop.company.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.company.create',
+        'uses' => 'Company\CompanyController@create',
+        'middleware' => 'permission:shop.company.create'
+    ]);
+
+    Route::get('edit', [
+        'as' => 'shop.company.edit',
+        'uses' => 'Company\CompanyController@edit',
+        'middleware' => 'permission:shop.company.edit'
+    ]);
+
+
+});
 // append
+
 
 
