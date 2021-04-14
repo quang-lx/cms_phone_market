@@ -71,6 +71,28 @@
                                         <div class="col-md-3" style="padding-top:10px;border-left: 1px solid rgba(0,0,0,.125);">
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                    <el-form-item :label="$t('product.label.category_id')"
+                                                                  :class="{'el-form-item is-error': form.errors.has('category_id') }">
+                                                        <el-tree
+                                                            v-model="modelForm.category_id"
+                                                            v-bind="modelForm.category_id"
+                                                            :data="categoryArr"
+                                                            show-checkbox
+                                                            default-expand-all
+                                                            node-key="id"
+                                                            ref="tree"
+                                                            highlight-current
+                                                            check-on-click-node
+                                                            check-strictly
+                                                            @check="handleCheckChange"
+                                                            :props="defaultProps">
+                                                        </el-tree>
+                                                        <div class="el-form-item__error"
+                                                             v-if="form.errors.has('category_id')"
+                                                             v-text="form.errors.first('category_id')"></div>
+                                                    </el-form-item>
+                                                </div>
+                                                <div class="col-md-12">
                                                     <el-form-item :label="$t('product.label.status')"
                                                                     :class="{'el-form-item is-error': form.errors.has(  'status') }">
 
@@ -164,7 +186,6 @@
                                                     <el-form-item :label="$t('product.label.amount')"
                                                                   :class="{'el-form-item is-error': form.errors.has('amount') }">
 
-<!--                                                        <el-input v-model="modelForm.amount"></el-input>-->
                                                         <el-input-number v-model="modelForm.amount" :min="1" :max="100000"></el-input-number>
 
                                                         <div class="el-form-item__error"
@@ -200,25 +221,6 @@
                                                         <div class="el-form-item__error"
                                                              v-if="form.errors.has('brand_id')"
                                                              v-text="form.errors.first('brand_id')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.category_id')"
-                                                                  :class="{'el-form-item is-error': form.errors.has(  'category_id') }">
-
-                                                        <el-select v-model="modelForm.category_id" :placeholder="$t('product.label.category_id')"
-                                                                   filterable style="width: 100% !important">
-                                                            <el-option
-                                                                    v-for="item in categoryArr"
-                                                                    :key="'category'+ item.id"
-                                                                    :label="item.name"
-                                                                    :value="item.id">
-                                                            </el-option>
-
-                                                        </el-select>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('category_id')"
-                                                             v-text="form.errors.first('category_id')"></div>
                                                     </el-form-item>
                                                 </div>
 
@@ -269,6 +271,11 @@
         },
         data() {
             return {
+                defaultProps: {
+                    children: 'children',
+                    label: 'label'
+                },
+
                 form: new Form(),
                 loading: false,
                 modelForm:{
@@ -281,7 +288,9 @@
                     s_width: '',
                     s_height: '',
                     brand_id: '',
-                    category_id: '',
+                    sku: '',
+                    price: '',
+                    amount: '',
 
                 },
                 locales: window.MonCMS.locales,
@@ -390,13 +399,25 @@
 
                 };
 
-                axios.get(route('api.category.index', _.merge(properties, {})))
+                axios.get(route('api.category.tree', _.merge(properties, {})))
                     .then((response) => {
 
-                        this.categoryArr = response.data.data;
+                        this.categoryArr = response.data;
 
                     });
             },
+            updateValue: function (value) {
+                // update parent data so that we can still v-model on the parent
+                this.$emit('input', value);
+            },
+
+            handleCheckChange(checkedNode, treeCheckedStatus) {
+                let checkedKeys = [
+                    treeCheckedStatus.checkedKeys,
+                    ...treeCheckedStatus.halfCheckedKeys
+                ];
+                this.updateValue(...checkedKeys);
+            }
         },
         mounted() {
             this.fetchBrand();
