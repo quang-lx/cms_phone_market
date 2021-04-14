@@ -69,7 +69,7 @@ class CompanyController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::company.message.update success'),
+            'message' => trans('ch::company.message.update success'),
         ]);
     }
 
