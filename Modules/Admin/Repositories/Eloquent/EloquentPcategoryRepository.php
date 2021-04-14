@@ -58,7 +58,7 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
         }
         $data = $query->paginate($request->get('per_page', 10));
         $dataTotal = (clone $query)->get();
-        $data_case= $this->formatCategories($dataTotal->getCollection());
+        $data_case= $this->formatCategories($dataTotal);
         $data_return = $this->getDataForPaging($data_case, $request->get('page', 1), $request->get('per_page', 10));
         return $data->setCollection(collect($data_return));
     }
