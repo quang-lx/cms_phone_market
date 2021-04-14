@@ -217,7 +217,7 @@ export default {
 
       this.changepassForm
         .post(
-          route("apife.user.changePassword")
+          route("apishop.company.changePassword")
         )
         .then((response) => {
           this.loadingPassword = false;

@@ -13,6 +13,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Mon\Http\Controllers\ApiController;
 use Modules\Mon\Auth\Contracts\Authentication;
+use Modules\Mon\Repositories\UserRepository;
+use Modules\Admin\Http\Requests\User\ChangePasswordRequest;
 
 class CompanyController extends ApiController
 {
@@ -20,11 +22,11 @@ class CompanyController extends ApiController
      * @var CompanyRepository
      */
     private $companyRepository;
-
-    public function __construct(Authentication $auth, CompanyRepository $company)
+    protected $userRepository;
+    public function __construct(Authentication $auth, CompanyRepository $company,UserRepository $userRepository)
     {
         parent::__construct($auth);
-
+        $this->userRepository = $userRepository;
         $this->companyRepository = $company;
     }
 
@@ -78,6 +80,16 @@ class CompanyController extends ApiController
         return response()->json([
             'errors' => false,
             'message' => trans('backend::company.message.delete success'),
+        ]);
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $this->userRepository->changePassword(Auth::user(), $request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('backend::user.message.change password success'),
         ]);
     }
 }

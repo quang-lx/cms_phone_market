@@ -8,7 +8,12 @@ class UpdateCompanyRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+      return [
+            'username' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +28,12 @@ class UpdateCompanyRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'username.required' => 'Tên là bắt buộc',
+            'phone.required' => 'Số điện thoại là bắt buộc',
+            'email.required' => 'Email là bắt buộc',
+            'address.required' => 'Địa chỉ là bắt buộc',
+        ];
     }
 
     public function translationMessages()
