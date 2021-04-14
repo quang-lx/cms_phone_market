@@ -61,7 +61,7 @@
                                                             <label class="el-form-item__label">{{$t('product.label.description')}}</label>
                                                         </div>
                                                         <tinymce v-model="modelForm.description"
-                                                                 :height="600"></tinymce>
+                                                                 :height="800"></tinymce>
                                                         <div class="el-form-item__error"
                                                              v-if="form.errors.has('description')"
                                                              v-text="form.errors.first('description')"></div>
@@ -72,6 +72,27 @@
                                         <div class="col-md-3"
                                              style="padding-top:10px;border-left: 1px solid rgba(0,0,0,.125);">
                                             <div class="row">
+                                                <div class="col-md-12">
+                                                    <el-form-item :label="$t('product.label.category_id')"
+                                                                  :class="{'el-form-item is-error': form.errors.has('category_id') }">
+                                                        <el-tree
+
+                                                            :data="categoryArr"
+                                                            show-checkbox
+                                                            default-expand-all
+                                                            node-key="id"
+                                                            ref="tree"
+                                                            highlight-current
+                                                            check-on-click-node
+                                                            check-strictly
+                                                            @check="handleCheckChange"
+                                                            :props="defaultProps">
+                                                        </el-tree>
+                                                        <div class="el-form-item__error"
+                                                             v-if="form.errors.has('category_id')"
+                                                             v-text="form.errors.first('category_id')"></div>
+                                                    </el-form-item>
+                                                </div>
                                                 <div class="col-md-12">
                                                     <el-form-item :label="$t('product.label.status')"
                                                                   :class="{'el-form-item is-error': form.errors.has(  'status') }">
@@ -154,6 +175,38 @@
                                                              v-text="form.errors.first('s_height')"></div>
                                                     </el-form-item>
                                                 </div>
+                                                <div class="col-md-12">
+                                                    <el-form-item :label="$t('product.label.sku')"
+                                                                  :class="{'el-form-item is-error': form.errors.has('sku') }">
+
+                                                        <el-input v-model="modelForm.sku"></el-input>
+                                                        <div class="el-form-item__error"
+                                                             v-if="form.errors.has('sku')"
+                                                             v-text="form.errors.first('sku')"></div>
+                                                    </el-form-item>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <el-form-item :label="$t('product.label.amount')"
+                                                                  :class="{'el-form-item is-error': form.errors.has('amount') }">
+
+                                                        <el-input-number v-model="modelForm.amount" :min="1"
+                                                                         :max="100000"></el-input-number>
+
+                                                        <div class="el-form-item__error"
+                                                             v-if="form.errors.has('amount')"
+                                                             v-text="form.errors.first('amount')"></div>
+                                                    </el-form-item>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <el-form-item :label="$t('product.label.price')"
+                                                                  :class="{'el-form-item is-error': form.errors.has('price') }">
+
+                                                        <el-input v-model="modelForm.price"></el-input>
+                                                        <div class="el-form-item__error"
+                                                             v-if="form.errors.has('price')"
+                                                             v-text="form.errors.first('price')"></div>
+                                                    </el-form-item>
+                                                </div>
 
                                                 <div class="col-md-12">
                                                     <el-form-item :label="$t('product.label.brand_id')"
@@ -181,82 +234,6 @@
                                         </div>
 
 
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card">
-                                                <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                                    <h3 class="card-title">
-                                                        Mua nhiều giảm giá
-                                                        <el-button type="primary" @click="addProductPrice()"
-                                                                   size="small" style="margin-left:20px"
-                                                                   class="btn btn-flat "
-                                                                   icon="el-icon-circle-plus-outline">
-                                                            Thêm khoảng giá
-                                                        </el-button>
-                                                    </h3>
-
-                                                </div><!-- /.card-header -->
-                                                <div class="card-body" style="padding-top:20px">
-                                                    <div class="row" v-for="(item, index) in modelForm.product_prices"
-                                                         :key="index">
-                                                        <div class="col-md-2">
-                                                            <el-form-item label="Số tối thiểu"
-                                                                          :class="{'el-form-item is-error': form.errors.has('product_price.'+index + 'min' )  }">
-
-                                                                <el-input-number v-model="item.min"
-                                                                                 placeholder="Số tối thiểu"></el-input-number>
-                                                                <div class="el-form-item__error"
-                                                                     v-if="form.errors.has('product_price.'+index + 'min')"
-                                                                     v-text="form.errors.first('product_price.'+index + 'min')"></div>
-                                                            </el-form-item>
-
-
-                                                        </div>
-                                                        <div class="col-md-2">
-
-                                                            <el-form-item label="Số tối đa"
-                                                                          :class="{'el-form-item is-error': form.errors.has('product_price.'+index + 'max')  }">
-
-                                                                <el-input-number v-model="item.max"
-                                                                                 placeholder="Số tối đa"></el-input-number>
-                                                                <div class="el-form-item__error"
-                                                                     v-if="form.errors.has('product_price.'+index + 'max')"
-                                                                     v-text="form.errors.first('product_price.'+index + 'max')"></div>
-                                                            </el-form-item>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <el-form-item label="Giá sản phẩm"
-                                                                          :class="{'el-form-item is-error': form.errors.has('product_price.'+index + 'price' )  }">
-
-                                                                <el-input-number v-model="item.price"
-                                                                                 placeholder="Giá sản phẩm"></el-input-number>
-                                                                <div class="el-form-item__error"
-                                                                     v-if="form.errors.has('product_price.'+index + 'price')"
-                                                                     v-text="form.errors.first('product_price.'+index + 'price')"></div>
-                                                            </el-form-item>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <el-form-item  label=" " >
-
-                                                            <i class="el-icon-circle-close" @click="removeProductPrice(index)" style="cursor:pointer; color:red;font-size:26px"></i>
-                                                            </el-form-item>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <multiple-media zone="product_collection"
-                                                            label="Ảnh/Video"
-                                                            @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
-                                                            @fileUnselected="unselectFile($event, 'modelForm')"
-                                                            @fileSorted="fileSorted($event, 'modelForm')"
-                                                            entity="Modules\Mon\Entities\Product"
-                                                            :entity-id="$route.params.productId"></multiple-media>
-                                        </div>
                                     </div>
 
 
@@ -288,38 +265,43 @@
   import Form from 'form-backend-validation';
   import Tinymce from '../utils/Tinymce';
   import SingleFileSelector from '../../mixins/SingleFileSelector.js';
-  import MultipleMedia from '../media/js/components/MultipleMedia';
-  import MultipleFileSelector from '../../mixins/MultipleFileSelector.js';
 
   export default {
-    mixins: [SingleFileSelector, MultipleFileSelector],
+    mixins: [SingleFileSelector],
     components: {
       Tinymce,
-      MultipleMedia
     },
     props: {
       pageTitle: {default: null, String},
     },
     data() {
       return {
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+
         form: new Form(),
         loading: false,
         modelForm: {
           name: '',
           description: '',
-          status: '1',
-          p_state: '1',
+          status: 1,
+          p_state: 1,
           p_weight: '',
           s_long: '',
           s_width: '',
           s_height: '',
           brand_id: '',
-          product_prices: []
+          sku: '',
+          price: '',
+          amount: '',
+          category_id: []
 
         },
-        medias_multi: {},
         locales: window.MonCMS.locales,
         brandArr: [],
+        categoryArr: [],
         listStatus: [
           {
             value: 1,
@@ -338,7 +320,7 @@
           },
           {
             value: 2,
-            label: '99%'
+            label: 'Đã sử dụng'
           },
 
         ],
@@ -391,6 +373,9 @@
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
+          if (this.modelForm.category_id) {
+            this.setCheckedKeys(this.modelForm.category_id)
+          }
 
         });
       },
@@ -416,19 +401,38 @@
 
         });
       },
-      addProductPrice() {
-        this.modelForm.product_prices.push({min: '', max: '', price: ''})
+      fetchCategory() {
+        const properties = {
+          page: 0,
+          per_page: 1000,
+
+        };
+
+        axios.get(route('apishop.pcategory.tree', _.merge(properties, {})))
+        .then((response) => {
+
+          this.categoryArr = response.data;
+
+        });
       },
-      removeProductPrice(index) {
-        this.modelForm.product_prices.splice(index, 1)
-      }
+      updateValue: function (value) {
+        // update parent data so that we can still v-model on the parent
+        this.$emit('input', value);
+      },
+
+      handleCheckChange(checkedNode, treeCheckedStatus) {
+        this.modelForm.category_id = treeCheckedStatus.checkedKeys
+      },
+      setCheckedKeys(keys) {
+        this.$refs.tree.setCheckedKeys(keys);
+      },
     },
     mounted() {
+
+      this.fetchCategory();
       this.fetchBrand();
       if (this.$route.params.productId !== undefined) {
         this.fetchData();
-      } else {
-        this.addProductPrice();
       }
 
     },

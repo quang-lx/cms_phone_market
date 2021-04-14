@@ -44,7 +44,6 @@ class ProductController extends ApiController
     public function store(CreateProductRequest $request)
     {
         $params = array();
-        $params['sku'] = 'sku_test';
         $params['company_id'] = Auth::user()->id;
     
         $this->productRepository->create(array_merge($request->all(), $params));
@@ -64,7 +63,6 @@ class ProductController extends ApiController
     public function update(Product $product, UpdateProductRequest $request)
     {
         $params = array();
-        $params['sku'] = 'sku_test';
         $params['company_id'] = Auth::user()->id;
     
         $this->productRepository->update($product, array_merge($request->all(), $params));
@@ -81,7 +79,7 @@ class ProductController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::product.message.delete success'),
+            'message' => trans('ch::product.message.delete success'),
         ]);
     }
 }

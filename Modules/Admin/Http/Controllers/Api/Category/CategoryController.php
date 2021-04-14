@@ -33,6 +33,11 @@ class CategoryController extends ApiController
         return CategoryTransformer::collection($this->categoryRepository->serverPagingFor($request));
     }
 
+    public function tree(Request $request)
+    {
+        return $this->categoryRepository->serverPagingForTree($request);
+    }
+
 
     public function all(Request $request)
     {

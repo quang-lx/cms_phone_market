@@ -16,6 +16,10 @@ class UpdateProductRequest extends FormRequest
             's_width' => 'required',
             's_height' => 'required',
             'brand_id' => 'required',
+            'sku' => 'required',
+            'amount' => 'required',
+            'price' => 'required',
+            'category_id' => 'required',
         ];
 
         return $rules;
@@ -41,6 +45,10 @@ class UpdateProductRequest extends FormRequest
             's_width.required' => 'Chiều rộng là bắt buộc',
             's_height.required' => 'Chiều cao sai định dạng',
             'brand_id.required' => 'Nhãn hiệu là bắt buộc',
+            'sku.required' => 'SKU là bắt buộc',
+            'amount.required' => 'Số lượng là bắt buộc',
+            'price.required' => 'Giá bán là bắt buộc',
+            'category_id.required' => 'Danh mục là bắt buộc',
         ];
     }
 

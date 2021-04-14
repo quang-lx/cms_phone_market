@@ -167,7 +167,11 @@ export default {
                 "s_long": "Chiều dài",
                 "s_width": "Chiều rộng",
                 "s_height": "Chiều cao",
-                "brand_id": "Thương hiệu"
+                "brand_id": "Thương hiệu",
+                "sku": "SKU",
+                "amount": "Số lượng",
+                "price": "Giá bán",
+                "category_id": "Danh mục"
             },
             "message": {
                 "create success": "Tạo sản phẩm thành công.",
