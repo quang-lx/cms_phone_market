@@ -160,7 +160,7 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
-	    $this->app->bind(
+         $this->app->bind(
 		   PcategoryRepository::class,
 		    function () {
 			    return new EloquentPcategoryRepository(new Pcategory());

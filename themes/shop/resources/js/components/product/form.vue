@@ -1,274 +1,295 @@
 <template>
-    <div>
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <el-breadcrumb separator="/">
-                            <el-breadcrumb-item>
-                                <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item :to="{name: 'shop.product.index'}">{{ $t('product.label.list') }}
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item> {{ $t(pageTitle) }}
-                            </el-breadcrumb-item>
-                        </el-breadcrumb>
-                    </div>
+  <div>
 
-                </div>
+
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <el-breadcrumb separator="/">
+                  <el-breadcrumb-item>
+                    <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
+                  </el-breadcrumb-item>
+                  <el-breadcrumb-item :to="{name: 'shop.product.index'}">{{ $t('product.label.list') }}
+                  </el-breadcrumb-item>
+                  <el-breadcrumb-item> {{ $t(pageTitle) }}
+                  </el-breadcrumb-item>
+                </el-breadcrumb>
+
+              </div>
+
             </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <el-form ref="form"
+                 :model="modelForm"
+                 label-width="200px"
+                 label-position="top"
+                 v-loading.body="loading"
+        >
+          <div class="row">
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    {{ $t(pageTitle) }}<span v-if="modelForm.name">: &nbsp{{modelForm.name}}</span>
-                                </h3>
+            <div class="col-md-9">
+              <div class="card">
 
-                            </div><!-- /.card-header -->
-                            <div class="card-body" style="padding-top:0px">
-
-                                <el-form ref="form"
-                                         :model="modelForm"
-                                         label-width="200px"
-                                         label-position="top"
-                                         v-loading.body="loading"
-                                >
-                                    <div class="row">
-                                        <div class="col-md-9" style="padding-top:10px;padding-right:30px">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.name')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('name') }">
-
-                                                        <el-input v-model="modelForm.name"></el-input>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('name')"
-                                                             v-text="form.errors.first('name')"></div>
-                                                    </el-form-item>
-                                                </div>
-
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.description')"
-                                                                  :class="{'el-form-item is-error': form.errors.has(  'description') }">
-                                                        <div slot="label">
-                                                            <label class="el-form-item__label">{{$t('product.label.description')}}</label>
-                                                        </div>
-                                                        <tinymce v-model="modelForm.description"
-                                                                 :height="800"></tinymce>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('description')"
-                                                             v-text="form.errors.first('description')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <multiple-media zone="product_collection"
-                                                                label="Ảnh/Video"
-                                                                @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
-                                                                @fileUnselected="unselectFile($event, 'modelForm')"
-                                                                @fileSorted="fileSorted($event, 'modelForm')"
-                                                                entity="Modules\Mon\Entities\Product"
-                                                                :entity-id="$route.params.productId"></multiple-media>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3"
-                                             style="padding-top:10px;border-left: 1px solid rgba(0,0,0,.125);">
-                                            <div class="row">
-                                                <div class="col-md-12 " >
-                                                    <el-form-item :label="$t('product.label.category_id')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('category_id') }">
-                                                        <div class="tree-container">
-                                                            <el-tree
-
-                                                                :data="categoryArr"
-                                                                show-checkbox
-                                                                default-expand-all
-                                                                node-key="id"
-                                                                ref="tree"
-                                                                highlight-current
-                                                                check-on-click-node
-                                                                check-strictly
-                                                                @check="handleCheckChange"
-                                                                :props="defaultProps">
-                                                            </el-tree>
-                                                        </div>
-
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('category_id')"
-                                                             v-text="form.errors.first('category_id')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.status')"
-                                                                  :class="{'el-form-item is-error': form.errors.has(  'status') }">
-
-                                                        <el-select v-model="modelForm.status"
-                                                                   :placeholder="$t('product.label.status')"
-                                                                   filterable style="width: 100% !important">
-                                                            <el-option
-                                                                v-for="item in listStatus"
-                                                                :key="'status'+ item.value"
-                                                                :label="item.label"
-                                                                :value="item.value">
-                                                            </el-option>
-
-                                                        </el-select>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('status')"
-                                                             v-text="form.errors.first('status')"></div>
-                                                    </el-form-item>
-                                                </div>
-
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.p_state')"
-                                                                  :class="{'el-form-item is-error': form.errors.has(  'p_state') }">
-
-                                                        <el-select v-model="modelForm.p_state"
-                                                                   :placeholder="$t('product.label.p_state')"
-                                                                   filterable style="width: 100% !important">
-                                                            <el-option
-                                                                v-for="item in listState"
-                                                                :key="'state'+ item.value"
-                                                                :label="item.label"
-                                                                :value="item.value">
-                                                            </el-option>
-
-                                                        </el-select>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('p_state')"
-                                                             v-text="form.errors.first('p_state')"></div>
-                                                    </el-form-item>
-                                                </div>
-
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.p_weight')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('p_weight') }">
-
-                                                        <el-input v-model="modelForm.p_weight"></el-input>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('p_weight')"
-                                                             v-text="form.errors.first('p_weight')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.s_long')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('s_long') }">
-
-                                                        <el-input v-model="modelForm.s_long"></el-input>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('s_long')"
-                                                             v-text="form.errors.first('s_long')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.s_width')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('s_width') }">
-
-                                                        <el-input v-model="modelForm.s_width"></el-input>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('s_width')"
-                                                             v-text="form.errors.first('s_width')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.s_height')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('s_height') }">
-
-                                                        <el-input v-model="modelForm.s_height"></el-input>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('s_height')"
-                                                             v-text="form.errors.first('s_height')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.sku')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('sku') }">
-
-                                                        <el-input v-model="modelForm.sku"></el-input>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('sku')"
-                                                             v-text="form.errors.first('sku')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.amount')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('amount') }">
-
-                                                        <el-input-number v-model="modelForm.amount" :min="1"
-                                                                         :max="100000"></el-input-number>
-
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('amount')"
-                                                             v-text="form.errors.first('amount')"></div>
-                                                    </el-form-item>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.price')"
-                                                                  :class="{'el-form-item is-error': form.errors.has('price') }">
-
-                                                        <el-input v-model="modelForm.price"></el-input>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('price')"
-                                                             v-text="form.errors.first('price')"></div>
-                                                    </el-form-item>
-                                                </div>
-
-                                                <div class="col-md-12">
-                                                    <el-form-item :label="$t('product.label.brand_id')"
-                                                                  :class="{'el-form-item is-error': form.errors.has(  'brand_id') }">
-
-                                                        <el-select v-model="modelForm.brand_id"
-                                                                   :placeholder="$t('product.label.brand_id')"
-                                                                   filterable style="width: 100% !important">
-                                                            <el-option
-                                                                v-for="item in brandArr"
-                                                                :key="'brand'+ item.id"
-                                                                :label="item.name"
-                                                                :value="item.id">
-                                                            </el-option>
-
-                                                        </el-select>
-                                                        <div class="el-form-item__error"
-                                                             v-if="form.errors.has('brand_id')"
-                                                             v-text="form.errors.first('brand_id')"></div>
-                                                    </el-form-item>
-                                                </div>
+                <div class="card-body">
 
 
-                                            </div>
-                                        </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.name')"
+                                    :class="{'el-form-item is-error': form.errors.has('name') }">
 
-
-                                    </div>
-
-
-
-                                </el-form>
-                            </div><!-- /.card-body -->
-                            <div class="card-footer d-flex justify-content-end">
-                                <el-button type="primary" @click="onSubmit()" size="small" :loading="loading"
-                                           class="btn btn-flat ">
-                                    {{ $t('mon.button.save') }}
-                                </el-button>
-                                <el-button class="btn btn-flat " size="small" @click="onCancel()">{{
-                                    $t('mon.button.cancel') }}
-                                </el-button>
-                            </div>
-                        </div>
+                        <el-input v-model="modelForm.name"></el-input>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('name')"
+                             v-text="form.errors.first('name')"></div>
+                      </el-form-item>
                     </div>
+
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.description')"
+                                    :class="{'el-form-item is-error': form.errors.has(  'description') }">
+                        <div slot="label">
+                          <label class="el-form-item__label">{{$t('product.label.description')}}</label>
+                        </div>
+                        <tinymce v-model="modelForm.description"
+                                 :height="500"></tinymce>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('description')"
+                             v-text="form.errors.first('description')"></div>
+                      </el-form-item>
+                    </div>
+
+                  </div>
+
                 </div>
 
-            </div>
-        </section>
 
-    </div>
+              </div>
+              <div class="card">
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <multiple-media zone="product_collection"
+                                      label="Ảnh/Video"
+                                      @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
+                                      @fileUnselected="unselectFile($event, 'modelForm')"
+                                      @fileSorted="fileSorted($event, 'modelForm')"
+                                      entity="Modules\Mon\Entities\Product"
+                                      :entity-id="$route.params.productId"></multiple-media>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="card">
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <el-form-item :label="$t('product.label.category_id')"
+                                    :class="{'el-form-item is-error': form.errors.has('category_id') }">
+                        <div class="tree-container">
+                          <el-tree
+
+                            :data="categoryArr"
+                            show-checkbox
+                            default-expand-all
+                            node-key="id"
+                            ref="tree"
+                            highlight-current
+                            check-on-click-node
+                            check-strictly
+                            @check="handleCheckChange"
+                            :props="defaultProps">
+                          </el-tree>
+                        </div>
+
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('category_id')"
+                             v-text="form.errors.first('category_id')"></div>
+                      </el-form-item>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="card">
+
+                <div class="card-body">
+                  <div class="row">
+
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.status')"
+                                    :class="{'el-form-item is-error': form.errors.has(  'status') }">
+
+                        <el-select v-model="modelForm.status"
+                                   :placeholder="$t('product.label.status')"
+                                   filterable style="width: 100% !important">
+                          <el-option
+                            v-for="item in listStatus"
+                            :key="'status'+ item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+
+                        </el-select>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('status')"
+                             v-text="form.errors.first('status')"></div>
+                      </el-form-item>
+                    </div>
+
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.p_state')"
+                                    :class="{'el-form-item is-error': form.errors.has(  'p_state') }">
+
+                        <el-select v-model="modelForm.p_state"
+                                   :placeholder="$t('product.label.p_state')"
+                                   filterable style="width: 100% !important">
+                          <el-option
+                            v-for="item in listState"
+                            :key="'state'+ item.value"
+                            :label="item.label"
+                            :value="item.value">
+                          </el-option>
+
+                        </el-select>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('p_state')"
+                             v-text="form.errors.first('p_state')"></div>
+                      </el-form-item>
+                    </div>
+
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.p_weight')"
+                                    :class="{'el-form-item is-error': form.errors.has('p_weight') }">
+
+                        <el-input v-model="modelForm.p_weight"></el-input>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('p_weight')"
+                             v-text="form.errors.first('p_weight')"></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.s_long')"
+                                    :class="{'el-form-item is-error': form.errors.has('s_long') }">
+
+                        <el-input v-model="modelForm.s_long"></el-input>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('s_long')"
+                             v-text="form.errors.first('s_long')"></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.s_width')"
+                                    :class="{'el-form-item is-error': form.errors.has('s_width') }">
+
+                        <el-input v-model="modelForm.s_width"></el-input>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('s_width')"
+                             v-text="form.errors.first('s_width')"></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.s_height')"
+                                    :class="{'el-form-item is-error': form.errors.has('s_height') }">
+
+                        <el-input v-model="modelForm.s_height"></el-input>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('s_height')"
+                             v-text="form.errors.first('s_height')"></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.sku')"
+                                    :class="{'el-form-item is-error': form.errors.has('sku') }">
+
+                        <el-input v-model="modelForm.sku"></el-input>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('sku')"
+                             v-text="form.errors.first('sku')"></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.amount')"
+                                    :class="{'el-form-item is-error': form.errors.has('amount') }">
+
+                        <el-input-number v-model="modelForm.amount" :min="1"
+                                         :max="100000"></el-input-number>
+
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('amount')"
+                             v-text="form.errors.first('amount')"></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.price')"
+                                    :class="{'el-form-item is-error': form.errors.has('price') }">
+
+                        <el-input v-model="modelForm.price"></el-input>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('price')"
+                             v-text="form.errors.first('price')"></div>
+                      </el-form-item>
+                    </div>
+
+                    <div class="col-md-12">
+                      <el-form-item :label="$t('product.label.brand_id')"
+                                    :class="{'el-form-item is-error': form.errors.has(  'brand_id') }">
+
+                        <el-select v-model="modelForm.brand_id"
+                                   :placeholder="$t('product.label.brand_id')"
+                                   filterable style="width: 100% !important">
+                          <el-option
+                            v-for="item in brandArr"
+                            :key="'brand'+ item.id"
+                            :label="item.name"
+                            :value="item.id">
+                          </el-option>
+
+                        </el-select>
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('brand_id')"
+                             v-text="form.errors.first('brand_id')"></div>
+                      </el-form-item>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-12">
+              <div class="card-footer d-flex justify-content-end">
+                <el-button type="primary" @click="onSubmit()" size="small" :loading="loading"
+                           class="btn btn-flat ">
+                  {{ $t('mon.button.save') }}
+                </el-button>
+                <el-button class="btn btn-flat " size="small" @click="onCancel()">{{
+                  $t('mon.button.cancel') }}
+                </el-button>
+              </div>
+            </div>
+          </div>
+        </el-form>
+      </div>
+    </section>
+
+  </div>
 
 
 </template>
@@ -350,22 +371,22 @@
         this.loading = true;
 
         this.form.post(this.getRoute())
-        .then((response) => {
-          this.loading = false;
-          this.$message({
-            type: 'success',
-            message: response.message,
-          });
-          this.$router.push({name: 'shop.product.index'});
-        })
-        .catch((error) => {
+          .then((response) => {
+            this.loading = false;
+            this.$message({
+              type: 'success',
+              message: response.message,
+            });
+            this.$router.push({name: 'shop.product.index'});
+          })
+          .catch((error) => {
 
-          this.loading = false;
-          this.$notify.error({
-            title: this.$t('mon.error.Title'),
-            message: this.getSubmitError(this.form.errors),
+            this.loading = false;
+            this.$notify.error({
+              title: this.$t('mon.error.Title'),
+              message: this.getSubmitError(this.form.errors),
+            });
           });
-        });
       },
       onCancel() {
 
@@ -386,14 +407,14 @@
         this.loading = true;
         let locale = this.$route.params.locale ? this.$route.params.locale : 'en';
         axios.get(route('api.product.find', {product: this.$route.params.productId}))
-        .then((response) => {
-          this.loading = false;
-          this.modelForm = response.data.data;
-          if (this.modelForm.category_id) {
-            this.setCheckedKeys(this.modelForm.category_id)
-          }
+          .then((response) => {
+            this.loading = false;
+            this.modelForm = response.data.data;
+            if (this.modelForm.category_id) {
+              this.setCheckedKeys(this.modelForm.category_id)
+            }
 
-        });
+          });
       },
 
       getRoute() {
@@ -411,11 +432,11 @@
         };
 
         axios.get(route('api.brand.index', _.merge(properties, {})))
-        .then((response) => {
+          .then((response) => {
 
-          this.brandArr = response.data.data;
+            this.brandArr = response.data.data;
 
-        });
+          });
       },
       fetchCategory() {
         const properties = {
@@ -425,11 +446,11 @@
         };
 
         axios.get(route('apishop.pcategory.tree', _.merge(properties, {})))
-        .then((response) => {
+          .then((response) => {
 
-          this.categoryArr = response.data;
+            this.categoryArr = response.data;
 
-        });
+          });
       },
       updateValue: function (value) {
         // update parent data so that we can still v-model on the parent
@@ -458,8 +479,8 @@
 </script>
 
 <style scoped>
-.tree-container {
+  .tree-container {
     max-height: 200px;
-    overflow: scroll;
-}
+    overflow-y:auto;
+  }
 </style>
