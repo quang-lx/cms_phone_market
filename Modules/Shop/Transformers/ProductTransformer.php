@@ -31,7 +31,7 @@ class ProductTransformer extends JsonResource
             'updated_at' => $this->updated_at,
             'amount' => $this->amount,
             'price' => $this->price,
-            'category_id' => $this->category_id,
+            'category_id' => $this->pcategories->pluck('id'),
 
 
              'urls' => [

@@ -154,6 +154,15 @@ Route::middleware('auth:api')->prefix('/products')->group(function (){
         'as' => 'api.product.destroy',
         'uses' => 'Product\ProductController@destroy',
     ]);
+
+});
+Route::middleware('auth:api')->prefix('/pcategory')->group(function (){
+
+	Route::get('/tree', [
+		'as' => 'apishop.pcategory.tree',
+		'uses' => 'Pcategory\PcategoryController@tree',
+	]);
+
 });
 // append
 

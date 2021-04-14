@@ -40,4 +40,10 @@ class Product extends Model
     public function prices() {
     	return $this->hasMany(ProductPrice::class, 'product_id');
     }
+
+
+	public function pcategories()
+	{
+		return $this->belongsToMany(Pcategory::class, 'category_product', 'product_id', 'category_id');
+	}
 }
