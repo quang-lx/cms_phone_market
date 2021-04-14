@@ -77,9 +77,7 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
         return $result;
     }
     public function getDataForPaging($data, $row, $per_page) {
-        $result = [];
         $from = (($row>0 ? $row : 1) - 1)*$per_page;
-        $to = ($row>0 ? $row : 1)*$per_page;
         return array_slice($data, $from, $per_page);
     }
 
