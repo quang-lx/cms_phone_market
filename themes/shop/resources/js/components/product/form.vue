@@ -68,26 +68,38 @@
                                                     </el-form-item>
                                                 </div>
                                             </div>
+                                            <div class="col-12">
+                                                <multiple-media zone="product_collection"
+                                                                label="Ảnh/Video"
+                                                                @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
+                                                                @fileUnselected="unselectFile($event, 'modelForm')"
+                                                                @fileSorted="fileSorted($event, 'modelForm')"
+                                                                entity="Modules\Mon\Entities\Product"
+                                                                :entity-id="$route.params.productId"></multiple-media>
+                                            </div>
                                         </div>
                                         <div class="col-md-3"
                                              style="padding-top:10px;border-left: 1px solid rgba(0,0,0,.125);">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 " >
                                                     <el-form-item :label="$t('product.label.category_id')"
                                                                   :class="{'el-form-item is-error': form.errors.has('category_id') }">
-                                                        <el-tree
+                                                        <div class="tree-container">
+                                                            <el-tree
 
-                                                            :data="categoryArr"
-                                                            show-checkbox
-                                                            default-expand-all
-                                                            node-key="id"
-                                                            ref="tree"
-                                                            highlight-current
-                                                            check-on-click-node
-                                                            check-strictly
-                                                            @check="handleCheckChange"
-                                                            :props="defaultProps">
-                                                        </el-tree>
+                                                                :data="categoryArr"
+                                                                show-checkbox
+                                                                default-expand-all
+                                                                node-key="id"
+                                                                ref="tree"
+                                                                highlight-current
+                                                                check-on-click-node
+                                                                check-strictly
+                                                                @check="handleCheckChange"
+                                                                :props="defaultProps">
+                                                            </el-tree>
+                                                        </div>
+
                                                         <div class="el-form-item__error"
                                                              v-if="form.errors.has('category_id')"
                                                              v-text="form.errors.first('category_id')"></div>
@@ -234,17 +246,6 @@
                                         </div>
 
 
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <multiple-media zone="product_collection"
-                                                            label="Ảnh/Video"
-                                                            @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
-                                                            @fileUnselected="unselectFile($event, 'modelForm')"
-                                                            @fileSorted="fileSorted($event, 'modelForm')"
-                                                            entity="Modules\Mon\Entities\Product"
-                                                            :entity-id="$route.params.productId"></multiple-media>
-                                        </div>
                                     </div>
 
 
@@ -457,5 +458,8 @@
 </script>
 
 <style scoped>
-
+.tree-container {
+    max-height: 200px;
+    overflow: scroll;
+}
 </style>
