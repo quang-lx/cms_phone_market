@@ -364,7 +364,107 @@ Route::middleware('auth:api')->prefix('/brands')->group(function (){
         'uses' => 'Brand\BrandController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/accounts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.account.index',
+        'uses' => 'Account\AccountController@index',
+    ]);
+    Route::post('/{account}/edit', [
+            'as' => 'api.account.update',
+            'uses' => 'Account\AccountController@update',
+        ]);
+   Route::get('/{account}', [
+              'as' => 'api.account.find',
+              'uses' => 'Account\AccountController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.account.store',
+        'uses' => 'Account\AccountController@store',
+    ]);
+
+    Route::delete('/{account}', [
+        'as' => 'api.account.destroy',
+        'uses' => 'Account\AccountController@destroy',
+    ]);
+});
+Route::middleware('auth:api')->prefix('/problems')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.problem.index',
+        'uses' => 'Problem\ProblemController@index',
+    ]);
+    Route::post('/{problem}/edit', [
+            'as' => 'api.problem.update',
+            'uses' => 'Problem\ProblemController@update',
+        ]);
+   Route::get('/{problem}', [
+              'as' => 'api.problem.find',
+              'uses' => 'Problem\ProblemController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.problem.store',
+        'uses' => 'Problem\ProblemController@store',
+    ]);
+
+    Route::delete('/{problem}', [
+        'as' => 'api.problem.destroy',
+        'uses' => 'Problem\ProblemController@destroy',
+    ]);
+});
+Route::middleware('auth:api')->prefix('/homesettings')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.homesetting.index',
+        'uses' => 'HomeSetting\HomeSettingController@index',
+    ]);
+    Route::post('/{homesetting}/edit', [
+            'as' => 'api.homesetting.update',
+            'uses' => 'HomeSetting\HomeSettingController@update',
+        ]);
+   Route::get('/{homesetting}', [
+              'as' => 'api.homesetting.find',
+              'uses' => 'HomeSetting\HomeSettingController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.homesetting.store',
+        'uses' => 'HomeSetting\HomeSettingController@store',
+    ]);
+
+    Route::delete('/{homesetting}', [
+        'as' => 'api.homesetting.destroy',
+        'uses' => 'HomeSetting\HomeSettingController@destroy',
+    ]);
+});
+Route::middleware('auth:api')->prefix('/banners')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.banners.index',
+        'uses' => 'Banners\BannersController@index',
+    ]);
+    Route::post('/{banners}/edit', [
+            'as' => 'api.banners.update',
+            'uses' => 'Banners\BannersController@update',
+        ]);
+   Route::get('/{banners}', [
+              'as' => 'api.banners.find',
+              'uses' => 'Banners\BannersController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.banners.store',
+        'uses' => 'Banners\BannersController@store',
+    ]);
+
+    Route::delete('/{banners}', [
+        'as' => 'api.banners.destroy',
+        'uses' => 'Banners\BannersController@destroy',
+    ]);
+});
+
 // append
+
+
+
 
 
 

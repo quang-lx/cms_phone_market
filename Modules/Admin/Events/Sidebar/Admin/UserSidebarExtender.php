@@ -49,8 +49,6 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 });
 
 
-
-
             });
 
 
@@ -83,7 +81,15 @@ class UserSidebarExtender extends AbstractAdminSidebar
                         $this->auth->hasAccess('admin.brand.index')
                     );
                 });
+                $item->item(trans('backend::sidebar.problem'), function (Item $item) {
 
+                    $item->weight(0);
+
+                    $item->route('admin.problem.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.problem.index')
+                    );
+                });
             });
         });
 
@@ -139,37 +145,67 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
         });
 
-	    $menu->group('news', function (Group $group) {
-		    $group->hideHeading(true);
-		    $group->item(trans('backend::sidebar.news'), function (Item $item) {
-			    $item->icon('fas fa-newspaper');
-			    $item->weight(10);
-			    $item->authorize(
-				    $this->auth->hasAccess('admin.news.index')
-			    );
+        $menu->group('news', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('backend::sidebar.news'), function (Item $item) {
+                $item->icon('fas fa-newspaper');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('admin.news.index')
+                );
 
-			    $item->item(trans('backend::sidebar.category'), function (Item $item) {
+                $item->item(trans('backend::sidebar.category'), function (Item $item) {
 
-				    $item->weight(0);
+                    $item->weight(0);
 
-				    $item->route('admin.category.index');
-				    $item->authorize(
-					    $this->auth->hasAccess('admin.category.index')
-				    );
-			    });
-			    $item->item(trans('backend::sidebar.news'), function (Item $item) {
+                    $item->route('admin.category.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.category.index')
+                    );
+                });
+                $item->item(trans('backend::sidebar.news'), function (Item $item) {
 
-				    $item->weight(0);
+                    $item->weight(0);
 
-				    $item->route('admin.news.index');
-				    $item->authorize(
-					    $this->auth->hasAccess('admin.news.index')
-				    );
-			    });
+                    $item->route('admin.news.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.news.index')
+                    );
+                });
 
-		    });
-	    });
+            });
+        });
+        $menu->group('setting', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('backend::sidebar.setting'), function (Item $item) {
+                $item->icon('fas fa-cog');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('admin.homesetting.index')
+                );
 
+                $item->item(trans('backend::sidebar.homesetting'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('admin.homesetting.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.homesetting.index')
+                    );
+                });
+                $item->item(trans('backend::sidebar.banner'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('admin.banners.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.banners.index')
+                    );
+                });
+
+
+            });
+        });
 
         return $menu;
 

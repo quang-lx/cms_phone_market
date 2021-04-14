@@ -41,6 +41,17 @@ import PcategoryForm from './../components/pcategory/form';
 import BrandList from './../components/brand/index';
 import BrandForm from './../components/brand/form';
 
+import AccountList from './../components/account/index';
+
+
+import ProblemList from './../components/problem/index';
+import ProblemForm from './../components/problem/form';
+
+import HomeSettingList from './../components/homesetting/index';
+import BannersList from './../components/banners/index';
+import BannersForm from './../components/banners/form';
+
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -361,5 +372,68 @@ export default [
         },
     },
 
+     //
+     {
+        path: '/admin/account',
+        name: 'admin.account.index',
+        component: AccountList,
+    },
 
+
+    //
+    {
+        path: '/admin/problem',
+        name: 'admin.problem.index',
+        component: ProblemList,
+    },
+    {
+        path: '/admin/problem/create',
+        name: 'admin.problem.create',
+        component: ProblemForm,
+        props: {
+            pageTitle: 'problem.label.update_item',
+        },
+    },
+
+    {
+        path: '/admin/problem/:problemId/edit',
+        name: 'admin.problem.edit',
+        component: ProblemForm,
+        props: {
+            pageTitle: 'problem.label.update_item',
+        },
+    },
+ 
+
+    //
+    {
+        path: '/admin/banners',
+        name: 'admin.banners.index',
+        component: BannersList,
+    },
+    {
+        path: '/admin/banners/create',
+        name: 'admin.banners.create',
+        component: BannersForm,
+        props: {
+            pageTitle: 'banners.label.update_title',
+        },
+    },
+
+    {
+        path: '/admin/banners/:bannersId/edit',
+        name: 'admin.banners.edit',
+        component: BannersForm,
+        props: {
+            pageTitle: 'banners.label.update_title',
+        },
+    },
+ 
+  //
+    {
+        path: '/admin/homesetting',
+        name: 'admin.homesetting.index',
+        component: HomeSettingList,
+    },
+ 
 ];

@@ -334,7 +334,92 @@ Route::group(['prefix' => '/brand'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/account'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.account.index',
+        'uses' => 'Account\AccountController@index',
+        'middleware' => 'permission:admin.account.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.account.create',
+        'uses' => 'Account\AccountController@create',
+        'middleware' => 'permission:admin.account.create'
+    ]);
+
+    Route::get('{account}/edit', [
+        'as' => 'admin.account.edit',
+        'uses' => 'Account\AccountController@edit',
+        'middleware' => 'permission:admin.account.edit'
+    ]);
+
+
+});
+Route::group(['prefix' => '/problem'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.problem.index',
+        'uses' => 'Problem\ProblemController@index',
+        'middleware' => 'permission:admin.problem.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.problem.create',
+        'uses' => 'Problem\ProblemController@create',
+        'middleware' => 'permission:admin.problem.create'
+    ]);
+
+    Route::get('{problem}/edit', [
+        'as' => 'admin.problem.edit',
+        'uses' => 'Problem\ProblemController@edit',
+        'middleware' => 'permission:admin.problem.edit'
+    ]);
+
+
+});
+Route::group(['prefix' => '/homesetting'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.homesetting.index',
+        'uses' => 'HomeSetting\HomeSettingController@index',
+        'middleware' => 'permission:admin.homesetting.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.homesetting.create',
+        'uses' => 'HomeSetting\HomeSettingController@create',
+        'middleware' => 'permission:admin.homesetting.create'
+    ]);
+
+    Route::get('{homesetting}/edit', [
+        'as' => 'admin.homesetting.edit',
+        'uses' => 'HomeSetting\HomeSettingController@edit',
+        'middleware' => 'permission:admin.homesetting.edit'
+    ]);
+});
+Route::group(['prefix' => '/banners'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.banners.index',
+        'uses' => 'Banners\BannersController@index',
+        'middleware' => 'permission:admin.banners.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.banners.create',
+        'uses' => 'Banners\BannersController@create',
+        'middleware' => 'permission:admin.banners.create'
+    ]);
+
+    Route::get('{banners}/edit', [
+        'as' => 'admin.banners.edit',
+        'uses' => 'Banners\BannersController@edit',
+        'middleware' => 'permission:admin.banners.edit'
+    ]);
+
+
+});
 // append
+
+
+
 
 
 
