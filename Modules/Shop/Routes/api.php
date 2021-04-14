@@ -74,7 +74,7 @@ Route::middleware('auth:api')->prefix('auth')->group(function (){
 
     ]);
     Route::post('roles/{role}/remove-permission', [
-        'as' => 'apishop.roles.removePermissions',
+        'as' => 'apishop.roles.removePechangePasswordrmissions',
         'uses' => 'Auth\RoleController@removePermissions',
 
     ]);
@@ -189,6 +189,11 @@ Route::middleware('auth:api')->prefix('/companies')->group(function (){
         'uses' => 'Company\CompanyController@find',
     ]);
 
+    Route::post('/change-password', [
+        'as' => 'apishop.company.changePassword',
+        'uses' => 'Company\CompanyController@changePassword',
+    ]);
+    
     
 });
 // append
