@@ -10,10 +10,9 @@
                   <el-breadcrumb-item>
                     <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
                   </el-breadcrumb-item>
-                  <el-breadcrumb-item :to="{ name: 'shop.company.index' }"
-                    >{{ $t("company.label.company") }}
+                  <el-breadcrumb-item  >{{ $t("company.label.company") }}
                   </el-breadcrumb-item>
-                  <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
+
                 </el-breadcrumb>
               </div>
             </div>
@@ -108,7 +107,7 @@
                             <router-link :to="{name: 'shop.company.edit'}">
                                   <el-button type="primary" :to="{ name: 'shop.company.index' }">Sửa</el-button>
                                         </router-link>
-                       
+
                           <el-button
                             v-if="modelForm.id"
                             type="danger"

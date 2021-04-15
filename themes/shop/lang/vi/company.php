@@ -1,7 +1,7 @@
 <?php
 return [
     'label' => [
-        'company' => 'Tài khoản cửa hàng',
+        'company' => 'Thông tin cửa hàng',
         'id' => 'ID',
         'username' => 'Username',
 

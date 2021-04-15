@@ -10,7 +10,7 @@
                   <el-breadcrumb-item>
                     <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
                   </el-breadcrumb-item>
-                  <el-breadcrumb-item :to="{ name: 'admin.company.index' }"
+                  <el-breadcrumb-item :to="{ name: 'shop.company.index' }"
                     >{{ $t("company.label.company") }}
                   </el-breadcrumb-item>
                   <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
