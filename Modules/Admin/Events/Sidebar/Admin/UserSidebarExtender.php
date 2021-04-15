@@ -54,6 +54,20 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
         });
 
+	    $menu->group('customer', function (Group $group) {
+		    $group->hideHeading(true);
+		    $group->item(trans('backend::sidebar.customer'), function (Item $item) {
+			    $item->icon('fas fa-user');
+			    $item->weight(10);
+			    $item->authorize(
+				    $this->auth->hasAccess('admin.account.index')
+			    );
+
+			    $item->route('admin.account.index');
+
+		    });
+	    });
+
         $menu->group('product shop', function (Group $group) {
             $group->hideHeading(true);
             $group->item(trans('backend::sidebar.product management'), function (Item $item) {
