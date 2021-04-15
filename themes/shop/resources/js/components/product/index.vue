@@ -2,54 +2,110 @@
     <div>
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <el-breadcrumb separator="/">
-                            <el-breadcrumb-item>
-                                <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item  >{{ $t('product.label.product') }}
-                            </el-breadcrumb-item>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 d-flex align-items-center">
+                                <el-breadcrumb separator="/">
+                                    <el-breadcrumb-item>
+                                        <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                    </el-breadcrumb-item>
+                                    <el-breadcrumb-item  >{{ $t('product.label.create_product') }}
+                                    </el-breadcrumb-item>
 
-                        </el-breadcrumb>
+                                </el-breadcrumb>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row pull-right">
+
+                                    <div class="col-6">
+                                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
+                                                  placeholder="Tên sản phẩm/SKU"
+                                                  v-model="searchQuery">
+                                        </el-input>
+                                    </div>
+                                    <div class="col-3">
+                                        <router-link :to="{name: 'shop.product.create'}">
+                                            <el-button type="primary" class="btn btn-flat">
+                                                {{ $t('product.label.create_product') }}
+                                            </el-button>
+                                        </router-link>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="row pull-right search-block">
+                            <div class="col-sm-3">
+
+                                <el-select v-model="filter.brand_id" placeholder="Lọc theo thương hiệu"
+                                           @change="onSearchChange()" clearable>
+                                    <el-option
+                                            v-for="item in brandArr"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+
+                            <div class="col-sm-3">
+
+                                <el-select v-model="filter.status" placeholder="Lọc theo trạng thái"
+                                           @change="onSearchChange()" clearable>
+                                    <el-option
+                                            v-for="item in listStatus"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+
+                            <div class="col-sm-3">
+
+                                <el-select v-model="filter.company_id" placeholder="Lọc theo cửa hàng"
+                                           @change="onSearchChange()" clearable>
+                                    <el-option
+                                            v-for="item in listStatus"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <el-select v-model="filter.category_id" placeholder="Lọc theo danh mục"
+                                           @change="onSearchChange()" clearable>
+                                    <el-option
+                                            v-for="item in categoryArr"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
+
+
             </div>
         </div>
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="row justify-content-end mb-2">
-
-                    <div class="col-md-4   ">
-                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch" placeholder="Nhập ID, tiêu đề, người tạo"
-                                  v-model="searchQuery">
-                        </el-input>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    {{ $t('shop.label.product') }}
-                                </h3>
-                                <div class="card-tools">
-                                    <ul class="nav nav-pills ml-auto">
-                                        <li class="nav-item">
-                                            <router-link :to="{name: 'shop.product.create'}">
-                                                <el-button type="primary"  size="small"   class="btn btn-flat">
-                                                    {{ $t('shop.label.create_product') }}
-                                                </el-button>
-                                            </router-link>
-                                        </li>
 
-                                    </ul>
-                                </div>
-                            </div><!-- /.card-header -->
                             <div class="card-body">
                                 <div class="sc-table">
 
@@ -61,7 +117,6 @@
                                       v-loading.body="tableIsLoading"
                                       @sort-change="handleSortChange">
                                         <el-table-column prop="id" :label="$t('product.label.id')" width="75" sortable="custom">
-
                                         </el-table-column>
                                         <el-table-column prop="" label="Ảnh đại diện">
                                             <template slot-scope="scope">
@@ -73,11 +128,33 @@
 
                                         </el-table-column>
 
-                                        <el-table-column prop="created_by" label="Người tạo" sortable="custom">
+                                        <el-table-column prop="amount" :label="$t('product.label.amount')" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom">
 
+                                        <el-table-column prop="" :label="$t('product.label.category_id')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                Danh mục
+                                            </template>
+                                        </el-table-column>
+
+                                        <el-table-column prop="company_name" :label="$t('product.label.company_id')" sortable="custom">
+<!--                                            <template slot-scope="scope">-->
+<!--                                                {{ scope.row.company.name}}-->
+<!--                                            </template>-->
+                                        </el-table-column>
+
+                                        <el-table-column prop="price" :label="$t('product.label.price')" sortable="custom">
+                                        </el-table-column>
+
+                                        <el-table-column prop="status" :label="$t('product.list.status')"
+                                                         sortable="custom">
+                                            <template slot-scope="scope">
+                                                <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
+                                            </template>
+                                        </el-table-column>
+
+                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom">
                                         </el-table-column>
 
                                         <el-table-column prop="actions" width="130">
@@ -172,5 +249,8 @@
 </script>
 
 <style scoped>
-
+    .search-block {
+        margin-top: 10px;
+        padding-right: 33px;
+    }
 </style>

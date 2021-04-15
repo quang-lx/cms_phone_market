@@ -23,6 +23,10 @@ return [
         'amount' => 'Số lượng',
         'price' => 'Giá bán',
         'category_id' => 'Danh mục',
+        'company_id' => 'Cửa hàng',
+    ],
+    'list' => [
+        'status' => 'Trạng thái',
     ],
     'message' => [
         'create success' => 'Tạo sản phẩm thành công.',

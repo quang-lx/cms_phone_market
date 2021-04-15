@@ -27,11 +27,12 @@ class ProductTransformer extends JsonResource
             's_height' => $this->s_height,
             'brand_id' => $this->brand_id,
             'company_id' => $this->company_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'company_name' => optional($this->company)->name,
+            'created_at' => $this->created_at->format('d-m-Y'),
+            'updated_at' => $this->updated_at->format('d-m-Y'),
             'amount' => $this->amount,
             'price' => $this->price,
-            'category_id' => $this->pcategories->pluck('id'),
+            'category_id' => optional($this->pcategories)->pluck('id'),
 
 
              'urls' => [
