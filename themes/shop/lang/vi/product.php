@@ -24,6 +24,7 @@ return [
         'price' => 'Giá bán',
         'category_id' => 'Danh mục',
         'company_id' => 'Cửa hàng',
+        'image' => 'Ảnh',
     ],
     'list' => [
         'status' => 'Trạng thái',

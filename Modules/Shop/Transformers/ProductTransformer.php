@@ -33,6 +33,8 @@ class ProductTransformer extends JsonResource
             'amount' => $this->amount,
             'price' => $this->price,
             'category_id' => optional($this->pcategories)->pluck('id'),
+            'category_name' => optional($this->pcategories)->pluck('name'),
+            'thumbnail' => $this->thumbnail,
 
 
              'urls' => [

@@ -40,20 +40,20 @@
                         </div>
 
                         <div class="row pull-right search-block">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
 
                                 <el-select v-model="filter.brand_id" placeholder="Lọc theo thương hiệu"
                                            @change="onSearchChange()" clearable>
                                     <el-option
                                             v-for="item in brandArr"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
                                     </el-option>
                                 </el-select>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
 
                                 <el-select v-model="filter.status" placeholder="Lọc theo trạng thái"
                                            @change="onSearchChange()" clearable>
@@ -66,7 +66,7 @@
                                 </el-select>
                             </div>
 
-                            <div class="col-sm-3">
+                            <!-- <div class="col-sm-3">
 
                                 <el-select v-model="filter.company_id" placeholder="Lọc theo cửa hàng"
                                            @change="onSearchChange()" clearable>
@@ -77,16 +77,16 @@
                                             :value="item.value">
                                     </el-option>
                                 </el-select>
-                            </div>
+                            </div> -->
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <el-select v-model="filter.category_id" placeholder="Lọc theo danh mục"
                                            @change="onSearchChange()" clearable>
                                     <el-option
                                             v-for="item in categoryArr"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
                                     </el-option>
                                 </el-select>
                             </div>
@@ -118,33 +118,43 @@
                                       @sort-change="handleSortChange">
                                         <el-table-column prop="id" :label="$t('product.label.id')" width="75" sortable="custom">
                                         </el-table-column>
-                                        <el-table-column prop="" label="Ảnh đại diện">
+
+                                        <el-table-column prop=""  :label="$t('product.label.image')" >
                                             <template slot-scope="scope">
                                                 <img :src="scope.row.thumbnail.path_string" v-if="scope.row.thumbnail"
-                                                     width="100"/>
+                                                     width="100" height="100" style="object-fit:contain"/>
                                             </template>
                                         </el-table-column>
+
                                         <el-table-column prop="name" :label="$t('product.label.name')" sortable="custom">
 
                                         </el-table-column>
 
-                                        <el-table-column prop="amount" :label="$t('product.label.amount')" sortable="custom">
-
+                                        <el-table-column prop="" :label="$t('product.label.amount')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                {{ formatNumber(scope.row.amount)}}
+                                            </template>
                                         </el-table-column>
 
                                         <el-table-column prop="" :label="$t('product.label.category_id')" sortable="custom">
                                             <template slot-scope="scope">
-                                                Danh mục
+                                                <span
+                                                        v-for="(item, index) in scope.row.category_name"
+                                                        :key="index"
+                                                >
+                                               <span v-if="scope.row.category_name.length-1==index">{{item}}</span>
+                                               <span v-else>{{item}},</span>
+                                               </span>
                                             </template>
                                         </el-table-column>
 
                                         <el-table-column prop="company_name" :label="$t('product.label.company_id')" sortable="custom">
-<!--                                            <template slot-scope="scope">-->
-<!--                                                {{ scope.row.company.name}}-->
-<!--                                            </template>-->
                                         </el-table-column>
 
-                                        <el-table-column prop="price" :label="$t('product.label.price')" sortable="custom">
+                                        <el-table-column prop="" :label="$t('product.label.price')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                {{ formatNumber(scope.row.price)}}
+                                            </template>
                                         </el-table-column>
 
                                         <el-table-column prop="status" :label="$t('product.list.status')"
@@ -204,27 +214,46 @@
                 currentLocale: window.MonCMS.currentLocale || 'en',
 
                 filter: {
-                    category:'',
+                    category_id:'',
                     status: '',
-                    filter_feature: '',
+                    brand_id: '',
+                    company_id: '',
                     locale: window.MonCMS.currentLocale || 'en'
                 },
-                listLocales: window.MonCMS.locales
+                listLocales: window.MonCMS.locales,
+                brandArr: [],
+                categoryArr: [],
+                listCompany: [
+                    {
+                        value: 1,
+                        label: 'TEST'
+                    }
+                ],
+                listStatus: [
+                    {
+                        value: 1,
+                        label: 'Hoạt động'
+                    },
+                    {
+                        value: 0,
+                        label: 'Đã xóa'
+                    },
 
+                ],
 
             };
         },
         methods: {
             queryServer(customProperties) {
-                    console.log(this.filter.locale);
                 const properties = {
                     page: this.meta.current_page,
                     per_page: this.meta.per_page,
                     order_by: this.order_meta.order_by,
                     order: this.order_meta.order,
                     search: this.searchQuery,
-
-                    filter_feature: this.filter.filter_feature,
+                    status: this.filter.status,
+                    brand_id: this.filter.brand_id,
+                    category_id: this.filter.category_id,
 
                 };
 
@@ -237,15 +266,55 @@
                         this.order_meta.order_by = properties.order_by;
                         this.order_meta.order = properties.order;
                     });
-            }
+            },
+            formatNumber(number){
+                return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+            },
+            fetchBrand() {
+                const properties = {
+                page: 0,
+                per_page: 1000,
+
+                };
+
+                axios.get(route('apishop.brand.index', _.merge(properties, {})))
+                .then((response) => {
+
+                    this.brandArr = response.data;
+
+                });
+            },
+            fetchCategory() {
+                const properties = {
+                page: 0,
+                per_page: 1000,
+
+                };
+
+                axios.get(route('apishop.pcategory.index', _.merge(properties, {})))
+                .then((response) => {
+
+                    this.categoryArr = response.data;
+
+                });
+            },
+
+            onSearchChange() {
+                this.meta.current_page = 0;
+                this.queryServer({})
+            },
 
 
         },
         mounted() {
             this.fetchData();
+            this.fetchBrand();
+            this.fetchCategory();
 
         },
     }
+
+    
 </script>
 
 <style scoped>

@@ -31,4 +31,14 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
         return ($categories);
     }
 
+    public function serverPagingFor(Request $request, $relations = null)
+    {
+        $query = $this->newQueryBuilder();
+        if ($relations) {
+            $query = $query->with($relations);
+        }
+        $categories = $query->select('id','name')->get()->toArray();
+        return ($categories);
+    }
+
 }

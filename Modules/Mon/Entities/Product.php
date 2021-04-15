@@ -74,4 +74,9 @@ class Product extends Model
         }
         return $statusColor;
     }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('product_collection')->first();
+    }
 }

@@ -155,6 +155,7 @@ Route::middleware('auth:api')->prefix('/products')->group(function (){
         'uses' => 'Product\ProductController@destroy',
     ]);
 
+
 });
 Route::middleware('auth:api')->prefix('/pcategory')->group(function (){
 
@@ -163,7 +164,21 @@ Route::middleware('auth:api')->prefix('/pcategory')->group(function (){
 		'uses' => 'Pcategory\PcategoryController@tree',
 	]);
 
+    Route::get('/', [
+		'as' => 'apishop.pcategory.index',
+		'uses' => 'Pcategory\PcategoryController@index',
+	]);
+
+});
+
+Route::middleware('auth:api')->prefix('/brands')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.brand.index',
+        'uses' => 'Brand\BrandController@index',
+    ]);
 });
 // append
+
 
 
