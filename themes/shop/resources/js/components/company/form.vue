@@ -95,9 +95,8 @@
                           v-text="form.errors.first('address')"
                         ></div>
                       </el-form-item>
-                      <el-form-item>
-                        <div>
-                        <single-media
+
+                      <single-media
                           zone="thumbnail"
                           @singleFileSelected="
                             selectSingleFile($event, 'modelForm')
@@ -105,15 +104,7 @@
                           label="Ảnh"
                           entity="Modules\Mon\Entities\Company"
                           :entity-id="modelForm.id"
-                        ></single-media>
-                        </div>
-                        <div
-                          class="el-form-item__error"
-                          style="margin-left: 208px"
-                          v-if="form.errors.has('medias_single.thumbnail')"
-                          v-text="form.errors.first('medias_single.thumbnail')"
-                        ></div>
-                      </el-form-item>
+                      ></single-media>
                     </div>
                   </div>
                 </el-form>
