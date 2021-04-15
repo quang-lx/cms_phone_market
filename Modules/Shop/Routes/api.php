@@ -154,16 +154,13 @@ Route::middleware('auth:api')->prefix('/products')->group(function (){
         'as' => 'api.product.destroy',
         'uses' => 'Product\ProductController@destroy',
     ]);
-
-});
-Route::middleware('auth:api')->prefix('/pcategory')->group(function (){
-
-	Route::get('/tree', [
-		'as' => 'apishop.pcategory.tree',
-		'uses' => 'Pcategory\PcategoryController@tree',
+	Route::get('/data/tree', [
+		'as' => 'apishop.product.tree',
+		'uses' => 'Product\ProductController@tree',
 	]);
 
 });
+
 Route::middleware('auth:api')->prefix('/companies')->group(function (){
 
     Route::get('/', [
@@ -193,8 +190,8 @@ Route::middleware('auth:api')->prefix('/companies')->group(function (){
         'as' => 'apishop.company.changePassword',
         'uses' => 'Company\CompanyController@changePassword',
     ]);
-    
-    
+
+
 });
 // append
 

@@ -23,6 +23,7 @@ return [
         'amount' => 'Số lượng',
         'price' => 'Giá bán',
         'category_id' => 'Danh mục',
+        'problem_id' => 'Vấn đề sửa chữa',
     ],
     'message' => [
         'create success' => 'Tạo sản phẩm thành công.',
