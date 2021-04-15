@@ -49,7 +49,7 @@ class CompanyController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::company.message.create success'),
+            'message' => trans('ch::company.message.create success'),
         ]);
     }
 
@@ -79,7 +79,7 @@ class CompanyController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::company.message.delete success'),
+            'message' => trans('ch::company.message.delete success'),
         ]);
     }
 
@@ -89,7 +89,7 @@ class CompanyController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::user.message.change password success'),
+            'message' => trans('ch::user.message.change password success'),
         ]);
     }
 }
