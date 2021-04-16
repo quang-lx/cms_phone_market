@@ -176,6 +176,14 @@
           {
             value: 'category',
             label: 'Danh mục'
+          },
+          {
+            value: 'service',
+            label: 'Dịch vụ sửa chữa'
+          },
+          {
+            value: 'suggest',
+            label: 'Gợi ý cho bạn'
           }
         ]
 

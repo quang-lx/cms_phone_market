@@ -13,6 +13,8 @@ class HomeSetting extends Model
     const TYPE_BEST_SELL = 'best_sell';
     const TYPE_BUY_NOW = 'buy_now';
     const TYPE_CATEGORY = 'category';
+    const TYPE_SERVICE = 'service';
+    const TYPE_SUGGEST = 'suggest';
     protected $table = 'home_setting';
     protected $fillable = [
     	'title',
