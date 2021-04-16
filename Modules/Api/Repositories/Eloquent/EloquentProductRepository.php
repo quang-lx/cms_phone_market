@@ -21,13 +21,12 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 	public function listByCategory(Request $request, $includeSub = false) {
 		$query = $this->model->query();
 		if ($category_id = $request->get('category_id')) {
-			$query->whereHas('pcategoryAsm', function ($q) use ($category_id) {
-				$q->where('category_id', $category_id);
-			});
+
 			if ($includeSub) {
 
 				$query->whereHas('pcategories', function ($q) use ($category_id) {
-					$q->where('parent_id', $category_id);
+					$q->where('parent_id', $category_id)
+					->orWhere('pcategory.id', $category_id);
 				});
 			}
 		}
