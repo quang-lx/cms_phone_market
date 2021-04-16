@@ -25,4 +25,9 @@ class PcategoryController extends ApiController
 	{
 		return $this->pcategoryRepository->serverPagingForTree($request);
 	}
+
+    public function index(Request $request)
+    {
+        return $this->pcategoryRepository->serverPagingFor($request);
+    }
 }

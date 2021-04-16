@@ -169,7 +169,7 @@ class ShopServiceProvider extends ServiceProvider
 			    return new EloquentPcategoryRepository(new Pcategory());
 		    }
 	    );
-        $this->app->bind(
+		$this->app->bind(
             'Modules\Shop\Repositories\CompanyRepository',
             function () {
                 $repository = new \Modules\Shop\Repositories\Eloquent\EloquentCompanyRepository(new \Modules\Mon\Entities\Company());
@@ -182,6 +182,23 @@ class ShopServiceProvider extends ServiceProvider
 			    return new EloquentProblemRepository(new Problem());
 		    }
 	    );
+		$this->app->bind(
+            'Modules\Shop\Repositories\BrandRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentBrandRepository(new \Modules\Mon\Entities\Brand());
+                return $repository;
+            }
+        );
+        $this->app->bind(
+ 
+            'Modules\Shop\Repositories\BrandRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentBrandRepository(new \Modules\Mon\Entities\Brand());
+                return $repository;
+            }
+        );
+ 
+            
 // add bindings
 
 

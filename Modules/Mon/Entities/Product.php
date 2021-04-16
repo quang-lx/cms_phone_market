@@ -10,6 +10,9 @@ class Product extends Model
 {
      use  SoftDeletes, MediaRelation;
 
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+
     protected $table = 'product';
     protected $fillable = [
         'id',
@@ -47,9 +50,37 @@ class Product extends Model
 	{
 		return $this->belongsToMany(Pcategory::class, 'category_product', 'product_id', 'category_id');
 	}
-
 	public function problems()
 	{
 		return $this->belongsToMany(Problem::class, 'product_problem', 'product_id', 'problem_id');
 	}
+    public function getStatusNameAttribute($value) {
+        $statusName = '';
+        switch ($this->status) {
+            case self::STATUS_ACTIVE:
+                $statusName = 'Hoạt động';
+                break;
+            case self::STATUS_INACTIVE:
+                $statusName = 'Đã xóa';
+                break;
+        }
+        return $statusName;
+    }
+    public function getStatusColorAttribute($value) {
+        $statusColor = '';
+        switch ($this->status) {
+            case self::STATUS_ACTIVE:
+                $statusColor = '#219653';
+                break;
+            case self::STATUS_INACTIVE:
+                $statusColor = 'red';
+                break;
+        }
+        return $statusColor;
+    }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('product_collection')->first();
+    }
 }
