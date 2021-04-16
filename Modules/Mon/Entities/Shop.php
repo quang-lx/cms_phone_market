@@ -4,12 +4,13 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Mon\Traits\CommonModel;
 use Wildside\Userstamps\Userstamps;
 use Modules\Media\Traits\MediaRelation;
 
 class Shop extends Model
 {
-    use  SoftDeletes, Userstamps, MediaRelation;
+    use  SoftDeletes, Userstamps, MediaRelation, CommonModel;
 
     const STATUS_LOCK = 0;
     const STATUS_ACTIVE = 1;

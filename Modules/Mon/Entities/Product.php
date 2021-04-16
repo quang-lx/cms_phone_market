@@ -5,10 +5,11 @@ namespace Modules\Mon\Entities;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Media\Traits\MediaRelation;
+use Modules\Mon\Traits\CommonModel;
 
 class Product extends Model
 {
-     use  SoftDeletes, MediaRelation;
+     use  SoftDeletes, MediaRelation, CommonModel;
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;

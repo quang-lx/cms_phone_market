@@ -19,13 +19,13 @@ class EloquentSearchRepository implements SearchRepository
 			// search in shop
 			$query = Shop::query();
 			$query->whereRaw("MATCH (name, address) AGAINST (?)", $this->fullTextWildcards($keyword));
-			$shop = $query->first();
+			$shop = $query->active()->first();
 
 			// search in product
 
 			$query = Product::query();
 			$query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
-			$products = $query->paginate($request->get('per_page', 10));
+			$products = $query->active()->paginate($request->get('per_page', 10));
 		}
 		return [$shop, $products];
 	}

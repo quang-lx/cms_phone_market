@@ -38,8 +38,8 @@ class MediaShortTransformer extends JsonResource
 
             'media_type' => $this->media_type,
 
-            'small_thumb' => $this->imagy->getThumbnail($this->path, 's'),
-            'medium_thumb' => $this->imagy->getThumbnail($this->path, 'm'),
+            'small_thumb' => url($this->imagy->getThumbnail($this->path, 's')),
+            'medium_thumb' => url($this->imagy->getThumbnail($this->path, 'm')),
             'full_url' => url($this->getPath()),
 
 
