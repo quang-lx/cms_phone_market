@@ -25,7 +25,7 @@ class EloquentSearchRepository implements SearchRepository
 
 			$query = Product::query();
 			$query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
-			$products = $query->select(['name'])->paginate($request->get('per_page', 10));
+			$products = $query->paginate($request->get('per_page', 10));
 		}
 		return [$shop, $products];
 	}
