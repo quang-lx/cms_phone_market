@@ -26,7 +26,7 @@ class ProductController extends ApiController
 
     public function listByCategory(Request $request)
     {
-    	$data = ProductTransformer::collection($this->productRepo->listByCategory($request));
+    	$data = ProductTransformer::collection($this->productRepo->listByCategory($request, $request->get('include_sub', 0)));
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 

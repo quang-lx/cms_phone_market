@@ -144,6 +144,15 @@
                     },
                     {
                         "in": "query",
+                        "name": "include_sub",
+                        "description": "Include sub category ",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
                         "name": "page",
                         "description": "page",
                         "default": "1",
