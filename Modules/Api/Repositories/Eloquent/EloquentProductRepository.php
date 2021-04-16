@@ -19,7 +19,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 		$this->model = $model;
 	}
 
-	public function listBuyCategory(Request $request) {
+	public function listByCategory(Request $request) {
 		$query = $this->model->query();
 		if ($category_id = $request->get('category_id')) {
 			$query->whereHas('pcategoryAsm', function ($q) use ($category_id) {

@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 
 interface ProductRepository
 {
-    public function listBuyCategory(Request $request);
+    public function listByCategory(Request $request);
 }
