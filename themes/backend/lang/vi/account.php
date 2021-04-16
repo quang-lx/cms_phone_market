@@ -3,10 +3,11 @@ return [
     'label' => [
         'account' => 'Tài khoản  ',
         'id' => 'ID',
-
+        'avatar' => 'Ảnh',
         'name' => 'Tên',
         'email' => 'Email',
         'info' => 'Liên hệ',
+        'rank' => 'Hạng',
         'created_at' => 'Ngày tạo',
         'status' => 'Trạng thái',
         'updated_by' => 'Nguời cập nhật',
