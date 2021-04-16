@@ -30,15 +30,16 @@ class EloquentHomeSettingRepository implements HomeSettingRepository {
 					break;
 				case HomeSetting::TYPE_BEST_SELL:
 				case HomeSetting::TYPE_BUY_NOW:
+				case HomeSetting::TYPE_SUGGEST:
 					$products = Product::query()->whereIn('id', $listId)->get();
 					$item['data'] = HomeProductTransformer::collection($products);
 					break;
 
 				case HomeSetting::TYPE_CATEGORY:
+				case HomeSetting::TYPE_SERVICE:
 					$categories = Pcategory::query()->whereIn('id', $listId)->get();
 					$item['data'] = HomePCategoryTransformer::collection($categories);
 					break;
-
 			}
 			$data[] = $item;
 		}
