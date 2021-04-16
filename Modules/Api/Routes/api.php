@@ -151,3 +151,11 @@ Route::prefix('/product')->group(function () {
 	]);
 
 });
+
+Route::prefix('/category')->group(function () {
+	Route::get('/{category_id}/sub', [
+		'as' => 'apife.category.sub',
+		'uses' => 'CategoryController@listSubCat',
+	]);
+
+});
