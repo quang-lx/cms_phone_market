@@ -23,9 +23,13 @@
         <div class="row justify-content-end mb-2">
           <div class="col-md-6"></div>
           <div class="col-md-2">
-            <el-select v-model="value" placeholder="Select">
+            <el-select
+              v-model="rank_value"
+              @change="onSearchChange"
+              placeholder="Select"
+            >
               <el-option
-                v-for="item in options"
+                v-for="item in rank"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -34,9 +38,13 @@
             </el-select>
           </div>
           <div class="col-md-2">
-            <el-select v-model="value" placeholder="Select">
+            <el-select
+              v-model="status_value"
+              @change="onSearchChange"
+              placeholder="Select"
+            >
               <el-option
-                v-for="item in options"
+                v-for="item in status"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -82,6 +90,13 @@
                     >
                     </el-table-column>
                     <el-table-column
+                      prop="avatar"
+                      :label="$t('account.label.avatar')"
+                      width="100"
+                      sortable="custom"
+                    >
+                    </el-table-column>
+                    <el-table-column
                       prop="name"
                       :label="$t('account.label.name')"
                       sortable="custom"
@@ -99,6 +114,13 @@
                     </el-table-column>
 
                     <el-table-column
+                      prop="rank_name"
+                      :label="$t('account.label.rank')"
+                      sortable="custom"
+                    >
+                    </el-table-column>
+
+                    <el-table-column
                       prop="created_at"
                       :label="$t('account.label.created_at')"
                       sortable="custom"
@@ -106,10 +128,14 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop="status_name"
                       :label="$t('account.label.status')"
                       sortable="custom"
                     >
+                      <template slot-scope="scope">
+                        <span :style="{ color: scope.row.status_color }">{{
+                          scope.row.status_name
+                        }}</span>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="updated_by"
@@ -180,29 +206,41 @@ export default {
         locale: window.MonCMS.currentLocale || "en",
       },
       listLocales: window.MonCMS.locales,
-      options: [
+      rank: [
         {
-          value: "Option1",
-          label: "Option1",
+          value: 1,
+          label: "Cơ bản",
         },
         {
-          value: "Option2",
-          label: "Option2",
+          value: 2,
+          label: "Bạc",
         },
         {
-          value: "Option3",
-          label: "Option3",
+          value: 3,
+          label: "Vàng",
         },
         {
-          value: "Option4",
-          label: "Option4",
+          value: 4,
+          label: "Bạch Kim",
         },
         {
-          value: "Option5",
-          label: "Option5",
+          value: 5,
+          label: "Kim Cương",
         },
       ],
-      value: "",
+      rank_value: "",
+
+      status: [
+        {
+          value: 1,
+          label: "Hoạt đông",
+        },
+        {
+          value: 2,
+          label: "Đã khóa",
+        },
+      ],
+      status_value: "",
     };
   },
   methods: {
@@ -214,6 +252,8 @@ export default {
         order_by: this.order_meta.order_by,
         order: this.order_meta.order,
         search: this.searchQuery,
+        rank: this.rank_value,
+        status: this.status_value,
 
         filter_feature: this.filter.filter_feature,
       };
@@ -229,7 +269,12 @@ export default {
           this.order_meta.order = properties.order;
         });
     },
+    onSearchChange() {
+      this.meta.current_page = 0;
+      this.queryServer({});
+    },
   },
+
   mounted() {
     this.fetchData();
   },

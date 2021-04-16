@@ -99,7 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      */
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
-        'fcm_token', 'lat', 'lng', 'status', 'phone','province_id', 'district_id', 'phoenix_id','is_admin_company','company_id','shop_id','rank','birthday','gender'
+        'fcm_token', 'lat', 'lng', 'status', 'phone', 'province_id', 'district_id', 'phoenix_id', 'is_admin_company', 'company_id', 'shop_id', 'rank', 'birthday', 'gender'
     ];
 
     /**
@@ -140,16 +140,17 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     public function company()
     {
-        return $this->belongsTo(Company::class,'company_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
 
     public function shop()
     {
-        return $this->belongsTo(Company::class,'shop_id');
+        return $this->belongsTo(Company::class, 'shop_id');
     }
 
-    public function getStatusNameAttribute($value) {
+    public function getStatusNameAttribute($value)
+    {
         $statusName = '';
         switch ($this->status) {
             case self::STATUS_LOCK:
@@ -164,7 +165,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         }
         return $statusName;
     }
-    public function getStatusColorAttribute($value) {
+    public function getStatusColorAttribute($value)
+    {
         $statusColor = '';
         switch ($this->status) {
             case self::STATUS_LOCK:
@@ -173,20 +175,44 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             case self::STATUS_ACTIVE:
                 $statusColor = '#219653';
                 break;
-	        case self::STATUS_INACTIVE:
-		        $statusColor = 'red';
-		        break;
+            case self::STATUS_INACTIVE:
+                $statusColor = 'red';
+                break;
         }
         return $statusColor;
     }
-	public function getAvatarAttribute()
-	{
-		return $this->filesByZone('avatar')->first();
+    public function getAvatarAttribute()
+    {
+        return $this->filesByZone('avatar')->first();
     }
-    
-    public function findCreatedBy()
-	{
-		return $this->find($this->created_by);
-	}
 
+    public function findCreatedBy()
+    {
+        return $this->find($this->created_by);
+    }
+
+
+    public function getRankNameAttribute($value)
+    {
+        $rank_name = '';
+        switch ($this->rank) {
+            case 1:
+                $rank_name = 'Cơ bản';
+                break;
+            case 2:
+                $rank_name = 'Bạc';
+                break;
+            case 3:
+                $rank_name = 'Vàng';
+                break;
+            case 4:
+                $rank_name = 'Bạch Kim';
+                break;
+            case 5:
+                $rank_name = 'Kim Cương';
+                break;
+          
+        }
+        return $rank_name;
+    }
 }

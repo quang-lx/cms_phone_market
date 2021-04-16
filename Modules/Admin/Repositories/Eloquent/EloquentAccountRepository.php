@@ -18,6 +18,22 @@ class EloquentAccountRepository extends BaseRepository implements AccountReposit
             $keyword = $request->get('search');
             $query->where(function ($q) use ($keyword) {
                 $q->orWhere('name', 'LIKE', "%{$keyword}%");
+                $q->orWhere('phone', 'LIKE', "%{$keyword}%");
+                $q->orWhere('email', 'LIKE', "%{$keyword}%");
+            });
+        }
+
+        if ($request->get('rank') !== null) {
+            $keyword = $request->get('rank');
+            $query->where(function ($q) use ($keyword) {
+                $q->orWhere('rank',$keyword);
+            });
+        }
+
+        if ($request->get('status') !== null) {
+            $keyword = $request->get('status');
+            $query->where(function ($q) use ($keyword) {
+                $q->orWhere('status',$keyword);
             });
         }
 
