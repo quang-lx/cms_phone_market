@@ -143,3 +143,11 @@ Route::prefix('/search')->group(function () {
     ]);
 
 });
+
+Route::prefix('/product')->group(function () {
+	Route::get('/', [
+		'as' => 'apife.product.list',
+		'uses' => 'ProductController@listByCategory',
+	]);
+
+});

@@ -45,7 +45,9 @@ class Product extends Model
     public function prices() {
     	return $this->hasMany(ProductPrice::class, 'product_id');
     }
-
+	public function pcategoryAsm() {
+		return $this->hasMany(PcategoryProduct::class, 'product_id');
+	}
 
 	public function pcategories()
 	{
