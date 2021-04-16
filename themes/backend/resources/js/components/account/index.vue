@@ -151,16 +151,21 @@
                     </el-table-column>
 
                     <el-table-column prop="actions" width="130">
-                      <template slot-scope="scope">
-                        <el-button
-                          :to="{
-                            name: 'admin.account.edit',
-                            params: { accountId: scope.row.id },
-                          }"
-                          type="primary"
-                          icon="el-icon-view"
-                        ></el-button>
-                      </template>
+                      <el-table-column prop="actions" width="130">
+                        <template slot-scope="scope">
+                          <router-link
+                            :to="{
+                              name: 'admin.account.detail',
+                              params: { accountId: scope.row.id },
+                            }"
+                          >
+                            <el-button
+                              type="primary"
+                              icon="el-icon-view"
+                            ></el-button>
+                          </router-link>
+                        </template>
+                      </el-table-column>
                     </el-table-column>
                   </el-table>
 

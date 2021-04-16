@@ -347,11 +347,19 @@ Route::group(['prefix' => '/account'], function ( ) {
         'middleware' => 'permission:admin.account.create'
     ]);
 
+    Route::get('{account}/detail', [
+        'as' => 'admin.account.detail',
+        'uses' => 'Account\AccountController@detail',
+        'middleware' => 'permission:admin.account.detail'
+    ]);
+
     Route::get('{account}/edit', [
         'as' => 'admin.account.edit',
         'uses' => 'Account\AccountController@edit',
         'middleware' => 'permission:admin.account.edit'
     ]);
+
+ 
 
 
 });

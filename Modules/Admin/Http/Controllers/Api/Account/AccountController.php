@@ -51,12 +51,12 @@ class AccountController extends ApiController
     }
 
 
-    public function find(Account $account)
+    public function find(User $account)
     {
         return new  AccountTransformer($account);
     }
 
-    public function update(Account $account, UpdateAccountRequest $request)
+    public function update(User $account, UpdateAccountRequest $request)
     {
         $this->accountRepository->update($account, $request->all());
 
@@ -66,7 +66,7 @@ class AccountController extends ApiController
         ]);
     }
 
-    public function destroy(Account $account)
+    public function destroy(User $account)
     {
         $this->accountRepository->destroy($account);
 

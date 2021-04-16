@@ -42,6 +42,7 @@ import BrandList from './../components/brand/index';
 import BrandForm from './../components/brand/form';
 
 import AccountList from './../components/account/index';
+import AccountDetail from './../components/account/detail';
 
 
 import ProblemList from './../components/problem/index';
@@ -373,10 +374,19 @@ export default [
     },
 
      //
-     {
+    {
         path: '/admin/account',
         name: 'admin.account.index',
         component: AccountList,
+    },
+
+    {
+        path: '/admin/account/:accountId/detail',
+        name: 'admin.account.detail',
+        component: AccountDetail,
+        props: {
+            pageTitle: 'banners.label.update_title',
+        },
     },
 
 
