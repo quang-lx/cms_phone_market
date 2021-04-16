@@ -104,7 +104,7 @@
                         <div class="tree-container">
                           <el-tree
 
-                            :data="categoryArr"
+                            :data="category_tree_data"
                             show-checkbox
                             default-expand-all
                             node-key="id"
@@ -126,6 +126,30 @@
 
                 </div>
               </div>
+
+              <div class="card">
+
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <el-form-item :label="$t('product.label.problem_id')"
+                                    :class="{'el-form-item is-error': form.errors.has('problem_id') }">
+
+                          <el-checkbox-group v-model="modelForm.problem_id" class ="problem-container">
+                            <el-checkbox v-for="(item,key) in list_problem" :key="key" :label="item.id"> {{item.title}}</el-checkbox>
+                          </el-checkbox-group>
+
+
+                        <div class="el-form-item__error"
+                             v-if="form.errors.has('problem_id')"
+                             v-text="form.errors.first('problem_id')"></div>
+                      </el-form-item>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
               <div class="card">
 
                 <div class="card-body">
@@ -333,12 +357,14 @@
           sku: '',
           price: '',
           amount: '',
-          category_id: []
+          category_id: [],
+          problem_id: []
 
         },
         locales: window.MonCMS.locales,
         brandArr: [],
-        categoryArr: [],
+        category_tree_data: [],
+        list_problem: [],
         listStatus: [
           {
             value: 1,
@@ -445,10 +471,11 @@
 
         };
 
-        axios.get(route('apishop.pcategory.tree', _.merge(properties, {})))
+        axios.get(route('apishop.product.tree', _.merge(properties, {})))
           .then((response) => {
 
-            this.categoryArr = response.data;
+            this.category_tree_data = response.data.categories_tree;
+            this.list_problem = response.data.list_problem;
 
           });
       },
@@ -482,5 +509,11 @@
   .tree-container {
     max-height: 200px;
     overflow-y:auto;
+  }
+  .problem-container {
+    max-height: 200px;
+    overflow-y:auto;
+    display: flex;
+    flex-direction: column;
   }
 </style>

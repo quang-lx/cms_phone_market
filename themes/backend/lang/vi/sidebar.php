@@ -44,6 +44,7 @@ return [
     'problem' => 'Vấn đề',
     'setting' => 'Cài đặt',
     'homesetting' => 'Màn home',
+    'customer' => 'Tài khoản khách hàng',
 
 
 ];

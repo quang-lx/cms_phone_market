@@ -171,7 +171,8 @@ export default {
                 "sku": "SKU",
                 "amount": "Số lượng",
                 "price": "Giá bán",
-                "category_id": "Danh mục"
+                "category_id": "Danh mục",
+                "problem_id": "Vấn đề sửa chữa"
             },
             "message": {
                 "create success": "Tạo sản phẩm thành công.",
@@ -209,6 +210,30 @@ export default {
             },
             "message": {
                 "permission_denied": "Không có quyền truy cập...."
+            }
+        },
+        "company": {
+            "label": {
+                "company": "Thông tin cửa hàng",
+                "id": "ID",
+                "username": "Username",
+                "name": "Tên cửa hàng",
+                "email": "Email",
+                "branchnumber": "Số chi nhánh",
+                "slug": "Đường dẫn",
+                "phone": "Số điện thoại",
+                "address": "Địa chỉ",
+                "description": "Miêu tả",
+                "status": "Trạng thái",
+                "level": "Cấp độ ưu tiên",
+                "create_title": "Tạo tài khoản",
+                "update_title": "Cập nhật",
+                "detail_title": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo Tài khoản cửa hàng thành công.",
+                "update success": "Cập nhật Tài khoản cửa hàng thành công.",
+                "delete success": "Xóa Tài khoản cửa hàng thành công."
             }
         },
         "role": {
@@ -337,7 +362,8 @@ export default {
             "banner": "Banner",
             "shop management": "Quản lý chi nhánh",
             "user management": "Quản lý tài khoản",
-            "product management": "Quản lý sản phẩm"
+            "product management": "Quản lý sản phẩm",
+            "information": "Thông tin cửa hàng"
         },
         "shop": {
             "label": {

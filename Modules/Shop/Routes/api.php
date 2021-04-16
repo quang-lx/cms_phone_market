@@ -74,7 +74,7 @@ Route::middleware('auth:api')->prefix('auth')->group(function (){
 
     ]);
     Route::post('roles/{role}/remove-permission', [
-        'as' => 'apishop.roles.removePermissions',
+        'as' => 'apishop.roles.removePechangePasswordrmissions',
         'uses' => 'Auth\RoleController@removePermissions',
 
     ]);
@@ -154,15 +154,44 @@ Route::middleware('auth:api')->prefix('/products')->group(function (){
         'as' => 'api.product.destroy',
         'uses' => 'Product\ProductController@destroy',
     ]);
+	Route::get('/data/tree', [
+		'as' => 'apishop.product.tree',
+		'uses' => 'Product\ProductController@tree',
+	]);
 
 
 });
-Route::middleware('auth:api')->prefix('/pcategory')->group(function (){
 
-	Route::get('/tree', [
-		'as' => 'apishop.pcategory.tree',
-		'uses' => 'Pcategory\PcategoryController@tree',
-	]);
+Route::middleware('auth:api')->prefix('/companies')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.company.index',
+        'uses' => 'Company\CompanyController@index',
+    ]);
+    Route::post('/edit', [
+            'as' => 'apishop.company.update',
+            'uses' => 'Company\CompanyController@update',
+        ]);
+    Route::post('/', [
+        'as' => 'apishop.company.store',
+        'uses' => 'Company\CompanyController@store',
+    ]);
+
+    Route::delete('/{company}', [
+        'as' => 'apishop.company.destroy',
+        'uses' => 'Company\CompanyController@destroy',
+    ]);
+
+    Route::get('/chi-tiet', [
+        'as' => 'apishop.company.find',
+        'uses' => 'Company\CompanyController@find',
+    ]);
+
+    Route::post('/change-password', [
+        'as' => 'apishop.company.changePassword',
+        'uses' => 'Company\CompanyController@changePassword',
+    ]);
+
 
     Route::get('/', [
 		'as' => 'apishop.pcategory.index',

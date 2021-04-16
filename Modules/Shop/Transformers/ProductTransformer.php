@@ -36,6 +36,8 @@ class ProductTransformer extends JsonResource
             'category_name' => optional($this->pcategories)->pluck('name'),
             'thumbnail' => $this->thumbnail,
 
+			'category_id' => $this->pcategories->pluck('id'),
+            'problem_id' => $this->problems->pluck('id'),
 
              'urls' => [
                 'delete_url' => route('api.product.destroy', $this->id),

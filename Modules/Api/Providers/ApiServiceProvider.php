@@ -9,7 +9,9 @@ use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
 use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentHomeSettingRepository;
+use Modules\Api\Repositories\Eloquent\EloquentSearchRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
+use Modules\Api\Repositories\SearchRepository;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -129,5 +131,11 @@ class ApiServiceProvider extends ServiceProvider
 			    return new EloquentHomeSettingRepository();
 		    }
 	    );
+        $this->app->bind(
+            SearchRepository::class,
+            function () {
+                return new EloquentSearchRepository();
+            }
+        );
     }
 }

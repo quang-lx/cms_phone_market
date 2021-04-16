@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Mon\Entities\Product;
 use Modules\Shop\Http\Requests\Product\CreateProductRequest;
+use Modules\Shop\Repositories\PcategoryRepository;
+use Modules\Shop\Repositories\ProblemRepository;
 use Modules\Shop\Transformers\ProductTransformer;
 use Modules\Shop\Http\Requests\Product\UpdateProductRequest;
 use Modules\Shop\Repositories\ProductRepository;
@@ -20,12 +22,22 @@ class ProductController extends ApiController
      * @var ProductRepository
      */
     private $productRepository;
+	/**
+	 * @var PcategoryRepository
+	 */
+	private $pcategoryRepository;
 
-    public function __construct(Authentication $auth, ProductRepository $product)
+	/**
+	 * @var ProblemRepository
+	 */
+	private $problemRepo;
+    public function __construct(Authentication $auth, ProductRepository $product, PcategoryRepository $pcategory, ProblemRepository $problemRepo)
     {
         parent::__construct($auth);
 
         $this->productRepository = $product;
+	    $this->pcategoryRepository = $pcategory;
+	    $this->problemRepo = $problemRepo;
     }
 
 
@@ -45,7 +57,7 @@ class ProductController extends ApiController
     {
         $params = array();
         $params['company_id'] = Auth::user()->id;
-    
+
         $this->productRepository->create(array_merge($request->all(), $params));
 
         return response()->json([
@@ -64,7 +76,7 @@ class ProductController extends ApiController
     {
         $params = array();
         $params['company_id'] = Auth::user()->id;
-    
+
         $this->productRepository->update($product, array_merge($request->all(), $params));
 
         return response()->json([
@@ -82,4 +94,15 @@ class ProductController extends ApiController
             'message' => trans('ch::product.message.delete success'),
         ]);
     }
+	public function tree(Request $request)
+	{
+		$categoriesTreeData =  $this->pcategoryRepository->serverPagingForTree($request);
+		$problemList =  $this->problemRepo->getList($request);
+
+		return response()->json([
+
+			'categories_tree' => $categoriesTreeData,
+			'list_problem' => $problemList,
+		]);
+	}
 }

@@ -40,6 +40,7 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
     public function prices() {
     	return $this->hasMany(ProductPrice::class, 'product_id');
     }
@@ -49,7 +50,10 @@ class Product extends Model
 	{
 		return $this->belongsToMany(Pcategory::class, 'category_product', 'product_id', 'category_id');
 	}
-
+	public function problems()
+	{
+		return $this->belongsToMany(Problem::class, 'product_problem', 'product_id', 'problem_id');
+	}
     public function getStatusNameAttribute($value) {
         $statusName = '';
         switch ($this->status) {

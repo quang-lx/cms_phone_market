@@ -5,10 +5,13 @@ namespace Modules\Shop\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Mon\Entities\Pcategory;
+use Modules\Mon\Entities\Problem;
 use Modules\Shop\Console\GenerateShopAdminRole;
 use Modules\Shop\Console\GenerateShopPermission;
 use Modules\Shop\Repositories\Eloquent\EloquentPcategoryRepository;
+use Modules\Shop\Repositories\Eloquent\EloquentProblemRepository;
 use Modules\Shop\Repositories\PcategoryRepository;
+use Modules\Shop\Repositories\ProblemRepository;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -160,19 +163,42 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
-	    $this->app->bind(
+         $this->app->bind(
 		   PcategoryRepository::class,
 		    function () {
 			    return new EloquentPcategoryRepository(new Pcategory());
 		    }
 	    );
-        $this->app->bind(
+		$this->app->bind(
+            'Modules\Shop\Repositories\CompanyRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentCompanyRepository(new \Modules\Mon\Entities\Company());
+                return $repository;
+            }
+        );
+	    $this->app->bind(
+		    ProblemRepository::class,
+		    function () {
+			    return new EloquentProblemRepository(new Problem());
+		    }
+	    );
+		$this->app->bind(
             'Modules\Shop\Repositories\BrandRepository',
             function () {
                 $repository = new \Modules\Shop\Repositories\Eloquent\EloquentBrandRepository(new \Modules\Mon\Entities\Brand());
                 return $repository;
             }
         );
+        $this->app->bind(
+ 
+            'Modules\Shop\Repositories\BrandRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentBrandRepository(new \Modules\Mon\Entities\Brand());
+                return $repository;
+            }
+        );
+ 
+            
 // add bindings
 
 

@@ -21,6 +21,9 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		if (isset($data['category_id']) && is_array($data['category_id'])) {
 			$model->pcategories()->sync($data['category_id']);
 		}
+		if (isset($data['problem_id']) && is_array($data['problem_id'])) {
+			$model->problems()->sync($data['problem_id']);
+		}
 		event(new ProductWasCreated($model, $data));
 
 		return $model;
@@ -33,6 +36,9 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 //		$this->syncPrice($model, $data['product_prices']);
 		if (isset($data['category_id']) && is_array($data['category_id'])) {
 			$model->pcategories()->sync($data['category_id']);
+		}
+		if (isset($data['problem_id']) && is_array($data['problem_id'])) {
+			$model->problems()->sync($data['problem_id']);
 		}
 		event(new ProductWasUpdated($model, $data));
 

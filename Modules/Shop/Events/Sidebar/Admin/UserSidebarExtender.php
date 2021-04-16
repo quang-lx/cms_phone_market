@@ -18,7 +18,20 @@ class UserSidebarExtender extends AbstractAdminSidebar
      */
     public function extendWith(Menu $menu)
     {
+	    $menu->group('info ', function (Group $group) {
+		    $group->hideHeading(true);
+		    $group->item(trans('ch::sidebar.information'), function (Item $item) {
+			    $item->icon('fas fa-info-circle');
+			    $item->weight(10);
+			    $item->authorize(
+				    $this->auth->hasAccess('shop.company.index')
+			    );
+			    $item->route('shop.company.index');
 
+		    });
+
+
+	    });
         $menu->group('shop system administration', function (Group $group) {
             $group->hideHeading(true);
             $group->item(trans('backend::sidebar.system administration'), function (Item $item) {
