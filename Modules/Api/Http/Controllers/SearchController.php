@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\SearchRepository;
+use Modules\Api\Transformers\ProductTransformer;
+use Modules\Api\Transformers\Search\SearchShopTransformer;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Entities\SmsToken;
@@ -36,5 +38,13 @@ class SearchController extends ApiController
         $data = $this->searchRepo->listSuggestion($request);
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
-
+	public function search(Request $request)
+	{
+		list($shop, $productions) = $this->searchRepo->search($request);
+		$data = [
+			'shop' => $shop? new SearchShopTransformer($shop): null,
+			'products' => $productions? ProductTransformer::collection($productions): null,
+		];
+		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 }

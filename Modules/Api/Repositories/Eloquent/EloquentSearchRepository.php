@@ -11,7 +11,24 @@ use Modules\Mon\Entities\Shop;
 class EloquentSearchRepository implements SearchRepository
 {
 
+	public function search(Request $request)
+	{
+		$shop = [];
+		$products = [];
+		if ($keyword = $request->get('q')) {
+			// search in shop
+			$query = Shop::query();
+			$query->whereRaw("MATCH (name, address) AGAINST (?)", $this->fullTextWildcards($keyword));
+			$shop = $query->first();
 
+			// search in product
+
+			$query = Product::query();
+			$query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+			$products = $query->select(['name'])->paginate($request->get('per_page', 10));
+		}
+		return [$shop, $products];
+	}
     public function listSuggestion(Request $request)
     {
         $result = [];
@@ -25,7 +42,7 @@ class EloquentSearchRepository implements SearchRepository
                 $result[] = $shop->name;
                 $limit = 5;
             }
-            
+
 
             // search in product
 

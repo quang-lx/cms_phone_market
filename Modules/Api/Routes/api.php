@@ -133,7 +133,10 @@ Route::prefix('/home')->group(function () {
 
 
 Route::prefix('/search')->group(function () {
-
+	Route::get('/', [
+		'as' => 'apife.search.search',
+		'uses' => 'SearchController@search',
+	]);
     Route::get('/suggestion', [
         'as' => 'apife.search.suggestion',
         'uses' => 'SearchController@listSuggestion',
