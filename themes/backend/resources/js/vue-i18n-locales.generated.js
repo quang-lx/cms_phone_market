@@ -152,9 +152,11 @@ export default {
             "label": {
                 "account": "Tài khoản  ",
                 "id": "ID",
+                "avatar": "Ảnh",
                 "name": "Tên",
                 "email": "Email",
                 "info": "Liên hệ",
+                "rank": "Hạng",
                 "created_at": "Ngày tạo",
                 "status": "Trạng thái",
                 "updated_by": "Nguời cập nhật",
@@ -531,7 +533,10 @@ export default {
             "pcategory": "Danh mục",
             "product management": "Quản trị sản phẩm",
             "brand": "Nhãn hàng",
-            "problem": "Vấn đề"
+            "problem": "Vấn đề",
+            "setting": "Cài đặt",
+            "homesetting": "Màn home",
+            "customer": "Tài khoản khách hàng"
         },
         "user": {
             "label": {
