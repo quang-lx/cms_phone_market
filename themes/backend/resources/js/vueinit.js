@@ -14,6 +14,7 @@ import Locale from './vue-i18n-locales.generated';
 import router from './routers';
 
 import ReloadDeleteComponent from './components/utils/ReloadDeleteComponent';
+import ViewComponent from './components/utils/ViewComponent';
 import DeleteComponent from './components/utils/DeleteComponent';
 import EditComponent from './components/utils/EditComponent';
 import SingleMedia from './components/media/js/components/SingleMedia';
@@ -35,6 +36,7 @@ require('./mixins');
 
 Vue.component('ReloadDeleteButton', ReloadDeleteComponent);
 Vue.component('DeleteButton', DeleteComponent);
+Vue.component('ViewButton', ViewComponent);
 Vue.component('EditButton',  EditComponent);
 Vue.component('SingleMedia', SingleMedia);
 Vue.component('MediaManager', MediaManager);

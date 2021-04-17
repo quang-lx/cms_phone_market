@@ -155,14 +155,14 @@
 
                     <el-table-column prop="actions" width="130">
                       <template slot-scope="scope">
-                        <el-button
+                        <view-button
                           :to="{
                             name: 'admin.account.detail',
                             params: { accountId: scope.row.id },
                           }"
-                          type="primary"
-                          icon="el-icon-view"
-                        ></el-button>
+
+
+                        ></view-button>
                       </template>
                     </el-table-column>
                   </el-table>
