@@ -59,7 +59,6 @@ class AccountController extends ApiController
     public function update(User $account, UpdateAccountRequest $request)
     {
         $this->accountRepository->update($account, $request->all());
-
         return response()->json([
             'errors' => false,
             'message' => trans('backend::account.message.update success'),
