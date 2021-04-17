@@ -18,6 +18,7 @@ class AccountTransformer extends JsonResource
             'avatar' => $this->avatar,
             'email' => $this->email,
             'phone' => $this->phone,
+            'rank' => $this->rank,
             'rank_name' => $this->rank_name,
             'created_at' => $this->created_at->format('d-m-Y'),
             'status' => $this->status,

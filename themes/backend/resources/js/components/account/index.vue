@@ -114,10 +114,13 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop="rank_name"
+                      prop="rank"
                       :label="$t('account.label.rank')"
                       sortable="custom"
                     >
+                      <template slot-scope="scope">
+                        <div>{{ scope.row.rank_name }}</div>
+                      </template>
                     </el-table-column>
 
                     <el-table-column
