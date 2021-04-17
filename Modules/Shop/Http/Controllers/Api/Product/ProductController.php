@@ -56,7 +56,7 @@ class ProductController extends ApiController
     public function store(CreateProductRequest $request)
     {
         $params = array();
-        $params['company_id'] = Auth::user()->id;
+        $params['company_id'] = Auth::user()->company_id;
 
         $this->productRepository->create(array_merge($request->all(), $params));
 
@@ -75,7 +75,7 @@ class ProductController extends ApiController
     public function update(Product $product, UpdateProductRequest $request)
     {
         $params = array();
-        $params['company_id'] = Auth::user()->id;
+        $params['company_id'] = Auth::user()->company_id;
 
         $this->productRepository->update($product, array_merge($request->all(), $params));
 

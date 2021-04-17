@@ -142,8 +142,8 @@
                                                         v-for="(item, index) in scope.row.category_name"
                                                         :key="index"
                                                 >
-                                               <span v-if="scope.row.category_name.length-1==index">{{item}}</span>
-                                               <span v-else>{{item}},</span>
+                                               <span v-if="scope.row.category_name.length-1==index" class="dont-break-out">{{item}}</span>
+                                               <span v-else class="dont-break-out">{{item}},&nbsp</span>
                                                </span>
                                             </template>
                                         </el-table-column>
