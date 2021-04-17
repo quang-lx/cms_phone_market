@@ -23,7 +23,7 @@ class AccountTransformer extends JsonResource
             'status' => $this->status,
             'status_name' => $this->status_name,
             'status_color' => $this->status_color,
-            'updated_by' => $this->findCreatedBy()['name'],
+            'updated_by' => optional($this->editor)->name,
             'updated_at' => $this->updated_at->format('d-m-Y'),
             'create_category' => 'Tạo Chuyên mục ',
             'update_category' => 'Cập nhật',
