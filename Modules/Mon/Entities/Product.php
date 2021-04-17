@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Media\Traits\MediaRelation;
 use Modules\Mon\Traits\CommonModel;
+use Wildside\Userstamps\Userstamps;
 
 class Product extends Model
 {
-     use  SoftDeletes, MediaRelation, CommonModel;
+     use  SoftDeletes, MediaRelation, CommonModel, Userstamps;
 
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
