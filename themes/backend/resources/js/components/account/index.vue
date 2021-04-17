@@ -157,7 +157,7 @@
                       <template slot-scope="scope">
                         <el-button
                           :to="{
-                            name: 'admin.account.edit',
+                            name: 'admin.account.detail',
                             params: { accountId: scope.row.id },
                           }"
                           type="primary"
