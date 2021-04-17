@@ -1,5 +1,61 @@
 export default {
     "en": {
+        "sidebar": {
+            "system administration": "System administration",
+            "roles and permission": "Roles and permission",
+            "users": "Users",
+            "roles": "Roles",
+            "permissions": "Permissions",
+            "media": "Media",
+            "news": "News",
+            "driver standing": "Driver Standing",
+            "constructor standing": "Constructor Standing",
+            "race event": "Race Event",
+            "standing": "Standing",
+            "driver": "Driver",
+            "constructor": "Constructor",
+            "resource": "Resource",
+            "partner": "Partner"
+        },
+        "permission": {
+            "label": {
+                "id": "ID",
+                "name": "Name",
+                "guard_name": "Guard name",
+                "created_at": "Created at",
+                "updated_at": "Updated at",
+                "create_permission": "Create Permission",
+                "update_permission": "Update Permission",
+                "permissions": "Permissions"
+            },
+            "message": {
+                "create success": "Create Permission Success.",
+                "update success": "Update Permission Success.",
+                "delete success": "Delete Permission Success."
+            }
+        },
+        "mon": {
+            "button": {
+                "save": "Save",
+                "create": "Create",
+                "cancel": "Cancel",
+                "delete": "Delete",
+                "close": "Close"
+            },
+            "all": "All",
+            "confirm": "Confirm",
+            "delete cancelled": "Delete cancelled",
+            "modal": {
+                "confirmation-message": "Are you sure you want to delete this record?",
+                "title": "Confirmation"
+            },
+            "breadcrumb": {
+                "home": "Home"
+            },
+            "message": {
+                "permission_denied": "Permission denied...."
+            }
+        },
         "auth": {
             "failed": "These credentials do not match our records.",
             "throttle": "Too many login attempts. Please try again in {seconds} seconds.",
@@ -9,24 +65,10 @@ export default {
                 "sign in": "Sign in"
             }
         },
-        "media": {
+        "profile": {
             "label": {
-                "media": "Media",
-                "choose_file": "Choose file",
-                "created_at": "Created at",
-                "filename": "Filename",
-                "move": "Move",
-                "upload file": "Upload file",
-                "title": "Title",
-                "description": "Description"
-            },
-            "folders": {
-                "create_resource": "Create folder",
-                "folder_name": "Folder name"
-            },
-            "insert": "Insert image",
-            "remove_media": "Remove media",
-            "Browse": "Browse"
+                "profile": "Profile"
+            }
         },
         "user": {
             "label": {
@@ -56,22 +98,24 @@ export default {
                 "change password success": "Change password success."
             }
         },
-        "permission": {
+        "media": {
             "label": {
-                "id": "ID",
-                "name": "Name",
-                "guard_name": "Guard name",
+                "media": "Media",
+                "choose_file": "Choose file",
                 "created_at": "Created at",
-                "updated_at": "Updated at",
-                "create_permission": "Create Permission",
-                "update_permission": "Update Permission",
-                "permissions": "Permissions"
+                "filename": "Filename",
+                "move": "Move",
+                "upload file": "Upload file",
+                "title": "Title",
+                "description": "Description"
             },
-            "message": {
-                "create success": "Create Permission Success.",
-                "update success": "Update Permission Success.",
-                "delete success": "Delete Permission Success."
-            }
+            "folders": {
+                "create_resource": "Create folder",
+                "folder_name": "Folder name"
+            },
+            "insert": "Insert image",
+            "remove_media": "Remove media",
+            "Browse": "Browse"
         },
         "role": {
             "label": {
@@ -101,136 +145,39 @@ export default {
             "deny": "Deny",
             "allow all": "Allow all",
             "deny all": "Deny all"
-        },
-        "mon": {
-            "button": {
-                "save": "Save",
-                "create": "Create",
-                "cancel": "Cancel",
-                "delete": "Delete",
-                "close": "Close"
-            },
-            "all": "All",
-            "confirm": "Confirm",
-            "delete cancelled": "Delete cancelled",
-            "modal": {
-                "confirmation-message": "Are you sure you want to delete this record?",
-                "title": "Confirmation"
-            },
-            "breadcrumb": {
-                "home": "Home"
-            },
-            "message": {
-                "permission_denied": "Permission denied...."
-            }
-        },
-        "sidebar": {
-            "system administration": "System administration",
-            "roles and permission": "Roles and permission",
-            "users": "Users",
-            "roles": "Roles",
-            "permissions": "Permissions",
-            "media": "Media",
-            "news": "News",
-            "driver standing": "Driver Standing",
-            "constructor standing": "Constructor Standing",
-            "race event": "Race Event",
-            "standing": "Standing",
-            "driver": "Driver",
-            "constructor": "Constructor",
-            "resource": "Resource",
-            "partner": "Partner"
-        },
-        "profile": {
-            "label": {
-                "profile": "Profile"
-            }
         }
     },
     "vi": {
-        "banners": {
+        "brand": {
             "label": {
-                "banners": "Banners",
                 "id": "ID",
-                "description": "Mô tả",
-                "image": "Ảnh",
-                "create_title": "Tạo banner",
-                "update_title": "Cập nhật banners",
+                "brand": "Nhãn hàng",
+                "name": "Tên nhãn hàng",
+                "type": "Loại dịch vụ",
+                "category": "Danh mục",
+                "status": "Trạng thái",
+                "create_title": "Tạo nhãn",
+                "update_title": "Cập nhật nhãn",
                 "detail_title": "Chi tiết"
             },
             "message": {
-                "create success": "Tạo banner thành công.",
-                "update success": "Cập nhật banner thành công.",
-                "delete success": "Xóa banner thành công."
+                "create success": "Tạo nhãn thành công.",
+                "update success": "Cập nhật nhãn thành công.",
+                "delete success": "Xóa nhãn thành công."
             }
         },
-        "auth": {
-            "failed": "These credentials do not match our records.",
-            "throttle": "Too many login attempts. Please try again in {seconds} seconds.",
-            "label": {
-                "sign in to start your session": "Đăng nhập để bắt đầu phiên của bạn",
-                "remember me": "Nhớ tài khoản",
-                "sign in": "Đăng nhập"
-            }
-        },
-        "media": {
-            "label": {
-                "media": "Media",
-                "choose_file": "Tải file lên",
-                "move": "Move",
-                "upload file": "Upload file",
-                "filename": "Tên tệp",
-                "width": "Chiều rộng",
-                "height": "Chiều cao",
-                "title": "Tiêu đề",
-                "description": "Mô tả",
-                "path": "Đường dẫn",
-                "file size": "Kích thước",
-                "type file": "Loại tệp",
-                "created_at": "Ngày tạo"
-            },
-            "folders": {
-                "create_resource": "Tạo folder",
-                "folder_name": "Tên folder"
-            },
-            "messages": {
-                "selected items deleted": "Tệp vừa được xóa"
-            },
-            "insert": "Insert image",
-            "remove_media": "Remove media",
-            "Browse": "Chọn file"
-        },
-        "user": {
+        "problem": {
             "label": {
                 "id": "ID",
-                "username": "Tài khoản",
-                "email": "Email",
-                "name": "Tên",
-                "phone": "Số điện thoại",
-                "created_at": "Ngày tạo",
-                "updated_at": "Ngày cập nhật",
-                "password_confirmation": "Xác nhận mật khẩu",
-                "password": "Mật khẩu",
-                "create_user": "Tạo người dùng",
-                "update_user": "Cập nhật",
-                "create_admin": "Tạo quản trị",
-                "update_admin": "Cập nhật quản trị",
-                "users": "Tài khoản",
-                "roles": "Nhóm quyền",
-                "change_password": "Đổi mật khẩu",
-                "admins": "Tài khoản quản trị"
-            },
-            "tabs": {
-                "data": "Thông tin chung",
-                "roles": "Nhóm quyền",
-                "new_password": "Mật khẩu mới"
+                "title": "Vấn đề",
+                "problem": "Vấn đề",
+                "create_item": "Tạo mới",
+                "update_item": "Cập nhật"
             },
             "message": {
-                "create success": "Tạo tài khoản thành công.",
-                "update success": "Cập nhật tài khoản thành công.",
-                "delete success": "Xóa tài khoản thành công.",
-                "change password success": "Đổi mật khẩu thành công.",
-                "not allow self delete": "Không cho phép xóa tài khoản bạn đang đăng nhập."
+                "create success": "Tạo vấn đề  thành công.",
+                "update success": "Cập nhật vấn đề  thành công.",
+                "delete success": "Xóa vấn đề  thành công."
             }
         },
         "news": {
@@ -263,26 +210,67 @@ export default {
                 "delete success": "Xóa tin tức thành công."
             }
         },
-        "phoenix": {
+        "pcategory": {
             "label": {
-                "phoenix": "Xã phường",
+                "pcategory": "Danh mục sản phẩm",
                 "id": "ID",
-                "name": "Tên Xã phường",
-                "province_id": "Id tỉnh thành phố",
-                "province": "Tỉnh thành phố",
-                "district_id": "Id quận huyện",
-                "district": "Tỉnh quận huyện",
-                "lat": "Lat",
-                "lng": "Lng",
-                "code": "Mã",
+                "name": "Tên",
                 "type": "Kiểu",
-                "create_phoenix": "Tạo Xã phường",
-                "update_phoenix": "Cập nhật"
+                "image": "Ảnh",
+                "parent_id": "Danh mục cha",
+                "create_pcategory": "Tạo Danh mục sản phẩm ",
+                "update_pcategory": "Cập nhật"
             },
             "message": {
-                "create success": "Tạo Xã phường thành công.",
-                "update success": "Cập nhật Xã phường thành công.",
-                "delete success": "Xóa Xã phường thành công."
+                "create success": "Tạo Danh mục sản phẩm  thành công.",
+                "update success": "Cập nhật Danh mục sản phẩm  thành công.",
+                "delete success": "Xóa Danh mục sản phẩm  thành công."
+            }
+        },
+        "sidebar": {
+            "system administration": "Quản trị",
+            "roles and permission": "Roles and permission",
+            "admins": "Tài khoản quản trị",
+            "users": "Người dùng",
+            "roles": "Nhóm quyền",
+            "permissions": "Quyền",
+            "media": "Media",
+            "alarm group": "DM cảnh báo",
+            "alarmlevel": "Mức độ",
+            "alarmtype": "Sự cố",
+            "news group": "Tin tức",
+            "category": "Danh mục tin",
+            "news": "Tin tức",
+            "warning": "Cảnh báo",
+            "fbnotification": "Notification",
+            "banner": "Banner",
+            "shop_permissions": "Danh sách quyền",
+            "system shop": "Cửa hàng",
+            "company": "Tài khoản cửa hàng",
+            "company info": "Thông tin cửa hàng",
+            "company priority": "Cài đặt ưu tiên",
+            "pcategory": "Danh mục",
+            "product management": "Quản trị sản phẩm",
+            "brand": "Nhãn hàng",
+            "problem": "Vấn đề",
+            "setting": "Cài đặt",
+            "homesetting": "Màn home",
+            "customer": "Tài khoản khách hàng"
+        },
+        "banners": {
+            "label": {
+                "banners": "Banners",
+                "id": "ID",
+                "description": "Mô tả",
+                "image": "Ảnh",
+                "create_title": "Tạo banner",
+                "update_title": "Cập nhật banners",
+                "detail_title": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo banner thành công.",
+                "update success": "Cập nhật banner thành công.",
+                "delete success": "Xóa banner thành công."
             }
         },
         "permission": {
@@ -319,130 +307,26 @@ export default {
                 "pcategory": "Danh mục sản phẩm"
             }
         },
-        "district": {
+        "phoenix": {
             "label": {
-                "district": "Quận huyện",
+                "phoenix": "Xã phường",
                 "id": "ID",
-                "name": "Tên Quận Huyện",
+                "name": "Tên Xã phường",
                 "province_id": "Id tỉnh thành phố",
                 "province": "Tỉnh thành phố",
+                "district_id": "Id quận huyện",
+                "district": "Tỉnh quận huyện",
                 "lat": "Lat",
                 "lng": "Lng",
                 "code": "Mã",
                 "type": "Kiểu",
-                "create_district": "Tạo Quận huyện",
-                "update_district": "Cập nhật"
+                "create_phoenix": "Tạo Xã phường",
+                "update_phoenix": "Cập nhật"
             },
             "message": {
-                "create success": "Tạo Quận huyện thành công.",
-                "update success": "Cập nhật Quận huyện thành công.",
-                "delete success": "Xóa Quận huyện thành công."
-            }
-        },
-        "category": {
-            "label": {
-                "category": "Chuyên mục ",
-                "id": "ID",
-                "title": "Tên",
-                "0": "type",
-                "slug": "Đường dẫn",
-                "1": "parent_id",
-                "2": "order",
-                "description": "Miêu tả",
-                "status": "Trạng thái",
-                "create_category": "Tạo Chuyên mục ",
-                "update_category": "Cập nhật"
-            },
-            "message": {
-                "create success": "Tạo Chuyên mục  thành công.",
-                "update success": "Cập nhật Chuyên mục  thành công.",
-                "delete success": "Xóa Chuyên mục  thành công."
-            }
-        },
-        "problem": {
-            "label": {
-                "id": "ID",
-                "title": "Vấn đề",
-                "problem": "Vấn đề",
-                "create_item": "Tạo mới",
-                "update_item": "Cập nhật"
-            },
-            "message": {
-                "create success": "Tạo vấn đề  thành công.",
-                "update success": "Cập nhật vấn đề  thành công.",
-                "delete success": "Xóa vấn đề  thành công."
-            }
-        },
-        "role": {
-            "label": {
-                "id": "ID",
-                "name": "Tên nhóm",
-                "description": "Mô tả",
-                "guard_name": "Guard name",
-                "created_at": "Ngày tạo",
-                "updated_at": "Ngày cập nhật",
-                "create_role": "Thêm mới",
-                "update_role": "Cập nhật",
-                "roles": "Nhóm quyền",
-                "permissions": "Danh sách chức năng",
-                "list_permissions": "Danh sách chức năng",
-                "selected_permissions": "Chức năng đã chọn",
-                "information": "Thông tin nhóm quyền",
-                "assign": "Gán",
-                "remove": "Hủy"
-            },
-            "message": {
-                "create success": "Thêm mới nhóm quyền thành công.",
-                "update success": "Cập nhật nhóm quyền thành công.",
-                "delete success": "Xóa nhóm quyền thành công.",
-                "add permissions success": "Gán chức năng thành công",
-                "remove permissions success": "Bỏ chức năng thành công"
-            },
-            "allow": "Chọn",
-            "deny": "Từ chối",
-            "allow all": "Chọn tất cả",
-            "deny all": "Từ chối tất cả"
-        },
-        "brand": {
-            "label": {
-                "id": "ID",
-                "brand": "Nhãn hàng",
-                "name": "Tên nhãn hàng",
-                "type": "Loại dịch vụ",
-                "category": "Danh mục",
-                "status": "Trạng thái",
-                "create_title": "Tạo nhãn",
-                "update_title": "Cập nhật nhãn",
-                "detail_title": "Chi tiết"
-            },
-            "message": {
-                "create success": "Tạo nhãn thành công.",
-                "update success": "Cập nhật nhãn thành công.",
-                "delete success": "Xóa nhãn thành công."
-            }
-        },
-        "company": {
-            "label": {
-                "company": "Tài khoản cửa hàng",
-                "id": "ID",
-                "username": "Username",
-                "name": "Tên cửa hàng",
-                "email": "Email",
-                "branchnumber": "Số chi nhánh",
-                "slug": "Đường dẫn",
-                "phone": "Số điện thoại",
-                "address": "Địa chỉ",
-                "description": "Miêu tả",
-                "status": "Trạng thái",
-                "level": "Cấp độ ưu tiên",
-                "create_title": "Tạo tài khoản",
-                "update_title": "Cập nhật",
-                "detail_title": "Chi tiết"
-            },
-            "message": {
-                "create success": "Tạo Tài khoản cửa hàng thành công.",
-                "update success": "Cập nhật Tài khoản cửa hàng thành công.",
-                "delete success": "Xóa Tài khoản cửa hàng thành công."
+                "create success": "Tạo Xã phường thành công.",
+                "update success": "Cập nhật Xã phường thành công.",
+                "delete success": "Xóa Xã phường thành công."
             }
         },
         "mon": {
@@ -480,78 +364,76 @@ export default {
             "updated_at": "Ngày cập nhật",
             "created_at": "Ngày cập nhật"
         },
+        "auth": {
+            "failed": "These credentials do not match our records.",
+            "throttle": "Too many login attempts. Please try again in {seconds} seconds.",
+            "label": {
+                "sign in to start your session": "Đăng nhập để bắt đầu phiên của bạn",
+                "remember me": "Nhớ tài khoản",
+                "sign in": "Đăng nhập"
+            }
+        },
         "account": {
             "label": {
                 "account": "Tài khoản  ",
                 "id": "ID",
-                "username": "Username",
-                "name": "Tên hiển thị",
+                "avatar": "Ảnh",
+                "name": "Tên",
                 "email": "Email",
                 "info": "Liên hệ",
-                "phone": "Số điện thoại",
-                "created_at": "Ngày tạo tài khoản",
+                "rank": "Hạng",
+                "created_at": "Ngày tạo",
                 "status": "Trạng thái",
                 "birthday": "Ngày sinh",
                 "gender": "Giới tính",
                 "last_login": "Lần đăng nhập cuối",
                 "updated_by": "Nguời cập nhật",
                 "updated_at": "Ngày cập nhật",
-                "rank": "Hạng",
-                "avatar": "Ảnh",
-                "create_category": "Tạo Chuyên mục ",
-                "update_category": "Cập nhật"
+                "create_account": "Tạo",
+                "update_account": "Cập nhật"
             },
             "message": {
-                "create success": "Tạo Chuyên mục  thành công.",
-                "update success": "Cập nhật Chuyên mục  thành công.",
-                "delete success": "Xóa Chuyên mục  thành công."
+                "create success": "Tạo thành công.",
+                "update success": "Cập nhật thành công.",
+                "delete success": "Xóa thành công."
             }
         },
-        "sidebar": {
-            "system administration": "Quản trị",
-            "roles and permission": "Roles and permission",
-            "admins": "Tài khoản quản trị",
-            "users": "Người dùng",
-            "roles": "Nhóm quyền",
-            "permissions": "Quyền",
-            "media": "Media",
-            "alarm group": "DM cảnh báo",
-            "alarmlevel": "Mức độ",
-            "alarmtype": "Sự cố",
-            "news group": "Tin tức",
-            "category": "Danh mục tin",
-            "news": "Tin tức",
-            "warning": "Cảnh báo",
-            "fbnotification": "Notification",
-            "banner": "Banner",
-            "shop_permissions": "Danh sách quyền",
-            "system shop": "Cửa hàng",
-            "company": "Tài khoản cửa hàng",
-            "company info": "Thông tin cửa hàng",
-            "company priority": "Cài đặt ưu tiên",
-            "pcategory": "Danh mục",
-            "product management": "Quản trị sản phẩm",
-            "brand": "Nhãn hàng",
-            "problem": "Vấn đề",
-            "setting": "Cài đặt",
-            "homesetting": "Màn home",
-            "customer": "Tài khoản khách hàng"
-        },
-        "pcategory": {
+        "profile": {
             "label": {
-                "pcategory": "Danh mục sản phẩm",
+                "profile": "Profile"
+            }
+        },
+        "user": {
+            "label": {
                 "id": "ID",
+                "username": "Tài khoản",
+                "email": "Email",
                 "name": "Tên",
-                "type": "Kiểu",
-                "image": "Ảnh",
-                "parent_id": "Danh mục cha",
-                "create_pcategory": "Tạo Danh mục sản phẩm ",
-                "update_pcategory": "Cập nhật"
+                "phone": "Số điện thoại",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "password_confirmation": "Xác nhận mật khẩu",
+                "password": "Mật khẩu",
+                "create_user": "Tạo người dùng",
+                "update_user": "Cập nhật",
+                "create_admin": "Tạo quản trị",
+                "update_admin": "Cập nhật quản trị",
+                "users": "Tài khoản",
+                "roles": "Nhóm quyền",
+                "change_password": "Đổi mật khẩu",
+                "admins": "Tài khoản quản trị"
+            },
+            "tabs": {
+                "data": "Thông tin chung",
+                "roles": "Nhóm quyền",
+                "new_password": "Mật khẩu mới"
             },
             "message": {
-                "create success": "Tạo Danh mục sản phẩm  thành công.",
-                "update success": "Cập nhật Danh mục sản phẩm  thành công.",
-                "delete success": "Xóa Danh mục sản phẩm  thành công."
+                "create success": "Tạo tài khoản thành công.",
+                "update success": "Cập nhật tài khoản thành công.",
+                "delete success": "Xóa tài khoản thành công.",
+                "change password success": "Đổi mật khẩu thành công.",
+                "not allow self delete": "Không cho phép xóa tài khoản bạn đang đăng nhập."
             }
         },
         "province": {
@@ -571,9 +453,125 @@ export default {
                 "delete success": "Xóa Tỉnh Thành Phố  thành công."
             }
         },
-        "profile": {
+        "category": {
             "label": {
-                "profile": "Profile"
+                "category": "Chuyên mục ",
+                "id": "ID",
+                "title": "Tên",
+                "0": "type",
+                "slug": "Đường dẫn",
+                "1": "parent_id",
+                "2": "order",
+                "description": "Miêu tả",
+                "status": "Trạng thái",
+                "create_category": "Tạo Chuyên mục ",
+                "update_category": "Cập nhật"
+            },
+            "message": {
+                "create success": "Tạo Chuyên mục  thành công.",
+                "update success": "Cập nhật Chuyên mục  thành công.",
+                "delete success": "Xóa Chuyên mục  thành công."
+            }
+        },
+        "company": {
+            "label": {
+                "company": "Tài khoản cửa hàng",
+                "id": "ID",
+                "username": "Username",
+                "name": "Tên cửa hàng",
+                "email": "Email",
+                "branchnumber": "Số chi nhánh",
+                "slug": "Đường dẫn",
+                "phone": "Số điện thoại",
+                "address": "Địa chỉ",
+                "description": "Miêu tả",
+                "status": "Trạng thái",
+                "level": "Cấp độ ưu tiên",
+                "create_title": "Tạo tài khoản",
+                "update_title": "Cập nhật",
+                "detail_title": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo Tài khoản cửa hàng thành công.",
+                "update success": "Cập nhật Tài khoản cửa hàng thành công.",
+                "delete success": "Xóa Tài khoản cửa hàng thành công."
+            }
+        },
+        "media": {
+            "label": {
+                "media": "Media",
+                "choose_file": "Tải file lên",
+                "move": "Move",
+                "upload file": "Upload file",
+                "filename": "Tên tệp",
+                "width": "Chiều rộng",
+                "height": "Chiều cao",
+                "title": "Tiêu đề",
+                "description": "Mô tả",
+                "path": "Đường dẫn",
+                "file size": "Kích thước",
+                "type file": "Loại tệp",
+                "created_at": "Ngày tạo"
+            },
+            "folders": {
+                "create_resource": "Tạo folder",
+                "folder_name": "Tên folder"
+            },
+            "messages": {
+                "selected items deleted": "Tệp vừa được xóa"
+            },
+            "insert": "Insert image",
+            "remove_media": "Remove media",
+            "Browse": "Chọn file"
+        },
+        "role": {
+            "label": {
+                "id": "ID",
+                "name": "Tên nhóm",
+                "description": "Mô tả",
+                "guard_name": "Guard name",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "create_role": "Thêm mới",
+                "update_role": "Cập nhật",
+                "roles": "Nhóm quyền",
+                "permissions": "Danh sách chức năng",
+                "list_permissions": "Danh sách chức năng",
+                "selected_permissions": "Chức năng đã chọn",
+                "information": "Thông tin nhóm quyền",
+                "assign": "Gán",
+                "remove": "Hủy"
+            },
+            "message": {
+                "create success": "Thêm mới nhóm quyền thành công.",
+                "update success": "Cập nhật nhóm quyền thành công.",
+                "delete success": "Xóa nhóm quyền thành công.",
+                "add permissions success": "Gán chức năng thành công",
+                "remove permissions success": "Bỏ chức năng thành công"
+            },
+            "allow": "Chọn",
+            "deny": "Từ chối",
+            "allow all": "Chọn tất cả",
+            "deny all": "Từ chối tất cả"
+        },
+        "district": {
+            "label": {
+                "district": "Quận huyện",
+                "id": "ID",
+                "name": "Tên Quận Huyện",
+                "province_id": "Id tỉnh thành phố",
+                "province": "Tỉnh thành phố",
+                "lat": "Lat",
+                "lng": "Lng",
+                "code": "Mã",
+                "type": "Kiểu",
+                "create_district": "Tạo Quận huyện",
+                "update_district": "Cập nhật"
+            },
+            "message": {
+                "create success": "Tạo Quận huyện thành công.",
+                "update success": "Cập nhật Quận huyện thành công.",
+                "delete success": "Xóa Quận huyện thành công."
             }
         }
     }
