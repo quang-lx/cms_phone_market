@@ -34,12 +34,11 @@
                       >: &nbsp{{ modelForm.title }}</span
                     >
                   </h3>
-                  <div class="col-md-2">
+                  <div class="col-md-4 text-right">
                     <el-button @click="showDataModal(1)" type="primary"
                       >Tùy chỉnh xếp hạng</el-button
                     >
-                  </div>
-                  <div class="col-md-2">
+
                     <el-button
                       v-if="modelForm.status == 1"
                       type="primary"
