@@ -59,7 +59,12 @@
                   :visible.sync="dialogRank"
                 >
                   <el-form :model="form">
-                    <el-select v-model="modelForm.rank" placeholder="Select">
+                    <el-select v-model="modelForm.rank" placeholder="Chọn xếp hạng">
+                      <el-option
+                        lang="" abel=""
+                        value="Chọn xếp hạng"
+                      >
+                      </el-option>
                       <el-option
                         v-for="item in rank"
                         :key="item.value"
