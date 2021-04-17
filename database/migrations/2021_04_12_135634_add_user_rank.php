@@ -14,7 +14,7 @@ class AddUserRank extends Migration
     public function up()
     {
 	    Schema::table('users', function (Blueprint $table) {
-		    $table->integer('rank')->default(0)->nullable();
+		    $table->integer('rank')->default(1)->nullable();
 		    $table->date('birthday')->nullable();
 		    $table->integer('gender')->nullable();
 
