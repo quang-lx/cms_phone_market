@@ -215,4 +215,18 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         }
         return $rank_name;
     }
+
+    public function getGenderNameAttribute($value)
+    {
+        $gender_name = '';
+        switch ($this->gender) {
+            case 1:
+                $gender_name = 'Nam';
+                break;
+            case 2:
+                $gender_name = 'Nữ';
+                break;      
+        }
+        return $gender_name;
+    }
 }

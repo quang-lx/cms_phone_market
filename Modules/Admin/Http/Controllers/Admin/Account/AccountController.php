@@ -48,5 +48,10 @@ class AccountController extends AdminController
         return $this->view('admin::accounts.edit', compact('account'));
     }
 
+    public function detail()
+    {
+        return $this->view('admin::accounts.detail');
+    }
+
 
 }
