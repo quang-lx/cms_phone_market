@@ -1,28 +1,14 @@
 <template>
-    <div>
+
+<div>
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <el-breadcrumb separator="/">
-                            <el-breadcrumb-item>
-                                <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
-                            </el-breadcrumb-item>
-                            <el-breadcrumb-item>{{ $t('news.label.news') }}
-                            </el-breadcrumb-item>
 
-                        </el-breadcrumb>
-                    </div>
 
-                </div>
-            </div>
-        </div>
-
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row justify-content-end mb-2">
-                    <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row ">
+                            <div class="col-md-6">
 
                         <el-radio-group v-model="filter.status" @change="fetchData">
                             <el-radio v-for="item in listStatus"
@@ -32,38 +18,44 @@
                             </el-radio>
                         </el-radio-group>
                     </div>
-                    <div class="col-md-4   ">
-                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
-                                  placeholder="Nhập ID, tiêu đề, người tạo"
-                                  v-model="searchQuery">
-                        </el-input>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header ui-sortable-handle" style="cursor: move;">
-                                <h3 class="card-title">
-                                    {{ $t('news.label.news') }}
-                                </h3>
-                                <div class="card-tools">
-                                    <ul class="nav nav-pills ml-auto">
-                                        <li class="nav-item">
-                                            <router-link :to="{name: 'admin.news.create'}">
+                        <div class="col-sm-6 text-right">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
+                                                  v-model="searchQuery">
+                                        </el-input>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <router-link :to="{name: 'admin.news.create'}">
                                                 <el-button type="primary" size="small" class="btn btn-flat">
                                                     {{ $t('news.label.create_news') }}
                                                 </el-button>
                                             </router-link>
-                                        </li>
-
-                                    </ul>
+                                    </div>
                                 </div>
-                            </div><!-- /.card-header -->
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="sc-table">
 
-                                    <el-table
+                                         <el-table
                                         :data="data"
                                         stripe
                                         style="width: 100%"
@@ -116,7 +108,6 @@
                                             </template>
                                         </el-table-column>
                                     </el-table>
-
                                     <div class="pagination-wrap">
                                         <el-pagination
                                             @size-change="handleSizeChange"
