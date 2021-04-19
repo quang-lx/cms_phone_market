@@ -27,7 +27,7 @@ class CreateUserRequest extends FormRequest
 
             'name' => 'required',
             'email' => 'required|unique:users|email',
-            'password' => 'required',
+            'password' => 'required|min:6',
             'password_confirmation' => 'same:password'
         ];
 
@@ -67,6 +67,7 @@ class CreateUserRequest extends FormRequest
             'password.required' => 'Mật khẩu là bắt buộc',
             'password_confirmation.same' => 'Xác nhận mật khẩu không đúng',
             'password.same' => 'Xác nhận mật khẩu không đúng',
+            'password.min' => 'Mật khẩu tối thiểu 6 ký tự'
         ];
     }
 }
