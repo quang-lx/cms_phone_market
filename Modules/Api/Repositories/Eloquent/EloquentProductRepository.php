@@ -28,6 +28,10 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 					$q->where('parent_id', $category_id)
 					->orWhere('pcategory.id', $category_id);
 				});
+			} else {
+				$query->whereHas('pcategories', function ($q) use ($category_id) {
+					$q->where('pcategory.id', $category_id);
+				});
 			}
 		}
 
