@@ -26,6 +26,9 @@ class CreateTableVoucher extends Migration
             $table->timestamp('actived_at')->nullable();
             $table->timestamp('expired_at')->nullable();
 
+            $table->integer('total')->default(0);
+            $table->integer('total_used')->default(0);
+
 
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('updated_by')->nullable();
