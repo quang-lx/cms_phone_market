@@ -192,7 +192,7 @@ class AuthController extends ApiController
         }
 
         $validator = Validator::make($request->all(), [
-            'password' => 'min:8',
+            'password' => 'min:6',
         ]);
         if($validator->fails()){
             return $this->respond([], ErrorCode::ERR04_MSG, ErrorCode::ERR04);
