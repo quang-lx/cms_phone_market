@@ -10,14 +10,16 @@ class CreateCompanyRequest extends FormRequest
     {
 
         $rules = [
-
-
             'username' => 'required|unique:users,username',
             'name' => 'required',
             'phone' => 'required',
             'email' => 'required|unique:users|email',
-            'password' => 'required',
-            'password_confirmation' => 'same:password'
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password',
+            'address' => 'required',
+            'district_id' => 'required',
+            'province_id' => 'required',
+            'phoenix_id' => 'required',
         ];
 
 
@@ -51,8 +53,15 @@ class CreateCompanyRequest extends FormRequest
             'email.required' => 'Email là bắt buộc',
             'email.email' => 'Email sai định dạng',
             'password.required' => 'Mật khẩu là bắt buộc',
+            'password.min' => 'Mật khẩu tối thiểu 6 ký tự',
+            'password.required' => 'Mật khẩu là bắt buộc',
             'password_confirmation.same' => 'Xác nhận mật khẩu không đúng',
+            'password_confirmation.required' => 'Xác nhận mật khẩu không được để trống',
             'password.same' => 'Xác nhận mật khẩu không đúng',
+            'address.required' => 'Địa chỉ là bắt buộc',
+            'district_id.required' => 'Quận huyện là bắt buộc',
+            'province_id.required' => 'Tỉnh thành phố là bắt buộc',
+            'phoenix_id.required' => 'Xã phường là bắt buộc',
         ];
     }
 }

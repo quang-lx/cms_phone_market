@@ -183,19 +183,7 @@
                           v-text="form.errors.first('level')"
                         ></div>
                       </el-form-item>
-                      <el-form-item
-                        :label="$t('company.label.address')"
-                        :class="{
-                          'el-form-item is-error': form.errors.has('address'),
-                        }"
-                      >
-                        <el-input v-model="modelForm.address"></el-input>
-                        <div
-                          class="el-form-item__error"
-                          v-if="form.errors.has('address')"
-                          v-text="form.errors.first('address')"
-                        ></div>
-                      </el-form-item>
+
                       <el-form-item
                         :label="$t('phoenix.label.province')"
                         :class="{
@@ -275,6 +263,19 @@
                           class="el-form-item__error"
                           v-if="form.errors.has('phoenix_id')"
                           v-text="form.errors.first('phoenix_id')"
+                        ></div>
+                      </el-form-item>
+                      <el-form-item
+                        :label="$t('company.label.address')"
+                        :class="{
+                          'el-form-item is-error': form.errors.has('address'),
+                        }"
+                      >
+                        <el-input v-model="modelForm.address"></el-input>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('address')"
+                          v-text="form.errors.first('address')"
                         ></div>
                       </el-form-item>
                     </div>
@@ -513,6 +514,10 @@ export default {
           this.loading = false;
           this.modelForm = response.data.data;
           this.modelForm.is_new = false;
+          if (this.modelForm.province_id != null) {
+            this.fetchDistrict();
+            this.fetchPhoenix();
+          }
         });
       } else {
         this.modelForm.is_new = true;
@@ -562,13 +567,13 @@ export default {
       this.modelForm.phoenix_id = "";
     },
 
-    fetchDistrict(value) {
+    fetchDistrict() {
       let routeUri = "";
       this.loading = true;
       routeUri = route("api.district.index", {
         page: 1,
         per_page: 1000,
-        province_id: value,
+        province_id: this.modelForm.province_id,
       });
       axios.get(routeUri).then((response) => {
         this.loading = false;
@@ -576,13 +581,13 @@ export default {
       });
     },
 
-    fetchPhoenix(value) {
+    fetchPhoenix() {
       let routeUri = "";
       this.loading = true;
       routeUri = route("api.phoenix.index", {
         page: 1,
         per_page: 1000,
-        district_id: value,
+        district_id: this.modelForm.district_id,
       });
       axios.get(routeUri).then((response) => {
         this.loading = false;
