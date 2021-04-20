@@ -26,6 +26,7 @@ return [
  'problem_id' => 'Vấn đề sửa chữa',
         'company_id' => 'Cửa hàng',
         'image' => 'Ảnh',
+        'attribute extend' => 'Thuộc tính mở rộng',
     ],
     'list' => [
         'status' => 'Trạng thái',

@@ -18,7 +18,7 @@ class Attribute extends Model
         'shop_id',
     ];
 
-    public function AttributeValue()
+    public function attributeValues()
     {
         return $this->hasMany(AttributeValue::class, 'attribute_id');
     }

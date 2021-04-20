@@ -4,10 +4,12 @@ namespace Modules\Shop\Http\Controllers\Api\Product;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Mon\Entities\Attribute;
 use Modules\Mon\Entities\Product;
 use Modules\Shop\Http\Requests\Product\CreateProductRequest;
 use Modules\Shop\Repositories\PcategoryRepository;
 use Modules\Shop\Repositories\ProblemRepository;
+use Modules\Shop\Transformers\AttributeTransformer;
 use Modules\Shop\Transformers\ProductTransformer;
 use Modules\Shop\Http\Requests\Product\UpdateProductRequest;
 use Modules\Shop\Repositories\ProductRepository;
@@ -98,11 +100,21 @@ class ProductController extends ApiController
 	{
 		$categoriesTreeData =  $this->pcategoryRepository->serverPagingForTree($request);
 		$problemList =  $this->problemRepo->getList($request);
+		$listAttribute = $this->listAttribute();
 
 		return response()->json([
 
 			'categories_tree' => $categoriesTreeData,
 			'list_problem' => $problemList,
+			'list_attribute' => $listAttribute,
 		]);
+	}
+
+	public function listAttribute() {
+		//TODO
+		$currentUser = Auth::user();
+		$listAttribute = Attribute::query()->where('company_id', $currentUser->company_id)
+			->orWhereNull('company_id')->get();
+		return AttributeTransformer::collection($listAttribute);
 	}
 }

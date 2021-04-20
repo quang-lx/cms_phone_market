@@ -55,7 +55,6 @@ class CreateTableProductOption extends Migration
 		    $table->double('price', 12,2 )->nullable();
 		    $table->double('sale_price', 12,2 )->nullable();
 		    $table->integer('amount')->nullable();
-		    $table->integer('remain_amount')->nullable();
 		    $table->unsignedBigInteger('company_id')->nullable();
 		    $table->unsignedBigInteger('shop_id')->nullable();
 		    $table->softDeletes();
