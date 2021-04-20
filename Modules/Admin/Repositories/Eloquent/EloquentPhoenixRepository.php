@@ -14,6 +14,13 @@ class EloquentPhoenixRepository extends BaseRepository implements PhoenixReposit
         if ($relations) {
             $query = $query->with($relations);
         }
+
+        if ($request->get('district_id') !== null) {
+            $district_id = $request->get('district_id');
+            $query->where(function ($q) use ($district_id) {
+                $q->orWhere('district_id',$district_id);
+            });
+        }
         
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');

@@ -27,8 +27,8 @@ class CreateUserRequest extends FormRequest
 
             'name' => 'required',
             'email' => 'required|unique:users|email',
-            'password' => 'required',
-            'password_confirmation' => 'same:password'
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password'
         ];
 
         if ($userType == User::TYPE_USER) {
@@ -65,8 +65,10 @@ class CreateUserRequest extends FormRequest
             'email.required' => 'Email là bắt buộc',
             'email.email' => 'Email sai định dạng',
             'password.required' => 'Mật khẩu là bắt buộc',
+            'password_confirmation.required' => 'Xác nhận mật khẩu không được để trống',
             'password_confirmation.same' => 'Xác nhận mật khẩu không đúng',
             'password.same' => 'Xác nhận mật khẩu không đúng',
+            'password.min' => 'Mật khẩu tối thiểu 6 ký tự'
         ];
     }
 }

@@ -20,12 +20,12 @@
                             </div>
                             <div class="col-sm-6 text-right">
                                 <div class="row">
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <router-link :to="{name: 'admin.pcategory.create'}">
                                             <el-button type="primary"      class="btn btn-flat">
                                                 {{ $t('pcategory.label.create_pcategory') }}

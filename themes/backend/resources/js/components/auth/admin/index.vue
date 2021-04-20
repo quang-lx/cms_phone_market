@@ -33,12 +33,12 @@
                                             </el-option>
                                         </el-select>
                                     </div>
-                                    <div class="col-7">
+                                    <div class="col-6">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <router-link :to="{name: 'admin.admins.create'}">
                                             <el-button type="primary"   class="btn btn-flat">
                                                 {{ $t('user.label.create_admin') }}

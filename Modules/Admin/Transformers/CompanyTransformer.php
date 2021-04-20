@@ -31,6 +31,9 @@ class CompanyTransformer extends JsonResource
             'deleted_by' => $this->deleted_by,
             'updated_at' => $this->updated_at->format('H:i d/m/Y'),
             'address' => $this->address,
+            'district_id' => $this->district_id,
+            'province_id' => $this->province_id,
+            'phoenix_id' => $this->phoenix_id,
 
             'urls' => [
                 'delete_url' => route('api.company.destroy', $this->id),

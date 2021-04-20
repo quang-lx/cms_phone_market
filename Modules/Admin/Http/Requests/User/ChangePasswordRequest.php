@@ -15,8 +15,8 @@ class ChangePasswordRequest extends FormRequest
     {
         $user = $this->route()->parameter('user');
         $rules = [
-            'password' => 'required',
-            'password_confirmation' => 'same:password'
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password'
         ];
         return $rules;
     }
@@ -36,6 +36,9 @@ class ChangePasswordRequest extends FormRequest
             'password.required' => 'Mật khẩu là bắt buộc',
             'password.confirmed' => 'Xác nhận mật khẩu không đúng',
             'password_confirmation.same' => 'Xác nhận mật khẩu không đúng',
+            'password_confirmation.required' => 'Mật khẩu nhập lại là bắt buộc',
+            'password.min' => 'Mật khẩu tối thiểu 6 ký tự'
+
         ];
     }
 }
