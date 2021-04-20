@@ -461,7 +461,32 @@ Route::middleware('auth:api')->prefix('/banners')->group(function (){
     ]);
 });
 
+Route::middleware('auth:api')->prefix('/attributes')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.attribute.index',
+        'uses' => 'Attribute\AttributeController@index',
+    ]);
+    Route::post('/{attribute}/edit', [
+            'as' => 'api.attribute.update',
+            'uses' => 'Attribute\AttributeController@update',
+        ]);
+   Route::get('/{attribute}', [
+              'as' => 'api.attribute.find',
+              'uses' => 'Attribute\AttributeController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.attribute.store',
+        'uses' => 'Attribute\AttributeController@store',
+    ]);
+
+    Route::delete('/{attribute}', [
+        'as' => 'api.attribute.destroy',
+        'uses' => 'Attribute\AttributeController@destroy',
+    ]);
+});
 // append
+
 
 
 
