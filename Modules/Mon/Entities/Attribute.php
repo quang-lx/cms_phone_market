@@ -22,4 +22,14 @@ class Attribute extends Model
     {
         return $this->hasMany(AttributeValue::class, 'attribute_id');
     }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'company_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'shop_id');
+    }
 }

@@ -8,7 +8,10 @@ class CreateAttributeRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required',
+            'code' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +26,12 @@ class CreateAttributeRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'name.required' => 'Tên không được để trống',
+            'code.required' => 'Code không được để trống'
+
+        ];
+    
     }
 
     public function translationMessages()

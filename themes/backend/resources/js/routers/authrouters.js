@@ -52,6 +52,10 @@ import HomeSettingList from './../components/homesetting/index';
 import BannersList from './../components/banners/index';
 import BannersForm from './../components/banners/form';
 
+import AttributeForm from './../components/attribute/form';
+import AttributeList from './../components/attribute/index';
+
+
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -444,6 +448,30 @@ export default [
         path: '/admin/homesetting',
         name: 'admin.homesetting.index',
         component: HomeSettingList,
+    },
+
+    //
+    {
+        path: '/admin/attribute',
+        name: 'admin.attribute.index',
+        component: AttributeList,
+    },
+    {
+        path: '/admin/attribute/create',
+        name: 'admin.attribute.create',
+        component: AttributeForm,
+        props: {
+            pageTitle: 'attribute.label.update_title',
+        },
+    },
+
+    {
+        path: '/admin/attribute/:attributeId/edit',
+        name: 'admin.attribute.edit',
+        component: AttributeForm,
+        props: {
+            pageTitle: 'attribute.label.update_title',
+        },
     },
  
 ];
