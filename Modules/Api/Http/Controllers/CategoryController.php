@@ -31,5 +31,9 @@ class CategoryController extends ApiController
     	$data = PCategoryTransformer::collection($this->categoryRepo->listSubCat($request, $category_id));
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
+    public function listByServiceType (Request $request) {
+	    $data = PCategoryTransformer::collection($this->categoryRepo->listByServiceType($request));
+	    return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
 
 }

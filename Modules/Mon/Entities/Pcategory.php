@@ -10,6 +10,9 @@ class Pcategory extends Model
 {
     use  MediaRelation, SoftDeletes;
 
+    const TYPE_SERVICE = 'service';
+    const TYPE_PRODUCT = 'product';
+
     protected $table = 'pcategory';
     protected $fillable = [
         'id',

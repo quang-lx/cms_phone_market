@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\ProductRepository;
 use Modules\Api\Repositories\SearchRepository;
+use Modules\Mon\Entities\Pcategory;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Shop;
 
@@ -22,5 +23,8 @@ class EloquentCategoryRepository implements CategoryRepository
 
 	public function listSubCat(Request $request, $catId) {
 		return $this->model->query()->where('parent_id', $catId)->get();
+	}
+	public function listByServiceType(Request $request) {
+		return $this->model->query()->where('type', Pcategory::TYPE_SERVICE)->get();
 	}
 }

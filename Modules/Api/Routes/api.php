@@ -157,5 +157,9 @@ Route::prefix('/category')->group(function () {
 		'as' => 'apife.category.sub',
 		'uses' => 'CategoryController@listSubCat',
 	]);
+	Route::get('/services', [
+		'as' => 'apife.category.services',
+		'uses' => 'CategoryController@listByServiceType',
+	]);
 
 });

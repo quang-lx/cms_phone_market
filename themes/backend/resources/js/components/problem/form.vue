@@ -143,7 +143,7 @@
       getCateUpdate() {
         let routeUri = "";
         routeUri = route("api.pcategory.index", {
-          type: this.modelForm.type,
+          type: 'service'
         });
         axios.get(routeUri).then((response) => {
           this.listCategory = response.data.data;
