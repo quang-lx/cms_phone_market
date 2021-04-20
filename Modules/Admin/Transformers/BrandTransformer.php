@@ -13,12 +13,7 @@ class BrandTransformer extends JsonResource
     public function toArray($request)
     {
         $category=[];
-        $category_id=[];
-        $brand_pcategory = $this->BrandPcategory;
-        foreach ($brand_pcategory as $key => $value) {
-           array_push($category,['id'=>$value->Pcategory->id,'name'=>$value->Pcategory->name]);
-           array_push($category_id,$value->Pcategory->id);
-        }
+        $category_id=$this->BrandPcategory->pluck('pcategory_id')->toArray();
         $data = [
             'id' => $this->id,
             'name' => $this->name,
