@@ -232,7 +232,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         ); 
+        $this->app->bind(
+            'Modules\Admin\Repositories\AttributeRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentAttributeRepository(new \Modules\Mon\Entities\Attribute());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

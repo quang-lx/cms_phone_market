@@ -424,7 +424,29 @@ Route::group(['prefix' => '/banners'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/attribute'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.attribute.index',
+        'uses' => 'Attribute\AttributeController@index',
+        'middleware' => 'permission:admin.attribute.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.attribute.create',
+        'uses' => 'Attribute\AttributeController@create',
+        'middleware' => 'permission:admin.attribute.create'
+    ]);
+
+    Route::get('{attribute}/edit', [
+        'as' => 'admin.attribute.edit',
+        'uses' => 'Attribute\AttributeController@edit',
+        'middleware' => 'permission:admin.attribute.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
