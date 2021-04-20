@@ -35,7 +35,6 @@ class CreateTableProductOption extends Migration
 		    $table->timestamps();
 		    $table->index('company_id');
 		    $table->index('shop_id');
-		    $table->index('name');
 	    });
 	    Schema::create('product_attributes', function (Blueprint $table) {
 		    $table->id();
