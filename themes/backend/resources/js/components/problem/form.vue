@@ -58,6 +58,33 @@
                                                         ></div>
                                                     </el-form-item>
                                                 </div>
+                                                <div class="col-md-10">
+                                                    <el-form-item
+                                                        :label="$t('brand.label.category')"
+                                                        :class="{
+                              'el-form-item is-error': form.errors.has('category_id'),
+                            }"
+                                                    >
+                                                        <el-select
+                                                            v-model="modelForm.category_id"
+                                                            multiple
+                                                            placeholder="Select"
+                                                        >
+                                                            <el-option
+                                                                v-for="item in listCategory"
+                                                                :key="item.id"
+                                                                :label="item.name"
+                                                                :value="item.id"
+                                                            >
+                                                            </el-option>
+                                                        </el-select>
+                                                        <div
+                                                            class="el-form-item__error"
+                                                            v-if="form.errors.has('category_id')"
+                                                            v-text="form.errors.first('category_id')"
+                                                        ></div>
+                                                    </el-form-item>
+                                                </div>
 
                                             </div>
                                         </div>
@@ -106,12 +133,22 @@
         options: [],
         modelForm: {
           title: "",
-
+          category_id: []
         },
+        listCategory: []
 
       };
     },
     methods: {
+      getCateUpdate() {
+        let routeUri = "";
+        routeUri = route("api.pcategory.index", {
+          type: this.modelForm.type,
+        });
+        axios.get(routeUri).then((response) => {
+          this.listCategory = response.data.data;
+        });
+      },
       onSubmit() {
         this.form = new Form(_.merge(this.modelForm, {}));
         this.loading = true;
@@ -178,6 +215,7 @@
     },
     mounted() {
       this.fetchData();
+      this.getCateUpdate();
     },
 
     computed: {},

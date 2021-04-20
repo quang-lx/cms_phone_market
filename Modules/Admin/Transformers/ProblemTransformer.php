@@ -15,7 +15,7 @@ class ProblemTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'title' => $this->title,
-
+	        'category_id' => $this->problemPcategory()->get()->pluck('pcategory_id')->toArray(),
 
              'urls' => [
                 'delete_url' => route('api.problem.destroy', $this->id),
