@@ -15,7 +15,8 @@ class CreateTableProductOption extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
+            $table->string('code', 50);
+            $table->string('name', 512);
 	        $table->unsignedBigInteger('company_id')->nullable();
 	        $table->unsignedBigInteger('shop_id')->nullable();
             $table->softDeletes();
