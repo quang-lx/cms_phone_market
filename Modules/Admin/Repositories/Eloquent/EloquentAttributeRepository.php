@@ -12,7 +12,7 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
 
         $model =  $this->model->create($data);
         foreach ($data['list_attribute_data_post'] as $list_name) {
-            $model->attributeValue()->create(["name" => $list_name]);
+            $model->attributeValues()->create(["name" => $list_name]);
         }
 
     }
