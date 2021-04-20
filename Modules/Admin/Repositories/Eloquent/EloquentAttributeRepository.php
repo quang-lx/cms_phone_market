@@ -7,4 +7,13 @@ use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
 class EloquentAttributeRepository extends BaseRepository implements AttributeRepository
 {
+    public function create($data)
+    {
+
+        $model =  $this->model->create($data);
+        foreach ($data['list_attribute_data_post'] as $list_name) {
+            $model->attributeValue()->create(["name" => $list_name]);
+        }
+
+    }
 }

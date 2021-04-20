@@ -14,8 +14,10 @@ class AttributeTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
-
-
+            'code' => $this->id,
+            'name' => $this->id,
+            'company_id' => $this->company_id,
+            'shop_id' => $this->shop_id,
              'urls' => [
                 'delete_url' => route('api.attribute.destroy', $this->id),
             ],
