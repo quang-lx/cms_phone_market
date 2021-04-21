@@ -40,10 +40,14 @@
                     <div class="col-md-12">
                       <el-form-item label="Loại mã">
                         <el-radio-group v-model="modelForm.type">
-                          <el-radio v-for="item in list_type"
+                          <el-radio
+                            v-for="item in list_type"
                             :key="item.value"
                             :value="item.value"
-                            :label="item.value">{{ item.label }}</el-radio>
+                            :label="item.value"
+                            @change="changeTypeVoucher()"
+                            >{{ item.label }}</el-radio
+                          >
                         </el-radio-group>
                       </el-form-item>
                     </div>
@@ -91,40 +95,55 @@
                       <el-form-item label="Thời gian sử dụng mã">
                         <el-col :span="11">
                           <el-date-picker
-                            type="date"
+                            type="datetime"
+                            value-format="yyyy-MM-dd HH:mm:ss"
                             placeholder="Thời gian bắt đầu hiệu lực"
                             v-model="modelForm.actived_at"
                             style="width: 100%"
+                            :class="{'el-form-item is-error': form.errors.has('code'),}"
                           ></el-date-picker>
                         </el-col>
                         <el-col class="line text-center" :span="2">-</el-col>
                         <el-col :span="11">
                           <el-date-picker
-                            type="date"
+                            type="datetime"
+                            value-format="yyyy-MM-dd HH:mm:ss"
                             placeholder="Thời gian kết thúc hiệu lực"
                             v-model="modelForm.expired_at"
                             style="width: 100%"
+                            :class="{'el-form-item is-error': form.errors.has('code'),}"
                           ></el-date-picker>
                         </el-col>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('actived_at')"
+                          v-text="form.errors.first('actived_at')"
+                        ></div>
+
+                        <div
+                          class="el-form-item__error"
+                          v-else-if="form.errors.has('expired_at')"
+                          v-text="form.errors.first('expired_at')"
+                        ></div>
+                      
                       </el-form-item>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 check-discount-product hide">
                       <el-form-item
                         :label="$t('voucher.label.products')"
                         :class="{
-                          'el-form-item is-error': form.errors.has(
-                            'products'
-                          ),
+                          'el-form-item is-error': form.errors.has('products'),
                         }"
                       >
-                        <el-input
+                        <el-autocomplete
                           prefix-icon="el-icon-search"
-                          @keyup.native="performSearch"
+                          v-model="modelForm.product_key"
+                          :fetch-suggestions="onSearchProduct"
                           placeholder="Tìm sản phẩm"
-                          v-model="searchQuery"
-                        >
-                        </el-input>
+                          @select="handleSelect"
+                          clearable
+                        ></el-autocomplete>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('products')"
@@ -132,6 +151,8 @@
                         ></div>
                       </el-form-item>
                     </div>
+
+                    
                   </div>
                 </div>
 
@@ -140,10 +161,13 @@
                     <div class="row mb-20">
                       <el-form-item label="Loại giảm giá">
                         <el-radio-group v-model="modelForm.discount_type">
-                          <el-radio v-for="item in list_discount_type"
+                          <el-radio
+                            v-for="item in list_discount_type"
                             :key="item.value"
                             :value="item.value"
-                            :label="item.value">{{ item.label }}</el-radio>
+                            :label="item.value"
+                            >{{ item.label }}</el-radio
+                          >
                         </el-radio-group>
                       </el-form-item>
                     </div>
@@ -154,10 +178,14 @@
                       <el-form-item
                         :label="$t('voucher.label.discount_amount')"
                         :class="{
-                          'el-form-item is-error': form.errors.has('discount_amount'),
+                          'el-form-item is-error': form.errors.has(
+                            'discount_amount'
+                          ),
                         }"
                       >
-                        <el-input v-model="modelForm.discount_amount"></el-input>
+                        <el-input
+                          v-model="modelForm.discount_amount"
+                        ></el-input>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('discount_amount')"
@@ -170,10 +198,14 @@
                       <el-form-item
                         :label="$t('voucher.label.require_min_amount')"
                         :class="{
-                          'el-form-item is-error': form.errors.has('require_min_amount'),
+                          'el-form-item is-error': form.errors.has(
+                            'require_min_amount'
+                          ),
                         }"
                       >
-                        <el-input v-model="modelForm.require_min_amount"></el-input>
+                        <el-input
+                          v-model="modelForm.require_min_amount"
+                        ></el-input>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('require_min_amount')"
@@ -200,6 +232,74 @@
                   </div>
                 </div>
                 <div class="clear-both"></div>
+              </div>
+
+              <div class="row check-discount-product hide">
+                <!-- Danh sách product được giảm giá -->
+                    <div class="col-md-12">
+                      <el-table
+                        :data="modelForm.products"
+                        stripe
+                        style="width: 100%"
+                        ref="dataTable"
+                        v-loading.body="tableIsLoading">
+                          <el-table-column prop="id" :label="$t('product.label.id')" width="75">
+                          </el-table-column>
+
+                          <el-table-column prop=""  :label="$t('product.label.image')" >
+                              <template slot-scope="scope">
+                                  <img :src="scope.row.thumbnail.path_string" v-if="scope.row.thumbnail"
+                                        width="100" height="100" style="object-fit:contain"/>
+                              </template>
+                          </el-table-column>
+
+                          <el-table-column prop="name" :label="$t('product.label.name')">
+
+                          </el-table-column>
+
+                          <el-table-column prop="" :label="$t('product.label.amount')">
+                              <template slot-scope="scope">
+                                  {{ formatNumber(scope.row.amount)}}
+                              </template>
+                          </el-table-column>
+
+                          <el-table-column prop="" :label="$t('product.label.category_id')">
+                              <template slot-scope="scope">
+                                  <span
+                                          v-for="(item, index) in scope.row.category_name"
+                                          :key="index"
+                                  >
+                                  <span v-if="scope.row.category_name.length-1==index" class="dont-break-out">{{item}}</span>
+                                  <span v-else class="dont-break-out">{{item}},&nbsp</span>
+                                  </span>
+                              </template>
+                          </el-table-column>
+
+                          <el-table-column prop="" :label="$t('product.label.price')">
+                              <template slot-scope="scope">
+                                  {{ formatNumber(scope.row.price)}}
+                              </template>
+                          </el-table-column>
+
+                          <el-table-column prop="status" :label="$t('product.list.status')">
+                              <template slot-scope="scope">
+                                  <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
+                              </template>
+                          </el-table-column>
+
+                        
+
+                          <el-table-column prop="actions" width="130">
+                              <template slot-scope="scope">
+                                <button type="button" class="el-button el-button--danger el-button--mini" @click="deleteProductVoucher(scope.row)">
+                                  <span><i class="fas fa-trash"></i></span>
+                                </button>
+                                
+                              </template>
+                          </el-table-column>
+                      </el-table>
+                    </div>
+                    <!-- End table -->
               </div>
             </div>
           </div>
@@ -242,7 +342,6 @@ export default {
   },
   data() {
     return {
-      medias_multi: {},
       form: new Form(),
       loading: false,
       modelForm: {
@@ -250,12 +349,13 @@ export default {
         code: "",
         type: 1,
         discount_type: 1,
-        actived_at: new Date,
-        expired_at: new Date,
+        actived_at: new Date("Y-m-d H:i:s"),
+        expired_at: new Date("Y-m-d H:i:s"),
         products: [],
-        discount_amount: '',
-        require_min_amount: '',
-        total: '',
+        discount_amount: "",
+        require_min_amount: "",
+        total: "",
+        product_key: "",
       },
       locales: window.MonCMS.locales,
       list_discount_type: [
@@ -279,7 +379,8 @@ export default {
           label: "Giảm giá sản phẩm",
         },
       ],
-   
+
+      productSearchResult: [],
     };
   },
   methods: {
@@ -338,14 +439,59 @@ export default {
       }
       return route("api.voucher.store");
     },
+    fetchProduct(queryString) {
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        search: queryString,
+        source: 'voucher',
+      
+      };
+
+      axios
+        .get(route("api.product.index", _.merge(properties, {})))
+        .then((response) => {
+          this.productSearchResult = response.data.data;
+        });
+    },
+    onSearchProduct(queryString, cb) {
+      this.fetchProduct(queryString);
+      cb(this.productSearchResult);
+    },
+    formatNumber(number) {
+      return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    },
+    handleSelect(item) {
+      //add thêm vào biến products lưu danh sách các product đc giảm giá
+      this.modelForm.products.push(item);
+    },
+    deleteProductVoucher (item){
+      var removeByAttr = function(arr, attr, value){
+        var i = arr.length;
+        while(i--){
+          if( arr[i] 
+              && arr[i].hasOwnProperty(attr) 
+              && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+              arr.splice(i,1);
+          }
+        }
+        return arr;
+      }
+      removeByAttr(this.modelForm.products, 'id', item.id);
+    },
+
+    changeTypeVoucher (){
+      // if (this.modelForm.type == 2){ //Giảm giá theo product
+        $('.check-discount-product').toggleClass('hide').toggleClass("show");
+      // }
+    }
   },
   mounted() {
     if (this.$route.params.voucherId !== undefined) {
       this.fetchData();
     }
   },
-  computed: {
-  },
+  computed: {},
 };
 </script>
 
@@ -358,5 +504,14 @@ export default {
 }
 .clear-both {
   clear: both;
+}
+.el-autocomplete {
+    width: 100%;
+}
+.hide {
+  display: none;
+}
+.show {
+  display: block;
 }
 </style>

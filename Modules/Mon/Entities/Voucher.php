@@ -10,6 +10,9 @@ class Voucher extends Model
 {
     use  SoftDeletes, Userstamps;
 
+    const TYPE_DISCOUNT_ALL = 1;
+    const TYPE_DISCOUNT_PRODUCT = 2;
+
     protected $table = 'vouchers';
     protected $fillable = [
         'id',
@@ -41,6 +44,12 @@ class Voucher extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'voucher_product');
+
     }
 
 

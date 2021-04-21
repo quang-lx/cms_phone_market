@@ -217,7 +217,7 @@ Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
             'as' => 'api.voucher.update',
             'uses' => 'Voucher\VoucherController@update',
         ]);
-   Route::get('/{voucher}', [
+    Route::get('/{voucher}', [
               'as' => 'api.voucher.find',
               'uses' => 'Voucher\VoucherController@find',
           ]);
@@ -230,6 +230,7 @@ Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
         'as' => 'api.voucher.destroy',
         'uses' => 'Voucher\VoucherController@destroy',
     ]);
+    
 });
 // append
 
