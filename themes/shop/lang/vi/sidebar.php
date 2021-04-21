@@ -37,6 +37,7 @@ return [
     'user management' => 'Quản lý tài khoản',
     'product management' => 'Quản lý sản phẩm',
     'information' => 'Thông tin cửa hàng',
+    'voucher management' => 'Quản lý Voucher',
 
 
 

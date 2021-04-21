@@ -199,7 +199,15 @@ class ShopServiceProvider extends ServiceProvider
         );
  
             
+        $this->app->bind(
+            'Modules\Shop\Repositories\VoucherRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentVoucherRepository(new \Modules\Mon\Entities\Voucher());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

@@ -19,6 +19,9 @@ import ProductForm from './../components/product/form';
 import CompanyList from './../components/company/index';
 import CompanyForm from './../components/company/form';
 
+import VoucherList from './../components/voucher/index';
+import VoucherForm from './../components/voucher/form';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -132,6 +135,30 @@ export default [
         component: CompanyForm,
         props: {
             pageTitle: 'company.label.update_title',
+        },
+    },
+
+    // voucher
+    {
+        path: '/shop-admin/voucher',
+        name: 'shop.voucher.index',
+        component: VoucherList,
+    },
+    {
+        path: '/shop-admin/voucher/create',
+        name: 'shop.voucher.create',
+        component: VoucherForm,
+        props: {
+            pageTitle: 'voucher.label.create_voucher',
+        },
+    },
+
+    {
+        path: '/shop-admin/voucher/:voucherId/edit',
+        name: 'shop.voucher.edit',
+        component: VoucherForm,
+        props: {
+            pageTitle: 'voucher.label.update_voucher',
         },
     },
 

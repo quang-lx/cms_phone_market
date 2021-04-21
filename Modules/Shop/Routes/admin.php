@@ -124,7 +124,29 @@ Route::group(['prefix' => '/company'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/voucher'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.voucher.index',
+        'uses' => 'Voucher\VoucherController@index',
+        'middleware' => 'permission:shop.voucher.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.voucher.create',
+        'uses' => 'Voucher\VoucherController@create',
+        'middleware' => 'permission:shop.voucher.create'
+    ]);
+
+    Route::get('{voucher}/edit', [
+        'as' => 'shop.voucher.edit',
+        'uses' => 'Voucher\VoucherController@edit',
+        'middleware' => 'permission:shop.voucher.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
