@@ -19,6 +19,9 @@ import ProductForm from './../components/product/form';
 import CompanyList from './../components/company/index';
 import CompanyForm from './../components/company/form';
 
+import AttributeForm from './../components/attribute/form';
+import AttributeList from './../components/attribute/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -132,6 +135,29 @@ export default [
         component: CompanyForm,
         props: {
             pageTitle: 'company.label.update_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/attribute',
+        name: 'shop.attribute.index',
+        component: AttributeList,
+    },
+    {
+        path: '/shop-admin/attribute/create',
+        name: 'shop.attribute.create',
+        component: AttributeForm,
+        props: {
+            pageTitle: 'attribute.label.update_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/attribute/:attributeId/edit',
+        name: 'shop.attribute.edit',
+        component: AttributeForm,
+        props: {
+            pageTitle: 'attribute.label.update_title',
         },
     },
 

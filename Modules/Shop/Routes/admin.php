@@ -124,6 +124,27 @@ Route::group(['prefix' => '/company'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/attribute'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.attribute.index',
+        'uses' => 'Attribute\AttributeController@index',
+        'middleware' => 'permission:shop.attribute.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.attribute.create',
+        'uses' => 'Attribute\AttributeController@create',
+        'middleware' => 'permission:shop.attribute.create'
+    ]);
+
+    Route::get('{attribute}/edit', [
+        'as' => 'shop.attribute.edit',
+        'uses' => 'Attribute\AttributeController@edit',
+        'middleware' => 'permission:shop.attribute.edit'
+    ]);
+
+
+});
 // append
 
 
