@@ -8,7 +8,9 @@ use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\ProductRepository;
+use Modules\Api\Transformers\BrandTransformer;
 use Modules\Api\Transformers\PCategoryTransformer;
+use Modules\Api\Transformers\ProblemTransformer;
 use Modules\Api\Transformers\ProductTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Http\Controllers\ApiController;
@@ -36,4 +38,12 @@ class CategoryController extends ApiController
 	    return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
+    public function getProblemBrandByCat(Request $request, $category_id) {
+    	$problems = $this->categoryRepo->listProblemByCat($request, $category_id);
+    	$brands = $this->categoryRepo->listBrandByCat($request, $category_id);
+	    return $this->respond([
+	    	'brands' => BrandTransformer::collection($brands),
+	    	'problems' => ProblemTransformer::collection($problems),
+	    ], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
 }

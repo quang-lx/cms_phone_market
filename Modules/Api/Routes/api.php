@@ -153,6 +153,10 @@ Route::prefix('/product')->group(function () {
 });
 
 Route::prefix('/category')->group(function () {
+	Route::get('/{category_id}/problem-brand', [
+		'as' => 'apife.category.problemBrand',
+		'uses' => 'CategoryController@getProblemBrandByCat',
+	]);
 	Route::get('/{category_id}/sub', [
 		'as' => 'apife.category.sub',
 		'uses' => 'CategoryController@listSubCat',
