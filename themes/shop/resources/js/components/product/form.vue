@@ -160,7 +160,7 @@
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
                                                                     <el-input-number style="width: 100%"
-                                                                                     v-model="itemValue.salse_price"
+                                                                                     v-model="itemValue.sale_price"
                                                                                      :min="0" :max="100000000"
                                                                                      placeholder="Giá khuyến mại"></el-input-number>
                                                                 </div>
@@ -442,6 +442,7 @@
         medias_multi: {},
         form: new Form(),
         loading: false,
+        list_selected_values: [],
         modelForm: {
           name: '',
           description: '',
@@ -595,7 +596,14 @@
       changeAttribute() {
         const itemInRoot = _.findIndex(this.list_attribute, {id: this.modelForm.attribute_id})
         if (itemInRoot !== -1) {
+          if (this.modelForm.attribute_selected) {
+            this.list_selected_values[this.modelForm.attribute_selected.id] = _.cloneDeep(this.modelForm.attribute_selected);
+          }
           this.modelForm.attribute_selected = _.cloneDeep(this.list_attribute[itemInRoot]);
+          // gan lai cac gia tri da chon
+          if (this.list_selected_values[this.modelForm.attribute_selected.id]) {
+            this.modelForm.attribute_selected.values = _.cloneDeep(this.list_selected_values[this.modelForm.attribute_selected.id].values);
+          }
         }
       },
 
