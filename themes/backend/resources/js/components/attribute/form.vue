@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-md-6">
                       <el-button
-                        v-if="is_new == true"
+                        v-if="is_new_value == true"
                         type="primary"
                         @click="createAttr('modelForm')"
                         class="btn btn-flat"
@@ -130,7 +130,7 @@
                         </el-button>
                         <el-button
                           type="primary"
-                          @click="onCancel"
+                          @click="onCancelValue"
                           class="btn btn-flat"
                         >
                           Hủy
@@ -145,7 +145,7 @@
                     <div class="col-12">
                       <div class="sc-table">
                         <el-table
-                          :data="list_attribute"
+                          :data="modelForm.list_attribute_value"
                           stripe
                           style="width: 100%"
                           ref="dataTable"
@@ -160,20 +160,20 @@
                             </template>
                           </el-table-column>
 
-                          <el-table-column prop="attr_value" label="Giá trị">
+                          <el-table-column prop="name" label="Giá trị">
                           </el-table-column>
 
                           <el-table-column width="240">
                             <template slot-scope="scope">
                               <el-button
                                 type="primary"
-                                @click="editAttr(scope.$index, list_attribute)"
+                                @click="editAttr(scope.$index, modelForm.list_attribute_value)"
                                 icon="el-icon-edit"
                               ></el-button>
                               <el-button
                                 type="primary"
                                 @click="
-                                  deleteAttr(scope.$index, list_attribute)
+                                  deleteAttr(scope.$index, modelForm.list_attribute_value)
                                 "
                                 icon="el-icon-delete"
                               ></el-button>
@@ -196,6 +196,9 @@
                   >
                     {{ $t("mon.button.save") }}
                   </el-button>
+                  <el-button class="btn btn-flat" size="small" @click="onCancel()"
+                  >{{ $t("mon.button.cancel") }}
+                </el-button>
                 </div>
               </div>
             </div>
@@ -221,25 +224,18 @@ export default {
     return {
       form: new Form(),
       loading: false,
-      is_new: true,
-      list_attribute: [],
+      is_new_value: true,
       key_update: "",
       
       modelForm: {
         name: "",
         code: "",
         attr_value: "",
-        list_attribute_data_post: [],
+        list_attribute_value: [],
       },
        rules: {
-          name: [
-            { required: true, message: 'Tên không được để trống', trigger: 'blur' },
-          ],
-          code: [
-            { required: true, message: 'Code không được để trống', trigger: 'blur' }
-          ],
           attr_value: [
-            { required: true, message: 'Giá trị không được để trống', trigger: 'blur' }
+            { required: true, message: 'Giá trị không được để trống',trigger: 'submit' }
           ]
         }
     };
@@ -247,7 +243,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.formatData();
       this.form = new Form(_.merge(this.modelForm, {}));
       this.loading = true;
 
@@ -259,7 +254,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          // this.$router.push({ name: "admin.attribute.index" });
+          this.$router.push({ name: "admin.attribute.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -270,10 +265,12 @@ export default {
         });
     },
 
-    createAttr(formName) {
+     createAttr(formName) {
       this.$refs[formName].validate((valid) => {
           if (valid) {
-             this.list_attribute.push({ ...this.modelForm });
+            let attr_value={};
+            attr_value.name= this.modelForm.attr_value
+            this.modelForm.list_attribute_value.push(attr_value);
           } else {
             return false;
           }
@@ -281,8 +278,8 @@ export default {
      
     },
     editAttr(index, rows) {
-      this.modelForm = { ...rows[index] };
-      this.is_new = false;
+      this.modelForm.attr_value = rows[index].name;
+      this.is_new_value = false;
       this.key_update = index;
     },
 
@@ -291,21 +288,25 @@ export default {
     },
 
     updateAttr() {
-      Vue.set(this.list_attribute, this.key_update, { ...this.modelForm });
-      this.is_new = true;
+      this.modelForm.list_attribute_value[this.key_update].name = this.modelForm.attr_value
+      this.is_new_value = true;
     },
 
+    onCancelValue() {
+      this.is_new_value = true;
+    },
+
+    
     onCancel() {
-      this.is_new = true;
-    },
-
-    formatData() {
-      this.modelForm.list_attribute_data_post = [];
-      for (let index = 0; index < this.list_attribute.length; index++) {
-        const element = this.list_attribute[index];
-
-        this.modelForm.list_attribute_data_post.push(element.attr_value);
-      }
+      this.$confirm(this.$t("mon.cancel.Are you sure to cancel?"), {
+        confirmButtonText: this.$t("mon.cancel.Yes"),
+        cancelButtonText: this.$t("mon.cancel.No"),
+        type: "warning",
+      })
+        .then(() => {
+          this.$router.push({ name: "admin.attribute.index" });
+        })
+        .catch(() => {});
     },
 
     getRoute() {
@@ -316,8 +317,26 @@ export default {
       }
       return route("api.attribute.store");
     },
+    fetchData() {
+      let routeUri = "";
+      if (this.$route.params.attributeId !== undefined) {
+        this.loading = true;
+        routeUri = route("api.attribute.find", {
+          attribute: this.$route.params.attributeId,
+        });
+        axios.get(routeUri).then((response) => {
+          this.loading = false;
+          this.modelForm = response.data.data;
+          this.modelForm.is_new = false;
+        });
+      } else {
+        this.modelForm.is_new = true;
+      }
+    },
   },
-  mounted() {},
+  mounted() {
+    this.fetchData();
+  },
   computed: {},
 };
 </script>

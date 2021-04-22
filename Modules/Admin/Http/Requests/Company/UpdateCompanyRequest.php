@@ -10,7 +10,6 @@ class UpdateCompanyRequest extends FormRequest
     {
         $company = $this->route()->parameter('company');
         $rules = [
-            'username' => "required|unique:users,username,{$company->id}",
             'name' => 'required',
             'phone' => 'required',
             'email' => "required|unique:company,email,{$company->id}|email",
@@ -36,8 +35,6 @@ class UpdateCompanyRequest extends FormRequest
     {
         return [
             'phone.required' => 'Số điện thoại là bắt buộc',
-            'username.required' => 'Tài khoản là bắt buộc',
-            'username.unique' => 'Tài khoản đã tồn tại trên hệ thống',
             'name.required' => 'Tên cửa hàng là bắt buộc',
             'email.unique' => 'Email đã được sử dụng',
             'email.required' => 'Email là bắt buộc',

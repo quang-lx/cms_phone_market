@@ -211,24 +211,24 @@ Route::middleware('auth:api')->prefix('/brands')->group(function (){
 Route::middleware('auth:api')->prefix('/attributes')->group(function (){
 
     Route::get('/', [
-        'as' => 'api.attribute.index',
+        'as' => 'apishop.attribute.index',
         'uses' => 'Attribute\AttributeController@index',
     ]);
     Route::post('/{attribute}/edit', [
-            'as' => 'api.attribute.update',
+            'as' => 'apishop.attribute.update',
             'uses' => 'Attribute\AttributeController@update',
         ]);
    Route::get('/{attribute}', [
-              'as' => 'api.attribute.find',
+              'as' => 'apishop.attribute.find',
               'uses' => 'Attribute\AttributeController@find',
           ]);
     Route::post('/', [
-        'as' => 'api.attribute.store',
+        'as' => 'apishop.attribute.store',
         'uses' => 'Attribute\AttributeController@store',
     ]);
 
     Route::delete('/{attribute}', [
-        'as' => 'api.attribute.destroy',
+        'as' => 'apishop.attribute.destroy',
         'uses' => 'Attribute\AttributeController@destroy',
     ]);
 });

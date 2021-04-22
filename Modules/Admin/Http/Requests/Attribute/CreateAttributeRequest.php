@@ -11,6 +11,8 @@ class CreateAttributeRequest extends FormRequest
         return [
             'name' => 'required',
             'code' => 'required|unique:attributes',
+            'list_attribute_value' => 'required|array'
+
         ];
     }
 
@@ -30,6 +32,8 @@ class CreateAttributeRequest extends FormRequest
             'name.required' => 'Tên không được để trống',
             'code.required' => 'Code không được để trống',
             'code.unique' => 'Code đã tồn tại',
+            'list_attribute_value.required' => 'Thuộc tính không được để trống',
+
 
         ];
     
