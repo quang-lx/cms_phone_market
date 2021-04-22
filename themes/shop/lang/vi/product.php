@@ -23,7 +23,7 @@ return [
         'amount' => 'Số lượng',
         'price' => 'Giá bán',
         'category_id' => 'Danh mục',
- 'problem_id' => 'Vấn đề sửa chữa',
+        'problem_id' => 'Vấn đề sửa chữa',
         'company_id' => 'Cửa hàng',
         'image' => 'Ảnh',
         'attribute extend' => 'Thuộc tính mở rộng',

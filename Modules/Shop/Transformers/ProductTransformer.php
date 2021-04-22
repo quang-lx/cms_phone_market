@@ -34,6 +34,7 @@ class ProductTransformer extends JsonResource
             'updated_at' => $this->updated_at->format('d-m-Y'),
             'amount' => $this->amount,
             'price' => $this->price,
+            'category_id' => optional($this->pcategories)->pluck('id'),
             'category_name' => optional($this->pcategories)->pluck('name'),
             'thumbnail' => $this->thumbnail,
 
@@ -41,7 +42,7 @@ class ProductTransformer extends JsonResource
             'problem_id' => $this->problems->pluck('id'),
             'attribute_id' => $attribute,
             'attribute_selected' => $attribute? $this->getAttributeValues($this->attributes->first(), $this->productAttributeValues): null,
-
+            'value' => $this->value, //trả về thêm value dùng cho Autocomplete search tạo mới voucher
              'urls' => [
                 'delete_url' => route('api.product.destroy', $this->id),
             ],
