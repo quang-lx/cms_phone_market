@@ -160,7 +160,7 @@
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
                                                                     <el-input-number style="width: 100%"
-                                                                                     v-model="itemValue.salse_price"
+                                                                                     v-model="itemValue.sale_price"
                                                                                      :min="0" :max="100000000"
                                                                                      placeholder="Giá khuyến mại"></el-input-number>
                                                                 </div>

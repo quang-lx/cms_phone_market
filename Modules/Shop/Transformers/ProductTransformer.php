@@ -4,6 +4,7 @@ namespace Modules\Shop\Transformers;
 
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Mon\Entities\AttributeValue;
 
 
 class ProductTransformer extends JsonResource
@@ -12,6 +13,7 @@ class ProductTransformer extends JsonResource
 
     public function toArray($request)
     {
+    	$attribute = $this->getAttributeId($this->attributes->first());
         $data = [
             'id' => $this->id,
             'name' => $this->name,
@@ -32,12 +34,13 @@ class ProductTransformer extends JsonResource
             'updated_at' => $this->updated_at->format('d-m-Y'),
             'amount' => $this->amount,
             'price' => $this->price,
-            'category_id' => optional($this->pcategories)->pluck('id'),
             'category_name' => optional($this->pcategories)->pluck('name'),
             'thumbnail' => $this->thumbnail,
 
 			'category_id' => $this->pcategories->pluck('id'),
             'problem_id' => $this->problems->pluck('id'),
+            'attribute_id' => $attribute,
+            'attribute_selected' => $attribute? $this->getAttributeValues($this->attributes->first(), $this->productAttributeValues): null,
 
              'urls' => [
                 'delete_url' => route('api.product.destroy', $this->id),
@@ -48,6 +51,29 @@ class ProductTransformer extends JsonResource
 
         return $data;
     }
+
+    public function getAttributeId($attribute) {
+    	return optional($attribute)->id;
+    }
+	public function getAttributeValues($attribute, $attributeValues) {
+    	$newValues = [];
+		foreach ($attributeValues as $value) {
+			$attributeValue = AttributeValue::query()->find($value->value_id);
+			$value['id']= $value->value_id;
+			if ($attributeValue) {
+				$value['name']= $attributeValue->name;
+				$newValues[] = $value;
+			}
+
+
+
+		}
+		$attibute = new \stdClass();
+		$attibute->id = optional($attribute)->id;
+		$attibute->name = optional($attribute)->name;
+		$attibute->values = $newValues;
+		return $attibute;
+	}
 
 
 }
