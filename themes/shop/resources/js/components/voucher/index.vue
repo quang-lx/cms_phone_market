@@ -5,30 +5,30 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6 d-flex align-items-center">
+                            <div class="col-sm-4 d-flex align-items-center">
                                 <el-breadcrumb separator="/">
                                     <el-breadcrumb-item>
                                         <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
                                     </el-breadcrumb-item>
-                                    <el-breadcrumb-item  >{{ $t('voucher.label.create_voucher') }}
+                                    <el-breadcrumb-item  >{{ $t('voucher.label.list') }}
                                     </el-breadcrumb-item>
 
                                 </el-breadcrumb>
 
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-8">
                                 <div class="row pull-right">
 
                                     <div class="col-6">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
-                                                  placeholder="Tên sản phẩm/SKU"
-                                                  v-model="searchQuery">
+                                                  placeholder="Tìm theo mã giảm giá"
+                                                  v-model="searchQuery" clearable>
                                         </el-input>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-6">
                                         <router-link :to="{name: 'shop.voucher.create'}">
                                             <el-button type="primary" class="btn btn-flat">
-                                                {{ $t('voucher.label.create_voucher') }}
+                                                {{ $t('voucher.label.btn_add_voucher') }}
                                             </el-button>
                                         </router-link>
                                     </div>
@@ -39,58 +39,6 @@
 
                         </div>
 
-                        <div class="row pull-right search-block">
-                            <div class="col-sm-4">
-
-                                <el-select v-model="filter.brand_id" placeholder="Lọc theo thương hiệu"
-                                           @change="onSearchChange()" clearable>
-                                    <el-option
-                                            v-for="item in brandArr"
-                                            :key="item.id"
-                                            :label="item.name"
-                                            :value="item.id">
-                                    </el-option>
-                                </el-select>
-                            </div>
-
-                            <div class="col-sm-4">
-
-                                <el-select v-model="filter.status" placeholder="Lọc theo trạng thái"
-                                           @change="onSearchChange()" clearable>
-                                    <el-option
-                                            v-for="item in listStatus"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </div>
-
-                            <!-- <div class="col-sm-3">
-
-                                <el-select v-model="filter.company_id" placeholder="Lọc theo cửa hàng"
-                                           @change="onSearchChange()" clearable>
-                                    <el-option
-                                            v-for="item in listStatus"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </div> -->
-
-                            <div class="col-sm-4">
-                                <el-select v-model="filter.category_id" placeholder="Lọc theo danh mục"
-                                           @change="onSearchChange()" clearable>
-                                    <el-option
-                                            v-for="item in categoryArr"
-                                            :key="item.id"
-                                            :label="item.name"
-                                            :value="item.id">
-                                    </el-option>
-                                </el-select>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -119,52 +67,43 @@
                                         <el-table-column prop="id" :label="$t('voucher.label.id')" width="75" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop=""  :label="$t('voucher.label.image')" >
+                                        <el-table-column prop="title" :label="$t('voucher.label.title')" sortable="address">
                                             <template slot-scope="scope">
-                                                <img :src="scope.row.thumbnail.path_string" v-if="scope.row.thumbnail"
-                                                     width="100" height="100" style="object-fit:contain"/>
+                                                <span class="dont-break-out">{{scope.row.title}}</span>
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="name" :label="$t('voucher.label.name')" sortable="custom">
-
+                                        <el-table-column prop="code" :label="$t('voucher.label.code')" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop="" :label="$t('voucher.label.amount')" sortable="custom">
+                                        <el-table-column prop="type_name" :label="$t('voucher.label.type_name')" sortable="address">
                                             <template slot-scope="scope">
-                                                {{ formatNumber(scope.row.amount)}}
+                                                <span class="dont-break-out">{{scope.row.type_name}}</span>
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="" :label="$t('voucher.label.category_id')" sortable="custom">
+                                        <el-table-column prop="discount_amount" :label="$t('voucher.label.discount_amount')" sortable="custom">
+                                        </el-table-column>
+
+                                        <el-table-column prop="status_name" :label="$t('voucher.label.status')" sortable="address">
                                             <template slot-scope="scope">
-                                                <span
-                                                        v-for="(item, index) in scope.row.category_name"
-                                                        :key="index"
-                                                >
-                                               <span v-if="scope.row.category_name.length-1==index" class="dont-break-out">{{item}}</span>
-                                               <span v-else class="dont-break-out">{{item}},&nbsp</span>
-                                               </span>
+                                                <span class="dont-break-out">{{scope.row.status_name}}</span>
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="company_name" :label="$t('voucher.label.company_id')" sortable="custom">
+                                        <el-table-column prop="total" :label="$t('voucher.label.total')" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop="" :label="$t('voucher.label.price')" sortable="custom">
+                                        <el-table-column prop="total_used" :label="$t('voucher.label.total_used')" sortable="custom">
+                                        </el-table-column>
+
+                                        <el-table-column prop="created_name" :label="$t('voucher.label.updated_by')" sortable="custom">
+                                        </el-table-column>
+
+                                        <el-table-column prop="updated_at" :label="$t('voucher.label.updated_at')" sortable="address">
                                             <template slot-scope="scope">
-                                                {{ formatNumber(scope.row.price)}}
+                                                <span class="dont-break-out">{{scope.row.updated_at}}</span>
                                             </template>
-                                        </el-table-column>
-
-                                        <el-table-column prop="status" :label="$t('voucher.list.status')"
-                                                         sortable="custom">
-                                            <template slot-scope="scope">
-                                                <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
-                                            </template>
-                                        </el-table-column>
-
-                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom">
                                         </el-table-column>
 
                                         <el-table-column prop="actions" width="130">
@@ -214,32 +153,10 @@
                 currentLocale: window.MonCMS.currentLocale || 'en',
 
                 filter: {
-                    category_id:'',
-                    status: '',
-                    brand_id: '',
-                    company_id: '',
                     locale: window.MonCMS.currentLocale || 'en'
                 },
                 listLocales: window.MonCMS.locales,
-                brandArr: [],
-                categoryArr: [],
-                listCompany: [
-                    {
-                        value: 1,
-                        label: 'TEST'
-                    }
-                ],
-                listStatus: [
-                    {
-                        value: 1,
-                        label: 'Hoạt động'
-                    },
-                    {
-                        value: 0,
-                        label: 'Đã xóa'
-                    },
-
-                ],
+               
 
             };
         },
@@ -251,9 +168,6 @@
                     order_by: this.order_meta.order_by,
                     order: this.order_meta.order,
                     search: this.searchQuery,
-                    status: this.filter.status,
-                    brand_id: this.filter.brand_id,
-                    category_id: this.filter.category_id,
 
                 };
 
@@ -270,34 +184,6 @@
             formatNumber(number){
                 return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
             },
-            fetchBrand() {
-                const properties = {
-                page: 0,
-                per_page: 1000,
-
-                };
-
-                axios.get(route('apishop.brand.index', _.merge(properties, {})))
-                .then((response) => {
-
-                    this.brandArr = response.data;
-
-                });
-            },
-            fetchCategory() {
-                const properties = {
-                page: 0,
-                per_page: 1000,
-
-                };
-
-                axios.get(route('apishop.pcategory.index', _.merge(properties, {})))
-                .then((response) => {
-
-                    this.categoryArr = response.data;
-
-                });
-            },
 
             onSearchChange() {
                 this.meta.current_page = 0;
@@ -308,8 +194,6 @@
         },
         mounted() {
             this.fetchData();
-            this.fetchBrand();
-            this.fetchCategory();
 
         },
     }
@@ -318,8 +202,4 @@
 </script>
 
 <style scoped>
-    .search-block {
-        margin-top: 10px;
-        padding-right: 33px;
-    }
 </style>

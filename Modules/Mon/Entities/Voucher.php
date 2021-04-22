@@ -49,7 +49,36 @@ class Voucher extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'voucher_product');
+    }
 
+    public function getTypeNameAttribute($value)
+    {
+        $typeName = '';
+        switch ($this->type) {
+            case self::TYPE_DISCOUNT_ALL:
+                $typeName = 'Giảm giá toàn bộ';
+                break;
+            case self::TYPE_DISCOUNT_PRODUCT:
+                $typeName = 'Giảm giá sản phẩm';
+                break;
+        }
+        return $typeName;
+    }
+
+    public function getStatusNameAttribute($value)
+    {
+        $statusName = '';
+        $start = strtotime($this->actived_at);
+        $end = strtotime($this->expired_at);
+        if (time() < $start){
+            $statusName.='Sắp diễn ra: ';
+        } else if (time() <= $end){
+            $statusName.='Đang diễn ra: ';
+        } else {
+            $statusName.='Đã kết thúc: ';
+        }
+        $statusName.= sprintf('%s - %s', date('d/m/Y', $start), date('d/m/Y', $end));
+        return $statusName;
     }
 
 

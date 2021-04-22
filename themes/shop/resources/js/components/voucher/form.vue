@@ -203,6 +203,7 @@
                           ),
                         }"
                       >
+
                         <el-input
                           v-model="modelForm.require_min_amount"
                         ></el-input>
@@ -221,7 +222,11 @@
                           'el-form-item is-error': form.errors.has('total'),
                         }"
                       >
-                        <el-input v-model="modelForm.total"></el-input>
+
+                        <el-input-number 
+                              v-model="modelForm.total" :min="0"
+                              :max="100000000"
+                              placeholder="Tổng số mã"></el-input-number>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('total')"
@@ -419,6 +424,7 @@ export default {
     },
 
     fetchData() {
+
       this.loading = true;
       let locale = this.$route.params.locale ? this.$route.params.locale : "en";
       axios
@@ -428,6 +434,10 @@ export default {
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
+          if (this.modelForm.type == '2'){
+            $('.check-discount-product').removeClass('hide show').addClass("show");
+          }
+          
         });
     },
 
@@ -481,9 +491,7 @@ export default {
     },
 
     changeTypeVoucher (){
-      // if (this.modelForm.type == 2){ //Giảm giá theo product
         $('.check-discount-product').toggleClass('hide').toggleClass("show");
-      // }
     }
   },
   mounted() {

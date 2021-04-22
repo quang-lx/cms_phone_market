@@ -8,9 +8,10 @@ class UpdateVoucherRequest extends FormRequest
 {
     public function rules()
     {
+        $id = $this->route('voucher')->id; // lấy id bài post muốn update
         return [
             'title' => 'required',
-            'code' => 'required',
+            'code' => 'required|unique:vouchers,id,{$id}',
             'discount_amount' => 'required',
             'require_min_amount' => 'required',
             'total' => 'required',
@@ -36,6 +37,7 @@ class UpdateVoucherRequest extends FormRequest
         return [
             'title.required' => 'Tên chương trình là bắt buộc',
             'code.required' => 'Mã giảm giá là bắt buộc',
+            'code.unique' => 'Mã giảm giá không được trùng lặp',
             'discount_amount.required' => 'Mức giảm là bắt buộc',
             'require_min_amount.required' => 'Giá trị đơn hàng tối thiểu là bắt buộc',
             'total.required' => 'Tổng số mã là bắt buộc',
