@@ -11,7 +11,6 @@ class Attribute extends Model
 
     protected $table = 'attributes';
     protected $fillable = [
-        'id',
         'code',
         'name',
         'company_id',

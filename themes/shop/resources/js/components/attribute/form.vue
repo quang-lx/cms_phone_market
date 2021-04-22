@@ -6,9 +6,9 @@
           <div class="col-12">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item>
-                <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
+                <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'admin.attribute.index' }"
+              <el-breadcrumb-item :to="{ name: 'shop.attribute.index' }"
                 >{{ $t("attribute.label.attribute") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-md-6">
                       <el-button
-                        v-if="is_new == true"
+                        v-if="is_new_value == true"
                         type="primary"
                         @click="createAttr('modelForm')"
                         class="btn btn-flat"
@@ -130,7 +130,7 @@
                         </el-button>
                         <el-button
                           type="primary"
-                          @click="onCancel"
+                          @click="onCancelValue"
                           class="btn btn-flat"
                         >
                           Hủy
@@ -160,7 +160,7 @@
                             </template>
                           </el-table-column>
 
-                          <el-table-column prop="attr_value" label="Giá trị">
+                          <el-table-column prop="name" label="Giá trị">
                           </el-table-column>
 
                           <el-table-column width="240">
@@ -196,6 +196,9 @@
                   >
                     {{ $t("mon.button.save") }}
                   </el-button>
+                  <el-button class="btn btn-flat" size="small" @click="onCancel()"
+                  >{{ $t("mon.button.cancel") }}
+                </el-button>
                 </div>
               </div>
             </div>
@@ -221,7 +224,7 @@ export default {
     return {
       form: new Form(),
       loading: false,
-      is_new: true,
+      is_new_value: true,
       list_attribute: [],
       key_update: "",
       
@@ -229,17 +232,11 @@ export default {
         name: "",
         code: "",
         attr_value: "",
-        list_attribute_data_post: [],
+        list_attribute_value: [],
       },
        rules: {
-          name: [
-            { required: true, message: 'Tên không được để trống', trigger: 'blur' },
-          ],
-          code: [
-            { required: true, message: 'Code không được để trống', trigger: 'blur' }
-          ],
           attr_value: [
-            { required: true, message: 'Giá trị không được để trống', trigger: 'blur' }
+            { required: true, message: 'Giá trị không được để trống',trigger: 'submit' }
           ]
         }
     };
@@ -259,7 +256,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          // this.$router.push({ name: "admin.attribute.index" });
+          this.$router.push({ name: "shop.attribute.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -270,10 +267,12 @@ export default {
         });
     },
 
-    createAttr(formName) {
+     createAttr(formName) {
       this.$refs[formName].validate((valid) => {
           if (valid) {
-             this.list_attribute.push({ ...this.modelForm });
+            let attr_value={};
+            attr_value.name= this.modelForm.attr_value
+            this.list_attribute.push(attr_value);
           } else {
             return false;
           }
@@ -282,7 +281,7 @@ export default {
     },
     editAttr(index, rows) {
       this.modelForm = { ...rows[index] };
-      this.is_new = false;
+      this.is_new_value = false;
       this.key_update = index;
     },
 
@@ -292,32 +291,63 @@ export default {
 
     updateAttr() {
       Vue.set(this.list_attribute, this.key_update, { ...this.modelForm });
-      this.is_new = true;
+      this.is_new_value = true;
     },
 
+    onCancelValue() {
+      this.is_new_value = true;
+    },
+
+    
     onCancel() {
-      this.is_new = true;
+      this.$confirm(this.$t("mon.cancel.Are you sure to cancel?"), {
+        confirmButtonText: this.$t("mon.cancel.Yes"),
+        cancelButtonText: this.$t("mon.cancel.No"),
+        type: "warning",
+      })
+        .then(() => {
+          this.$router.push({ name: "shop.attribute.index" });
+        })
+        .catch(() => {});
     },
 
     formatData() {
-      this.modelForm.list_attribute_data_post = [];
+      this.modelForm.list_attribute_value = [];
       for (let index = 0; index < this.list_attribute.length; index++) {
         const element = this.list_attribute[index];
-
-        this.modelForm.list_attribute_data_post.push(element.attr_value);
+        this.modelForm.list_attribute_value.push(element.name);
       }
     },
 
     getRoute() {
       if (this.$route.params.attributeId !== undefined) {
-        return route("api.attribute.update", {
+        return route("apishop.attribute.update", {
           attribute: this.$route.params.attributeId,
         });
       }
-      return route("api.attribute.store");
+      return route("apishop.attribute.store");
+    },
+    fetchData() {
+      let routeUri = "";
+      if (this.$route.params.attributeId !== undefined) {
+        this.loading = true;
+        routeUri = route("apishop.attribute.find", {
+          attribute: this.$route.params.attributeId,
+        });
+        axios.get(routeUri).then((response) => {
+          this.loading = false;
+          this.modelForm = response.data.data;
+          this.list_attribute = response.data.data.list_attribute_value;
+          this.modelForm.is_new = false;
+        });
+      } else {
+        this.modelForm.is_new = true;
+      }
     },
   },
-  mounted() {},
+  mounted() {
+    this.fetchData();
+  },
   computed: {},
 };
 </script>
