@@ -68,7 +68,7 @@
                                                         <el-select
                                                             v-model="modelForm.category_id"
                                                             multiple
-                                                            placeholder="Select"
+                                                            placeholder="Chọn danh mục"
                                                         >
                                                             <el-option
                                                                 v-for="item in listCategory"
