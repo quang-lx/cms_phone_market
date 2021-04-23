@@ -1715,6 +1715,22 @@
                         "required": false,
                         "type": "integer",
                         "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "lat",
+                        "description": "lat",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "lng",
+                        "description": "lng",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
                     }
                 ],
                 "responses": {
