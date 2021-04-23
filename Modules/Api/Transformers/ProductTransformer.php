@@ -15,6 +15,7 @@ class ProductTransformer extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
+            'sale_price' => $this->sale_price,
             'discount' => 15,
 	        'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null
 

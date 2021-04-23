@@ -23,7 +23,7 @@ class UserController extends ApiController
     {
 
         $user = $this->auth->user();
-        $user->update($request->only('email', 'name', 'phone', 'gender', 'birthday'));
+        $user->update($request->only('email', 'name', 'phone', 'gender', 'birthday', 'lat', 'lng', 'fcm_token'));
 	    if (  $avatar = $request->get('avatar')) {
 		    $zone= 'avatar';
 		    $fileSync[$avatar] = ['mediable_type' => get_class($user), 'zone' => $zone];

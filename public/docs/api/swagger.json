@@ -258,6 +258,131 @@
                     },
                     {
                         "in": "query",
+                        "name": "from_price",
+                        "description": "gia nho nhat",
+                        "required": false,
+                        "type": "integer",
+
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "to_price",
+                        "description": "gia cao nhat",
+                        "required": false,
+                        "type": "integer",
+
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "default": "1",
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "default": 10,
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/by-service": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "List Product dich vu sua chua",
+                "description": "",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "q",
+                        "description": "Search value",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "category_id",
+                        "description": "Category id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "brand_id",
+                        "description": "thuong hieu ",
+                        "required": false,
+                        "type": "integer",
+
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "problem_id",
+                        "description": "van de",
+                        "required": false,
+                        "type": "integer",
+
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort_by",
+                        "description": "sap xep theo : price - re nhat, distance : gan nhat",
+                        "required": false,
+                        "type": "string",
+
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
                         "name": "page",
                         "description": "page",
                         "default": "1",
@@ -1587,6 +1712,22 @@
                         "in": "formData",
                         "name": "avatar",
                         "description": "avatar",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "lat",
+                        "description": "lat",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "lng",
+                        "description": "lng",
                         "required": false,
                         "type": "integer",
                         "format": "text"

@@ -129,6 +129,21 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
         });
 
+        $menu->group('shop management', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('ch::sidebar.voucher management'), function (Item $item) {
+                $item->icon('fa fa-gift');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('shop.voucher.index')
+                );
+	            $item->route('shop.voucher.index');
+
+            });
+
+
+        });
+
 
         return $menu;
 

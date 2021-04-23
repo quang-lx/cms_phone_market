@@ -31,6 +31,7 @@ class Product extends Model
         'company_id',
 	    'amount',
 	    'price',
+	    'sale_price',
     ];
 
     public function company()
@@ -43,6 +44,19 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function productAttributes() {
+    	return $this->hasMany(ProductAttribute::class, 'product_id');
+    }
+	public function productAttributeValues() {
+		return $this->hasMany(ProductAttributeValue::class, 'product_id');
+	}
+
+	public function attributes() {
+		return $this->belongsToMany(Attribute::class, 'product_attributes', 'product_id', 'attribute_id');
+	}
+	public function attributeValues() {
+		return $this->belongsToMany(AttributeValue::class, 'product_attribute_values', 'product_id', 'value_id');
+	}
     public function prices() {
     	return $this->hasMany(ProductPrice::class, 'product_id');
     }

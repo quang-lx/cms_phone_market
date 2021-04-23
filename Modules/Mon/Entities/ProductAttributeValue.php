@@ -9,6 +9,6 @@ class ProductAttributeValue extends Model
 {
     use  SoftDeletes;
 
-    protected $table = 'product_attributes';
+    protected $table = 'product_attribute_values';
     protected $fillable = ['attribute_id','product_id', 'value_id','company_id','shop_id', 'price', 'sale_price', 'amount'];
 }

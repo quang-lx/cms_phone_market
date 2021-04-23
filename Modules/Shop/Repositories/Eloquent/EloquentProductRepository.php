@@ -4,6 +4,7 @@ namespace Modules\Shop\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Mon\Entities\ProductAttributeValue;
 use Modules\Mon\Entities\ProductPrice;
 use Modules\Shop\Events\Product\ProductWasCreated;
 use Modules\Shop\Events\Product\ProductWasUpdated;
@@ -26,6 +27,13 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		}
 		event(new ProductWasCreated($model, $data));
 
+		if (isset($data['attribute_id']) && $data['attribute_id']) {
+			$this->syncProductAttribute($model, $data['attribute_id']);
+			if (isset($data['attribute_selected']) && isset($data['attribute_selected']['values']) && $data['attribute_selected']['values']) {
+				$this->syncProductAttributeValues($model, $data['attribute_id'], $data['attribute_selected']['values']);
+			}
+		}
+
 		return $model;
 	}
 
@@ -41,7 +49,14 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 			$model->problems()->sync($data['problem_id']);
 		}
 		event(new ProductWasUpdated($model, $data));
-
+		if (isset($data['attribute_id']) && $data['attribute_id']) {
+			$this->syncProductAttribute($model, $data['attribute_id']);
+			if (isset($data['attribute_selected']) && isset($data['attribute_selected']['values']) && $data['attribute_selected']['values']) {
+				$this->syncProductAttributeValues($model, $data['attribute_id'], $data['attribute_selected']['values']);
+			}
+		} else {
+			$this->removeProductAttribute($model);
+		}
 		return $model;
 	}
 
@@ -71,6 +86,52 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 				}
 			}
 
+		}
+	}
+
+	public function removeProductAttribute($model) {
+		$model->attributes()->detach();
+		$model->attributeValues()->detach();
+	}
+	public function syncProductAttribute($model, $productAttribute) {
+		if ($productAttribute) {
+			$model->attributes()->sync([$productAttribute]);
+		}
+	}
+	public function syncProductAttributeValues($model,$productAttribute, $productAttributeValues) {
+		if ($productAttribute && is_array($productAttributeValues)) {
+			$selectedValues= [];
+			foreach ($productAttributeValues as $item) {
+				if (isset($item['id']))
+					$selectedValues[] = $item['id'];
+			}
+			ProductAttributeValue::query()->where('product_id', $model->id)->whereNotIn('value_id', $selectedValues)->delete();
+			foreach ($productAttributeValues as $item) {
+				if (isset($item['price']) && isset($item['sale_price']) && isset($item['amount'])) {
+					$row = ProductAttributeValue::query()->where([
+						'product_id' => $model->id,
+						'value_id'=> $item['id'],
+						])->first();
+					if ($row) {
+						$row->update([
+							'price' => $item['price'],
+							'sale_price' => $item['sale_price'],
+							'amount' => $item['amount']
+
+						]);
+					} else {
+						ProductAttributeValue::create([
+							'price' => $item['price'],
+							'sale_price' => $item['sale_price'],
+							'amount' => $item['amount'],
+							'product_id' => $model->id,
+							'attribute_id' => $item['attribute_id'],
+							'value_id' => $item['id'],
+						]);
+					}
+				}
+
+			}
 		}
 	}
 
@@ -106,6 +167,10 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
            $brandId = $request->get('brand_id');
            $query->where('brand_id', $brandId);
        }
+
+	   if ($request->get('source') == 'voucher'){
+		   $query->select('product.*','product.name AS value');
+	   }
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';

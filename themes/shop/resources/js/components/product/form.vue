@@ -160,7 +160,7 @@
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
                                                                     <el-input-number style="width: 100%"
-                                                                                     v-model="itemValue.salse_price"
+                                                                                     v-model="itemValue.sale_price"
                                                                                      :min="0" :max="100000000"
                                                                                      placeholder="Giá khuyến mại"></el-input-number>
                                                                 </div>
@@ -366,7 +366,16 @@
                                                      v-text="form.errors.first('price')"></div>
                                             </el-form-item>
                                         </div>
+                                        <div class="col-md-12">
+                                            <el-form-item :label="$t('product.label.sale_price')"
+                                                          :class="{'el-form-item is-error': form.errors.has('sale_price') }">
 
+                                                <el-input v-model="modelForm.sale_price"></el-input>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('sale_price')"
+                                                     v-text="form.errors.first('sale_price')"></div>
+                                            </el-form-item>
+                                        </div>
                                         <div class="col-md-12">
                                             <el-form-item :label="$t('product.label.brand_id')"
                                                           :class="{'el-form-item is-error': form.errors.has(  'brand_id') }">
@@ -442,6 +451,7 @@
         medias_multi: {},
         form: new Form(),
         loading: false,
+        list_selected_values: [],
         modelForm: {
           name: '',
           description: '',
@@ -454,6 +464,7 @@
           brand_id: '',
           sku: '',
           price: '',
+          sale_price: '',
           amount: '',
           category_id: [],
           problem_id: [],
@@ -595,7 +606,14 @@
       changeAttribute() {
         const itemInRoot = _.findIndex(this.list_attribute, {id: this.modelForm.attribute_id})
         if (itemInRoot !== -1) {
+          if (this.modelForm.attribute_selected) {
+            this.list_selected_values[this.modelForm.attribute_selected.id] = _.cloneDeep(this.modelForm.attribute_selected);
+          }
           this.modelForm.attribute_selected = _.cloneDeep(this.list_attribute[itemInRoot]);
+          // gan lai cac gia tri da chon
+          if (this.list_selected_values[this.modelForm.attribute_selected.id]) {
+            this.modelForm.attribute_selected.values = _.cloneDeep(this.list_selected_values[this.modelForm.attribute_selected.id].values);
+          }
         }
       },
 

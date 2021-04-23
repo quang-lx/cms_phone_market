@@ -16,7 +16,9 @@ class AttributeTransformer extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'name' => $this->name,
-            'company_id' => $this->company_id,
+            'code' => $this->code,
+	        'values' => $this->parseValue($this->attributeValues),
+	        'company_id' => $this->company_id,
             'shop_id' => $this->shop_id,
             'list_attribute_value' =>$this->attributeValues()->select('name')->get(),
              'urls' => [
@@ -27,6 +29,14 @@ class AttributeTransformer extends JsonResource
 
 
         return $data;
+    }
+    public function parseValue($values) {
+    	foreach ($values as $value) {
+    		$value['price']=0;
+    		$value['sale_price']=0;
+    		$value['amount']=0;
+	    }
+    	return $values;
     }
 
 
