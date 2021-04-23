@@ -356,6 +356,15 @@
                     },
                     {
                         "in": "query",
+                        "name": "sort_by",
+                        "description": "sap xep theo : price - re nhat, distance : gan nhat",
+                        "required": false,
+                        "type": "string",
+
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
                         "name": "page",
                         "description": "page",
                         "default": "1",

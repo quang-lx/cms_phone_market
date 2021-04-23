@@ -64,6 +64,14 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 				$q->where('problems.id', $problem_id);
 			});
 		}
+		if ($sort_by = $request->get('sort_by')) {
+
+			if ($sort_by == 'price') {
+				$query->orderBy('product.price');
+			} elseif ($sort_by == 'distance') {
+				//TODO
+			}
+		}
 
 		if ($keyword = $request->get('q')) {
 			$query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
