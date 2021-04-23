@@ -197,6 +197,14 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+
+        $this->app->bind(
+            'Modules\Shop\Repositories\AttributeRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentAttributeRepository(new \Modules\Mon\Entities\Attribute());
+                return $repository;
+            }
+        );
  
             
         $this->app->bind(

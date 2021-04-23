@@ -1,17 +1,16 @@
 <?php
 
-namespace Modules\Admin\Http\Requests\Attribute;
+namespace Modules\Shop\Http\Requests\Attribute;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAttributeRequest extends FormRequest
+class CreateAttributeRequest extends FormRequest
 {
     public function rules()
     {
-        $attributes = $this->route()->parameter('attribute');
         return [
             'name' => 'required',
-            'code' => "required|unique:attributes,code,{$attributes->id}",
+            'code' => 'required|unique:attributes',
             'list_attribute_value' => 'required|array'
 
         ];
@@ -37,6 +36,7 @@ class UpdateAttributeRequest extends FormRequest
 
 
         ];
+    
     }
 
     public function translationMessages()

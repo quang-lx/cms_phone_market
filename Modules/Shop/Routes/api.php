@@ -232,6 +232,31 @@ Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
     ]);
     
 });
+
+Route::middleware('auth:api')->prefix('/attributes')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.attribute.index',
+        'uses' => 'Attribute\AttributeController@index',
+    ]);
+    Route::post('/{attribute}/edit', [
+            'as' => 'apishop.attribute.update',
+            'uses' => 'Attribute\AttributeController@update',
+        ]);
+   Route::get('/{attribute}', [
+              'as' => 'apishop.attribute.find',
+              'uses' => 'Attribute\AttributeController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'apishop.attribute.store',
+        'uses' => 'Attribute\AttributeController@store',
+    ]);
+
+    Route::delete('/{attribute}', [
+        'as' => 'apishop.attribute.destroy',
+        'uses' => 'Attribute\AttributeController@destroy',
+    ]);
+});
 // append
 
 

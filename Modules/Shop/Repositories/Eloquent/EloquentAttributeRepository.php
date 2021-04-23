@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Admin\Repositories\Eloquent;
+namespace Modules\Shop\Repositories\Eloquent;
 
-use Modules\Admin\Repositories\AttributeRepository;
+use Modules\Shop\Repositories\AttributeRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
 use Modules\Mon\Entities\AttributeValue;

@@ -11,7 +11,6 @@ class Attribute extends Model
 
     protected $table = 'attributes';
     protected $fillable = [
-        'id',
         'code',
         'name',
         'company_id',
@@ -21,5 +20,15 @@ class Attribute extends Model
     public function attributeValues()
     {
         return $this->hasMany(AttributeValue::class, 'attribute_id');
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'company_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'shop_id');
     }
 }

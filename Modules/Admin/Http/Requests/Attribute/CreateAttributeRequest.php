@@ -8,7 +8,12 @@ class CreateAttributeRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required',
+            'code' => 'required|unique:attributes',
+            'list_attribute_value' => 'required|array'
+
+        ];
     }
 
     public function translationRules()
@@ -23,7 +28,13 @@ class CreateAttributeRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'name.required' => 'Tên không được để trống',
+            'code.required' => 'Code không được để trống',
+            'code.unique' => 'Code đã tồn tại',
+            'list_attribute_value.required' => 'Thuộc tính không được để trống',
+        ];
+    
     }
 
     public function translationMessages()

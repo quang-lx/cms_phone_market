@@ -22,6 +22,8 @@ import CompanyForm from './../components/company/form';
 import VoucherList from './../components/voucher/index';
 import VoucherForm from './../components/voucher/form';
 
+import AttributeForm from './../components/attribute/form';
+import AttributeList from './../components/attribute/index';
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -152,13 +154,35 @@ export default [
             pageTitle: 'voucher.label.create_voucher',
         },
     },
-
-    {
+	{
         path: '/shop-admin/voucher/:voucherId/edit',
         name: 'shop.voucher.edit',
         component: VoucherForm,
         props: {
             pageTitle: 'voucher.label.update_voucher',
+        },
+    },
+
+   {
+        path: '/shop-admin/attribute',
+        name: 'shop.attribute.index',
+        component: AttributeList,
+    },
+    {
+        path: '/shop-admin/attribute/create',
+        name: 'shop.attribute.create',
+        component: AttributeForm,
+        props: {
+            pageTitle: 'attribute.label.update_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/attribute/:attributeId/edit',
+        name: 'shop.attribute.edit',
+        component: AttributeForm,
+        props: {
+            pageTitle: 'attribute.label.update_title',
         },
     },
 
