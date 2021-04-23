@@ -5,6 +5,7 @@ namespace Modules\Shop\Repositories\Eloquent;
 use Modules\Shop\Repositories\AttributeRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
+use Modules\Mon\Entities\AttributeValue;
 class EloquentAttributeRepository extends BaseRepository implements AttributeRepository
 {
     public function serverPagingFor(Request $request, $relations = null)
@@ -34,12 +35,8 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
 
     public function create($data)
     {
-        $attr_value = [];
-        foreach ($data['list_attribute_value'] as $list_name) {
-            array_push($attr_value,['name'=>$list_name]);
-        }
         $model =  $this->model->create($data);
-        $model->attributeValues()->createMany($attr_value);
+        $model->attributeValues()->createMany($data['list_attribute_value']);
 
 
     }
@@ -47,12 +44,18 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
     public function update($model,$data)
     {
         $model->update($data);
-        $model->attributeValues()->delete();
-        $attr_value = [];
+        $attr_value_edit = [];
+        $attr_value_add = [];
         foreach ($data['list_attribute_value'] as $list_name) {
-            array_push($attr_value,['name'=>$list_name]);
+            if (!empty($list_name['id'])) {
+                array_push($attr_value_edit,$list_name['id']);
+                AttributeValue::where('id',$list_name['id'])->update(['name'=>$list_name['name']]);
+            }else{
+                array_push($attr_value_add,['name'=>$list_name['name']]);
+            }
         }
-        $model->attributeValues()->createMany($attr_value);
+        $model->attributeValues()->whereNotIn('id',$attr_value_edit)->delete();
+        $model->attributeValues()->createMany($attr_value_add);
 
 
     }

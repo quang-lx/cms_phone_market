@@ -327,6 +327,7 @@ export default {
         axios.get(routeUri).then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
+          Vue.set(this.modelForm, 'attr_value', "")
           this.modelForm.is_new = false;
         });
       } else {

@@ -44,7 +44,6 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
     public function update($model,$data)
     {
         $model->update($data);
-        $attr_value_old = $model->attributeValues()->pluck('id')->toArray();
         $attr_value_edit = [];
         $attr_value_add = [];
         foreach ($data['list_attribute_value'] as $list_name) {
@@ -55,10 +54,7 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
                 array_push($attr_value_add,['name'=>$list_name['name']]);
             }
         }
-        $attr_value_delete =array_diff($attr_value_old,$attr_value_edit);
-        if (!empty($attr_value_delete)) {
-            AttributeValue::where('id',$attr_value_delete)->delete();
-        }    
+        $model->attributeValues()->whereNotIn('id',$attr_value_edit)->delete();
         $model->attributeValues()->createMany($attr_value_add);
 
 

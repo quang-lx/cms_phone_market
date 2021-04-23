@@ -145,7 +145,7 @@
                     <div class="col-12">
                       <div class="sc-table">
                         <el-table
-                          :data="list_attribute"
+                          :data="modelForm.list_attribute_value"
                           stripe
                           style="width: 100%"
                           ref="dataTable"
@@ -167,13 +167,13 @@
                             <template slot-scope="scope">
                               <el-button
                                 type="primary"
-                                @click="editAttr(scope.$index, list_attribute)"
+                                @click="editAttr(scope.$index, modelForm.list_attribute_value)"
                                 icon="el-icon-edit"
                               ></el-button>
                               <el-button
                                 type="primary"
                                 @click="
-                                  deleteAttr(scope.$index, list_attribute)
+                                  deleteAttr(scope.$index, modelForm.list_attribute_value)
                                 "
                                 icon="el-icon-delete"
                               ></el-button>
@@ -225,7 +225,6 @@ export default {
       form: new Form(),
       loading: false,
       is_new_value: true,
-      list_attribute: [],
       key_update: "",
       
       modelForm: {
@@ -244,7 +243,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.formatData();
       this.form = new Form(_.merge(this.modelForm, {}));
       this.loading = true;
 
@@ -272,7 +270,7 @@ export default {
           if (valid) {
             let attr_value={};
             attr_value.name= this.modelForm.attr_value
-            this.list_attribute.push(attr_value);
+            this.modelForm.list_attribute_value.push(attr_value);
           } else {
             return false;
           }
@@ -280,7 +278,7 @@ export default {
      
     },
     editAttr(index, rows) {
-      this.modelForm = { ...rows[index] };
+      this.modelForm.attr_value = rows[index].name;
       this.is_new_value = false;
       this.key_update = index;
     },
@@ -290,7 +288,7 @@ export default {
     },
 
     updateAttr() {
-      Vue.set(this.list_attribute, this.key_update, { ...this.modelForm });
+      this.modelForm.list_attribute_value[this.key_update].name = this.modelForm.attr_value
       this.is_new_value = true;
     },
 
@@ -311,14 +309,6 @@ export default {
         .catch(() => {});
     },
 
-    formatData() {
-      this.modelForm.list_attribute_value = [];
-      for (let index = 0; index < this.list_attribute.length; index++) {
-        const element = this.list_attribute[index];
-        this.modelForm.list_attribute_value.push(element.name);
-      }
-    },
-
     getRoute() {
       if (this.$route.params.attributeId !== undefined) {
         return route("apishop.attribute.update", {
@@ -337,7 +327,7 @@ export default {
         axios.get(routeUri).then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
-          this.list_attribute = response.data.data.list_attribute_value;
+          Vue.set(this.modelForm, 'attr_value', "")
           this.modelForm.is_new = false;
         });
       } else {
