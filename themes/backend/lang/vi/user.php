@@ -13,7 +13,7 @@ return [
         'create_user' => 'Tạo người dùng',
 
         'update_user' => 'Cập nhật',
-        'create_admin' => 'Tạo quản trị',
+        'create_admin' => 'Thêm tài khoản',
         'update_admin' => 'Cập nhật quản trị',
 
         'users' => 'Tài khoản',
