@@ -2,6 +2,7 @@
 
 namespace Modules\Shop\Repositories\Eloquent;
 
+use Illuminate\Support\Facades\Auth;
 use Modules\Shop\Repositories\AttributeRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
 
     public function create($data)
     {
+    	$data['company_id'] = Auth::user()->id;
         $model =  $this->model->create($data);
         $model->attributeValues()->createMany($data['list_attribute_value']);
 

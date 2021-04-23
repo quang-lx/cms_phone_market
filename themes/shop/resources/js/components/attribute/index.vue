@@ -87,7 +87,7 @@
                       </template>
                     </el-table-column>
                     <el-table-column prop="actions" width="130">
-                      <template slot-scope="scope">
+                      <template slot-scope="scope" v-if="scope.row.company_id">
                         <edit-button
                           :to="{
                             name: 'shop.attribute.edit',

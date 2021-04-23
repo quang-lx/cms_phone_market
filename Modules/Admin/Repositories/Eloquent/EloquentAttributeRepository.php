@@ -14,6 +14,7 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
         if ($relations) {
             $query = $query->with($relations);
         }
+        $query->whereNull('company_id');
 
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');

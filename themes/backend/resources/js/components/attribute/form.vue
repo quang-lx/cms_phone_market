@@ -226,7 +226,7 @@ export default {
       loading: false,
       is_new_value: true,
       key_update: "",
-      
+
       modelForm: {
         name: "",
         code: "",
@@ -239,7 +239,7 @@ export default {
           ]
         }
     };
-    
+
   },
   methods: {
     onSubmit() {
@@ -271,11 +271,12 @@ export default {
             let attr_value={};
             attr_value.name= this.modelForm.attr_value
             this.modelForm.list_attribute_value.push(attr_value);
+            this.modelForm.attr_value = ''
           } else {
             return false;
           }
       })
-     
+
     },
     editAttr(index, rows) {
       this.modelForm.attr_value = rows[index].name;
@@ -290,13 +291,14 @@ export default {
     updateAttr() {
       this.modelForm.list_attribute_value[this.key_update].name = this.modelForm.attr_value
       this.is_new_value = true;
+      this.modelForm.attr_value = ''
     },
 
     onCancelValue() {
       this.is_new_value = true;
     },
 
-    
+
     onCancel() {
       this.$confirm(this.$t("mon.cancel.Are you sure to cancel?"), {
         confirmButtonText: this.$t("mon.cancel.Yes"),

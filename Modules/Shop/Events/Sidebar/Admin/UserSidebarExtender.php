@@ -122,6 +122,15 @@ class UserSidebarExtender extends AbstractAdminSidebar
                         $this->auth->hasAccess('shop.product.index')
                     );
                 });
+	            $item->item(trans('ch::sidebar.attribute'), function (Item $item) {
+
+		            $item->weight(0);
+
+		            $item->route('shop.attribute.index');
+		            $item->authorize(
+			            $this->auth->hasAccess('shop.attribute.index')
+		            );
+	            });
 
 
             });

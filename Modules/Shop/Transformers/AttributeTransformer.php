@@ -20,7 +20,7 @@ class AttributeTransformer extends JsonResource
 	        'values' => $this->parseValue($this->attributeValues),
 	        'company_id' => $this->company_id,
             'shop_id' => $this->shop_id,
-            'list_attribute_value' =>$this->attributeValues()->select('name')->get(),
+            'list_attribute_value' =>$this->attributeValues()->get(),
              'urls' => [
                 'delete_url' => route('api.attribute.destroy', $this->id),
             ],
