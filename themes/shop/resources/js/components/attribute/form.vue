@@ -6,7 +6,7 @@
           <div class="col-12">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item>
-                <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
+                <a href="/admin-shop">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
               <el-breadcrumb-item :to="{ name: 'shop.attribute.index' }"
                 >{{ $t("attribute.label.attribute") }}

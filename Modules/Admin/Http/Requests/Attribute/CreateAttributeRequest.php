@@ -33,8 +33,6 @@ class CreateAttributeRequest extends FormRequest
             'code.required' => 'Code không được để trống',
             'code.unique' => 'Code đã tồn tại',
             'list_attribute_value.required' => 'Thuộc tính không được để trống',
-
-
         ];
     
     }
