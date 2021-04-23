@@ -45,6 +45,7 @@ return [
     'setting' => 'Cài đặt',
     'homesetting' => 'Màn home',
     'customer' => 'Tài khoản khách hàng',
+    'attribute' => 'Thuộc tính',
 
 
 ];
