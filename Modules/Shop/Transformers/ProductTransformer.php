@@ -34,11 +34,11 @@ class ProductTransformer extends JsonResource
             'updated_at' => $this->updated_at->format('d-m-Y'),
             'amount' => $this->amount,
             'price' => $this->price,
+            'sale_price' => $this->sale_price,
             'category_id' => optional($this->pcategories)->pluck('id'),
             'category_name' => optional($this->pcategories)->pluck('name'),
             'thumbnail' => $this->thumbnail,
 
-			'category_id' => $this->pcategories->pluck('id'),
             'problem_id' => $this->problems->pluck('id'),
             'attribute_id' => $attribute,
             'attribute_selected' => $attribute? $this->getAttributeValues($this->attributes->first(), $this->productAttributeValues): null,

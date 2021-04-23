@@ -366,7 +366,16 @@
                                                      v-text="form.errors.first('price')"></div>
                                             </el-form-item>
                                         </div>
+                                        <div class="col-md-12">
+                                            <el-form-item :label="$t('product.label.sale_price')"
+                                                          :class="{'el-form-item is-error': form.errors.has('sale_price') }">
 
+                                                <el-input v-model="modelForm.sale_price"></el-input>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('sale_price')"
+                                                     v-text="form.errors.first('sale_price')"></div>
+                                            </el-form-item>
+                                        </div>
                                         <div class="col-md-12">
                                             <el-form-item :label="$t('product.label.brand_id')"
                                                           :class="{'el-form-item is-error': form.errors.has(  'brand_id') }">
@@ -455,6 +464,7 @@
           brand_id: '',
           sku: '',
           price: '',
+          sale_price: '',
           amount: '',
           category_id: [],
           problem_id: [],

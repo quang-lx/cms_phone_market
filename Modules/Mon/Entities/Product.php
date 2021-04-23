@@ -31,6 +31,7 @@ class Product extends Model
         'company_id',
 	    'amount',
 	    'price',
+	    'sale_price',
     ];
 
     public function company()

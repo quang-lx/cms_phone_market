@@ -22,6 +22,7 @@ return [
         'sku' => 'SKU',
         'amount' => 'Số lượng',
         'price' => 'Giá bán',
+        'sale_price' => 'Giá khuyến mại',
         'category_id' => 'Danh mục',
         'problem_id' => 'Vấn đề sửa chữa',
         'company_id' => 'Cửa hàng',
