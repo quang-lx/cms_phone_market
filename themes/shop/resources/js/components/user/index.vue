@@ -107,8 +107,12 @@
                                                 <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="created_name" :label="$t('user.label.updated_by')"
-                                                         sortable="custom"/>
+                                        <el-table-column prop="updated_by" :label="$t('user.label.updated_by')"
+                                                         sortable="custom">
+                                            <template slot-scope="scope">
+                                                {{ scope.row.created_name}}
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column prop="updated_at" :label="$t('user.label.updated_at')"
                                                          sortable="custom"/>
 

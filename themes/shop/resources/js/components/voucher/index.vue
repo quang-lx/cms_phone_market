@@ -76,7 +76,7 @@
                                         <el-table-column prop="code" :label="$t('voucher.label.code')" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop="type_name" :label="$t('voucher.label.type_name')" sortable="address">
+                                        <el-table-column prop="type" :label="$t('voucher.label.type_name')" sortable="address">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.type_name}}</span>
                                             </template>
@@ -85,7 +85,7 @@
                                         <el-table-column prop="discount_amount" :label="$t('voucher.label.discount_amount')" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop="status_name" :label="$t('voucher.label.status')" sortable="address">
+                                        <el-table-column prop="actived_at" :label="$t('voucher.label.status')" sortable="address">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.status_name}}</span>
                                             </template>
@@ -97,7 +97,10 @@
                                         <el-table-column prop="total_used" :label="$t('voucher.label.total_used')" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop="created_name" :label="$t('voucher.label.updated_by')" sortable="custom">
+                                        <el-table-column prop="created_by" :label="$t('voucher.label.updated_by')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                <span class="dont-break-out">{{scope.row.created_name}}</span>
+                                            </template>
                                         </el-table-column>
 
                                         <el-table-column prop="updated_at" :label="$t('voucher.label.updated_at')" sortable="address">

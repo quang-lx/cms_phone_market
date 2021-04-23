@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Modules\Shop\Repositories\VoucherRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Support\Facades\Auth;
+use Modules\Shop\Events\Voucher\VoucherWasCreated;
+use Modules\Shop\Events\Voucher\VoucherWasUpdated;
 
 class EloquentVoucherRepository extends BaseRepository implements VoucherRepository
 {
@@ -14,6 +16,22 @@ class EloquentVoucherRepository extends BaseRepository implements VoucherReposit
 	{
         $data['company_id'] = Auth::user()->company_id;
 		$model = $this->model->create($data);
+        $data['products'] = array_map(function ($product){
+            return $product['id'];
+        }, $data['products']);
+		if (isset($data['products']) && is_array($data['products'])) {
+			$model->products()->sync($data['products']); //mảng product_id
+		}
+
+		return $model;
+	}
+
+    public function update($model, $data)
+	{
+		$model->update($data);
+        $data['company_id'] = Auth::user()->company_id;
+		// $model = $this->model->update($data);
+        event(new VoucherWasUpdated($model, $data));
         $data['products'] = array_map(function ($product){
             return $product['id'];
         }, $data['products']);
