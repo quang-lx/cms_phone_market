@@ -126,7 +126,7 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="name" :label="$t('product.label.name')" sortable="custom">
+                                        <el-table-column prop="name" :label="$t('product.label.name')" sortable="custom" width="150">
 
                                         </el-table-column>
 
@@ -167,7 +167,7 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom">
+                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom" width="150">
                                         </el-table-column>
 
                                         <el-table-column prop="actions" width="130">
