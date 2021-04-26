@@ -41,4 +41,8 @@ class ProductController extends ApiController
 		$data = $product? new ProductDetailTransformer($product): null;
 		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
+	public function baohanh(Request $request) {
+		$data = ProductTransformer::collection($this->productRepo->listBaoHanh($request));
+		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 }

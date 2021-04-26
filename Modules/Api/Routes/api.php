@@ -184,4 +184,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'as' => 'apife.shop.baohanh',
 		]);
 	});
+	Route::prefix('product')->group(function ($router) {
+		Route::get('bao-hanh', [
+			'uses' => 'ProductController@baohanh',
+			'as' => 'apife.product.baohanh',
+		]);
+	});
 });

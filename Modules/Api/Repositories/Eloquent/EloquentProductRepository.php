@@ -48,6 +48,21 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 
 	}
 
+	public function listBaoHanh(Request $request) {
+		$query = $this->model->query();
+		if ($shop_id = $request->get('shop_id')) {
+
+			$query->where('shop_id', $shop_id);
+		}
+
+
+		if ($keyword = $request->get('q')) {
+			$query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+		}
+		return $query->active()->paginate($request->get('per_page', 10));
+
+	}
+
 	public function listByService(Request $request) {
 		$query = $this->model->query();
 		if ($category_id = $request->get('category_id')) {

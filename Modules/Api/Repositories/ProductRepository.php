@@ -9,5 +9,6 @@ interface ProductRepository
 {
     public function listByCategory(Request $request, $includeSub = false);
     public function listByService(Request $request);
+    public function listBaoHanh(Request $request);
     public function detail($id);
 }
