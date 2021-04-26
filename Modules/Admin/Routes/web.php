@@ -27,4 +27,6 @@ Route::group(['prefix' => '/admin'], function ( ) {
         'uses' => 'Auth\LoginController@facebookCallback',
 
     ]);
+	Route::post('login', 'Auth\LoginController@login')->name('admin.login.submit');
+
 });

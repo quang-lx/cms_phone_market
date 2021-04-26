@@ -140,7 +140,7 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">{{trans('backend::auth.label.sign in to start your session')}}</p>
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('admin.login.submit') }}">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Tài khoản" name="username" required autofocus>
