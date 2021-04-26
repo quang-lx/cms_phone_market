@@ -339,7 +339,7 @@
                 ],
                 "parameters": [
                     {
-                        "in": "query",
+                        "in": "path",
                         "name": "id",
                         "description": "ID san pham",
                         "required": true,
