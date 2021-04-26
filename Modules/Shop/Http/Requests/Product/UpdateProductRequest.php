@@ -8,6 +8,7 @@ class UpdateProductRequest extends FormRequest
 {
     public function rules()
     {
+        $id = $this->route('product')->id;
         $rules = [
             'name' => 'required',
             'description' => 'required',
@@ -16,7 +17,7 @@ class UpdateProductRequest extends FormRequest
             's_width' => 'required',
             's_height' => 'required',
             'brand_id' => 'required',
-            'sku' => 'required',
+            'sku' => 'required|unique:product,id,{$id}',
             'amount' => 'required',
             'price' => 'required',
             'category_id' => 'required',
@@ -46,6 +47,7 @@ class UpdateProductRequest extends FormRequest
             's_height.required' => 'Chiều cao sai định dạng',
             'brand_id.required' => 'Nhãn hiệu là bắt buộc',
             'sku.required' => 'SKU là bắt buộc',
+            'sku.unique' => 'SKU không được trùng lặp',
             'amount.required' => 'Số lượng là bắt buộc',
             'price.required' => 'Giá bán là bắt buộc',
             'category_id.required' => 'Danh mục là bắt buộc',
