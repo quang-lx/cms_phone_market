@@ -572,7 +572,7 @@
         axios.get(route('apishop.brand.index', _.merge(properties, {})))
         .then((response) => {
 
-          this.brandArr = response.data.data;
+          this.brandArr = response.data;
 
         });
       },
