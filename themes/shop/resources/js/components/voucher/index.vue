@@ -17,17 +17,17 @@
 
                             </div>
                             <div class="col-sm-8">
-                                <div class="row pull-right">
+                                <div class="row  ">
 
-                                    <div class="col-6">
+                                    <div class="col-sm-9">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tìm theo mã giảm giá"
                                                   v-model="searchQuery" clearable>
                                         </el-input>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-sm-3 d-block">
                                         <router-link :to="{name: 'shop.voucher.create'}">
-                                            <el-button type="primary" class="btn btn-flat">
+                                            <el-button type="primary" class="btn btn-flat d-block" style="width:100%">
                                                 {{ $t('voucher.label.btn_add_voucher') }}
                                             </el-button>
                                         </router-link>
