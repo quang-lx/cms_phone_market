@@ -56,7 +56,7 @@
     ],
     "paths": {
         "/shop/bao-hanh": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "Bearer": []
