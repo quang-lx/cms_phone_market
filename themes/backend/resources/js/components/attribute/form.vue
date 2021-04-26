@@ -37,9 +37,8 @@
                   style="cursor: move"
                 >
                   <h3 class="card-title">
-                    {{ $t(pageTitle)
-                    }}<span v-if="modelForm.title"
-                      >: &nbsp{{ modelForm.title }}</span
+                    <span>
+                      Thông tin</span
                     >
                   </h3>
                 </div>

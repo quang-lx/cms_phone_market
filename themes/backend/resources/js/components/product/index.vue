@@ -10,7 +10,7 @@
                                     <el-breadcrumb-item>
                                         <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
                                     </el-breadcrumb-item>
-                                    <el-breadcrumb-item  >{{ $t('product.label.create_product') }}
+                                    <el-breadcrumb-item  >{{ $t('product.label.manager') }}
                                     </el-breadcrumb-item>
 
                                 </el-breadcrumb>
