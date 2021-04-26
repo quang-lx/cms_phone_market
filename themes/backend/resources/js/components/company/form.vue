@@ -183,106 +183,7 @@
                           v-text="form.errors.first('level')"
                         ></div>
                       </el-form-item>
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <el-form-item
-                        :label="$t('company.label.province')"
-                        :class="{
-                          'el-form-item is-error': form.errors.has(
-                            'province_id'
-                          ),
-                        }"
-                      >
-                        <el-select
-                          v-model="modelForm.province_id"
-                          @change="changeProvince"
-                          placeholder="Chọn tỉnh"
-                        >
-                          <el-option
-                            v-for="item in list_province"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
-                        <div
-                          class="el-form-item__error"
-                          v-if="form.errors.has('province_id')"
-                          v-text="form.errors.first('province_id')"
-                        ></div>
-                      </el-form-item>
-                      </div>
-                      <div class="col-sm-6"><el-form-item
-                        :label="$t('company.label.district')"
-                        :class="{
-                          'el-form-item is-error': form.errors.has(
-                            'district_id'
-                          ),
-                        }"
-                      >
-                        <el-select
-                          v-model="modelForm.district_id"
-                          placeholder="Chọn quận/huyện"
-                          @change="changeDistrict"
-                        >
-                          <el-option
-                            v-for="item in list_district"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
-                        <div
-                          class="el-form-item__error"
-                          v-if="form.errors.has('district_id')"
-                          v-text="form.errors.first('district_id')"
-                        ></div>
-                      </el-form-item></div>
-                    </div>
-                      
-                      
 
-                      <el-form-item
-                        :label="$t('company.label.phoenix')"
-                        :class="{
-                          'el-form-item is-error': form.errors.has(
-                            'phoenix_id'
-                          ),
-                        }"
-                      >
-                        <el-select
-                          v-model="modelForm.phoenix_id"
-                          placeholder="Chọn xã/phường"
-                        >
-                          <el-option
-                            v-for="item in list_phoenix"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
-                        <div
-                          class="el-form-item__error"
-                          v-if="form.errors.has('phoenix_id')"
-                          v-text="form.errors.first('phoenix_id')"
-                        ></div>
-                      </el-form-item>
-                      <el-form-item
-                        :label="$t('company.label.address')"
-                        :class="{
-                          'el-form-item is-error': form.errors.has('address'),
-                        }"
-                      >
-                        <el-input v-model="modelForm.address"></el-input>
-                        <div
-                          class="el-form-item__error"
-                          v-if="form.errors.has('address')"
-                          v-text="form.errors.first('address')"
-                        ></div>
-                      </el-form-item>
                     </div>
                     <div class="col-md-6 pl-5">
                       <el-form-item
@@ -360,6 +261,111 @@
                           class="el-form-item__error"
                           v-if="form.errors.has('status')"
                           v-text="form.errors.first('status')"
+                        ></div>
+                      </el-form-item>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <el-form-item
+                        :label="$t('company.label.province')"
+                        :class="{
+                          'el-form-item is-error': form.errors.has(
+                            'province_id'
+                          ),
+                        }"
+                      >
+                        <el-select
+                          v-model="modelForm.province_id"
+                          @change="changeProvince"
+                          placeholder="Chọn tỉnh"
+                        >
+                          <el-option
+                            v-for="item in list_province"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                          >
+                          </el-option>
+                        </el-select>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('province_id')"
+                          v-text="form.errors.first('province_id')"
+                        ></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-sm-4">
+                      <el-form-item
+                        :label="$t('company.label.district')"
+                        :class="{
+                          'el-form-item is-error': form.errors.has(
+                            'district_id'
+                          ),
+                        }"
+                      >
+                        <el-select
+                          v-model="modelForm.district_id"
+                          placeholder="Chọn quận/huyện"
+                          @change="changeDistrict"
+                        >
+                          <el-option
+                            v-for="item in list_district"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                          >
+                          </el-option>
+                        </el-select>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('district_id')"
+                          v-text="form.errors.first('district_id')"
+                        ></div>
+                      </el-form-item>
+                    </div>
+                    <div class="col-sm-4">
+                      <el-form-item
+                        :label="$t('company.label.phoenix')"
+                        :class="{
+                          'el-form-item is-error': form.errors.has(
+                            'phoenix_id'
+                          ),
+                        }"
+                      >
+                        <el-select
+                          v-model="modelForm.phoenix_id"
+                          placeholder="Chọn xã/phường"
+                        >
+                          <el-option
+                            v-for="item in list_phoenix"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                          >
+                          </el-option>
+                        </el-select>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('phoenix_id')"
+                          v-text="form.errors.first('phoenix_id')"
+                        ></div>
+                      </el-form-item>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6 pr-5">
+                      <el-form-item
+                        :label="$t('company.label.address')"
+                        :class="{
+                          'el-form-item is-error': form.errors.has('address'),
+                        }"
+                      >
+                        <el-input v-model="modelForm.address"></el-input>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('address')"
+                          v-text="form.errors.first('address')"
                         ></div>
                       </el-form-item>
                     </div>

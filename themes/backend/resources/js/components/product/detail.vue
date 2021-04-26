@@ -9,10 +9,10 @@
                 <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
               <el-breadcrumb-item :to="{ name: 'admin.product.index' }"
-                >{{ $t("product.label.product") }}
+                >{{ $t("product.label.detail_product") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item>
-                Tài khoản khách hàng #{{ this.$route.params.productId }}
+                Sản phẩm {{ modelForm.name }}
               </el-breadcrumb-item>
             </el-breadcrumb>
           </div>
@@ -43,10 +43,7 @@
                       <div class="row">
                         <div class="col-md-3">
                           <div class="row">
-                            <div class="col-md-4">
-                              <img :src="modelForm.avatar" width="75" alt="" />
-                            </div>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                               <div>
                                 {{ $t("product.label.name") }}:
                                 {{ modelForm.name }}
@@ -57,11 +54,18 @@
                               </div>
                               <div>
                                 {{ $t("product.label.category_id") }}:
-                                {{ modelForm.category_name }}
+                                 <span
+                                    v-for="(item, index) in modelForm.category_name"
+                                    :key="index"
+                                    >
+                                    <span v-if="modelForm.category_name.length-1 == index"> {{item}}</span>
+                                    <span v-else> {{item}},</span>
+                                  
+                                  </span>
                               </div>
                               <div>
                                 {{ $t("product.label.brand_id") }}:
-                                {{ modelForm.brand_id }}
+                                 {{ modelForm.brand_name }}
                               </div>
                             </div>
                           </div>
@@ -69,65 +73,76 @@
                         <div class="col-md-3">
                           <div>
                             {{ $t("product.label.company_id") }}:
-                            {{ modelForm.company_name }}
+                            {{ modelForm.company.name }}
                           </div>
                           <div>
-                            {{ modelForm.email }}
+                            {{ modelForm.company.email }}
                           </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div>
-                            {{ $t("product.label.p_state") }}:
-                            {{ modelForm.p_state }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.price") }}
-                            :
-                            {{ modelForm.price }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.amount") }}
-                            :
-                            {{ modelForm.amount }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.p_state") }}
-                            :
-                            {{ modelForm.p_state }}
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div>
-                            {{ $t("product.label.p_state") }}:
-                            {{ modelForm.p_state }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.price") }}
-                            :
-                            {{ modelForm.price }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.amount") }}
-                            :
-                            {{ modelForm.amount }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.p_state") }}
-                            :
-                            {{ modelForm.p_state }}
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                              <div zone="product_collection"
-                                label="Ảnh/Video"
-                                entity="Modules\Mon\Entities\Product"
-                                :entity-id="$route.params.productId"></div>
-                        </div>
-                        <div class="col-md-12">
                              <div>
+                            {{ modelForm.company.phone }}
+                          </div>
+                             <div>
+                            {{ modelForm.company.address }}
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div>
+                            {{ $t("product.label.p_state") }}:
+                            {{ modelForm.p_state_name }}
+                          </div>
+                          <div>
+                            {{ $t("product.label.price") }}
+                            :
+                            {{ modelForm.price }}
+                          </div>
+                          <div>
+                            {{ $t("product.label.amount") }}
+                            :
+                            {{ modelForm.amount }}
+                          </div>
+                          <div>
+                            {{ $t("product.label.status") }}
+                            :
+                            <span :style="{ color: modelForm.status_color }">{{
+                          modelForm.status_name
+                        }}</span>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-3">
+                          <div>
+                            {{ $t("product.label.p_state") }}:
+                            {{ modelForm.p_state }}
+                          </div>
+                          <div>
+                            {{ $t("product.label.price") }}
+                            :
+                            {{ modelForm.price }}
+                          </div>
+                          <div>
+                            {{ $t("product.label.amount") }}
+                            :
+                            {{ modelForm.amount }}
+                          </div>
+                          <div>
+                            {{ $t("product.label.p_state") }}
+                            :
+                            {{ modelForm.p_state }}
+                          </div>
+                        </div> -->
+                        <div class="col-md-12 mt-5">
+                          Ảnh/Video
+                              <div>
+                                <span
+                                    v-for="(item, index) in modelForm.filse"
+                                    :key="index"
+                                    >
+                                    <img :src="item.path_string" width="100" height="100" style="object-fit:contain"/>
+                                </span>
+                             </div>
+                        </div>
+                        <div class="col-md-12">
                             {{ $t("product.label.description") }}:
                             <div v-html="modelForm.description"></div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -188,33 +203,6 @@ export default {
         .catch(() => {});
     },
 
-    open() {
-      if (this.modelForm.status == 1) {
-        this.message = "Bạn có muốn khóa tài khoản " + this.modelForm.username;
-      } else {
-        this.message =
-          "Bạn có muốn bỏ khóa tài khoản " + this.modelForm.username;
-      }
-      this.$confirm(this.message, "Warning", {
-        confirmButtonText: "OK",
-        cancelButtonText: "Cancel",
-        type: "warning",
-      })
-        .then(() => {
-          if (this.modelForm.status == 1) {
-            this.modelForm.status = 2;
-          } else {
-            this.modelForm.status = 1;
-          }
-          this.onSubmit();
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "Canceled",
-          });
-        });
-    },
 
     onSubmit() {
       this.form = new Form(_.merge(this.modelForm, {}));

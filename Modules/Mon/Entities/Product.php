@@ -41,7 +41,7 @@ class Product extends Model
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class,'brand_id');
     }
 
     public function productAttributes() {
@@ -95,6 +95,19 @@ class Product extends Model
                 break;
         }
         return $statusColor;
+    }
+
+    public function getStateNameAttribute($value) {
+        $p_state = '';
+        switch ($this->p_state) {
+            case 1:
+                $p_state = 'Mới';
+                break;
+            case 2:
+                $p_state = 'Đã sử dụng';
+                break;
+        }
+        return $p_state;
     }
 
     public function getThumbnailAttribute()

@@ -141,7 +141,7 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="company_name" :label="$t('product.label.company_id')" sortable="custom">
+                                        <el-table-column prop="company.name" :label="$t('product.label.company_id')" sortable="custom">
                                         </el-table-column>
 
                                         <el-table-column prop="" :label="$t('product.label.price')" sortable="custom">
