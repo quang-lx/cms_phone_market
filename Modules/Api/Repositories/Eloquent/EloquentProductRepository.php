@@ -26,7 +26,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 
 				$query->whereHas('pcategories', function ($q) use ($category_id) {
 					$q->where('parent_id', $category_id)
-					->orWhere('pcategory.id', $category_id);
+						->orWhere('pcategory.id', $category_id);
 				});
 			} else {
 				$query->whereHas('pcategories', function ($q) use ($category_id) {
@@ -83,5 +83,9 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 		}
 		return $query->active()->paginate($request->get('per_page', 10));
 
+	}
+
+	public function detail($id) {
+		return $this->model->query()->find($id);
 	}
 }

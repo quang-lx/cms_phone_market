@@ -29,6 +29,7 @@ class Product extends Model
         's_height',
         'brand_id',
         'company_id',
+        'shop_id',
 	    'amount',
 	    'price',
 	    'sale_price',
@@ -38,7 +39,10 @@ class Product extends Model
     {
         return $this->belongsTo(Company::class);
     }
-
+	public function shop()
+	{
+		return $this->belongsTo(Shop::class, 'shop_id');
+	}
     public function brand()
     {
         return $this->belongsTo(Brand::class,'brand_id');
