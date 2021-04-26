@@ -173,7 +173,7 @@ export default [
         name: 'shop.attribute.create',
         component: AttributeForm,
         props: {
-            pageTitle: 'attribute.label.update_title',
+            pageTitle: 'attribute.label.create_title',
         },
     },
 
