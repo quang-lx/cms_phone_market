@@ -13,7 +13,7 @@ class ProblemTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
-            'title' => $this->title,
+            'name' => $this->title,
 
         ];
 
