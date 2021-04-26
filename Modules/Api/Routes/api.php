@@ -153,7 +153,7 @@ Route::prefix('/product')->group(function () {
 		'as' => 'apife.product.listByService',
 		'uses' => 'ProductController@listByService',
 	]);
-	Route::get('/{id}/detail}', [
+	Route::get('/{id}/detail', [
 		'as' => 'apife.product.detail',
 		'uses' => 'ProductController@detail',
 	]);
