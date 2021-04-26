@@ -30,4 +30,9 @@ class EloquentApiShopRepository implements ApiShopRepository
 		});
 		return $result;
 	}
+	public function getShopBaoHanh(Request $request, $user) {
+
+		$result = Shop::query()->paginate($request->get('per_page', 10));
+		return $result;
+	}
 }

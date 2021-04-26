@@ -114,12 +114,7 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
 	]);
 });
 
-Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
-	Route::post('file', [
-		'uses' => 'MediaController@store',
-		'as' => 'apife.media.store',
-	]);
-});
+
 
 
 Route::prefix('/home')->group(function () {
@@ -173,4 +168,20 @@ Route::prefix('/category')->group(function () {
 		'uses' => 'CategoryController@listByServiceType',
 	]);
 
+});
+
+Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
+	Route::post('file', [
+		'uses' => 'MediaController@store',
+		'as' => 'apife.media.store',
+	]);
+});
+
+Route::middleware(['auth:api'])->group(function ($router) {
+	Route::prefix('shop')->group(function ($router) {
+		Route::get('bao-hanh', [
+			'uses' => 'ShopController@shopBaoHanh',
+			'as' => 'apife.shop.baohanh',
+		]);
+	});
 });

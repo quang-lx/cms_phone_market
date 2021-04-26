@@ -41,5 +41,9 @@ class ShopController extends ApiController
         return $this->respond(ShopTransformer::collection($shops), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
-
+	public function shopBaoHanh(Request $request) {
+		$user = $this->auth->user();
+		$shops = $this->apiShopRepository->getShopBaoHanh($request, $user);
+		return $this->respond(ShopTransformer::collection($shops), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 }
