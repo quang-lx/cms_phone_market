@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row ">
-                            <div class="col-sm-6 d-flex align-items-center">
+                            <div class="col-sm-3 d-flex align-items-center">
                                 <el-breadcrumb separator="/">
                                     <el-breadcrumb-item>
                                         <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
@@ -18,7 +18,7 @@
                                 </el-breadcrumb>
 
                             </div>
-                            <div class="col-sm-6 text-right">
+                            <div class="col-sm-9 text-right">
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"

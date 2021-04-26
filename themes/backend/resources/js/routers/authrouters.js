@@ -55,6 +55,9 @@ import BannersForm from './../components/banners/form';
 import AttributeForm from './../components/attribute/form';
 import AttributeList from './../components/attribute/index';
 
+import ProductDetail from './../components/product/detail';
+import ProductList from './../components/product/index';
+
 
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
@@ -471,6 +474,21 @@ export default [
         component: AttributeForm,
         props: {
             pageTitle: 'attribute.label.update_title',
+        },
+    },
+    //
+    {
+        path: '/admin/product',
+        name: 'admin.product.index',
+        component: ProductList,
+    },
+
+    {
+        path: '/admin/product/:productId/detail',
+        name: 'admin.product.detail',
+        component: ProductDetail,
+        props: {
+            pageTitle: 'product.label.detail_product',
         },
     },
  

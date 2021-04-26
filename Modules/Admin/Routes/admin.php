@@ -445,7 +445,29 @@ Route::group(['prefix' => '/attribute'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/product'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.product.index',
+        'uses' => 'Product\ProductController@index',
+        'middleware' => 'permission:admin.product.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.product.create',
+        'uses' => 'Product\ProductController@create',
+        'middleware' => 'permission:admin.product.create'
+    ]);
+
+    Route::get('{product}/detail', [
+        'as' => 'admin.product.detail',
+        'uses' => 'Product\ProductController@detail',
+        'middleware' => 'permission:admin.product.detail'
+    ]);
+
+
+});
 // append
+
 
 
 
