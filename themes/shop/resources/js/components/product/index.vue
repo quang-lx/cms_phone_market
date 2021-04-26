@@ -126,7 +126,7 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="name" :label="$t('product.label.name')" sortable="custom">
+                                        <el-table-column prop="name" :label="$t('product.label.name')" sortable="custom" width="150">
 
                                         </el-table-column>
 
@@ -148,7 +148,10 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="company_name" :label="$t('product.label.company_id')" sortable="custom">
+                                        <el-table-column prop="company_id" :label="$t('product.label.company_id')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                {{ scope.row.company_name}}
+                                            </template>
                                         </el-table-column>
 
                                         <el-table-column prop="" :label="$t('product.label.price')" sortable="custom">
@@ -164,7 +167,7 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom">
+                                        <el-table-column prop="updated_at" label="Ngày cập nhật" sortable="custom" width="150">
                                         </el-table-column>
 
                                         <el-table-column prop="actions" width="130">

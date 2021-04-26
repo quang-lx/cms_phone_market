@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row ">
-                            <div class="col-sm-6 d-flex align-items-center">
+                            <div class="col-sm-3 d-flex align-items-center">
                                 <el-breadcrumb separator="/">
                                     <el-breadcrumb-item>
                                         <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
@@ -18,8 +18,8 @@
                                 </el-breadcrumb>
 
                             </div>
-                            <div class="col-sm-6 text-right">
-                                <div class="row">
+                            <div class="col-sm-9">
+                                <div class="row pull-right">
 
                                     <div class="col-4">
 
@@ -33,13 +33,13 @@
                                             </el-option>
                                         </el-select>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tên đăng nhập/SĐT/Email"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <router-link :to="{name: 'shop.user.create'}">
                                             <el-button type="primary" class="btn btn-flat">
                                                 {{ $t('user.label.btn_add_user') }}
@@ -107,8 +107,12 @@
                                                 <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="created_name" :label="$t('user.label.updated_by')"
-                                                         sortable="custom"/>
+                                        <el-table-column prop="updated_by" :label="$t('user.label.updated_by')"
+                                                         sortable="custom">
+                                            <template slot-scope="scope">
+                                                {{ scope.row.created_name}}
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column prop="updated_at" :label="$t('user.label.updated_at')"
                                                          sortable="custom"/>
 

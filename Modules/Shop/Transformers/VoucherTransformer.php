@@ -4,11 +4,11 @@ namespace Modules\Shop\Transformers;
 
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Shop\Transformers\ProductTransformer;
 
 
 class VoucherTransformer extends JsonResource
 {
-
 
     public function toArray($request)
     {
@@ -39,6 +39,10 @@ class VoucherTransformer extends JsonResource
             ],
 
         ];
+
+        foreach ($data['products'] as $key => $product){
+            $data['products'][$key] = new ProductTransformer($product);
+        }
 
 
         return $data;
