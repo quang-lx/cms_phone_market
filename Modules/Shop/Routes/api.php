@@ -134,24 +134,24 @@ Route::middleware('auth:api')->prefix('/users')->group(function (){
 Route::middleware('auth:api')->prefix('/products')->group(function (){
 
     Route::get('/', [
-        'as' => 'api.product.index',
+        'as' => 'apishop.product.index',
         'uses' => 'Product\ProductController@index',
     ]);
     Route::post('/{product}/edit', [
-            'as' => 'api.product.update',
+            'as' => 'apishop.product.update',
             'uses' => 'Product\ProductController@update',
         ]);
    Route::get('/{product}', [
-              'as' => 'api.product.find',
+              'as' => 'apishop.product.find',
               'uses' => 'Product\ProductController@find',
           ]);
     Route::post('/', [
-        'as' => 'api.product.store',
+        'as' => 'apishop.product.store',
         'uses' => 'Product\ProductController@store',
     ]);
 
     Route::delete('/{product}', [
-        'as' => 'api.product.destroy',
+        'as' => 'apishop.product.destroy',
         'uses' => 'Product\ProductController@destroy',
     ]);
 	Route::get('/data/tree', [

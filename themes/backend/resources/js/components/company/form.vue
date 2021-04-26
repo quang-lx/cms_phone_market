@@ -183,9 +183,10 @@
                           v-text="form.errors.first('level')"
                         ></div>
                       </el-form-item>
-
-                      <el-form-item
-                        :label="$t('phoenix.label.province')"
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <el-form-item
+                        :label="$t('company.label.province')"
                         :class="{
                           'el-form-item is-error': form.errors.has(
                             'province_id'
@@ -195,7 +196,7 @@
                         <el-select
                           v-model="modelForm.province_id"
                           @change="changeProvince"
-                          placeholder="Select"
+                          placeholder="Chọn tỉnh"
                         >
                           <el-option
                             v-for="item in list_province"
@@ -211,8 +212,9 @@
                           v-text="form.errors.first('province_id')"
                         ></div>
                       </el-form-item>
-                      <el-form-item
-                        :label="$t('phoenix.label.district')"
+                      </div>
+                      <div class="col-sm-6"><el-form-item
+                        :label="$t('company.label.district')"
                         :class="{
                           'el-form-item is-error': form.errors.has(
                             'district_id'
@@ -221,7 +223,7 @@
                       >
                         <el-select
                           v-model="modelForm.district_id"
-                          placeholder="Select"
+                          placeholder="Chọn quận/huyện"
                           @change="changeDistrict"
                         >
                           <el-option
@@ -237,19 +239,22 @@
                           v-if="form.errors.has('district_id')"
                           v-text="form.errors.first('district_id')"
                         ></div>
-                      </el-form-item>
+                      </el-form-item></div>
+                    </div>
+                      
+                      
 
                       <el-form-item
-                        :label="$t('phoenix.label.district')"
+                        :label="$t('company.label.phoenix')"
                         :class="{
                           'el-form-item is-error': form.errors.has(
-                            'district_id'
+                            'phoenix_id'
                           ),
                         }"
                       >
                         <el-select
                           v-model="modelForm.phoenix_id"
-                          placeholder="Select"
+                          placeholder="Chọn xã/phường"
                         >
                           <el-option
                             v-for="item in list_phoenix"

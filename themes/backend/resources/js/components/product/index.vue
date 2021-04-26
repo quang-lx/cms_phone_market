@@ -8,7 +8,7 @@
                             <div class="col-sm-6 d-flex align-items-center">
                                 <el-breadcrumb separator="/">
                                     <el-breadcrumb-item>
-                                        <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                        <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
                                     </el-breadcrumb-item>
                                     <el-breadcrumb-item  >{{ $t('product.label.create_product') }}
                                     </el-breadcrumb-item>
@@ -25,13 +25,6 @@
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-                                    <div class="col-3">
-                                        <router-link :to="{name: 'shop.product.create'}">
-                                            <el-button type="primary" class="btn btn-flat">
-                                                {{ $t('product.label.create_product') }}
-                                            </el-button>
-                                        </router-link>
-                                    </div>
                                 </div>
 
 
@@ -40,7 +33,7 @@
                         </div>
 
                         <div class="row pull-right search-block">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
 
                                 <el-select v-model="filter.brand_id" placeholder="Lọc theo thương hiệu"
                                            @change="onSearchChange()" clearable>
@@ -53,7 +46,7 @@
                                 </el-select>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
 
                                 <el-select v-model="filter.status" placeholder="Lọc theo trạng thái"
                                            @change="onSearchChange()" clearable>
@@ -66,20 +59,20 @@
                                 </el-select>
                             </div>
 
-                            <!-- <div class="col-sm-3">
+                            <div class="col-sm-3">
 
                                 <el-select v-model="filter.company_id" placeholder="Lọc theo cửa hàng"
                                            @change="onSearchChange()" clearable>
                                     <el-option
-                                            v-for="item in listStatus"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
+                                            v-for="item in companyArr"
+                                            :key="item.id"
+                                            :label="item.name"
+                                            :value="item.id">
                                     </el-option>
                                 </el-select>
-                            </div> -->
+                            </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <el-select v-model="filter.category_id" placeholder="Lọc theo danh mục"
                                            @change="onSearchChange()" clearable>
                                     <el-option
@@ -168,10 +161,11 @@
                                         </el-table-column>
 
                                         <el-table-column prop="actions" width="130">
+                                            
                                             <template slot-scope="scope">
-                                                <edit-button
-                                                  :to="{name: 'shop.product.edit', params: {productId: scope.row.id}}"></edit-button>
-                                                <delete-button :scope="scope" :rows="data"></delete-button>
+                                                <router-link :to="{name: 'admin.product.detail', params: {productId: scope.row.id}}">
+                                                    <i class="el-icon-view"></i>
+                                                </router-link>
                                             </template>
                                         </el-table-column>
                                     </el-table>
@@ -223,6 +217,7 @@
                 listLocales: window.MonCMS.locales,
                 brandArr: [],
                 categoryArr: [],
+                companyArr: [],
                 listCompany: [
                     {
                         value: 1,
@@ -254,10 +249,11 @@
                     status: this.filter.status,
                     brand_id: this.filter.brand_id,
                     category_id: this.filter.category_id,
+                    company_id: this.filter.company_id,
 
                 };
 
-                axios.get(route('apishop.product.index', _.merge(properties, customProperties)))
+                axios.get(route('api.product.index', _.merge(properties, customProperties)))
                     .then((response) => {
                         this.tableIsLoading = false;
                         this.data = response.data.data;
@@ -277,10 +273,10 @@
 
                 };
 
-                axios.get(route('apishop.brand.index', _.merge(properties, {})))
+                axios.get(route('api.brand.index', _.merge(properties, {})))
                 .then((response) => {
 
-                    this.brandArr = response.data;
+                    this.brandArr = response.data.data;
 
                 });
             },
@@ -291,10 +287,25 @@
 
                 };
 
-                axios.get(route('apishop.pcategory.index', _.merge(properties, {})))
+                axios.get(route('api.pcategory.index', _.merge(properties, {})))
                 .then((response) => {
 
-                    this.categoryArr = response.data;
+                    this.categoryArr = response.data.data;
+
+                });
+            },
+
+            fetchCompany() {
+                const properties = {
+                page: 0,
+                per_page: 1000,
+
+                };
+
+                axios.get(route('api.company.index', _.merge(properties, {})))
+                .then((response) => {
+
+                    this.companyArr = response.data.data;
 
                 });
             },
@@ -310,6 +321,7 @@
             this.fetchData();
             this.fetchBrand();
             this.fetchCategory();
+            this.fetchCompany()
 
         },
     }

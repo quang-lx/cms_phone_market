@@ -544,7 +544,7 @@
       fetchData() {
         this.loading = true;
         let locale = this.$route.params.locale ? this.$route.params.locale : 'en';
-        axios.get(route('api.product.find', {product: this.$route.params.productId}))
+        axios.get(route('apishop.product.find', {product: this.$route.params.productId}))
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
@@ -557,9 +557,9 @@
 
       getRoute() {
         if (this.$route.params.productId !== undefined) {
-          return route('api.product.update', {product: this.$route.params.productId});
+          return route('apishop.product.update', {product: this.$route.params.productId});
         }
-        return route('api.product.store');
+        return route('apishop.product.store');
       },
 
       fetchBrand() {
@@ -569,7 +569,7 @@
 
         };
 
-        axios.get(route('api.brand.index', _.merge(properties, {})))
+        axios.get(route('apishop.brand.index', _.merge(properties, {})))
         .then((response) => {
 
           this.brandArr = response.data.data;

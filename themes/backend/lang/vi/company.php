@@ -14,6 +14,9 @@ return [
         'description' => 'Miêu tả',
         'status' => 'Trạng thái',
         'level' => 'Cấp độ ưu tiên',
+        'province' => 'Tỉnh/TP',
+        'district' => 'Quận/Huyện',
+        'phoenix' => 'Xã/Phường',
 
         'create_title' => 'Tạo tài khoản',
         'update_title' => 'Cập nhật',
