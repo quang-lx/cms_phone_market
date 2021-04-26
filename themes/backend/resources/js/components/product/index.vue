@@ -17,11 +17,12 @@
 
                             </div>
                             <div class="col-sm-6">
-                                <div class="row pull-right">
+                                <div class="row  ">
 
-                                    <div class="col-6">
+                                    <div class="col-sm-6 offset-sm-6">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tên sản phẩm/SKU"
+                                                  style="width:100%"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
@@ -161,7 +162,7 @@
                                         </el-table-column>
 
                                         <el-table-column prop="actions" width="130">
-                                            
+
                                             <template slot-scope="scope">
                                                 <router-link :to="{name: 'admin.product.detail', params: {productId: scope.row.id}}">
                                                     <i class="el-icon-view"></i>
@@ -326,12 +327,12 @@
         },
     }
 
-    
+
 </script>
 
 <style scoped>
     .search-block {
         margin-top: 10px;
-        padding-right: 33px;
+
     }
 </style>

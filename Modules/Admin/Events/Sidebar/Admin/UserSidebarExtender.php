@@ -76,7 +76,15 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 $item->authorize(
                     $this->auth->hasAccess('admin.pcategory.index')
                 );
+	            $item->item(trans('backend::sidebar.product'), function (Item $item) {
 
+		            $item->weight(0);
+
+		            $item->route('admin.product.index');
+		            $item->authorize(
+			            $this->auth->hasAccess('admin.product.index')
+		            );
+	            });
                 $item->item(trans('backend::sidebar.attribute'), function (Item $item) {
 
                     $item->weight(0);

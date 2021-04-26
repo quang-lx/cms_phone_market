@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="modelForm&&modelForm.id">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -15,7 +15,7 @@
                 Sản phẩm {{ modelForm.name }}
               </el-breadcrumb-item>
             </el-breadcrumb>
-          </div>
+          </div>company
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
                                     >
                                     <span v-if="modelForm.category_name.length-1 == index"> {{item}}</span>
                                     <span v-else> {{item}},</span>
-                                  
+
                                   </span>
                               </div>
                               <div>
@@ -70,7 +70,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" v-if="modelForm.company">
                           <div>
                             {{ $t("product.label.company_id") }}:
                             {{ modelForm.company.name }}
@@ -133,10 +133,10 @@
                           Ảnh/Video
                               <div>
                                 <span
-                                    v-for="(item, index) in modelForm.filse"
+                                    v-for="(item, index) in modelForm.files"
                                     :key="index"
                                     >
-                                    <img :src="item.path_string" width="100" height="100" style="object-fit:contain"/>
+                                    <img :src="item.path_string" width="100" height="100" style="object-ielseit:contain"/>
                                 </span>
                              </div>
                         </div>
@@ -184,50 +184,13 @@ export default {
       loading: false,
       list_product: [],
       modelForm: {
-        description: "",
+
       },
       dialogRank: false,
       message: "",
     };
   },
   methods: {
-    onCancel() {
-      this.$confirm(this.$t("mon.cancel.Are you sure to cancel?"), {
-        confirmButtonText: this.$t("mon.cancel.Yes"),
-        cancelButtonText: this.$t("mon.cancel.No"),
-        type: "warning",
-      })
-        .then(() => {
-          this.$router.push({ name: "admin.product.index" });
-        })
-        .catch(() => {});
-    },
-
-
-    onSubmit() {
-      this.form = new Form(_.merge(this.modelForm, {}));
-      this.loading = true;
-
-      this.form
-        .post(this.getRoute())
-        .then((response) => {
-          this.loading = false;
-          this.dialogRank = false;
-          this.fetchData();
-          this.$message({
-            type: "success",
-            message: response.message,
-          });
-        })
-        .catch((error) => {
-          this.loading = false;
-          this.dialogRank = false;
-          this.$notify.error({
-            title: this.$t("mon.error.Title"),
-            message: this.getSubmitError(this.form.errors),
-          });
-        });
-    },
 
     fetchData() {
       let routeUri = "";
@@ -242,14 +205,6 @@ export default {
       });
     },
 
-    getRoute() {
-      if (this.$route.params.productId !== undefined) {
-        return route("api.product.update", {
-          product: this.$route.params.productId,
-        });
-      }
-      return route("api.product.store");
-    },
     showDataModal(key) {
       this.dialogRank = true;
     },
