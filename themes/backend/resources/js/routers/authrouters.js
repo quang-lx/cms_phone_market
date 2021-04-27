@@ -58,6 +58,8 @@ import AttributeList from './../components/attribute/index';
 import ProductDetail from './../components/product/detail';
 import ProductList from './../components/product/index';
 
+import PInformationForm from './../components/pinformation/form';
+import PInformationList from './../components/pinformation/index';
 
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
@@ -489,6 +491,29 @@ export default [
         component: ProductDetail,
         props: {
             pageTitle: 'product.label.detail_product',
+        },
+    },
+    //
+    {
+        path: '/admin/pinformation',
+        name: 'admin.pinformation.index',
+        component: PInformationList,
+    },
+    {
+        path: '/admin/pinformation/create',
+        name: 'admin.pinformation.create',
+        component: PInformationForm,
+        props: {
+            pageTitle: 'pinformation.label.create_title',
+        },
+    },
+
+    {
+        path: '/admin/pinformation/:pinformationId/edit',
+        name: 'admin.pinformation.edit',
+        component: PInformationForm,
+        props: {
+            pageTitle: 'pinformation.label.update_title',
         },
     },
  

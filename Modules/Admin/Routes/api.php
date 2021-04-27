@@ -509,7 +509,32 @@ Route::middleware('auth:api')->prefix('/products')->group(function (){
         'uses' => 'Product\ProductController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/pinformations')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.pinformation.index',
+        'uses' => 'PInformation\PInformationController@index',
+    ]);
+    Route::post('/{pinformation}/edit', [
+            'as' => 'api.pinformation.update',
+            'uses' => 'PInformation\PInformationController@update',
+        ]);
+   Route::get('/{pinformation}', [
+              'as' => 'api.pinformation.find',
+              'uses' => 'PInformation\PInformationController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.pinformation.store',
+        'uses' => 'PInformation\PInformationController@store',
+    ]);
+
+    Route::delete('/{pinformation}', [
+        'as' => 'api.pinformation.destroy',
+        'uses' => 'PInformation\PInformationController@destroy',
+    ]);
+});
 // append
+
 
 
 
