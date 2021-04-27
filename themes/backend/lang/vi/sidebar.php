@@ -48,6 +48,6 @@ return [
     'attribute' => 'Thuộc tính',
     'product' => 'Sản phẩm',
     'product information' => 'Thông tính chi tiết',
-
+    'voucher management' => 'Quản lý khuyến mại',
 
 ];

@@ -533,7 +533,32 @@ Route::middleware('auth:api')->prefix('/pinformations')->group(function (){
         'uses' => 'PInformation\PInformationController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.voucher.index',
+        'uses' => 'Voucher\VoucherController@index',
+    ]);
+    Route::post('/{voucher}/edit', [
+            'as' => 'api.voucher.update',
+            'uses' => 'Voucher\VoucherController@update',
+        ]);
+   Route::get('/{voucher}', [
+              'as' => 'api.voucher.find',
+              'uses' => 'Voucher\VoucherController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.voucher.store',
+        'uses' => 'Voucher\VoucherController@store',
+    ]);
+
+    Route::delete('/{voucher}', [
+        'as' => 'api.voucher.destroy',
+        'uses' => 'Voucher\VoucherController@destroy',
+    ]);
+});
 // append
+
 
 
 

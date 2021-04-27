@@ -253,7 +253,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\VoucherRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentVoucherRepository(new \Modules\Mon\Entities\Voucher());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

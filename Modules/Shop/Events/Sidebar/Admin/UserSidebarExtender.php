@@ -154,7 +154,16 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 $item->authorize(
                     $this->auth->hasAccess('shop.voucher.index')
                 );
-	            $item->route('shop.voucher.index');
+                
+                $item->item(trans('ch::sidebar.voucher management'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('shop.voucher.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('shop.voucher.index')
+                    );
+                });
 
             });
 

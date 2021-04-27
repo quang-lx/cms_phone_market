@@ -247,6 +247,30 @@ class UserSidebarExtender extends AbstractAdminSidebar
             });
         });
 
+        $menu->group('voucher management', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('backend::sidebar.voucher management'), function (Item $item) {
+                $item->icon('fa fa-gift');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('admin.voucher.index')
+                );
+
+                $item->item(trans('backend::sidebar.voucher management'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('admin.voucher.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('admin.voucher.index')
+                    );
+                });
+
+            });
+
+
+        });
+
         return $menu;
 
     }

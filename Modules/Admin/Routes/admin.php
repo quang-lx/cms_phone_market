@@ -487,7 +487,29 @@ Route::group(['prefix' => '/pinformation'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/voucher'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.voucher.index',
+        'uses' => 'Voucher\VoucherController@index',
+        'middleware' => 'permission:admin.voucher.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.voucher.create',
+        'uses' => 'Voucher\VoucherController@create',
+        'middleware' => 'permission:admin.voucher.create'
+    ]);
+
+    Route::get('{voucher}/edit', [
+        'as' => 'admin.voucher.edit',
+        'uses' => 'Voucher\VoucherController@edit',
+        'middleware' => 'permission:admin.voucher.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
