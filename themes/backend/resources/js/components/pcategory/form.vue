@@ -85,41 +85,6 @@
                           </el-form-item>
                         </div>
                         <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('pcategory.label.parent_id')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has(
-                                'parent_id'
-                              ),
-                            }"
-                          >
-                            <el-select
-                              v-model="modelForm.parent_id"
-                              placeholder="Select"
-                            >
-                              <el-option
-                                label="Chọn"
-                                value=""
-                              >
-                              
-                              </el-option>
-                    
-                              <el-option
-                                v-for="item in list_pcategory"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id"
-                              >
-                              </el-option>
-                            </el-select>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('parent_id')"
-                              v-text="form.errors.first('parent_id')"
-                            ></div>
-                          </el-form-item>
-                        </div>
-                        <div class="col-md-10">
                           <single-media
                             zone="thumbnail"
                             @singleFileSelected="

@@ -72,10 +72,6 @@
                                             </template>
                                         </el-table-column>
                                         <el-table-column  prop="name" :label="$t('pcategory.label.name')" sortable="custom">
-                                        <template slot-scope="scope">
-                                            <span  class="pl-4"  v-if="scope.row.parent_id">{{scope.row.name}}</span>
-                                            <span v-else>{{scope.row.name}}</span>
-                                            </template>
                                         </el-table-column>
                                         <el-table-column prop="type_name" :label="$t('pcategory.label.type')" sortable="custom">
 
