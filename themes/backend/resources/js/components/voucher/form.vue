@@ -429,7 +429,7 @@ export default {
       let locale = this.$route.params.locale ? this.$route.params.locale : "en";
       axios
         .get(
-          route("api.voucher.find", { voucher: this.$route.params.voucherId })
+          route("api.admin.voucher.find", { voucher: this.$route.params.voucherId })
         )
         .then((response) => {
           this.loading = false;
@@ -443,11 +443,11 @@ export default {
 
     getRoute() {
       if (this.$route.params.voucherId !== undefined) {
-        return route("api.voucher.update", {
+        return route("api.admin.voucher.update", {
           voucher: this.$route.params.voucherId,
         });
       }
-      return route("api.voucher.store");
+      return route("api.admin.voucher.store");
     },
     fetchProduct(queryString) {
       const properties = {

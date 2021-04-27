@@ -536,24 +536,24 @@ Route::middleware('auth:api')->prefix('/pinformations')->group(function (){
 Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
 
     Route::get('/', [
-        'as' => 'api.voucher.index',
+        'as' => 'api.admin.voucher.index',
         'uses' => 'Voucher\VoucherController@index',
     ]);
     Route::post('/{voucher}/edit', [
-            'as' => 'api.voucher.update',
+            'as' => 'api.admin.voucher.update',
             'uses' => 'Voucher\VoucherController@update',
         ]);
    Route::get('/{voucher}', [
-              'as' => 'api.voucher.find',
+              'as' => 'api.admin.voucher.find',
               'uses' => 'Voucher\VoucherController@find',
           ]);
     Route::post('/', [
-        'as' => 'api.voucher.store',
+        'as' => 'api.admin.voucher.store',
         'uses' => 'Voucher\VoucherController@store',
     ]);
 
     Route::delete('/{voucher}', [
-        'as' => 'api.voucher.destroy',
+        'as' => 'api.admin.voucher.destroy',
         'uses' => 'Voucher\VoucherController@destroy',
     ]);
 });

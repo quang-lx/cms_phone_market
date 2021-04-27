@@ -17,15 +17,15 @@
 
                             </div>
                             <div class="col-sm-8">
-                                <div class="row  ">
+                                <div class="row  pull-right">
 
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-6">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tìm theo mã giảm giá"
                                                   v-model="searchQuery" clearable>
                                         </el-input>
                                     </div>
-                                    <div class="col-sm-3 d-block">
+                                    <div class="col-sm-6 d-block">
                                         <router-link :to="{name: 'shop.voucher.create'}">
                                             <el-button type="primary" class="btn btn-flat d-block" style="width:100%">
                                                 {{ $t('voucher.label.btn_add_voucher') }}
@@ -67,7 +67,7 @@
                                         <el-table-column prop="id" :label="$t('voucher.label.id')" width="60" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop="title" :label="$t('voucher.label.title')" sortable="address" width="170">
+                                        <el-table-column prop="title" :label="$t('voucher.label.title')" sortable="address" width="70">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.title}}</span>
                                             </template>
@@ -76,23 +76,23 @@
                                         <el-table-column prop="code" :label="$t('voucher.label.code')" sortable="custom" width="120">
                                         </el-table-column>
 
-                                        <el-table-column prop="type" :label="$t('voucher.label.type_name')" sortable="custom" >
+                                        <el-table-column prop="type" :label="$t('voucher.label.type_name')" sortable="custom" width="100">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.type_name}}</span>
                                             </template>
                                         </el-table-column>
 
                                         <el-table-column prop="discount_amount" :label="$t('voucher.label.discount_amount')"
-                                            sortable="custom" width="180">
+                                            sortable="custom" width="80">
                                         </el-table-column>
 
-                                        <el-table-column prop="actived_at" :label="$t('voucher.label.status')" sortable="custom"  >
+                                        <el-table-column prop="actived_at" :label="$t('voucher.label.status')" sortable="custom" width="110" >
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.status_name}}</span>
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="total" :label="$t('voucher.label.total')" sortable="custom"  >
+                                        <el-table-column prop="total" :label="$t('voucher.label.total')" sortable="custom" width="130" >
                                         </el-table-column>
 
                                         <el-table-column prop="total_used" :label="$t('voucher.label.total_used')" sortable="custom" width="100">
