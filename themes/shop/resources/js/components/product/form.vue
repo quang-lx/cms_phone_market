@@ -96,7 +96,7 @@
                                 <div class="card-header"  >
                                     <h3 class="card-title">Thông tin chi tiêt</h3>
                                     <div class="card-tools">
-                                        <el-button size="mini"  icon="el-icon-plus" @click="addMoreInfo">Thêm</el-button>
+                                        <el-button size="mini" type="warning"  icon="el-icon-plus" @click="addMoreInfo">Thêm</el-button>
 
                                     </div>
                                 </div>
