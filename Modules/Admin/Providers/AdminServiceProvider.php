@@ -246,7 +246,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\PInformationRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentPInformationRepository(new \Modules\Mon\Entities\PInformation());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

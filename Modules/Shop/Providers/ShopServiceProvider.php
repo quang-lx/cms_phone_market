@@ -214,7 +214,15 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Shop\Repositories\PInformationRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentPInformationRepository(new \Modules\Mon\Entities\PInformation());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 
