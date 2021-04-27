@@ -119,6 +119,11 @@
                                         <div class="col-md-8">
                                             <el-input v-model="pinfo.value"></el-input>
                                         </div>
+                                        <div
+                                            class="col-md-1   text-right d-flex justify-content-end align-items-center">
+                                            <i class="el-icon-circle-close" style="color:red; cursor:pointer"
+                                               @click="removeInfo(key)"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -585,12 +590,7 @@
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
-          this.modelForm.pinformations = [
-            {
-              id:'',
-              value: ''
-            }
-          ];
+
           if (this.modelForm.category_id) {
             this.setCheckedKeys(this.modelForm.category_id)
           }
@@ -679,6 +679,9 @@
           id: '',
           value: ''
         })
+      },
+      removeInfo(index) {
+        this.modelForm.pinformations.splice(index,1)
       }
     },
     mounted() {

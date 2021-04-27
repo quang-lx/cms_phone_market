@@ -4,18 +4,18 @@ namespace Modules\Shop\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Mon\Entities\PInformation;
 use Modules\Mon\Entities\ProductAttributeValue;
+use Modules\Mon\Entities\ProductInformation;
 use Modules\Mon\Entities\ProductPrice;
 use Modules\Shop\Events\Product\ProductWasCreated;
 use Modules\Shop\Events\Product\ProductWasUpdated;
 use Modules\Shop\Repositories\ProductRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
-class EloquentProductRepository extends BaseRepository implements ProductRepository
-{
+class EloquentProductRepository extends BaseRepository implements ProductRepository {
 
-	public function create($data)
-	{
+	public function create($data) {
 
 		$model = $this->model->create($data);
 //		$this->syncPrice($model, $data['product_prices']);
@@ -25,6 +25,10 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		if (isset($data['problem_id']) && is_array($data['problem_id'])) {
 			$model->problems()->sync($data['problem_id']);
 		}
+		if (isset($data['pinformations']) && is_array($data['pinformations'])) {
+			$this->syncInformation($model, $data['pinformations']);
+		}
+
 		event(new ProductWasCreated($model, $data));
 
 		if (isset($data['attribute_id']) && $data['attribute_id']) {
@@ -37,8 +41,7 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		return $model;
 	}
 
-	public function update($model, $data)
-	{
+	public function update($model, $data) {
 
 		$model->update($data);
 //		$this->syncPrice($model, $data['product_prices']);
@@ -48,6 +51,11 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		if (isset($data['problem_id']) && is_array($data['problem_id'])) {
 			$model->problems()->sync($data['problem_id']);
 		}
+
+		if (isset($data['pinformations']) && is_array($data['pinformations'])) {
+			$this->syncInformation($model, $data['pinformations']);
+		}
+
 		event(new ProductWasUpdated($model, $data));
 		if (isset($data['attribute_id']) && $data['attribute_id']) {
 			$this->syncProductAttribute($model, $data['attribute_id']);
@@ -60,8 +68,9 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		return $model;
 	}
 
+
 	public function syncPrice($model, $productPrices) {
-		$selectedPrice= [];
+		$selectedPrice = [];
 		foreach ($productPrices as $item) {
 			if (isset($item['id']))
 				$selectedPrice[] = $item['id'];
@@ -70,7 +79,7 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		foreach ($productPrices as $item) {
 			if (isset($item['min']) && isset($item['max']) && isset($item['price'])) {
 				if (isset($item['id'])) {
-					ProductPrice::query()->where('id',$item['id'])->update([
+					ProductPrice::query()->where('id', $item['id'])->update([
 						'min' => $item['min'],
 						'max' => $item['max'],
 						'price' => $item['price'],
@@ -93,14 +102,61 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		$model->attributes()->detach();
 		$model->attributeValues()->detach();
 	}
+
 	public function syncProductAttribute($model, $productAttribute) {
 		if ($productAttribute) {
-			$model->attributes()->sync([$productAttribute]);
+			$model->attributes()->sync([ $productAttribute ]);
 		}
 	}
-	public function syncProductAttributeValues($model,$productAttribute, $productAttributeValues) {
+
+	public function syncInformation($model, $informations) {
+		$user = Auth::user();
+		if ($informations && is_array($informations)) {
+			$selectedValues = [];
+			foreach ($informations as $item) {
+				if (isset($item['id']) && is_int($item['id']))
+					$selectedValues[] = $item['id'];
+			}
+			ProductInformation::query()->where('product_id', $model->id)->whereNotIn('information_id', $selectedValues)->delete();
+			foreach ($informations as $item) {
+				if (isset($item['value']) && isset($item['id']) && !empty($item['id']) && !empty($item['value'])) {
+					$pinformation = null;
+					if (is_int($item['id'])) {
+						$pinformation = PInformation::query()->find($item['id']);
+					}
+
+					if (!$pinformation) {
+						$pinformation = PInformation::create([
+							'title' => $item['id'],
+							'company_id' => $user->company_id,
+							'shop_id' => $user->shop_id,
+						]);
+					}
+					$row = ProductInformation::query()->where([
+						'product_id' => $model->id,
+						'information_id' => $pinformation->id,
+					])->first();
+					if ($row) {
+						$row->update([
+							'value' => $item['value']
+
+						]);
+					} else {
+						ProductInformation::create([
+							'product_id' => $model->id,
+							'information_id' => $pinformation->id,
+							'value' => $item['value']
+						]);
+					}
+				}
+
+			}
+		}
+	}
+
+	public function syncProductAttributeValues($model, $productAttribute, $productAttributeValues) {
 		if ($productAttribute && is_array($productAttributeValues)) {
-			$selectedValues= [];
+			$selectedValues = [];
 			foreach ($productAttributeValues as $item) {
 				if (isset($item['id']))
 					$selectedValues[] = $item['id'];
@@ -110,8 +166,8 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 				if (isset($item['price']) && isset($item['sale_price']) && isset($item['amount'])) {
 					$row = ProductAttributeValue::query()->where([
 						'product_id' => $model->id,
-						'value_id'=> $item['id'],
-						])->first();
+						'value_id' => $item['id'],
+					])->first();
 					if ($row) {
 						$row->update([
 							'price' => $item['price'],
@@ -135,51 +191,50 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 		}
 	}
 
-    public function serverPagingFor(Request $request, $relations = null)
-    {
-        $query = $this->newQueryBuilder();
-        if ($relations) {
-            $query = $query->with($relations);
-        }
-
-		if ($request->get('category_id') !==null) {
-			$catId = $request->get('category_id');
-			$query->join('category_product','product.id','=','category_product.product_id')
-				->where('category_product.category_id',$catId)->select('product.*');
+	public function serverPagingFor(Request $request, $relations = null) {
+		$query = $this->newQueryBuilder();
+		if ($relations) {
+			$query = $query->with($relations);
 		}
 
-        if ($request->get('status') !== null) {
-            $status = $request->get('status');
-            $query->where('status', $status);
-        }
+		if ($request->get('category_id') !== null) {
+			$catId = $request->get('category_id');
+			$query->join('category_product', 'product.id', '=', 'category_product.product_id')
+				->where('category_product.category_id', $catId)->select('product.*');
+		}
 
-        $query->where('company_id', Auth::user()->company_id);
+		if ($request->get('status') !== null) {
+			$status = $request->get('status');
+			$query->where('status', $status);
+		}
 
-        if ($request->get('search') !== null) {
-            $keyword = $request->get('search');
-            $query->where(function ($q) use ($keyword) {
-                $q->orWhere('name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('sku', 'LIKE', "%{$keyword}%");
-            });
-        }
+		$query->where('company_id', Auth::user()->company_id);
 
-       if ($request->get('brand_id') !==null) {
-           $brandId = $request->get('brand_id');
-           $query->where('brand_id', $brandId);
-       }
+		if ($request->get('search') !== null) {
+			$keyword = $request->get('search');
+			$query->where(function ($q) use ($keyword) {
+				$q->orWhere('name', 'LIKE', "%{$keyword}%")
+					->orWhere('sku', 'LIKE', "%{$keyword}%");
+			});
+		}
 
-	   if ($request->get('source') == 'voucher'){
-		   $query->select('product.*','product.name AS value');
-	   }
+		if ($request->get('brand_id') !== null) {
+			$brandId = $request->get('brand_id');
+			$query->where('brand_id', $brandId);
+		}
 
-        if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
-            $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
+		if ($request->get('source') == 'voucher') {
+			$query->select('product.*', 'product.name AS value');
+		}
 
-            $query->orderBy($request->get('order_by'), $order);
-        } else {
-            $query->orderBy('product.id', 'desc');
-        }
+		if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
+			$order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
 
-        return $query->paginate($request->get('per_page', 10));
-    }
+			$query->orderBy($request->get('order_by'), $order);
+		} else {
+			$query->orderBy('product.id', 'desc');
+		}
+
+		return $query->paginate($request->get('per_page', 10));
+	}
 }

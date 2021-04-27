@@ -47,6 +47,7 @@ return [
     'customer' => 'Tài khoản khách hàng',
     'attribute' => 'Thuộc tính',
     'product' => 'Sản phẩm',
+    'product information' => 'Thông tính chi tiết',
 
 
 ];

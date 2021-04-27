@@ -47,7 +47,9 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class,'brand_id');
     }
-
+	public function productInformation() {
+		return $this->hasMany(ProductInformation::class, 'product_id');
+	}
     public function productAttributes() {
     	return $this->hasMany(ProductAttribute::class, 'product_id');
     }

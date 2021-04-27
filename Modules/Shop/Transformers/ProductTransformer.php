@@ -41,6 +41,7 @@ class ProductTransformer extends JsonResource
 
             'problem_id' => $this->problems->pluck('id'),
             'attribute_id' => $attribute,
+            'pinformations' => $this->getInformations($this->productInformation),
             'attribute_selected' => $attribute? $this->getAttributeValues($this->attributes->first(), $this->productAttributeValues): null,
             'value' => $this->value, //trả về thêm value dùng cho Autocomplete search tạo mới voucher
              'urls' => [
@@ -75,6 +76,18 @@ class ProductTransformer extends JsonResource
 		$attibute->values = $newValues;
 		return $attibute;
 	}
+	public function getInformations($asm) {
+		$newValues = [];
+		foreach ($asm as $value) {
 
+			$newValues[] = [
+				'id' => $value->information_id,
+				'value' => $value->value
+			];
+
+
+		}
+		 return $newValues;
+	}
 
 }

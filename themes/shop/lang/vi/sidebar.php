@@ -39,6 +39,7 @@ return [
     'information' => 'Thông tin cửa hàng',
     'voucher management' => 'Quản lý Voucher',
     'attribute' => 'Thuộc tính',
+	'product information' => 'Thông tính chi tiết',
 
 
 

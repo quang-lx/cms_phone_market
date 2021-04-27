@@ -132,7 +132,15 @@ class UserSidebarExtender extends AbstractAdminSidebar
 		            );
 	            });
 
+	            $item->item(trans('ch::sidebar.product information'), function (Item $item) {
 
+		            $item->weight(0);
+
+		            $item->route('shop.pinformation.index');
+		            $item->authorize(
+			            $this->auth->hasAccess('shop.pinformation.index')
+		            );
+	            });
             });
 
 
