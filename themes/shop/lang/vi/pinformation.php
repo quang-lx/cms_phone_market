@@ -1,20 +1,19 @@
 <?php
 return [
     'label' => [
-        'banners' => 'Banners',
+        'pinformation' => 'Thông tin',
         'id' => 'ID',
-        'description' => 'Mô tả',
-        'image' => 'Ảnh',
+        'title' => 'Tiêu đề',
 
-        'create_title' => 'Tạo banner',
-        'update_title' => 'Cập nhật banners',
+        'create_title' => 'Tạo thông tin',
+        'update_title' => 'Cập nhật thông tin',
         'detail_title' => 'Chi tiết'
     ],
 
     'message' => [
-        'create success' => 'Tạo banner thành công.',
-        'update success' => 'Cập nhật banner thành công.',
-        'delete success' => 'Xóa banner thành công.',
+        'create success' => 'Tạo thông tin thành công.',
+        'update success' => 'Cập nhật thông tin thành công.',
+        'delete success' => 'Xóa thông tin thành công.',
     ]
 
 ];

@@ -23,6 +23,7 @@ class EloquentPInformationRepository extends BaseRepository implements PInformat
         } else {
             $query->orderBy('created_at', 'desc');
         }
+         $query->where('company_id',Auth::user()->company_id );
 
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');
@@ -37,11 +38,9 @@ class EloquentPInformationRepository extends BaseRepository implements PInformat
     }
     public function create($data)
     {
-    	$data['company_id'] = Auth::user()->id;
+    	$data['company_id'] = Auth::user()->company_id;
     	$data['shop_id'] = Auth::user()->shop_id;
-        $model =  $this->model->create($data);
-        $model->attributeValues()->createMany($data['list_attribute_value']);
-
+        $this->model->create($data);
 
     }
 }

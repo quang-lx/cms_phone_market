@@ -260,24 +260,24 @@ Route::middleware('auth:api')->prefix('/attributes')->group(function (){
 Route::middleware('auth:api')->prefix('/pinformations')->group(function (){
 
     Route::get('/', [
-        'as' => 'api.pinformation.index',
+        'as' => 'apishop.pinformation.index',
         'uses' => 'PInformation\PInformationController@index',
     ]);
     Route::post('/{pinformation}/edit', [
-            'as' => 'api.pinformation.update',
+            'as' => 'apishop.pinformation.update',
             'uses' => 'PInformation\PInformationController@update',
         ]);
    Route::get('/{pinformation}', [
-              'as' => 'api.pinformation.find',
+              'as' => 'apishop.pinformation.find',
               'uses' => 'PInformation\PInformationController@find',
           ]);
     Route::post('/', [
-        'as' => 'api.pinformation.store',
+        'as' => 'apishop.pinformation.store',
         'uses' => 'PInformation\PInformationController@store',
     ]);
 
     Route::delete('/{pinformation}', [
-        'as' => 'api.pinformation.destroy',
+        'as' => 'apishop.pinformation.destroy',
         'uses' => 'PInformation\PInformationController@destroy',
     ]);
 });
