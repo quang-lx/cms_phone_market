@@ -6,9 +6,9 @@
           <div class="col-12">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item>
-                <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
+                <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'admin.pinformation.index' }"
+              <el-breadcrumb-item :to="{ name: 'shop.pinformation.index' }"
                 >{{ $t("pinformation.label.pinformation") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
@@ -117,7 +117,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "admin.pinformation.index" });
+          this.$router.push({ name: "shop.pinformation.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -135,7 +135,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "admin.pinformation.index" });
+          this.$router.push({ name: "shop.pinformation.index" });
         })
         .catch(() => {});
     },
@@ -144,7 +144,7 @@ export default {
       let routeUri = "";
       if (this.$route.params.pinformationId !== undefined) {
         this.loading = true;
-        routeUri = route("api.pinformation.find", {
+        routeUri = route("apishop.pinformation.find", {
           pinformation: this.$route.params.pinformationId,
         });
         axios.get(routeUri).then((response) => {
@@ -159,11 +159,11 @@ export default {
 
     getRoute() {
       if (this.$route.params.pinformationId !== undefined) {
-        return route("api.pinformation.update", {
+        return route("apishop.pinformation.update", {
           pinformation: this.$route.params.pinformationId,
         });
       }
-      return route("api.pinformation.store");
+      return route("apishop.pinformation.store");
     },
   },
   mounted() {

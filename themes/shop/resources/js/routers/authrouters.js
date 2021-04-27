@@ -24,6 +24,10 @@ import VoucherForm from './../components/voucher/form';
 
 import AttributeForm from './../components/attribute/form';
 import AttributeList from './../components/attribute/index';
+
+import PInformationForm from './../components/pinformation/form';
+import PInformationList from './../components/pinformation/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -185,5 +189,30 @@ export default [
             pageTitle: 'attribute.label.update_title',
         },
     },
+
+      //
+      {
+        path: '/shop-admin/pinformation',
+        name: 'shop.pinformation.index',
+        component: PInformationList,
+    },
+    {
+        path: '/shop-admin/pinformation/create',
+        name: 'shop.pinformation.create',
+        component: PInformationForm,
+        props: {
+            pageTitle: 'pinformation.label.create_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/pinformation/:pinformationId/edit',
+        name: 'shop.pinformation.edit',
+        component: PInformationForm,
+        props: {
+            pageTitle: 'pinformation.label.update_title',
+        },
+    },
+ 
 
 ];

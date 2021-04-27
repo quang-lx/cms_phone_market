@@ -8,7 +8,9 @@ class CreatePInformationRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'title' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +25,9 @@ class CreatePInformationRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'title.required' => 'Tiêu đề là bắt buộc',
+        ];
     }
 
     public function translationMessages()

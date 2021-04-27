@@ -14,6 +14,7 @@ class PInformationTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
+            'title' => $this->title,
 
 
              'urls' => [

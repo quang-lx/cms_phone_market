@@ -169,20 +169,20 @@ Route::group(['prefix' => '/voucher'], function ( ) {
 Route::group(['prefix' => '/pinformation'], function ( ) {
 
     Route::get('/', [
-        'as' => 'admin.pinformation.index',
+        'as' => 'shop.pinformation.index',
         'uses' => 'PInformation\PInformationController@index',
-        'middleware' => 'permission:admin.pinformation.index'
+        'middleware' => 'permission:shop.pinformation.index'
     ]);
     Route::get('create', [
-        'as' => 'admin.pinformation.create',
+        'as' => 'shop.pinformation.create',
         'uses' => 'PInformation\PInformationController@create',
-        'middleware' => 'permission:admin.pinformation.create'
+        'middleware' => 'permission:shop.pinformation.create'
     ]);
 
     Route::get('{pinformation}/edit', [
-        'as' => 'admin.pinformation.edit',
+        'as' => 'shop.pinformation.edit',
         'uses' => 'PInformation\PInformationController@edit',
-        'middleware' => 'permission:admin.pinformation.edit'
+        'middleware' => 'permission:shop.pinformation.edit'
     ]);
 
 

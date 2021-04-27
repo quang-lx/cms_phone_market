@@ -36,7 +36,7 @@ class EloquentAttributeRepository extends BaseRepository implements AttributeRep
 
     public function create($data)
     {
-    	$data['company_id'] = Auth::user()->id;
+    	$data['company_id'] = Auth::user()->company_id;
         $model =  $this->model->create($data);
         $model->attributeValues()->createMany($data['list_attribute_value']);
 
