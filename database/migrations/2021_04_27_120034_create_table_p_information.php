@@ -21,7 +21,7 @@ class CreateTablePInformation extends Migration
             $table->timestamps();
             $table->softDeletes();
 	        $table->index('shop_id');
-	        $table->index('shop_id');
+	        $table->index('company_id');
 
         });
 	    Schema::create('production_information', function (Blueprint $table) {
@@ -32,7 +32,8 @@ class CreateTablePInformation extends Migration
 
 		    $table->timestamps();
 		    $table->softDeletes();
-
+		    $table->index('information_id');
+		    $table->index('product_id');
 	    });
     }
 
