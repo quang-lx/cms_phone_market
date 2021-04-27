@@ -28,6 +28,9 @@ import AttributeList from './../components/attribute/index';
 import PInformationForm from './../components/pinformation/form';
 import PInformationList from './../components/pinformation/index';
 
+import VtCategoryForm from './../components/vtcategory/form';
+import VtCategoryList from './../components/vtcategory/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -191,7 +194,7 @@ export default [
     },
 
       //
-      {
+    {
         path: '/shop-admin/pinformation',
         name: 'shop.pinformation.index',
         component: PInformationList,
@@ -211,6 +214,30 @@ export default [
         component: PInformationForm,
         props: {
             pageTitle: 'pinformation.label.update_title',
+        },
+    },
+
+       //
+    {
+        path: '/shop-admin/vtcategory',
+        name: 'shop.vtcategory.index',
+        component: VtCategoryList,
+    },
+    {
+        path: '/shop-admin/vtcategory/create',
+        name: 'shop.vtcategory.create',
+        component: VtCategoryForm,
+        props: {
+            pageTitle: 'vtcategory.label.create_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/vtcategory/:vtcategoryId/edit',
+        name: 'shop.vtcategory.edit',
+        component: VtCategoryForm,
+        props: {
+            pageTitle: 'vtcategory.label.update_title',
         },
     },
  

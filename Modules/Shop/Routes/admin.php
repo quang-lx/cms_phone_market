@@ -187,7 +187,29 @@ Route::group(['prefix' => '/pinformation'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/vtcategory'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.vtcategory.index',
+        'uses' => 'VtCategory\VtCategoryController@index',
+        'middleware' => 'permission:shop.vtcategory.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.vtcategory.create',
+        'uses' => 'VtCategory\VtCategoryController@create',
+        'middleware' => 'permission:shop.vtcategory.create'
+    ]);
+
+    Route::get('{vtcategory}/edit', [
+        'as' => 'shop.vtcategory.edit',
+        'uses' => 'VtCategory\VtCategoryController@edit',
+        'middleware' => 'permission:shop.vtcategory.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

@@ -221,7 +221,15 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Shop\Repositories\VtCategoryRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentVtCategoryRepository(new \Modules\Mon\Entities\VtCategory());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 
