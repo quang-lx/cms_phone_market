@@ -92,6 +92,36 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-header"  >
+                                    <h3 class="card-title">Thông tin chi tiêt</h3>
+                                    <div class="card-tools">
+                                        <el-button size="mini"  icon="el-icon-plus" @click="addMoreInfo">Thêm</el-button>
+
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mt-2" v-for="(pinfo,key) in modelForm.pinformations" :key="key">
+                                        <div class="col-md-3">
+                                            <el-select
+                                                v-model="pinfo.id"
+                                                allow-create
+                                                filterable
+                                                placeholder="Chọn nhãn">
+                                                <el-option
+                                                    v-for="item in list_information"
+                                                    :key="item.id"
+                                                    :label="item.title"
+                                                    :value="item.id">
+                                                </el-option>
+                                            </el-select>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <el-input v-model="pinfo.value"></el-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="card">
                                 <div class="card-header">
@@ -468,6 +498,12 @@
           amount: '',
           category_id: [],
           problem_id: [],
+          pinformations: [
+            {
+              id:'',
+              value: ''
+            }
+          ],
           attribute_id: '',
           attribute_selected: null,
 
@@ -477,6 +513,7 @@
         category_tree_data: [],
         list_problem: [],
         list_attribute: [],
+        list_information: [],
         listStatus: [
           {
             value: 1,
@@ -548,6 +585,12 @@
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
+          this.modelForm.pinformations = [
+            {
+              id:'',
+              value: ''
+            }
+          ];
           if (this.modelForm.category_id) {
             this.setCheckedKeys(this.modelForm.category_id)
           }
@@ -589,6 +632,7 @@
           this.category_tree_data = response.data.categories_tree;
           this.list_problem = response.data.list_problem;
           this.list_attribute = response.data.list_attribute;
+          this.list_information = response.data.list_information;
 
         });
       },
@@ -629,6 +673,12 @@
           this.modelForm.attribute_selected.values.push(_.cloneDeep(this.values[valueIndex]))
           this.value_id = ''
         }
+      },
+      addMoreInfo() {
+        this.modelForm.pinformations.push({
+          id: '',
+          value: ''
+        })
       }
     },
     mounted() {

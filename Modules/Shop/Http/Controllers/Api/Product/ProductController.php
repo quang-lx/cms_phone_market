@@ -8,6 +8,7 @@ use Modules\Mon\Entities\Attribute;
 use Modules\Mon\Entities\Product;
 use Modules\Shop\Http\Requests\Product\CreateProductRequest;
 use Modules\Shop\Repositories\PcategoryRepository;
+use Modules\Shop\Repositories\PInformationRepository;
 use Modules\Shop\Repositories\ProblemRepository;
 use Modules\Shop\Transformers\AttributeTransformer;
 use Modules\Shop\Transformers\ProductTransformer;
@@ -33,13 +34,21 @@ class ProductController extends ApiController
 	 * @var ProblemRepository
 	 */
 	private $problemRepo;
-    public function __construct(Authentication $auth, ProductRepository $product, PcategoryRepository $pcategory, ProblemRepository $problemRepo)
+
+
+	/**
+	 * @var PInformationRepository
+	 */
+	private $pinformationRepository;
+
+    public function __construct(Authentication $auth, ProductRepository $product, PcategoryRepository $pcategory, ProblemRepository $problemRepo, PInformationRepository $pinformationRepository)
     {
         parent::__construct($auth);
 
         $this->productRepository = $product;
 	    $this->pcategoryRepository = $pcategory;
 	    $this->problemRepo = $problemRepo;
+	    $this->pinformationRepository = $pinformationRepository;
     }
 
 
@@ -102,12 +111,14 @@ class ProductController extends ApiController
 		$categoriesTreeData =  $this->pcategoryRepository->serverPagingForTree($request);
 		$problemList =  $this->problemRepo->getList($request);
 		$listAttribute = $this->listAttribute();
+		$listInformation = $this->pinformationRepository->listAll();
 
 		return response()->json([
 
 			'categories_tree' => $categoriesTreeData,
 			'list_problem' => $problemList,
 			'list_attribute' => $listAttribute,
+			'list_information' => $listInformation
 		]);
 	}
 

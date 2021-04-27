@@ -6,4 +6,5 @@ use Modules\Mon\Repositories\BaseRepository;
 
 interface PInformationRepository extends BaseRepository
 {
+	public function listAll();
 }

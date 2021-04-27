@@ -32,9 +32,9 @@ class EloquentPInformationRepository extends BaseRepository implements PInformat
             });
         }
         return $query->paginate($request->get('per_page', 10));
-        
 
-        
+
+
     }
     public function create($data)
     {
@@ -43,4 +43,8 @@ class EloquentPInformationRepository extends BaseRepository implements PInformat
         $this->model->create($data);
 
     }
+
+	public function listAll() {
+    	return $this->all();
+	}
 }
