@@ -5,10 +5,10 @@ namespace Modules\Shop\Repositories\Eloquent;
 use Illuminate\Http\Request;
 use Modules\Admin\Events\VtCategory\VtCategoryWasCreated;
 use Modules\Admin\Events\VtCategory\VtCategoryWasUpdated;
-use Modules\Admin\Repositories\PcategoryRepository;
+use Modules\Shop\Repositories\VtCategoryRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
-class EloquentVtCategoryRepository extends BaseRepository implements PcategoryRepository
+class EloquentVtCategoryRepository extends BaseRepository implements VtCategoryRepository
 {
     protected $categories;
 
@@ -83,10 +83,4 @@ class EloquentVtCategoryRepository extends BaseRepository implements PcategoryRe
         return array_slice($data, $from, $per_page);
     }
 
-
-    public function destroy($model)
-    {
-        $model->delete();
-        return $model->brand()->detach();
-    }
 }

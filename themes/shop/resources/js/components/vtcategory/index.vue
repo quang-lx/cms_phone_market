@@ -8,7 +8,7 @@
               <div class="col-sm-3 d-flex align-items-center">
                 <el-breadcrumb separator="/">
                   <el-breadcrumb-item>
-                    <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
+                    <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
                   </el-breadcrumb-item>
                   <el-breadcrumb-item
                     >{{ $t("vtcategory.label.vtcategory") }}
@@ -26,7 +26,7 @@
                     </el-input>
                   </div>
                   <div class="col-sm-4">
-                    <router-link :to="{ name: 'admin.vtcategory.create' }">
+                    <router-link :to="{ name: 'shop.vtcategory.create' }">
                       <el-button type="primary" class="btn btn-flat">
                         {{ $t("vtcategory.label.create_vtcategory") }}
                       </el-button>
@@ -82,12 +82,7 @@
                       :label="$t('vtcategory.label.name')"
                       sortable="custom"
                     >
-                    </el-table-column>
-                    <el-table-column
-                      :label="$t('vtcategory.label.type')"
-                      sortable="custom"
-                    >
-                      <template slot-scope="scope">
+                     <template slot-scope="scope">
                         <span class="pl-4" v-if="scope.row.parent_id">{{
                           scope.row.name
                         }}</span>
@@ -99,7 +94,7 @@
                       <template slot-scope="scope">
                         <edit-button
                           :to="{
-                            name: 'admin.vtcategory.edit',
+                            name: 'shop.vtcategory.edit',
                             params: { vtcategoryId: scope.row.id },
                           }"
                         ></edit-button>
@@ -157,7 +152,7 @@ export default {
 
       axios
         .get(
-          route("shopapi.vtcategory.index", _.merge(properties, customProperties))
+          route("apishop.vtcategory.index", _.merge(properties, customProperties))
         )
         .then((response) => {
           this.tableIsLoading = false;

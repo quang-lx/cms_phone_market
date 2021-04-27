@@ -46,7 +46,7 @@ class VtCategoryController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::vtcategory.message.create success'),
+            'message' => trans('ch::vtcategory.message.create success'),
         ]);
     }
 
@@ -62,7 +62,7 @@ class VtCategoryController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::vtcategory.message.update success'),
+            'message' => trans('ch::vtcategory.message.update success'),
         ]);
     }
 
@@ -72,7 +72,7 @@ class VtCategoryController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::vtcategory.message.delete success'),
+            'message' => trans('ch::vtcategory.message.delete success'),
         ]);
     }
 }

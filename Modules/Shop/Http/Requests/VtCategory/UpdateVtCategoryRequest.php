@@ -8,7 +8,9 @@ class UpdateVtCategoryRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +25,9 @@ class UpdateVtCategoryRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'name.required' => 'Tên là bắt buộc',
+        ];
     }
 
     public function translationMessages()

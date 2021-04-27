@@ -14,10 +14,13 @@ class VtCategoryTransformer extends JsonResource
     {
         $data = [
             'id' => $this->id,
-
-
+            'name' => $this->name,
+            'type' => $this->type,
+            'type_name' => $this->type_name,
+            'parent_id' => $this->parent_id,
+            'thumbnail' => $this->thumbnail,
              'urls' => [
-                'delete_url' => route('api.vtcategory.destroy', $this->id),
+                'delete_url' => route('apishop.vtcategory.destroy', $this->id),
             ],
 
         ];

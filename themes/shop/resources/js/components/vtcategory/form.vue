@@ -6,10 +6,10 @@
           <div class="col-12">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item>
-                <a href="/admin">{{ $t("mon.breadcrumb.home") }}</a>
+                <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'admin.pcategory.index' }"
-                >{{ $t("pcategory.label.pcategory") }}
+              <el-breadcrumb-item :to="{ name: 'shop.vtcategory.index' }"
+                >{{ $t("vtcategory.label.vtcategory") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
             </el-breadcrumb>
@@ -46,7 +46,7 @@
                       <div class="row">
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('pcategory.label.name')"
+                            :label="$t('vtcategory.label.name')"
                             :class="{
                               'el-form-item is-error': form.errors.has('name'),
                             }"
@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('pcategory.label.parent_id')"
+                            :label="$t('vtcategory.label.parent_id')"
                             :class="{
                               'el-form-item is-error': form.errors.has(
                                 'parent_id'
@@ -80,7 +80,7 @@
                               </el-option>
                     
                               <el-option
-                                v-for="item in list_pcategory"
+                                v-for="item in list_vtcategory"
                                 :key="item.id"
                                 :label="item.name"
                                 :value="item.id"
@@ -101,8 +101,8 @@
                               selectSingleFile($event, 'modelForm')
                             "
                             label="Ảnh đại diện"
-                            entity="Modules\Mon\Entities\Pcategory"
-                            :entity-id="$route.params.pcategoryId"
+                            entity="Modules\Mon\Entities\vtcategory"
+                            :entity-id="$route.params.vtcategoryId"
                           ></single-media>
                           <div
                             class="el-form-item__error"
@@ -156,7 +156,7 @@ export default {
     return {
       form: new Form(),
       loading: false,
-      list_pcategory: [],
+      list_vtcategory: [],
       modelForm: {
         name: "",
         type: "",
@@ -187,7 +187,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "admin.pcategory.index" });
+          this.$router.push({ name: "shop.vtcategory.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -205,17 +205,17 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "admin.pcategory.index" });
+          this.$router.push({ name: "shop.vtcategory.index" });
         })
         .catch(() => {});
     },
 
     fetchData() {
       let routeUri = "";
-      if (this.$route.params.pcategoryId !== undefined) {
+      if (this.$route.params.vtcategoryId !== undefined) {
         this.loading = true;
-        routeUri = route("shopapi.pcategory.find", {
-          pcategory: this.$route.params.pcategoryId,
+        routeUri = route("apishop.vtcategory.find", {
+          vtcategory: this.$route.params.vtcategoryId,
         });
         axios.get(routeUri).then((response) => {
           this.loading = false;
@@ -227,28 +227,28 @@ export default {
       }
     },
 
-    fetchPcategory() {
+    fetchvtcategory() {
       let routeUri = "";
       this.loading = true;
-      routeUri = route("shopapi.pcategory.index", { page: 1, per_page: 1000,parent_id:0,id_edit:this.$route.params.pcategoryId });
+      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000,parent_id:0,id_edit:this.$route.params.vtcategoryId });
       axios.get(routeUri).then((response) => {
         this.loading = false;
-        this.list_pcategory = response.data.data;
+        this.list_vtcategory = response.data.data;
       });
     },
 
     getRoute() {
-      if (this.$route.params.pcategoryId !== undefined) {
-        return route("shopapi.pcategory.update", {
-          pcategory: this.$route.params.pcategoryId,
+      if (this.$route.params.vtcategoryId !== undefined) {
+        return route("apishop.vtcategory.update", {
+          vtcategory: this.$route.params.vtcategoryId,
         });
       }
-      return route("shopapi.pcategory.store");
+      return route("apishop.vtcategory.store");
     },
   },
   mounted() {
     this.fetchData();
-    this.fetchPcategory();
+    this.fetchvtcategory();
   },
   computed: {},
 };

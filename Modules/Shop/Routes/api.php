@@ -284,24 +284,24 @@ Route::middleware('auth:api')->prefix('/pinformations')->group(function (){
 Route::middleware('auth:api')->prefix('/vtcategories')->group(function (){
 
     Route::get('/', [
-        'as' => 'api.vtcategory.index',
+        'as' => 'apishop.vtcategory.index',
         'uses' => 'VtCategory\VtCategoryController@index',
     ]);
     Route::post('/{vtcategory}/edit', [
-            'as' => 'api.vtcategory.update',
+            'as' => 'apishop.vtcategory.update',
             'uses' => 'VtCategory\VtCategoryController@update',
         ]);
    Route::get('/{vtcategory}', [
-              'as' => 'api.vtcategory.find',
+              'as' => 'apishop.vtcategory.find',
               'uses' => 'VtCategory\VtCategoryController@find',
           ]);
     Route::post('/', [
-        'as' => 'api.vtcategory.store',
+        'as' => 'apishop.vtcategory.store',
         'uses' => 'VtCategory\VtCategoryController@store',
     ]);
 
     Route::delete('/{vtcategory}', [
-        'as' => 'api.vtcategory.destroy',
+        'as' => 'apishop.vtcategory.destroy',
         'uses' => 'VtCategory\VtCategoryController@destroy',
     ]);
 });
