@@ -38,7 +38,7 @@
                 >
                     <div class="row">
 
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="card">
 
                                 <div class="card-body">
@@ -238,7 +238,51 @@
 
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 ">
+                                            <el-form-item :label="$t('product.label.type')"
+                                                          :class="{'el-form-item is-error': form.errors.has('type') }">
+                                                <el-radio-group v-model="modelForm.type">
+                                                    <el-radio v-for = "(item, key) in list_type" :label="item.value" :key="key">{{item.label}}</el-radio>
+
+                                                </el-radio-group>
+
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('type')"
+                                                     v-text="form.errors.first('type')"></div>
+                                            </el-form-item>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <el-form-item :label="$t('product.label.warranty_time')"
+                                                          :class="{'el-form-item is-error': form.errors.has('warranty_time') }">
+
+                                                <el-input-number :min="0"
+                                                                 :max="100000000" v-model="modelForm.warranty_time"></el-input-number>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('warranty_time')"
+                                                     v-text="form.errors.first('warranty_time')"></div>
+                                            </el-form-item>
+                                        </div>
+                                        <div class="col-md-6" v-if="modelForm.type == 2">
+                                            <el-form-item :label="$t('product.label.fix_time')"
+                                                          :class="{'el-form-item is-error': form.errors.has('fix_time') }">
+
+                                                <el-input-number :min="0"
+                                                                 :max="100000000" v-model="modelForm.fix_time"></el-input-number>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('fix_time')"
+                                                     v-text="form.errors.first('fix_time')"></div>
+                                            </el-form-item>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="card">
 
                                 <div class="card-body">
@@ -345,7 +389,7 @@
                                             </el-form-item>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.p_weight')"
                                                           :class="{'el-form-item is-error': form.errors.has('p_weight') }">
 
@@ -356,7 +400,7 @@
                                                      v-text="form.errors.first('p_weight')"></div>
                                             </el-form-item>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.s_long')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_long') }">
 
@@ -367,7 +411,7 @@
                                                      v-text="form.errors.first('s_long')"></div>
                                             </el-form-item>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.s_width')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_width') }">
 
@@ -378,7 +422,7 @@
                                                      v-text="form.errors.first('s_width')"></div>
                                             </el-form-item>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.s_height')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_height') }">
 
@@ -411,7 +455,7 @@
                                                      v-text="form.errors.first('amount')"></div>
                                             </el-form-item>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.price')"
                                                           :class="{'el-form-item is-error': form.errors.has('price') }">
 
@@ -422,7 +466,7 @@
                                                      v-text="form.errors.first('price')"></div>
                                             </el-form-item>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.sale_price')"
                                                           :class="{'el-form-item is-error': form.errors.has('sale_price') }">
 
@@ -509,6 +553,16 @@
         form: new Form(),
         loading: false,
         list_selected_values: [],
+        list_type: [
+          {
+            value: 1,
+            label: 'Sản phẩm bán hàng'
+          },
+          {
+            value: 2,
+            label: 'Sản phẩm sửa chữa'
+          }
+        ],
         modelForm: {
           name: '',
           description: '',
@@ -533,6 +587,9 @@
           ],
           attribute_id: '',
           attribute_selected: null,
+          type: null,
+          warranty_time: null,
+          fix_time: null,
 
         },
         locales: window.MonCMS.locales,
