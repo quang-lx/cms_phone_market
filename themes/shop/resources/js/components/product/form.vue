@@ -181,6 +181,22 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-2 col-sm-6"> </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            Giá
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            Giá khuyến mại
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            Số lượng
+                                                        </div>
+                                                        <div
+                                                            class="col-md-1 col-sm-6 text-right d-flex justify-content-end align-items-center">
+                                                          
+                                                        </div>
+                                                    </div>
                                                     <div class="row"
                                                          v-for="(itemValue, valueKey) in modelForm.attribute_selected.values"
                                                          :key="valueKey">
@@ -333,7 +349,8 @@
                                             <el-form-item :label="$t('product.label.p_weight')"
                                                           :class="{'el-form-item is-error': form.errors.has('p_weight') }">
 
-                                                <el-input v-model="modelForm.p_weight"></el-input>
+                                                <el-input-number :min="0"
+                                                                 :max="100000000" v-model="modelForm.p_weight"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('p_weight')"
                                                      v-text="form.errors.first('p_weight')"></div>
@@ -343,7 +360,8 @@
                                             <el-form-item :label="$t('product.label.s_long')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_long') }">
 
-                                                <el-input v-model="modelForm.s_long"></el-input>
+                                                <el-input-number :min="0"
+                                                                 :max="100000000" v-model="modelForm.s_long"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_long')"
                                                      v-text="form.errors.first('s_long')"></div>
@@ -353,7 +371,8 @@
                                             <el-form-item :label="$t('product.label.s_width')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_width') }">
 
-                                                <el-input v-model="modelForm.s_width"></el-input>
+                                                <el-input-number :min="0"
+                                                                 :max="100000000" v-model="modelForm.s_width"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_width')"
                                                      v-text="form.errors.first('s_width')"></div>
@@ -363,7 +382,8 @@
                                             <el-form-item :label="$t('product.label.s_height')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_height') }">
 
-                                                <el-input v-model="modelForm.s_height"></el-input>
+                                                <el-input-number :min="0"
+                                                          :max="100000000" v-model="modelForm.s_height"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_height')"
                                                      v-text="form.errors.first('s_height')"></div>
@@ -395,7 +415,8 @@
                                             <el-form-item :label="$t('product.label.price')"
                                                           :class="{'el-form-item is-error': form.errors.has('price') }">
 
-                                                <el-input v-model="modelForm.price"></el-input>
+                                                <el-input-number :min="0"
+                                                                 :max="100000000" v-model="modelForm.price"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('price')"
                                                      v-text="form.errors.first('price')"></div>
@@ -405,7 +426,8 @@
                                             <el-form-item :label="$t('product.label.sale_price')"
                                                           :class="{'el-form-item is-error': form.errors.has('sale_price') }">
 
-                                                <el-input v-model="modelForm.sale_price"></el-input>
+                                                <el-input-number :min="0"
+                                                                 :max="100000000" v-model="modelForm.sale_price"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('sale_price')"
                                                      v-text="form.errors.first('sale_price')"></div>
