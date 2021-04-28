@@ -31,6 +31,9 @@ import PInformationList from './../components/pinformation/index';
 import VtCategoryForm from './../components/vtcategory/form';
 import VtCategoryList from './../components/vtcategory/index';
 
+import VtProductForm from './../components/vtproduct/form';
+import VtProductList from './../components/vtproduct/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -238,6 +241,30 @@ export default [
         component: VtCategoryForm,
         props: {
             pageTitle: 'vtcategory.label.update_title',
+        },
+    },
+
+     //
+    {
+        path: '/shop-admin/vtproduct',
+        name: 'shop.vtproduct.index',
+        component: VtProductList,
+    },
+    {
+        path: '/shop-admin/vtproduct/create',
+        name: 'shop.vtproduct.create',
+        component: VtProductForm,
+        props: {
+            pageTitle: 'vtproduct.label.create_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/vtproduct/:vtproductId/edit',
+        name: 'shop.vtproduct.edit',
+        component: VtProductForm,
+        props: {
+            pageTitle: 'vtproduct.label.update_title',
         },
     },
  

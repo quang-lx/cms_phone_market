@@ -305,7 +305,32 @@ Route::middleware('auth:api')->prefix('/vtcategories')->group(function (){
         'uses' => 'VtCategory\VtCategoryController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/vtproducts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.vtproduct.index',
+        'uses' => 'VtProduct\VtProductController@index',
+    ]);
+    Route::post('/{vtproduct}/edit', [
+            'as' => 'apishop.vtproduct.update',
+            'uses' => 'VtProduct\VtProductController@update',
+        ]);
+   Route::get('/{vtproduct}', [
+              'as' => 'apishop.vtproduct.find',
+              'uses' => 'VtProduct\VtProductController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'apishop.vtproduct.store',
+        'uses' => 'VtProduct\VtProductController@store',
+    ]);
+
+    Route::delete('/{vtproduct}', [
+        'as' => 'apishop.vtproduct.destroy',
+        'uses' => 'VtProduct\VtProductController@destroy',
+    ]);
+});
 // append
+
 
 
 
