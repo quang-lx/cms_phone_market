@@ -61,6 +61,8 @@ import ProductList from './../components/product/index';
 import PInformationForm from './../components/pinformation/form';
 import PInformationList from './../components/pinformation/index';
 
+import VoucherList from './../components/voucher/index';
+import VoucherForm from './../components/voucher/form';
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -514,6 +516,29 @@ export default [
         component: PInformationForm,
         props: {
             pageTitle: 'pinformation.label.update_title',
+        },
+    },
+
+    // voucher
+    {
+        path: '/admin/voucher',
+        name: 'admin.voucher.index',
+        component: VoucherList,
+    },
+    {
+        path: '/admin/voucher/create',
+        name: 'admin.voucher.create',
+        component: VoucherForm,
+        props: {
+            pageTitle: 'voucher.label.create_voucher',
+        },
+    },
+    {
+        path: '/admin/voucher/:voucherId/edit',
+        name: 'admin.voucher.edit',
+        component: VoucherForm,
+        props: {
+            pageTitle: 'voucher.label.update_voucher',
         },
     },
  

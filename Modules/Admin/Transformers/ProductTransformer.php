@@ -45,7 +45,7 @@ class ProductTransformer extends JsonResource
             'problem_id' => $this->problems->pluck('id'),
             'attribute_id' => $attribute,
 //            'attribute_selected' => $attribute? $this->getAttributeValues($this->attributes->first(), $this->productAttributeValues): null,
-//            'value' => $this->value, //trả về thêm value dùng cho Autocomplete search tạo mới voucher
+           'value' => $this->value, //trả về thêm value dùng cho Autocomplete search tạo mới voucher
              'urls' => [
                 'delete_url' => route('api.product.destroy', $this->id),
             ],

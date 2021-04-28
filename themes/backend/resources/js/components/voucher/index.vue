@@ -8,7 +8,7 @@
                             <div class="col-sm-4 d-flex align-items-center">
                                 <el-breadcrumb separator="/">
                                     <el-breadcrumb-item>
-                                        <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                        <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
                                     </el-breadcrumb-item>
                                     <el-breadcrumb-item  >{{ $t('voucher.label.list') }}
                                     </el-breadcrumb-item>
@@ -17,16 +17,16 @@
 
                             </div>
                             <div class="col-sm-8">
-                                <div class="row  pull-right">
+                                <div class="row pull-rights">
 
-                                    <div class="col-sm-6">
+                                    <div class="offset-sm-5 col-4">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tìm theo mã giảm giá"
                                                   v-model="searchQuery" clearable>
                                         </el-input>
                                     </div>
-                                    <div class="col-sm-6 d-block">
-                                        <router-link :to="{name: 'shop.voucher.create'}">
+                                    <div class="col-3">
+                                        <router-link :to="{name: 'admin.voucher.create'}">
                                             <el-button type="primary" class="btn btn-flat d-block" style="width:100%">
                                                 {{ $t('voucher.label.btn_add_voucher') }}
                                             </el-button>
@@ -113,7 +113,7 @@
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
                                                 <edit-button
-                                                  :to="{name: 'shop.voucher.edit', params: {voucherId: scope.row.id}}"></edit-button>
+                                                  :to="{name: 'admin.voucher.edit', params: {voucherId: scope.row.id}}"></edit-button>
                                                 <delete-button :scope="scope" :rows="data"></delete-button>
                                             </template>
                                         </el-table-column>
@@ -175,7 +175,7 @@
 
                 };
 
-                axios.get(route('api.voucher.index', _.merge(properties, customProperties)))
+                axios.get(route('api.admin.voucher.index', _.merge(properties, customProperties)))
                     .then((response) => {
                         this.tableIsLoading = false;
                         this.data = response.data.data;
