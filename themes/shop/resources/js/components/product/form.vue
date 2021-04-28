@@ -194,7 +194,7 @@
                                                         </div>
                                                         <div
                                                             class="col-md-1 col-sm-6 text-right d-flex justify-content-end align-items-center">
-                                                          
+
                                                         </div>
                                                     </div>
                                                     <div class="row"

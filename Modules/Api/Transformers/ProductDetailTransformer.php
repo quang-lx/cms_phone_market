@@ -27,6 +27,8 @@ class ProductDetailTransformer extends JsonResource
 	        'brand_id' => $this->brand_id,
 	        'brand_name' => optional($this->brand)->name,
 	        'shop' => $this->shop? new ShopTransformer($this->shop): null,
+	        'attributes' => $this->getProductAttribute($this->attributeValues),
+	        'detail_information' => $this->getDetailInformation($this->pinformation),
 
 	        'files' => $this->files?  MediaShortTransformer::collection($this->files): null
 
@@ -35,5 +37,28 @@ class ProductDetailTransformer extends JsonResource
 
         return $data;
     }
-
+    public function getProductAttribute($productValues) {
+		$result = [];
+		foreach ($productValues as $item) {
+			$result[] = [
+				'value_id' => $item->id,
+				'value_name' => $item->name,
+				'price' => $item->pivot->price,
+				'sale_price' => $item->pivot->sale_price,
+				'amount' => $item->pivot->amount,
+			];
+		}
+		return $result;
+    }
+	public function getDetailInformation($pinformation) {
+		$result = [];
+		foreach ($pinformation as $item) {
+			$result[] = [
+				'information_id' => $item->id,
+				'name' => $item->title,
+				'value' => $item->pivot->value,
+			];
+		}
+		return $result;
+	}
 }
