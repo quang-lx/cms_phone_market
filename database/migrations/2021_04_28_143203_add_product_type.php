@@ -16,8 +16,8 @@ class AddProductType extends Migration
 	    Schema::table('product', function (Blueprint $table) {
 
 		    $table->smallInteger('type')->default(1);
-		    $table->integer('fix_time')->default(0);
-		    $table->integer('warranty_time')->default(0);
+		    $table->integer('fix_time')->default(0)->nullable();
+		    $table->integer('warranty_time')->default(0)->nullable();
 		    $table->index('type');
 	    });
     }
