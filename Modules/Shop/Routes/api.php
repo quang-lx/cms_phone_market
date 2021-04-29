@@ -329,7 +329,32 @@ Route::middleware('auth:api')->prefix('/vtproducts')->group(function (){
         'uses' => 'VtProduct\VtProductController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/vtimportexcels')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.vtimportexcel.index',
+        'uses' => 'VtImportExcel\VtImportExcelController@index',
+    ]);
+    Route::post('/{vtimportexcel}/edit', [
+            'as' => 'apishop.vtimportexcel.update',
+            'uses' => 'VtImportExcel\VtImportExcelController@update',
+        ]);
+   Route::get('/{vtimportexcel}', [
+              'as' => 'apishop.vtimportexcel.find',
+              'uses' => 'VtImportExcel\VtImportExcelController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'apishop.vtimportexcel.store',
+        'uses' => 'VtImportExcel\VtImportExcelController@store',
+    ]);
+
+    Route::delete('/{vtimportexcel}', [
+        'as' => 'apishop.vtimportexcel.destroy',
+        'uses' => 'VtImportExcel\VtImportExcelController@destroy',
+    ]);
+});
 // append
+
 
 
 

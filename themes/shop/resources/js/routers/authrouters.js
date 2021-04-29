@@ -34,6 +34,10 @@ import VtCategoryList from './../components/vtcategory/index';
 import VtProductForm from './../components/vtproduct/form';
 import VtProductList from './../components/vtproduct/index';
 
+import VtImportExcelDetail from './../components/vtimportexcel/detail';
+import VtImportExcelList from './../components/vtimportexcel/index';
+import VtImportExcelCreate from './../components/vtimportexcel/create';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -265,6 +269,30 @@ export default [
         component: VtProductForm,
         props: {
             pageTitle: 'vtproduct.label.update_title',
+        },
+    },
+
+     //
+     {
+        path: '/shop-admin/vtimportexcel',
+        name: 'shop.vtimportexcel.index',
+        component: VtImportExcelList,
+    },
+    {
+        path: '/shop-admin/vtimportexcel/create',
+        name: 'shop.vtimportexcel.create',
+        component: VtImportExcelCreate,
+        props: {
+            pageTitle: 'vtimportexcel.label.create_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/vtimportexcel/:vtimportexcelId/detail',
+        name: 'shop.vtimportexcel.edit',
+        component: VtImportExcelDetail,
+        props: {
+            pageTitle: 'vtimportexcel.label.update_title',
         },
     },
  

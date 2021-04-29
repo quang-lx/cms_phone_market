@@ -229,7 +229,29 @@ Route::group(['prefix' => '/vtproduct'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/vtimportexcel'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.vtimportexcel.index',
+        'uses' => 'VtImportExcel\VtImportExcelController@index',
+        'middleware' => 'permission:shop.vtimportexcel.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.vtimportexcel.create',
+        'uses' => 'VtImportExcel\VtImportExcelController@create',
+        'middleware' => 'permission:shop.vtimportexcel.create'
+    ]);
+
+    Route::get('{vtimportexcel}/detail', [
+        'as' => 'shop.vtimportexcel.detail',
+        'uses' => 'VtImportExcel\VtImportExcelController@detail',
+        'middleware' => 'permission:shop.vtimportexcel.detail'
+    ]);
+
+
+});
 // append
+
 
 
 

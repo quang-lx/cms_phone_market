@@ -470,7 +470,10 @@ export default {
             "information": "Thông tin cửa hàng",
             "voucher management": "Quản lý khuyến mại",
             "attribute": "Thuộc tính",
-            "product information": "Thông tính chi tiết"
+            "product information": "Thông tính chi tiết",
+            "vat tu": "Vật tư",
+            "vtcategory": "Danh mục",
+            "vtproduct": "Vật tư"
         },
         "user": {
             "label": {
@@ -558,6 +561,22 @@ export default {
                 "create success": "Tạo Danh mục vật tư  thành công.",
                 "update success": "Cập nhật Danh mục vật tư  thành công.",
                 "delete success": "Xóa Danh mục vật tư  thành công."
+            }
+        },
+        "vtimportexcel": {
+            "label": {
+                "vtimportexcel": "Quản lý import vật tư",
+                "id": "ID",
+                "filename": "Đường dẫn",
+                "number_product": "Số lượng sản phẩm",
+                "status": "Trạng thái",
+                "amount": "Số lượng",
+                "create_vtimportexcel": "Import Vật tư ",
+                "create_title": "Import Vật tư"
+            },
+            "message": {
+                "create success": "Import Vật tư  thành công.",
+                "delete success": "Xóa thành công."
             }
         },
         "vtproduct": {
