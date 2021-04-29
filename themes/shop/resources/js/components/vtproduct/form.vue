@@ -92,21 +92,6 @@
                         </div>
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('vtproduct.label.amount')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('amount'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.amount"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('amount')"
-                              v-text="form.errors.first('amount')"
-                            ></div>
-                          </el-form-item>
-                        </div>
-                        <div class="col-md-10">
-                          <el-form-item
                             :label="$t('vtproduct.label.vt_category_id')"
                             :class="{
                               'el-form-item is-error': form.errors.has(

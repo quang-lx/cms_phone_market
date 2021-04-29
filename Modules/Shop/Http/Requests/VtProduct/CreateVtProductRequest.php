@@ -12,7 +12,6 @@ class CreateVtProductRequest extends FormRequest
             'name' => 'required',
             'code' => 'required',
             'price' => 'required|numeric',
-            'amount' => 'required|numeric',
             'vt_category_id' => 'required',
         ];
     }
@@ -34,8 +33,6 @@ class CreateVtProductRequest extends FormRequest
             'code.required' => 'Code là bắt buộc',
             'price.required' => 'Tiền là bắt buộc',
             'price.numeric' => 'Tiền phải là số',
-            'amount.required' => 'Số lượng là bắt buộc',
-            'amount.numeric' => 'Số lượng phải là số',
             'vt_category_id.required' => 'Danh mục là bắt buộc',
         ];
     }

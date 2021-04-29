@@ -83,13 +83,6 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop="amount"
-                      :label="$t('vtproduct.label.amount')"
-                      sortable="custom"
-                    >
-                    </el-table-column>
-
-                    <el-table-column
                       prop="vt_category_name"
                       :label="$t('vtproduct.label.vt_category_id')"
                       sortable="custom"
