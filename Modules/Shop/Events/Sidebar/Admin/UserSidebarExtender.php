@@ -154,7 +154,7 @@ class UserSidebarExtender extends AbstractAdminSidebar
                 $item->authorize(
                     $this->auth->hasAccess('shop.voucher.index')
                 );
-                
+
                 $item->item(trans('ch::sidebar.voucher management'), function (Item $item) {
 
                     $item->weight(0);
@@ -169,7 +169,38 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
 
         });
+	    $menu->group('vt management', function (Group $group) {
+		    $group->hideHeading(true);
+		    $group->item(trans('ch::sidebar.vat tu'), function (Item $item) {
+			    $item->icon('fa fa-gift');
+			    $item->weight(10);
+			    $item->authorize(
+				    $this->auth->hasAccess('shop.vtcategory.index')
+			    );
 
+			    $item->item(trans('ch::sidebar.vtcategory'), function (Item $item) {
+
+				    $item->weight(0);
+
+				    $item->route('shop.vtcategory.index');
+				    $item->authorize(
+					    $this->auth->hasAccess('shop.vtcategory.index')
+				    );
+			    });
+			    $item->item(trans('ch::sidebar.vtproduct'), function (Item $item) {
+
+				    $item->weight(0);
+
+				    $item->route('shop.vtproduct.index');
+				    $item->authorize(
+					    $this->auth->hasAccess('shop.vtproduct.index')
+				    );
+			    });
+
+		    });
+
+
+	    });
 
         return $menu;
 
