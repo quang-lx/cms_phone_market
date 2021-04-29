@@ -208,7 +208,29 @@ Route::group(['prefix' => '/vtcategory'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/vtproduct'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.vtproduct.index',
+        'uses' => 'VtProduct\VtProductController@index',
+        'middleware' => 'permission:shop.vtproduct.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.vtproduct.create',
+        'uses' => 'VtProduct\VtProductController@create',
+        'middleware' => 'permission:shop.vtproduct.create'
+    ]);
+
+    Route::get('{vtproduct}/edit', [
+        'as' => 'shop.vtproduct.edit',
+        'uses' => 'VtProduct\VtProductController@edit',
+        'middleware' => 'permission:shop.vtproduct.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
