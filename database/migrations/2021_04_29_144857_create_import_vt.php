@@ -26,7 +26,7 @@ class CreateImportVt extends Migration
 		    $table->id();
 		    $table->unsignedBigInteger('vt_import_excel_id');
 		    $table->string('vt_product_code',30);
-		    $table->unsignedBigInteger('vt_product_name', 512);
+		    $table->string ('vt_product_name', 512);
 		    $table->integer('amount');
 		    $table->softDeletes();
 		    $table->timestamps();
