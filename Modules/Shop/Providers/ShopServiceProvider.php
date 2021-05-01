@@ -235,7 +235,15 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Shop\Repositories\TransferHistoryRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentTransferHistoryRepository(new \Modules\Mon\Entities\TransferHistory());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

@@ -229,7 +229,29 @@ Route::group(['prefix' => '/vtproduct'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/transfer'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.transfer.index',
+        'uses' => 'TransferHistory\TransferHistoryController@index',
+        'middleware' => 'permission:shop.transfer.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.transfer.create',
+        'uses' => 'TransferHistory\TransferHistoryController@create',
+        'middleware' => 'permission:shop.transfer.create'
+    ]);
+
+    Route::get('{transfer}/edit', [
+        'as' => 'shop.transfer.edit',
+        'uses' => 'TransferHistory\TransferHistoryController@edit',
+        'middleware' => 'permission:shop.transfer.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

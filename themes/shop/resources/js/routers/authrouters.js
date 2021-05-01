@@ -34,6 +34,9 @@ import VtCategoryList from './../components/vtcategory/index';
 import VtProductForm from './../components/vtproduct/form';
 import VtProductList from './../components/vtproduct/index';
 
+import TransferForm from './../components/transfer/form';
+import TransferList from './../components/transfer/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -265,6 +268,28 @@ export default [
         component: VtProductForm,
         props: {
             pageTitle: 'vtproduct.label.update_title',
+        },
+    },
+    // transfer-history
+    {
+        path: '/shop-admin/transfer',
+        name: 'shop.transfer.index',
+        component: TransferList,
+    },
+    {
+        path: '/shop-admin/transfer/create',
+        name: 'shop.transfer.create',
+        component: TransferForm,
+        props: {
+            pageTitle: 'transfer.label.create_transfer',
+        },
+    },
+	{
+        path: '/shop-admin/transfer/:transferId/edit',
+        name: 'shop.transfer.edit',
+        component: TransferForm,
+        props: {
+            pageTitle: 'transfer.label.update_transfer',
         },
     },
  
