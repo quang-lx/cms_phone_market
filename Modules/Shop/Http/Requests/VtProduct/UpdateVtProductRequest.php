@@ -10,7 +10,6 @@ class UpdateVtProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'code' => 'required',
             'price' => 'required|numeric',
             'vt_category_id' => 'required',
         ];
@@ -30,7 +29,6 @@ class UpdateVtProductRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên là bắt buộc',
-            'code.required' => 'Code là bắt buộc',
             'price.required' => 'Tiền là bắt buộc',
             'price.numeric' => 'Tiền phải là số',
             'vt_category_id.required' => 'Danh mục là bắt buộc',

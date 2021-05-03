@@ -4,7 +4,6 @@ return [
         'vtproduct' => 'Linh kiện',
         'id' => 'ID',
         'name' => "Tên",
-        'code' => "Code",
         'price' => 'Giá',
         'amount' => 'Số lượng',
         'vt_category_id' => 'Danh mục',

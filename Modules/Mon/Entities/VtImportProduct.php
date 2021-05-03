@@ -13,7 +13,7 @@ class VtImportProduct extends Model
     protected $fillable = [
         'id',
         'vt_import_excel_id',
-        'vt_product_code',
+        'vt_product_id',
         'vt_product_name',
         'amount',
     ];

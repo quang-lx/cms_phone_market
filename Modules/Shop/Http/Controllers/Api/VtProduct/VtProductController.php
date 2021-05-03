@@ -75,4 +75,15 @@ class VtProductController extends ApiController
             'message' => trans('ch::vtproduct.message.delete success'),
         ]);
     }
+
+
+    public function import(Request $request)
+    {
+        $this->vtproductRepository->import($request->vtimportexcel);
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::vtproduct.message.create success'),
+        ]);
+    }
 }

@@ -64,7 +64,7 @@
                     >
                     </el-table-column>
                     <el-table-column
-                      prop="filename"
+                      prop="filepath"
                       :label="$t('vtimportexcel.label.filename')"
                     >
                     </el-table-column>
@@ -86,11 +86,12 @@
                       <template slot-scope="scope">
                         <edit-button
                           :to="{
-                            name: 'shop.vtimportexcel.edit',
+                            name: 'shop.vtimportexcel.detail',
                             params: { vtimportexcelId: scope.row.id },
                           }"
                         ></edit-button>
                         <delete-button
+                          v-if="scope.row.status==1"
                           :scope="scope"
                           :rows="data"
                         ></delete-button>

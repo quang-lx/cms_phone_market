@@ -13,7 +13,6 @@ class VtProduct extends Model
     protected $fillable = [
         'id',
         'name',
-        'code',
         'price',
         'amount',
         'vt_category_id',

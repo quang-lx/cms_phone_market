@@ -289,10 +289,10 @@ export default [
 
     {
         path: '/shop-admin/vtimportexcel/:vtimportexcelId/detail',
-        name: 'shop.vtimportexcel.edit',
+        name: 'shop.vtimportexcel.detail',
         component: VtImportExcelDetail,
         props: {
-            pageTitle: 'vtimportexcel.label.update_title',
+            pageTitle: 'vtimportexcel.label.detail_title',
         },
     },
  

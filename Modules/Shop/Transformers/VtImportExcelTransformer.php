@@ -17,9 +17,10 @@ class VtImportExcelTransformer extends JsonResource
             'filepath' => $this->filepath,
             'number_product' => $this->number_product,
             'status' => $this->status,
+            'vt_import_product' => $this->vtImportProduct,
 
              'urls' => [
-                'delete_url' => route('api.vtimportexcel.destroy', $this->id),
+                'delete_url' => route('apishop.vtimportexcel.destroy', $this->id),
             ],
 
         ];

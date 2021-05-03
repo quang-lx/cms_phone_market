@@ -51,20 +51,6 @@
                             ref="file"
                             v-on:change="handleFileUpload()"
                           />
-                          <!-- <el-upload
-                            ref="upload"
-                            :label="$t('vtimportexcel.label.file')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('file'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.file"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('file')"
-                              v-text="form.errors.first('file')"
-                            ></div>
-                          </el-upload> -->
                         </div>
                       </div>
                     </div>
@@ -120,24 +106,6 @@ export default {
     onSubmit() {
       this.form = new Form(_.merge(this.modelForm, {}));
       this.loading = true;
-
-      //   this.form
-      //     .post(this.getRoute())
-      //     .then((response) => {
-      //       this.loading = false;
-      //       this.$message({
-      //         type: "success",
-      //         message: response.message,
-      //       });
-      //       this.$router.push({ name: "shop.vtimportexcel.index" });
-      //     })
-      //     .catch((error) => {
-      //       this.loading = false;
-      //       this.$notify.error({
-      //         title: this.$t("mon.error.Title"),
-      //         message: this.getSubmitError(this.form.errors),
-      //       });
-      //     });
       let formData = new FormData();
       formData.append("file", this.modelForm.file);
       axios
@@ -146,7 +114,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
-        .then(function () {
+        .then( (response) =>{
           this.loading = false;
           this.$message({
             type: "success",
@@ -154,7 +122,7 @@ export default {
           });
           this.$router.push({ name: "shop.vtimportexcel.index" });
         })
-        .catch(function () {
+        .catch((response) =>{
           this.loading = false;
           this.$notify.error({
             title: this.$t("mon.error.Title"),

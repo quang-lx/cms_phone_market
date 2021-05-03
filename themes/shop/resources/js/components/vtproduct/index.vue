@@ -68,12 +68,6 @@
                       :label="$t('vtproduct.label.name')"
                     >
                     </el-table-column>
-                    <el-table-column
-                      prop="code"
-                      :label="$t('vtproduct.label.code')"
-                      sortable="custom"
-                    >
-                    </el-table-column>
 
                     <el-table-column
                       prop="price"

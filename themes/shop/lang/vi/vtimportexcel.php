@@ -9,6 +9,7 @@ return [
         'amount' => 'Số lượng',
         'create_vtimportexcel' => 'Import Vật tư ',
         'create_title' => 'Import Vật tư',
+        'detail_title' => 'Chi tiết import'
     ],
 
 
@@ -18,3 +19,4 @@ return [
     ]
 
 ];
+

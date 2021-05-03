@@ -4,7 +4,7 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-
+use Modules\Mon\Entities\VtImportProduct;
 class VtImportExcel extends Model
 {
     use  SoftDeletes;
@@ -16,4 +16,9 @@ class VtImportExcel extends Model
         'number_product',
         'status',
     ];
+
+    public function vtImportProduct()
+    {
+       return $this->hasMany(VtImportProduct::class,'vt_import_excel_id');
+    }
 }

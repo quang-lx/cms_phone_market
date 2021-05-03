@@ -8,10 +8,12 @@
               <el-breadcrumb-item>
                 <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'shop.vtproduct.index' }"
-                >{{ $t("vtproduct.label.vtproduct") }}
+              <el-breadcrumb-item :to="{ name: 'shop.vtimportexcel.index' }"
+                >{{ $t("vtimportexcel.label.vtimportexcel") }}
               </el-breadcrumb-item>
-              <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
+              <el-breadcrumb-item>
+                {{ $t(pageTitle) }}
+              </el-breadcrumb-item>
             </el-breadcrumb>
           </div>
         </div>
@@ -44,86 +46,43 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="row">
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('vtproduct.label.name')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('name'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.name"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('name')"
-                              v-text="form.errors.first('name')"
-                            ></div>
-                          </el-form-item>
+                        <div class="col-md-6">
+                          {{ $t("vtimportexcel.label.filename") }}:{{modelForm.filepath}}
                         </div>
-
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('vtproduct.label.code')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('code'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.code"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('code')"
-                              v-text="form.errors.first('code')"
-                            ></div>
-                          </el-form-item>
+                        <div class="col-md-3">
+                          {{ $t("vtimportexcel.label.number_product") }}:{{modelForm.number_product}}
                         </div>
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('vtproduct.label.price')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('price'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.price"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('price')"
-                              v-text="form.errors.first('price')"
-                            ></div>
-                          </el-form-item>
+                        <div class="col-md-3">
+                          {{ $t("vtimportexcel.label.status") }}:{{modelForm.status}}
                         </div>
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('vtproduct.label.vt_category_id')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has(
-                                'vt_category_id'
-                              ),
-                            }"
+                        <div class="col-md-12">
+                          <el-table
+                            :data="modelForm.vt_import_product"
+                            stripe
+                            style="width: 100%"
+                            ref="dataTable"
+                            v-loading.body="tableIsLoading"
+                            @sort-change="handleSortChange"
                           >
-                            <el-select
-                              v-model="modelForm.vt_category_id"
-                              placeholder="Chọn danh mục"
+                            <el-table-column
+                              prop="id"
+                              :label="$t('vtimportproduct.label.id')"
+                              width="75"
+                              sortable="custom"
                             >
-                              <el-option
-                                label="Chọn"
-                                value=""
-                              >
-                              
-                              </el-option>
-                    
-                              <el-option
-                                v-for="item in list_vtcategory"
-                                :key="item.id"
-                                :label="item.name"
-                                :value="item.id"
-                              >
-                              </el-option>
-                            </el-select>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('vt_category_id')"
-                              v-text="form.errors.first('vt_category_id')"
-                            ></div>
-                          </el-form-item>
+                            </el-table-column>
+                            <el-table-column
+                              prop="vt_product_name"
+                              :label="$t('vtimportproduct.label.vt_product_name')"
+                            >
+                            </el-table-column>
+                            <el-table-column
+                              prop="amount"
+                               :label="$t('vtimportproduct.label.amount')"
+                              sortable="custom"
+                            >
+                            </el-table-column>
+                          </el-table>
                         </div>
                       </div>
                     </div>
@@ -132,14 +91,14 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer d-flex justify-content-end">
-                <el-button
+                <el-button v-if="modelForm.status==1"
                   type="primary"
                   @click="onSubmit()"
                   size="small"
                   :loading="loading"
                   class="btn btn-flat"
                 >
-                  {{ $t("mon.button.save") }}
+                Import
                 </el-button>
                 <el-button class="btn btn-flat" size="small" @click="onCancel()"
                   >{{ $t("mon.button.cancel") }}
@@ -168,19 +127,17 @@ export default {
       loading: false,
       list_vtcategory: [],
       modelForm: {
-        name: "",
-        code: "",
-        price: "",
-        amount: "",
-        vt_cateogry_id: "",
+        filepath: "",
+        number_product: "",
+        status: "",
+        vt_import_product: "",
       },
     };
   },
   methods: {
     onSubmit() {
-      this.form = new Form(_.merge(this.modelForm, {}));
+      this.form = new Form({vtimportexcel: this.$route.params.vtimportexcelId})
       this.loading = true;
-
       this.form
         .post(this.getRoute())
         .then((response) => {
@@ -189,7 +146,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "shop.vtproduct.index" });
+          this.$router.push({ name: "shop.vtimportexcel.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -207,54 +164,32 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "shop.vtproduct.index" });
+          this.$router.push({ name: "shop.vtimportexcel.index" });
         })
         .catch(() => {});
     },
 
     fetchData() {
       let routeUri = "";
-      if (this.$route.params.vtproductId !== undefined) {
-        this.loading = true;
-        routeUri = route("apishop.vtproduct.find", {
-          vtproduct: this.$route.params.vtproductId,
-        });
-        axios.get(routeUri).then((response) => {
-          this.loading = false;
-          this.modelForm = response.data.data;
-          this.modelForm.is_new = false;
-        });
-      } else {
-        this.modelForm.is_new = true;
-      }
-    },
-
-    fetchVtCategory() {
-      let routeUri = "";
       this.loading = true;
-      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000});
+      routeUri = route("apishop.vtimportexcel.find", {
+        vtimportexcel: this.$route.params.vtimportexcelId,
+      });
       axios.get(routeUri).then((response) => {
         this.loading = false;
-        this.list_vtcategory = response.data.data;
+        this.modelForm = response.data.data;
       });
     },
-
     getRoute() {
-      if (this.$route.params.vtproductId !== undefined) {
-        return route("apishop.vtproduct.update", {
-          vtproduct: this.$route.params.vtproductId,
-        });
-      }
-      return route("apishop.vtproduct.store");
+      return route("apishop.vtproduct.import");
     },
   },
   mounted() {
     this.fetchData();
-    this.fetchVtCategory();
   },
+   
   computed: {},
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -328,6 +328,11 @@ Route::middleware('auth:api')->prefix('/vtproducts')->group(function (){
         'as' => 'apishop.vtproduct.destroy',
         'uses' => 'VtProduct\VtProductController@destroy',
     ]);
+
+    Route::post('/import}', [
+        'as' => 'apishop.vtproduct.import',
+        'uses' => 'VtProduct\VtProductController@import',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/vtimportexcels')->group(function (){
 
