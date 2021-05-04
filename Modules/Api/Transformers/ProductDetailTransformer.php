@@ -4,6 +4,7 @@
 namespace Modules\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Mon\Entities\Product;
 
 class ProductDetailTransformer extends JsonResource
 {
@@ -33,7 +34,9 @@ class ProductDetailTransformer extends JsonResource
 	        'attributes' => $this->getProductAttribute($this->attributeValues),
 	        'detail_information' => $this->getDetailInformation($this->pinformation),
 
-	        'files' => $this->files?  MediaShortTransformer::collection($this->files): null
+	        'files' => $this->files?  MediaShortTransformer::collection($this->files): null,
+	        'product_related' => $this->getProductRelated($this->id),
+	        'product_suggested' => $this->getProductSuggested($this->id),
 
         ];
 
@@ -63,5 +66,19 @@ class ProductDetailTransformer extends JsonResource
 			];
 		}
 		return $result;
+	}
+	//TODO
+	public function getProductRelated($id) {
+		$query = Product::query();
+		$query->where('id', '!=', $id);
+		$data = $query->limit(10)->get();
+		return ProductTransformer::collection($data);
+	}
+	//TODO
+	public function getProductSuggested($id) {
+		$query = Product::query();
+		$query->where('id', '!=', $id);
+		$data = $query->limit(10)->get();
+		return ProductTransformer::collection($data);
 	}
 }
