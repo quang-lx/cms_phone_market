@@ -176,8 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         'Maatwebsite\Sidebar\SidebarServiceProvider',
-        Kreait\Laravel\Firebase\ServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
+
 
     ],
 

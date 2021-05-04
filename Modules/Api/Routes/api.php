@@ -177,7 +177,13 @@ Route::prefix('/category')->group(function () {
 	]);
 
 });
+Route::prefix('rating')->group(function ($router) {
 
+	Route::get('/{product_id}/list', [
+		'uses' => 'RatingController@listByProduct',
+		'as' => 'apife.rating.listByProduct',
+	]);
+});
 Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
 	Route::post('file', [
 		'uses' => 'MediaController@store',
@@ -203,6 +209,7 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'uses' => 'RatingController@store',
 			'as' => 'apife.rating.store',
 		]);
+		 
 	});
 });
 

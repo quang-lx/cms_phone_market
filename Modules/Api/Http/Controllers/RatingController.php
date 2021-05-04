@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\RatingRepository;
+use Modules\Api\Transformers\RatingTransformer;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Entities\SmsToken;
@@ -49,4 +50,8 @@ class RatingController extends ApiController
 		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
 
+	public function listByProduct(Request $request, $product_id) {
+		$data = RatingTransformer::collection($this->ratingRepo->listByProductId($request, $product_id));
+		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 }
