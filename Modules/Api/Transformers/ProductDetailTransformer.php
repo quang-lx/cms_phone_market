@@ -37,7 +37,8 @@ class ProductDetailTransformer extends JsonResource
 	        'files' => $this->files?  MediaShortTransformer::collection($this->files): null,
 	        'product_related' => $this->getProductRelated($this->id),
 	        'product_suggested' => $this->getProductSuggested($this->id),
-
+	        'rating_avg' => $this->rating_avg,
+	        'rating_user' => $this->rating_user,
         ];
 
 
