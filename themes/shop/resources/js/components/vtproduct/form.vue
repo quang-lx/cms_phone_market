@@ -59,22 +59,6 @@
                             ></div>
                           </el-form-item>
                         </div>
-
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('vtproduct.label.code')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has('code'),
-                            }"
-                          >
-                            <el-input v-model="modelForm.code"></el-input>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('code')"
-                              v-text="form.errors.first('code')"
-                            ></div>
-                          </el-form-item>
-                        </div>
                         <div class="col-md-10">
                           <el-form-item
                             :label="$t('vtproduct.label.price')"
@@ -169,7 +153,6 @@ export default {
       list_vtcategory: [],
       modelForm: {
         name: "",
-        code: "",
         price: "",
         amount: "",
         vt_cateogry_id: "",

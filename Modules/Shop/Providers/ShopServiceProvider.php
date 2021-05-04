@@ -235,7 +235,15 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Shop\Repositories\VtImportExcelRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentVtImportExcelRepository(new \Modules\Mon\Entities\VtImportExcel());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 
