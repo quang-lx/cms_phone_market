@@ -4,6 +4,7 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Media\Entities\Media;
 use Modules\Media\Traits\MediaRelation;
 
 class Rating extends Model
@@ -24,5 +25,8 @@ class Rating extends Model
     }
     public function user() {
     	return $this->belongsTo(User::class, 'user_id');
+    }
+    public function files() {
+    	return $this->belongsToMany(Media::class, 'rating_file', 'rating_id', 'file_id');
     }
 }

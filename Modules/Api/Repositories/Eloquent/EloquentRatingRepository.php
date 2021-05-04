@@ -3,7 +3,6 @@
 namespace Modules\Api\Repositories\Eloquent;
 
 
-
 use Illuminate\Http\Request;
 use Modules\Api\Repositories\RatingRepository;
 
@@ -15,16 +14,24 @@ class EloquentRatingRepository extends ApiBaseRepository implements RatingReposi
 	public function __construct($model) {
 		$this->model = $model;
 	}
-	public function create($data)
-	{
-		return $this->model->create($data);
+
+	public function create($data) {
+		$model = $this->model->create($data);
+		if (isset($data['files'])) {
+			$files =  ($data['files']);
+			if (!is_array($data['files'])) {
+				$files  = explode(',', $files);
+			}
+			$model->files()->sync($files);
+		}
+		return $model;
 	}
 
-	public function update($model, $data)
-	{
+	public function update($model, $data) {
 		$model->update($data);
 		return $model;
 	}
+
 	public function listByProductId(Request $request, $product_id) {
 		$query = $this->model->query();
 		$query->where('product_id', $product_id);

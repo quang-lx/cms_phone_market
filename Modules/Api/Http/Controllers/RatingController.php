@@ -16,6 +16,7 @@ use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Transformers\RatingTransformer;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
+use Modules\Mon\Entities\Rating;
 use Modules\Mon\Entities\SmsToken;
 use Modules\Mon\Entities\User;
 use Modules\Mon\Http\Controllers\ApiController;
@@ -45,12 +46,15 @@ class RatingController extends ApiController
 		}
 
 		$rating  = $request->get('rating');
-
-		if($rating && !in_array($rating, [1,2,3,4,5])){
+		$checkExist = Rating::query()->where([
+			'product_id' => $request->get('product_id'),
+			'user_id' => $user->id,
+		])->exists();
+		if(($rating && !in_array($rating, [1,2,3,4,5])) || $checkExist){
 			return $this->respond([], ErrorCode::ERR32_MSG, ErrorCode::ERR32);
 		}
 
-		$request = $request->only('product_id', 'rating', 'comment', 'parent_id');
+		$request = $request->only('product_id', 'rating', 'comment', 'parent_id', 'files');
 
         $data = $this->ratingRepo->create(array_merge($request, ['user_id' => $user->id]));
 		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
