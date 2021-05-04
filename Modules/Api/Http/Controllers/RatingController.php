@@ -36,7 +36,6 @@ class RatingController extends ApiController
 
 
         $user = Auth::user();
-		$comment = $request->get('comment');
 
 		$validator = Validator::make($request->all(), [
 			'comment' => 'required',
@@ -44,6 +43,13 @@ class RatingController extends ApiController
 		if($validator->fails()){
 			return $this->respond([], ErrorCode::ERR31_MSG, ErrorCode::ERR31);
 		}
+
+		$rating  = $request->get('rating');
+
+		if($rating && !in_array($rating, [1,2,3,4,5])){
+			return $this->respond([], ErrorCode::ERR32_MSG, ErrorCode::ERR32);
+		}
+
 		$request = $request->only('product_id', 'rating', 'comment', 'parent_id');
 
         $data = $this->ratingRepo->create(array_merge($request, ['user_id' => $user->id]));
