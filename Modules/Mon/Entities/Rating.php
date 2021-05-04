@@ -22,4 +22,7 @@ class Rating extends Model
     public function ratingFiles() {
     	return $this->hasMany(RatingFile::class, 'rating_id', 'id');
     }
+    public function user() {
+    	return $this->belongsTo(User::class, 'user_id');
+    }
 }

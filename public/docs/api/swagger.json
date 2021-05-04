@@ -16,6 +16,10 @@
     "basePath": "/api-fe",
     "tags": [
         {
+            "name": "rating",
+            "description": "Rating"
+        },
+        {
             "name": "product",
             "description": "Product"
         },
@@ -2425,8 +2429,95 @@
                     }
                 }
             }
+        },
+        "/rating": {
+            "post": {
+                "tags": [
+                    "rating"
+                ],
+                "summary": "danh gia san pham",
+                "description": "danh gia san pham",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "product_id",
+                        "description": "product_id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "parent_id",
+                        "description": "parent_id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "rating",
+                        "description": "rating",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "comment",
+                        "description": "comment",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/definitions/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
         }
-
     },
     "securityDefinitions": {
         "Bearer": {

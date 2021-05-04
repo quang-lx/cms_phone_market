@@ -5,6 +5,7 @@ namespace Modules\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Mon\Entities\Product;
+use Modules\Mon\Entities\Rating;
 
 class ProductDetailTransformer extends JsonResource
 {
@@ -39,6 +40,7 @@ class ProductDetailTransformer extends JsonResource
 	        'product_suggested' => $this->getProductSuggested($this->id),
 	        'rating_avg' => $this->rating_avg,
 	        'rating_user' => $this->rating_user,
+	        'ratings' => $this->getRating($this->id),
         ];
 
 
@@ -68,6 +70,14 @@ class ProductDetailTransformer extends JsonResource
 		}
 		return $result;
 	}
+	public function getRating($id) {
+    	$query = Rating::query();
+    	$query->where('product_id', $id)
+		    ->orderBy('created_at', 'desc')
+		    ->limit(2);
+    	$data = $query->get();
+    	return RatingTransformer::collection($data);
+	}
 	//TODO
 	public function getProductRelated($id) {
 		$query = Product::query();
@@ -82,4 +92,5 @@ class ProductDetailTransformer extends JsonResource
 		$data = $query->limit(10)->get();
 		return ProductTransformer::collection($data);
 	}
+
 }

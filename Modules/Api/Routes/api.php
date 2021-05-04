@@ -198,4 +198,12 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'as' => 'apife.product.baohanh',
 		]);
 	});
+	Route::prefix('rating')->group(function ($router) {
+		Route::post('/', [
+			'uses' => 'RatingController@store',
+			'as' => 'apife.rating.store',
+		]);
+	});
 });
+
+
