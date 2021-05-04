@@ -63,8 +63,8 @@ class VtImportExcelController extends ApiController
         } catch (\Exception $e) {
             return response()->json([
                 'errors' => true,
-                'message' => 'Có lỗi xảy ra',
-            ]);
+                'message' => 'Có lỗi xảy ra trong quá trình import',
+            ],500);
         }
 
 

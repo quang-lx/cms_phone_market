@@ -83,7 +83,7 @@ class VtProductController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('ch::vtproduct.message.create success'),
+            'message' => trans('ch::vtproduct.message.import success'),
         ]);
     }
 }

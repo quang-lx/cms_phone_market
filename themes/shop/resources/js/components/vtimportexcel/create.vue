@@ -52,6 +52,11 @@
                             v-on:change="handleFileUpload()"
                           />
                         </div>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('file')"
+                          v-text="form.errors.first('file')"
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -114,20 +119,27 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
-        .then( (response) =>{
+        .then((response) => {
           this.loading = false;
           this.$message({
             type: "success",
-            message: response.message,
+            message: response.data.message,
           });
           this.$router.push({ name: "shop.vtimportexcel.index" });
         })
-        .catch((response) =>{
+        .catch((err) => {
           this.loading = false;
-          this.$notify.error({
-            title: this.$t("mon.error.Title"),
-            message: this.getSubmitError(this.form.errors),
-          });
+          if (err.response.status == 500) {
+            this.$notify.error({
+              title: "Import",
+              message: err.response.data.message,
+            });
+          } else {
+            this.$notify.error({
+              title: this.$t("mon.error.Title"),
+              message:  err.response.data.errors.file[0],
+            });
+          }
         });
     },
 

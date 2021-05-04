@@ -8,7 +8,9 @@ class CreateVtImportExcelRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'file' => 'required|mimes:xlsx'
+        ];
     }
 
     public function translationRules()
@@ -23,7 +25,10 @@ class CreateVtImportExcelRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'file.required' => 'Vui lòng chọn file',
+            'file.mimes' => 'File sai định dạng',
+        ];
     }
 
     public function translationMessages()

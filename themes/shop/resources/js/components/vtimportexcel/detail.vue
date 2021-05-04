@@ -27,11 +27,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header ui-sortable-handle" style="cursor: move">
-                <h3 class="card-title">
-                  {{ $t(pageTitle)
-                  }}<span v-if="modelForm.title"
-                    >: &nbsp{{ modelForm.title }}</span
-                  >
+                <h3 class="card-title"><span>Thông tin file</span>
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -55,6 +51,32 @@
                         <div class="col-md-3">
                           {{ $t("vtimportexcel.label.status") }}:{{modelForm.status}}
                         </div>
+  
+                      </div>
+                    </div>
+                  </div>
+                </el-form>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header ui-sortable-handle" style="cursor: move">
+                <h3 class="card-title"><span>Chi tiết file</span>
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <el-form
+                  ref="form"
+                  :model="modelForm"
+                  label-width="200px"
+                  label-position="left"
+                  v-loading.body="loading"
+                >
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
                         <div class="col-md-12">
                           <el-table
                             :data="modelForm.vt_import_product"
@@ -66,8 +88,8 @@
                           >
                             <el-table-column
                               prop="id"
-                              :label="$t('vtimportproduct.label.id')"
-                              width="75"
+                              :label="$t('vtimportproduct.label.ma_vat_tu')"
+                              width="150"
                               sortable="custom"
                             >
                             </el-table-column>
@@ -130,7 +152,7 @@ export default {
         filepath: "",
         number_product: "",
         status: "",
-        vt_import_product: "",
+        vt_import_product: [],
       },
     };
   },

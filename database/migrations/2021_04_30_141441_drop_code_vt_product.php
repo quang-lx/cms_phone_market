@@ -14,7 +14,7 @@ class DropCodeVtProduct extends Migration
     public function up()
     {
         Schema::table('vt_product', function (Blueprint $table) {
-            
+            $table->dropColumn('code');
         });
     }
 
@@ -26,8 +26,6 @@ class DropCodeVtProduct extends Migration
     public function down()
     {
         Schema::table('vt_product', function (Blueprint $table) {
-            $table->dropForeign(['code']);
-            $table->dropColumn('code');
         });
     }
 }

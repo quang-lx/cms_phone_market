@@ -19,7 +19,7 @@ class VtProductTransformer extends JsonResource
             'price' => $this->price,
             'amount' => $this->amount,
             'vt_category_id' => $this->vt_category_id,
-            'vt_category_name' => $this->VtCategory->name,
+            'vt_category_name' => isset($this->VtCategory)?$this->VtCategory->name:'',
             'shop_id' => $this->shop_id,
             'company_id' => $this->company_id,
             'urls' => [

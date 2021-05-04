@@ -17,6 +17,7 @@ return [
 
     'message' => [
         'create success' => 'Tạo Linh kiện  thành công.',
+        'import success' => 'Import Linh kiện  thành công.',
         'update success' => 'Cập nhật Linh kiện  thành công.',
         'delete success' => 'Xóa Linh kiện  thành công.',
     ]
