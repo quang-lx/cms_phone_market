@@ -4,3 +4,4 @@
 composer.lock
 assets
 fonts/vendor
+storage/framework/laravel-excel/
