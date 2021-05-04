@@ -522,6 +522,33 @@
                         "required": true,
                         "type": "integer",
                         "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "q",
+                        "description": "Search value",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "default": "1",
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "default": 10,
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
                     }
                 ],
                 "responses": {

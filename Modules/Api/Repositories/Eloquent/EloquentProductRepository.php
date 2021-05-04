@@ -115,7 +115,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 	public function getSuggested($id, Request $request) {
 		$query = $this->model->query();
 		$query->where('id', '!=', $id);
-		return $query->active()->limit(4)->get();
+		return $query->active()->paginate($request->get('per_page', 10));
 
 	}
 }
