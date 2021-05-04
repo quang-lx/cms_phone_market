@@ -209,7 +209,7 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'uses' => 'RatingController@store',
 			'as' => 'apife.rating.store',
 		]);
-		 
+
 	});
 });
 
