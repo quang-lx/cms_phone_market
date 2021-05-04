@@ -152,6 +152,14 @@ Route::prefix('/product')->group(function () {
 		'as' => 'apife.product.detail',
 		'uses' => 'ProductController@detail',
 	]);
+	Route::get('/{id}/related', [
+		'as' => 'apife.product.related',
+		'uses' => 'ProductController@related',
+	]);
+	Route::get('/{id}/suggested', [
+		'as' => 'apife.product.suggested',
+		'uses' => 'ProductController@suggested',
+	]);
 });
 
 Route::prefix('/category')->group(function () {

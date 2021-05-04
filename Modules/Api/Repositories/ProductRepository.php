@@ -11,4 +11,6 @@ interface ProductRepository
     public function listByService(Request $request);
     public function listBaoHanh(Request $request);
     public function detail($id);
+    public function getRelated($id, Request $request);
+	public function getSuggested($id, Request $request);
 }
