@@ -13,9 +13,7 @@ class RatingFile extends Model
     protected $fillable = [
         'id',
         'rating_id',
-        'filename',
-        'file_type',
-        'file_ext',
+        'file_id'
     ];
 
 }
