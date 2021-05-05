@@ -42,7 +42,8 @@ return [
 	'product information' => 'Thông tính chi tiết',
 	'vat tu' => 'Vật tư',
 	'vtcategory' => 'Danh mục',
-	'vtproduct' => 'Vật tư'
+	'vtproduct' => 'Vật tư',
+	'vtimportexcel' => 'Nhập linh kiện',
 
 
 
