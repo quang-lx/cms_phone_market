@@ -59,6 +59,19 @@
                         ></div>
                       </div>
                     </div>
+                    <div class="col-md-12 mt-2">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <span
+                            >Tải file mẫu tại
+                            <a
+                              href="/file-excel-teamplate/import_template.xlsx" download
+                              >đây</a
+                            ></span
+                          >
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </el-form>
               </div>
@@ -137,7 +150,7 @@ export default {
           } else {
             this.$notify.error({
               title: this.$t("mon.error.Title"),
-              message:  err.response.data.errors.file[0],
+              message: err.response.data.errors.file[0],
             });
           }
         });
