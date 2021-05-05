@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Mon\Entities\ProductPrice;
 use Modules\Shop\Repositories\ShopRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
-
+use Illuminate\Support\Facades\Auth;
 class EloquentShopRepository extends BaseRepository implements ShopRepository
 {
 
@@ -37,6 +37,12 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
             $keyword = $request->get('search');
             $query->orWhereHas('company', function($c) use ($company_id) {
                 $c->where('id',$company_id);
+            });
+        }
+
+        if ($request->get('shop_admin') !==null) {
+            $query->orWhere(function($c){
+                $c->orWhere('company_id',Auth::user()->company_id);
             });
         }
 

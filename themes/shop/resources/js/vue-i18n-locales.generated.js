@@ -473,7 +473,8 @@ export default {
             "product information": "Thông tính chi tiết",
             "vat tu": "Vật tư",
             "vtcategory": "Danh mục",
-            "vtproduct": "Vật tư"
+            "vtproduct": "Vật tư",
+            "vtimportexcel": "Nhập linh kiện"
         },
         "user": {
             "label": {
@@ -482,6 +483,7 @@ export default {
                 "email": "Email",
                 "name": "Tên",
                 "phone": "Số điện thoại",
+                "shop_id": "Chi nhánh",
                 "created_at": "Ngày tạo",
                 "updated_at": "Ngày cập nhật",
                 "password_confirmation": "Xác nhận mật khẩu",
@@ -603,6 +605,7 @@ export default {
             },
             "message": {
                 "create success": "Tạo Linh kiện  thành công.",
+                "import success": "Import Linh kiện  thành công.",
                 "update success": "Cập nhật Linh kiện  thành công.",
                 "delete success": "Xóa Linh kiện  thành công."
             }
