@@ -16,6 +16,7 @@ class UserFullTransformer extends JsonResource
             'email' => $this->email,
             'type' => $this->type,
             'status' => $this->status,
+            'shop_id' => $this->shop_id,
             'phone' => optional($this->profile)->phone,
 
             'created_at' => optional($this->created_at)->format('d-m-Y'),
