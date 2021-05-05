@@ -329,7 +329,7 @@ Route::middleware('auth:api')->prefix('/vtproducts')->group(function (){
         'uses' => 'VtProduct\VtProductController@destroy',
     ]);
 });
-Route::middleware('auth:api')->prefix('/transferhistories')->group(function (){
+Route::middleware('auth:api')->prefix('/transfers')->group(function (){
 
     Route::get('/', [
         'as' => 'apishop.transfer.index',

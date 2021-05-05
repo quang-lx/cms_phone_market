@@ -68,24 +68,59 @@
                         </div>
 
                         <div class="col-md-12">
-                            <el-form-item :label="$t('transfer.label.shop_id')"
-                                          :class="{'el-form-item is-error': form.errors.has(  'shop_id') }">
+                          <el-form-item
+                            :label="$t('transfer.label.shop_id')"
+                            :class="{
+                              'el-form-item is-error': form.errors.has(
+                                'shop_id'
+                              ),
+                            }"
+                          >
+                            <el-select
+                              v-model="modelForm.shop_id"
+                              :placeholder="$t('transfer.label.shop_id')"
+                              filterable
+                              style="width: 100% !important"
+                            >
+                              <el-option
+                                v-for="item in shopArr"
+                                :key="'shop' + item.id"
+                                :label="item.name"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
+                            <div
+                              class="el-form-item__error"
+                              v-if="form.errors.has('shop_id')"
+                              v-text="form.errors.first('shop_id')"
+                            ></div>
+                          </el-form-item>
+                        </div>
 
-                                <el-select v-model="modelForm.shop_id"
-                                            :placeholder="$t('transfer.label.shop_id')"
-                                            filterable style="width: 100% !important">
-                                    <el-option
-                                        v-for="item in shopArr"
-                                        :key="'shop'+ item.id"
-                                        :label="item.name"
-                                        :value="item.id">
-                                    </el-option>
-
-                                </el-select>
-                                <div class="el-form-item__error"
-                                      v-if="form.errors.has('shop_id')"
-                                      v-text="form.errors.first('shop_id')"></div>
-                            </el-form-item>
+                        <div class="col-md-12">
+                          <el-form-item
+                            :label="$t('transfer.label.products')"
+                            :class="{
+                              'el-form-item is-error': form.errors.has(
+                                'products'
+                              ),
+                            }"
+                          >
+                            <el-autocomplete
+                              prefix-icon="el-icon-search"
+                              v-model="modelForm.product_key"
+                              :fetch-suggestions="onSearchProduct"
+                              placeholder="Tìm sản phẩm"
+                              @select="handleSelect"
+                              clearable
+                            ></el-autocomplete>
+                            <div
+                              class="el-form-item__error"
+                              v-if="form.errors.has('products')"
+                              v-text="form.errors.first('products')"
+                            ></div>
+                          </el-form-item>
                         </div>
                       </div>
                     </div>
@@ -95,13 +130,17 @@
                           <el-form-item
                             :label="$t('transfer.label.received_at')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('received_at'),
+                              'el-form-item is-error': form.errors.has(
+                                'received_at'
+                              ),
                             }"
                           >
                             <el-date-picker
                               v-model="modelForm.received_at"
+                              value-format="yyyy-MM-dd HH:mm:ss"
                               type="datetime"
-                              placeholder="Thời gian chuyển">
+                              placeholder="Thời gian chuyển"
+                            >
                             </el-date-picker>
                             <div
                               class="el-form-item__error"
@@ -115,7 +154,35 @@
                   </div>
                 </el-form>
               </div>
-              <!-- /.card-body -->
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Thông tin chi tiết vật tư</h3>
+              </div>
+              <div class="card-body">
+                <div
+                  class="row mt-2"
+                  v-for="(pinfo, key) in modelForm.products"
+                  :key="key"
+                >
+                  <div class="col-md-3">
+                    <el-input v-model="pinfo.name"></el-input>
+                  </div>
+
+                  <div class="col-md-2">
+                    <el-input v-model="pinfo.count"></el-input>
+                  </div>
+                  <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
+                    <i
+                      class="el-icon-circle-close"
+                      style="color: red; cursor: pointer"
+                      @click="removeInfo(key)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+
               <div class="card-footer d-flex justify-content-end">
                 <el-button
                   type="primary"
@@ -131,6 +198,7 @@
                 </el-button>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -141,15 +209,7 @@
 <script>
 import axios from "axios";
 import Form from "form-backend-validation";
-import Vue from "vue";
-import * as VueGoogleMaps from "vue2-google-maps";
 
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: window.MonCMS.googleApiKey,
-    libraries: "places",
-  },
-});
 export default {
   props: {
     pageTitle: { default: null, String },
@@ -161,11 +221,15 @@ export default {
       modelForm: {
         title: "",
         status: 1,
-        received_at: "",
+        received_at: new Date("Y-m-d H:i:s"),
         shop_id: "",
+        product_key: "",
+        product_key: "",
+        products: [],
       },
       shopArr: [],
       locales: window.MonCMS.locales,
+      productSearchResult: [],
     };
   },
   methods: {
@@ -228,20 +292,49 @@ export default {
     },
 
     fetchShop() {
-        const properties = {
-          page: 0,
-          per_page: 1000,
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        check_company: true,
+      };
 
-        };
-
-        axios.get(route('apishop.shop.index', _.merge(properties, {})))
+      axios
+        .get(route("api.shop.index", _.merge(properties, {})))
         .then((response) => {
-
           this.shopArr = response.data.data;
-
         });
-      },
+    },
+
+    onSearchProduct(queryString, cb) {
+      this.fetchProduct(queryString);
+      cb(this.productSearchResult);
+    },
+
+    fetchProduct(queryString) {
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        search: queryString,
+        source: "voucher",
+      };
+
+      axios
+        .get(route("api.product.index", _.merge(properties, {})))
+        .then((response) => {
+          this.productSearchResult = response.data.data;
+        });
+    },
+
+    handleSelect(item) {
+      console.log(item);
+      //add thêm vào biến products lưu danh sách các product đc giảm giá
+      this.modelForm.products.push(item);
+    },
+    removeInfo(key) {
+      this.modelForm.products.splice(key,1);
+    },
   },
+
   mounted() {
     this.fetchShop();
     if (this.$route.params.transferId !== undefined) {
@@ -253,4 +346,11 @@ export default {
 </script>
 
 <style scoped>
+.el-autocomplete {
+  width: 100%;
+}
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
+  width: 100%;
+}
 </style>

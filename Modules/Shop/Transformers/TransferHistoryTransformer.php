@@ -27,7 +27,7 @@ class TransferHistoryTransformer extends JsonResource
 
 
              'urls' => [
-                'delete_url' => route('api.transferhistory.destroy', $this->id),
+                'delete_url' => route('apishop.transfer.destroy', $this->id),
             ],
 
         ];

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Mon\Entities\ProductPrice;
 use Modules\Shop\Repositories\ShopRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
+use Illuminate\Support\Facades\Auth;
 
 class EloquentShopRepository extends BaseRepository implements ShopRepository
 {
@@ -38,6 +39,10 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
             $query->orWhereHas('company', function($c) use ($company_id) {
                 $c->where('id',$company_id);
             });
+        }
+
+        if ($request->get('check_company')){
+            $query->where('company_id', Auth::user()->company_id);
         }
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {

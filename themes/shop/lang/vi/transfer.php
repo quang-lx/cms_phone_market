@@ -11,6 +11,7 @@ return [
         'id' => 'ID',
         'received_at' => 'Thời gian chuyển',
         'shop_id' => 'Kho nhận',
+        'products' => 'Danh sách vật tư',
     ],
     'message' => [
         'create success' => 'Thêm mới chi nhánh thành công.',
