@@ -4,18 +4,19 @@ namespace Modules\Shop\Transformers;
 
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Carbon\Carbon;
 
 class TransferHistoryTransformer extends JsonResource
 {
 
-
     public function toArray($request)
     {
+        //convert string to carbon
+        $receivedAt = optional(Carbon::parse($this->received_at));
         $data = [
             'id' => $this->id,
             'title' => $this->title,
-            'received_at' => $this->received_at,
+            'received_at' => $receivedAt->format('d-m-Y H:i:s'),
             'shop_id' => $this->shop_id,
             'shop_name' => optional($this->shop)->name,
             'company_id' => $this->company_id,

@@ -174,7 +174,7 @@
                     <el-input-number style="width: 100%"
                             v-model="pinfo.count" :min="1"
                             :max="100000000"
-                            placeholder="Giá"></el-input-number>
+                            placeholder="Số lượng"></el-input-number>
                   </div>
                   <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
                     <i
@@ -226,7 +226,6 @@ export default {
         status: 1,
         received_at: new Date("Y-m-d H:i:s"),
         shop_id: "",
-        product_key: "",
         product_key: "",
         products: [],
       },

@@ -186,7 +186,7 @@
                 const properties = {
                     page: 0,
                     per_page: 1000,
-
+                    check_company: true,
                 };
 
                 axios.get(route('api.shop.index', _.merge(properties, {})))
