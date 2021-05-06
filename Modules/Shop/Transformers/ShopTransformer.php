@@ -21,6 +21,7 @@ class ShopTransformer extends JsonResource
             'status' => $this->status,
             'status_color' =>$this->status_color,
             'status_name' =>$this->status_name,
+            'thumbnail' => $this->thumbnail,
             'company_id' => $this->company_id,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,

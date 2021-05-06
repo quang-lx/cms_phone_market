@@ -7,6 +7,8 @@ use Modules\Mon\Entities\ProductPrice;
 use Modules\Shop\Repositories\ShopRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Support\Facades\Auth;
+use Modules\Shop\Events\Shop\ShopWasCreated;
+use Modules\Shop\Events\Shop\ShopWasUpdated;
 class EloquentShopRepository extends BaseRepository implements ShopRepository
 {
 
@@ -55,6 +57,20 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
         }
 
         return $query->paginate($request->get('per_page', 10));
+    }
+
+    public function create($data)
+    {
+        $model = $this->model->create($data);
+        event(new ShopWasCreated($model, $data));
+        return $model;
+    }
+
+    public function update($model, $data)
+    {
+        $model->update($data);
+        event(new ShopWasUpdated($model, $data));
+        return $model;
     }
 
 }
