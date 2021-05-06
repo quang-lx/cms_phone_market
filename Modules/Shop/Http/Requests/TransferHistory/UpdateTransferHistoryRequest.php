@@ -8,7 +8,11 @@ class UpdateTransferHistoryRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'title' => 'required',
+            'received_at' => 'required',
+            'shop_id' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +27,12 @@ class UpdateTransferHistoryRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'title.required' => 'Tên đơn là bắt buộc',
+            'received_at.required' => 'Thời gian chuyển là bắt buộc',
+            'shop_id.required' => 'Kho nhận là bắt buộc',
+            
+        ];
     }
 
     public function translationMessages()

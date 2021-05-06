@@ -23,13 +23,13 @@
 
                                     <div class="col-3 offset-sm-2">
 
-                                        <el-select v-model="filter.status" placeholder="Lọc theo chi nhánh"
+                                        <el-select v-model="filter.shop_id" placeholder="Lọc theo chi nhánh"
                                                    @change="onSearchChange()" clearable>
                                             <el-option
-                                                    v-for="item in listStatus"
-                                                    :key="item.value"
-                                                    :label="item.label"
-                                                    :value="item.value">
+                                                    v-for="item in shopArr"
+                                                    :key="item.id"
+                                                    :label="item.name"
+                                                    :value="item.id">
                                             </el-option>
                                         </el-select>
                                     </div>
@@ -42,7 +42,7 @@
                                     <div class="col-2">
                                         <router-link :to="{name: 'shop.transfer.create'}">
                                             <el-button type="primary" class="btn btn-flat">
-                                                {{ $t('transfer.label.title') }}
+                                                {{ $t('transfer.label.create_new') }}
                                             </el-button>
                                         </router-link>
                                     </div>
@@ -80,19 +80,16 @@
                                                          sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="name" :label="$t('transfer.label.name')"
+                                        <el-table-column prop="title" :label="$t('transfer.label.title')"
                                                          sortable="custom"/>
-                                        <el-table-column prop="email" :label="$t('transfer.label.email')"
+                                        <el-table-column prop="received_at" :label="$t('transfer.label.received_at')"
                                                          sortable="custom"/>
-                                        <el-table-column prop="address" :label="$t('transfer.label.address')"
+                                        <el-table-column prop="shop_name" :label="$t('transfer.label.shop_name')"
                                                          sortable="address">
                                             <template slot-scope="scope">
-                                                <span class="dont-break-out">{{scope.row.address}}</span>
+                                                <span class="dont-break-out">{{scope.row.shop_name}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="phone" :label="$t('transfer.label.phone')"
-                                                         sortable="address"/>
-
 
                                         <el-table-column prop="status" :label="$t('transfer.label.status')"
                                                          sortable="custom">
@@ -101,12 +98,17 @@
                                             </template>
                                         </el-table-column>
 
+                                        <el-table-column prop="updated_at" :label="$t('transfer.label.updated_at')" sortable="custom">
+
+                                        </el-table-column>
+
 
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
                                                 <edit-button
                                                         :to="{name: 'shop.transfer.edit', params: {transferId: scope.row.id}}"></edit-button>
-                                                <delete-button :scope="scope" :rows="data"></delete-button>
+                                                        
+                                                <delete-button :scope="scope" :rows="data" v-if="scope.row.status == 1"></delete-button>
                                             </template>
                                         </el-table-column>
                                     </el-table>
@@ -145,19 +147,11 @@
 
                 columnsSearch: [],
                 listFilterColumn: [],
-                listStatus: [
-                    {
-                        value: 0,
-                        label: 'Không hoạt động'
-                    },
-                    {
-                        value: 1,
-                        label: 'Hoạt động'
-                    }
-                ],
                 filter: {
-                    status: ''
-                }
+                    shop_id: '',
+                    searchQuery: '',
+                },
+                shopArr: [],
 
             };
         },
@@ -170,7 +164,7 @@
                     order_by: this.order_meta.order_by,
                     order: this.order_meta.order,
                     search: this.searchQuery,
-                    status: this.filter.status
+                    shop_id: this.filter.shop_id
                 };
 
                 axios.get(route('apishop.transfer.index', _.merge(properties, customProperties)))
@@ -188,11 +182,26 @@
                 this.meta.current_page = 0;
                 this.queryServer({})
             },
+            fetchShop() {
+                const properties = {
+                    page: 0,
+                    per_page: 1000,
+
+                };
+
+                axios.get(route('api.shop.index', _.merge(properties, {})))
+                .then((response) => {
+
+                    this.shopArr = response.data.data;
+
+                });
+            },
 
         },
 
         mounted() {
             this.fetchData();
+            this.fetchShop();
 
         },
     }

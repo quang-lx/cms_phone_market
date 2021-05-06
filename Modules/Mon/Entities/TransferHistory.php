@@ -25,6 +25,10 @@ class TransferHistory extends Model
         'status',
     ];
 
+    const STATUS_INACTIVE = 0;
+    const STATUS_NEW = 1;
+    const STATUS_LOCK = 2;
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
@@ -37,6 +41,39 @@ class TransferHistory extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'vt_transfer_history_detail','vt_transfer_id','vt_product_id');
+        return $this->belongsToMany(Product::class, 'vt_transfer_history_detail','vt_transfer_id','vt_product_id')->withPivot('amount');
+    }
+
+    public function getStatusNameAttribute($value)
+    {
+        $statusName = '';
+        switch ($this->status) {
+            case self::STATUS_LOCK:
+                $statusName = 'Đã khóa';
+                break;
+            case self::STATUS_NEW:
+                $statusName = 'Mới tạo';
+                break;
+            case self::STATUS_INACTIVE:
+                $statusName = 'Chưa hoạt động';
+                break;
+        }
+        return $statusName;
+    }
+    public function getStatusColorAttribute($value)
+    {
+        $statusColor = '';
+        switch ($this->status) {
+            case self::STATUS_LOCK:
+                $statusColor = '#F5ABAB';
+                break;
+            case self::STATUS_NEW:
+                $statusColor = '#219653';
+                break;
+            case self::STATUS_INACTIVE:
+                $statusColor = 'red';
+                break;
+        }
+        return $statusColor;
     }
 }

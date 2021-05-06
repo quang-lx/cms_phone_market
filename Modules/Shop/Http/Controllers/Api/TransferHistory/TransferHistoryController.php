@@ -46,7 +46,7 @@ class TransferHistoryController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('ch::transferhistory.message.create success'),
+            'message' => trans('ch::transfer.message.create success'),
         ]);
     }
 
@@ -62,7 +62,7 @@ class TransferHistoryController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('ch::transferhistory.message.update success'),
+            'message' => trans('ch::transfer.message.update success'),
         ]);
     }
 
@@ -72,7 +72,7 @@ class TransferHistoryController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('ch::transferhistory.message.delete success'),
+            'message' => trans('ch::transfer.message.delete success'),
         ]);
     }
 }

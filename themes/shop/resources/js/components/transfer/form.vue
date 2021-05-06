@@ -31,8 +31,8 @@
               <div class="card-header ui-sortable-handle" style="cursor: move">
                 <h3 class="card-title">
                   {{ $t(pageTitle)
-                  }}<span v-if="modelForm.name"
-                    >: &nbsp{{ modelForm.name }}</span
+                  }}<span v-if="modelForm.title"
+                    >: &nbsp{{ modelForm.title }}</span
                   >
                 </h3>
               </div>
@@ -171,7 +171,10 @@
                   </div>
 
                   <div class="col-md-2">
-                    <el-input v-model="pinfo.count"></el-input>
+                    <el-input-number style="width: 100%"
+                            v-model="pinfo.count" :min="1"
+                            :max="100000000"
+                            placeholder="Giá"></el-input-number>
                   </div>
                   <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
                     <i
@@ -273,7 +276,7 @@ export default {
       axios
         .get(
           route("apishop.transfer.find", {
-            transfer: this.$route.params.transferId,
+            transferhistory: this.$route.params.transferId,
           })
         )
         .then((response) => {
@@ -285,7 +288,7 @@ export default {
     getRoute() {
       if (this.$route.params.transferId !== undefined) {
         return route("apishop.transfer.update", {
-          transfer: this.$route.params.transferId,
+          transferhistory: this.$route.params.transferId,
         });
       }
       return route("apishop.transfer.store");

@@ -2,7 +2,7 @@
 
 namespace Modules\Shop\Events\Transfer;
 
-use Modules\Mon\Entities\Transfer;
+use Modules\Mon\Entities\TransferHistory;
 
 
 class TransferWasCreated
@@ -12,7 +12,7 @@ class TransferWasCreated
      */
     private $model;
     private $data;
-    public function __construct(Transfer $model, $data)
+    public function __construct(TransferHistory $model, $data)
     {
         $this->model = $model;
         $this->data = $data;
