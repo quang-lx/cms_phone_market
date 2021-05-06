@@ -4,6 +4,7 @@ namespace Modules\Shop\Http\Controllers\Api\VtImportExcel;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Modules\Mon\Entities\VtImportExcel;
 use Modules\Shop\Http\Requests\VtImportExcel\CreateVtImportExcelRequest;
 use Modules\Shop\Transformers\VtImportExcelTransformer;
@@ -61,6 +62,7 @@ class VtImportExcelController extends ApiController
                 $this->vtimportexcelRepository->update($importExcel, ['number_product' => $import->getRowCount()]);
             });
         } catch (\Exception $e) {
+        	Log::info($e->getMessage());
             return response()->json([
                 'errors' => true,
                 'message' => 'Có lỗi xảy ra trong quá trình import',
