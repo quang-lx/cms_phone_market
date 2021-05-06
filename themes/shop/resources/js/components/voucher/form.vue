@@ -459,7 +459,7 @@ export default {
       };
 
       axios
-        .get(route("api.product.index", _.merge(properties, {})))
+        .get(route("apishop.product.index", _.merge(properties, {})))
         .then((response) => {
           this.productSearchResult = response.data.data;
         });
