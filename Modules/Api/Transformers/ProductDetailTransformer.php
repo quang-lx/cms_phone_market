@@ -4,49 +4,50 @@
 namespace Modules\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
 
-class ProductDetailTransformer extends JsonResource
-{
+class ProductDetailTransformer extends JsonResource {
 
 
-    public function toArray($request)
-    {
-        $data = [
-            'id' => $this->id,
-            'sku' => $this->sku,
-            'name' => $this->name,
-            'price' => $this->price,
-            'sale_price' => $this->sale_price,
-            'discount' => 15,
-	        'amount' => $this->amount,
-	        'description' => $this->description,
-	        'p_weight' => $this->p_weight,
-	        's_long' => $this->s_long,
-	        's_width' => $this->s_width,
-	        's_height' => $this->s_height,
-	        'brand_id' => $this->brand_id,
-	        'fix_time' => $this->fix_time,
-	        'warranty_time' => $this->warranty_time,
-	        'type' => $this->type,
-	        'brand_name' => optional($this->brand)->name,
-	        'shop' => $this->shop? new ShopTransformer($this->shop): null,
-	        'attributes' => $this->getProductAttribute($this->attributeValues),
-	        'detail_information' => $this->getDetailInformation($this->pinformation),
+	public function toArray($request) {
+		$data = [
+			'id' => $this->id,
+			'sku' => $this->sku,
+			'name' => $this->name,
+			'price' => $this->price,
+			'sale_price' => $this->sale_price,
+			'discount' => 15,
+			'amount' => $this->amount,
+			'description' => $this->description,
+			'p_weight' => $this->p_weight,
+			's_long' => $this->s_long,
+			's_width' => $this->s_width,
+			's_height' => $this->s_height,
+			'brand_id' => $this->brand_id,
+			'fix_time' => $this->fix_time,
+			'warranty_time' => $this->warranty_time,
+			'type' => $this->type,
+			'brand_name' => optional($this->brand)->name,
+			'shop' => $this->shop ? new ShopTransformer($this->shop) : null,
+			'attributes' => $this->getProductAttribute($this->attributeValues),
+			'detail_information' => $this->getDetailInformation($this->pinformation),
 
-	        'files' => $this->files?  MediaShortTransformer::collection($this->files): null,
-	        'product_related' => $this->getProductRelated($this->id),
-	        'product_suggested' => $this->getProductSuggested($this->id),
-	        'rating_avg' => $this->rating_avg,
-	        'rating_user' => $this->rating_user,
-	        'ratings' => $this->getRating($this->id),
-        ];
+			'files' => $this->files ? MediaShortTransformer::collection($this->files) : null,
+			'product_related' => $this->getProductRelated($this->id),
+			'product_suggested' => $this->getProductSuggested($this->id),
+			'rating_avg' => $this->rating_avg,
+			'rating_user' => $this->rating_user,
+			'ratings' => $this->getRating($this->id),
+			'rating_group' => $this->statisticRating($this->id)
+		];
 
 
-        return $data;
-    }
-    public function getProductAttribute($productValues) {
+		return $data;
+	}
+
+	public function getProductAttribute($productValues) {
 		$result = [];
 		foreach ($productValues as $item) {
 			$result[] = [
@@ -58,7 +59,8 @@ class ProductDetailTransformer extends JsonResource
 			];
 		}
 		return $result;
-    }
+	}
+
 	public function getDetailInformation($pinformation) {
 		$result = [];
 		foreach ($pinformation as $item) {
@@ -70,14 +72,16 @@ class ProductDetailTransformer extends JsonResource
 		}
 		return $result;
 	}
+
 	public function getRating($id) {
-    	$query = Rating::query();
-    	$query->where('product_id', $id)
-		    ->orderBy('created_at', 'desc')
-		    ->limit(2);
-    	$data = $query->get();
-    	return RatingTransformer::collection($data);
+		$query = Rating::query();
+		$query->where('product_id', $id)
+			->orderBy('created_at', 'desc')
+			->limit(2);
+		$data = $query->get();
+		return RatingTransformer::collection($data);
 	}
+
 	//TODO
 	public function getProductRelated($id) {
 		$query = Product::query();
@@ -85,6 +89,7 @@ class ProductDetailTransformer extends JsonResource
 		$data = $query->limit(10)->get();
 		return ProductTransformer::collection($data);
 	}
+
 	//TODO
 	public function getProductSuggested($id) {
 		$query = Product::query();
@@ -93,4 +98,13 @@ class ProductDetailTransformer extends JsonResource
 		return ProductTransformer::collection($data);
 	}
 
+	public function statisticRating($id) {
+		$query = Rating::query();
+		$query->where('product_id', $id)
+			->groupBy('rating')
+			->orderBy('rating')
+			->select('rating', DB::raw('count(1) as total'));
+		$data = $query->get();
+		return $data;
+	}
 }
