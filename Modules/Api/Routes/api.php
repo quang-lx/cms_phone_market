@@ -152,6 +152,14 @@ Route::prefix('/product')->group(function () {
 		'as' => 'apife.product.detail',
 		'uses' => 'ProductController@detail',
 	]);
+	Route::get('/{id}/related', [
+		'as' => 'apife.product.related',
+		'uses' => 'ProductController@related',
+	]);
+	Route::get('/{id}/suggested', [
+		'as' => 'apife.product.suggested',
+		'uses' => 'ProductController@suggested',
+	]);
 });
 
 Route::prefix('/category')->group(function () {
@@ -169,7 +177,13 @@ Route::prefix('/category')->group(function () {
 	]);
 
 });
+Route::prefix('rating')->group(function ($router) {
 
+	Route::get('/{product_id}/list', [
+		'uses' => 'RatingController@listByProduct',
+		'as' => 'apife.rating.listByProduct',
+	]);
+});
 Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
 	Route::post('file', [
 		'uses' => 'MediaController@store',
@@ -190,4 +204,13 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'as' => 'apife.product.baohanh',
 		]);
 	});
+	Route::prefix('rating')->group(function ($router) {
+		Route::post('/', [
+			'uses' => 'RatingController@store',
+			'as' => 'apife.rating.store',
+		]);
+
+	});
 });
+
+

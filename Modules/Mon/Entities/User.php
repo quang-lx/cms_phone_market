@@ -229,4 +229,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         }
         return $gender_name;
     }
+    
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('thumbnail')->first();
+    }
 }

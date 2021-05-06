@@ -208,7 +208,11 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 			$query->where('status', $status);
 		}
 
-		$query->where('company_id', Auth::user()->company_id);
+		$user = Auth::user();
+		$query->where('company_id', $user->company_id);
+		if($user->shop_id) {
+			$query->where('shop_id', $user->shop_id);
+		}
 
 		if ($request->get('search') !== null) {
 			$keyword = $request->get('search');

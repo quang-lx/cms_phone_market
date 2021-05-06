@@ -37,6 +37,8 @@ class Product extends Model {
 		'fix_time',
 		'warranty_time',
 		'type',
+		'rating_avg',
+		'rating_user',
 	];
 	protected $casts = [
 		'type' => 'integer',

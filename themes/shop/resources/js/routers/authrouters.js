@@ -36,6 +36,9 @@ import VtProductList from './../components/vtproduct/index';
 
 import TransferForm from './../components/transfer/form';
 import TransferList from './../components/transfer/index';
+import VtImportExcelDetail from './../components/vtimportexcel/detail';
+import VtImportExcelList from './../components/vtimportexcel/index';
+import VtImportExcelCreate from './../components/vtimportexcel/create';
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -290,6 +293,30 @@ export default [
         component: TransferForm,
         props: {
             pageTitle: 'transfer.label.update_transfer',
+        },
+    },
+
+     //vtimportexcel
+    {
+        path: '/shop-admin/vtimportexcel',
+        name: 'shop.vtimportexcel.index',
+        component: VtImportExcelList,
+    },
+    {
+        path: '/shop-admin/vtimportexcel/create',
+        name: 'shop.vtimportexcel.create',
+        component: VtImportExcelCreate,
+        props: {
+            pageTitle: 'vtimportexcel.label.create_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/vtimportexcel/:vtimportexcelId/detail',
+        name: 'shop.vtimportexcel.detail',
+        component: VtImportExcelDetail,
+        props: {
+            pageTitle: 'vtimportexcel.label.detail_title',
         },
     },
  

@@ -34,6 +34,8 @@ class ErrorCode
     const ERR26 = 26;
     const ERR27 = 27;
     const ERR28 = 28;
+    const ERR31 = 31;
+    const ERR32 = 32;
 
     const ERR500 = 500;
     const SUCCESS = 0;
@@ -68,6 +70,8 @@ class ErrorCode
     const ERR28_MSG = "Mật khẩu không đúng";
     const ERR29_MSG = "Vui lòng nhập mã OTP";
     const ERR30_MSG = 'Vui lòng nhập mật khẩu cũ';
+    const ERR31_MSG = 'Vui lòng nhập đánh giá';
+    const ERR32_MSG = 'Đánh giá không hợp lệ';
 
 
     const ERR500_MSG = 'Hệ thống đang bận. Vui lòng thử lại';

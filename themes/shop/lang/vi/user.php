@@ -6,6 +6,7 @@ return [
         'email' => 'Email',
         'name' => 'Tên',
         'phone' => 'Số điện thoại',
+        'shop_id' => 'Chi nhánh',
         'created_at' => 'Ngày tạo',
         'updated_at' => 'Ngày cập nhật',
         'password_confirmation' => 'Xác nhận mật khẩu',

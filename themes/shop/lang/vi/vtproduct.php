@@ -4,7 +4,6 @@ return [
         'vtproduct' => 'Linh kiện',
         'id' => 'ID',
         'name' => "Tên",
-        'code' => "Code",
         'price' => 'Giá',
         'amount' => 'Số lượng',
         'vt_category_id' => 'Danh mục',
@@ -18,6 +17,7 @@ return [
 
     'message' => [
         'create success' => 'Tạo Linh kiện  thành công.',
+        'import success' => 'Import Linh kiện  thành công.',
         'update success' => 'Cập nhật Linh kiện  thành công.',
         'delete success' => 'Xóa Linh kiện  thành công.',
     ]

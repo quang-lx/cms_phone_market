@@ -144,10 +144,39 @@
 
                                                                 </el-select>
                                                                 <div class="el-form-item__error"
-                                                                     v-if="form.errors.has('status')"
-                                                                     v-text="form.errors.first('status')"></div>
+                                                                     v-if="form.errors.has('shop_id')"
+                                                                     v-text="form.errors.first('shop_id')"></div>
                                                             </el-form-item>
 
+                                                            
+                                                                <single-media zone="thumbnail" class="mb-4"
+                                                                  @singleFileSelected="selectSingleFile($event, 'modelForm')"
+                                                                  label="Ảnh đại diện"
+                                                                  entity="Modules\Mon\Entities\User"
+                                                                  :entity-id="$route.params.userId"></single-media>
+                                                            <div class="el-form-item__error"  style="margin-left:208px"
+                                                                v-if="form.errors.has('medias_single.thumbnail')"
+                                                                v-text="form.errors.first('medias_single.thumbnail')"></div>
+
+
+                                                            <el-form-item :label="$t('user.label.shop_id')"
+                                                                          :class="{'el-form-item is-error': form.errors.has('shop_id') }">
+
+                                                                <el-select v-model="modelForm.shop_id" :placeholder="$t('user.label.shop_id')"
+                                                                           filterable style="width: 100% !important">
+                                                                    <el-option
+                                                                            v-for="item in listShop"
+                                                                            :key="'shop_id'+ item.id"
+                                                                            :label="item.name"
+                                                                            :value="item.id">
+                                                                    </el-option>
+
+                                                                </el-select>
+                                                                <div class="el-form-item__error"
+                                                                     v-if="form.errors.has('shop_id')"
+                                                                     v-text="form.errors.first('shop_id')"></div>
+                                                            </el-form-item>
+                                                                                                          
                                                             <div v-if="modelForm.is_new">
                                                                 <el-form-item :label="$t('user.label.password')"
                                                                               :class="{'el-form-item is-error': form.errors.has('password') }">
@@ -223,8 +252,13 @@
 <script>
     import axios from 'axios';
     import Form from 'form-backend-validation';
-
+    import Tinymce from '../utils/Tinymce';
+    import SingleFileSelector from '../../mixins/SingleFileSelector.js';
     export default {
+        mixins: [SingleFileSelector],
+        components: {
+            Tinymce,
+        },
         props: {
             locales: {default: null},
             pageTitle: {default: null, String},
@@ -243,13 +277,15 @@
                     roles: [],
                     is_new: false,
                     type: 1,
-                    status: 1
+                    status: 1,
+                    shop_id:''
 
                 },
                 roles: [],
                 checkAll: false,
                 isIndeterminate: false,
                 changePassDialogVisible: false,
+                listShop:[],
                 listStatus: [
 
                     {
@@ -369,13 +405,28 @@
                 let checkedCount = value.length;
                 this.checkAll = checkedCount === this.roles.length;
                 this.isIndeterminate = checkedCount > 0 && checkedCount < this.roles.length;
-            }
+            },
+
+            fetchShop() {
+                const properties = {
+                page: 0,
+                per_page: 1000,
+                shop_admin: 1,
+                };
+
+                axios.get(route('api.shop.index', _.merge(properties, {})))
+                .then((response) => {
+                this.listShop = response.data.data;
+                });
+            },
 
 
         },
         mounted() {
+            this.fetchShop();
             this.fetchData();
             this.fetchRoles();
+         
 
         },
         computed: {}

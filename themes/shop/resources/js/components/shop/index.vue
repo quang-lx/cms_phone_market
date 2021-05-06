@@ -170,7 +170,8 @@
                     order_by: this.order_meta.order_by,
                     order: this.order_meta.order,
                     search: this.searchQuery,
-                    status: this.filter.status
+                    status: this.filter.status,
+                    shop_admin: 1
                 };
 
                 axios.get(route('api.shop.index', _.merge(properties, customProperties)))
