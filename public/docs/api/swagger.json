@@ -2551,6 +2551,14 @@
                         "required": true,
                         "type": "integer",
                         "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "rating",
+                        "description": "media|1|2|3|4|5",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
                     }
                 ],
                 "responses": {

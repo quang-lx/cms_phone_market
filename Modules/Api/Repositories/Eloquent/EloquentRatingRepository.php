@@ -35,6 +35,14 @@ class EloquentRatingRepository extends ApiBaseRepository implements RatingReposi
 	public function listByProductId(Request $request, $product_id) {
 		$query = $this->model->query();
 		$query->where('product_id', $product_id);
+		if($rating = $request->get('rating')) {
+			if ($rating == 'media') {
+				$query->whereHas('files');
+			}else {
+				$query->where('rating', $rating);
+			}
+		}
+
 		return $query->paginate($request->get('per_page', 10));
 
 	}

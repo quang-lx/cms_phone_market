@@ -40,7 +40,7 @@ class ProductDetailTransformer extends JsonResource {
 			'rating_avg' => $this->rating_avg,
 			'rating_user' => $this->rating_user,
 			'ratings' => $this->getRating($this->id),
-			'rating_group' => $this->statisticRating($this->id)
+			'rating_group' => $this->ratingGroup($this->id)
 		];
 
 
@@ -106,5 +106,33 @@ class ProductDetailTransformer extends JsonResource {
 			->select('rating', DB::raw('count(1) as total'));
 		$data = $query->get();
 		return $data;
+	}
+	public function statisticRatingFile($id) {
+		$query = Rating::query();
+		$query->where('product_id', $id)->whereHas('files');
+		$data = $query->count();
+		return $data;
+	}
+	public function ratingGroup($id) {
+		$group=[];
+		$total = Rating::query()->where('product_id', $id)->count();
+		$group[] = [
+			'rating' => 'Tất cả',
+			'total' => $total
+		];
+		$mediaRating = $this->statisticRatingFile($id);
+		$group[] = [
+			'rating' => '‘media’',
+			'total' => $mediaRating
+		];
+		$ratings = $this->statisticRating($id);
+		for ($i=1; $i<=5; $i++) {
+			if (!$ratings->contains('rating', $i)) {
+				$ratings->push(['rating'=> $i, 'total'=> 0]);
+			}
+		}
+		$ratingsGroup = $ratings->sortByDesc('rating')->values()->all();
+		return array_merge($group, $ratingsGroup);
+
 	}
 }
