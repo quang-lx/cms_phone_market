@@ -54,7 +54,7 @@ class UserController extends ApiController
 
         $data['company_id'] = Auth::user()->company_id;
         $data['status'] = User::STATUS_ACTIVE;
-        $data['type'] = User::TYPE_USER;
+        $data['type'] = User::TYPE_SHOP;
         $data['sms_verified_at'] = now();
         $data['finish_reg'] = 1;
 

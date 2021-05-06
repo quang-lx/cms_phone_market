@@ -43,7 +43,7 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
         }
 
         if ($request->get('shop_admin') !==null) {
-            $query->orWhere(function($c){
+            $query->where(function($c){
                 $c->orWhere('company_id',Auth::user()->company_id);
             });
         }
