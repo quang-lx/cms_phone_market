@@ -48,6 +48,16 @@
                                     <div class="row">
                                         <div class="col-md-6" style="padding-top:10px;padding-right:30px">
                                             <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                      <single-media zone="thumbnail"
+                                                                  @singleFileSelected="selectSingleFile($event, 'modelForm')"
+                                                                  label="Ảnh đại diện"
+                                                                  entity="Modules\Mon\Entities\Shop"
+                                                                  :entity-id="$route.params.shopId"></single-media>
+                                                            <div class="el-form-item__error"  style="margin-left:208px"
+                                                                v-if="form.errors.has('medias_single.thumbnail')"
+                                                                v-text="form.errors.first('medias_single.thumbnail')"></div>
+                                                </div>
                                                 <div class="col-md-12">
                                                     <el-form-item :label="$t('shop.label.name')"
                                                                   :class="{'el-form-item is-error': form.errors.has('name') }">
@@ -185,6 +195,8 @@
   import Form from 'form-backend-validation';
   import Vue from 'vue'
   import * as VueGoogleMaps from 'vue2-google-maps'
+  import Tinymce from '../utils/Tinymce';
+  import SingleFileSelector from '../../mixins/SingleFileSelector.js';
 
   Vue.use(VueGoogleMaps, {
     load: {
@@ -193,6 +205,10 @@
     },
   });
   export default {
+    mixins: [SingleFileSelector],
+    components: {
+        Tinymce,
+    },
     props: {
       pageTitle: {default: null, String},
     },
@@ -208,7 +224,7 @@
           status: 1,
           lat: '',
           lng: '',
-          place: ''
+          place: '',
 
         },
         locales: window.MonCMS.locales,
