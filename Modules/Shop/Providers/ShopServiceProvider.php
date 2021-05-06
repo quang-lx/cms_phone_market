@@ -236,6 +236,14 @@ class ShopServiceProvider extends ServiceProvider
             }
         );
         $this->app->bind(
+            'Modules\Shop\Repositories\TransferHistoryRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentTransferHistoryRepository(new \Modules\Mon\Entities\TransferHistory());
+                return $repository;
+            }
+        );
+
+        $this->app->bind(
             'Modules\Shop\Repositories\VtImportExcelRepository',
             function () {
                 $repository = new \Modules\Shop\Repositories\Eloquent\EloquentVtImportExcelRepository(new \Modules\Mon\Entities\VtImportExcel());
@@ -243,21 +251,6 @@ class ShopServiceProvider extends ServiceProvider
             }
         );
 // add bindings
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

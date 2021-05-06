@@ -358,6 +358,30 @@ Route::middleware('auth:api')->prefix('/vtimportexcels')->group(function (){
         'uses' => 'VtImportExcel\VtImportExcelController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/transfers')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.transfer.index',
+        'uses' => 'TransferHistory\TransferHistoryController@index',
+    ]);
+    Route::post('/{transferhistory}/edit', [
+            'as' => 'apishop.transfer.update',
+            'uses' => 'TransferHistory\TransferHistoryController@update',
+        ]);
+   Route::get('/{transferhistory}', [
+              'as' => 'apishop.transfer.find',
+              'uses' => 'TransferHistory\TransferHistoryController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'apishop.transfer.store',
+        'uses' => 'TransferHistory\TransferHistoryController@store',
+    ]);
+
+    Route::delete('/{transferhistory}', [
+        'as' => 'apishop.transfer.destroy',
+        'uses' => 'TransferHistory\TransferHistoryController@destroy',
+    ]);
+});
 // append
 
 

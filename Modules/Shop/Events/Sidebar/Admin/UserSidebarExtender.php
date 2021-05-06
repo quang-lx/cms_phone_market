@@ -202,6 +202,30 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
 	    });
 
+        $menu->group('transfer management', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('ch::sidebar.transfer management'), function (Item $item) {
+                $item->icon('fa fa-shopping-cart');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('shop.transfer.index')
+                );
+
+                $item->item(trans('ch::sidebar.transfer management'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('shop.transfer.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('shop.transfer.index')
+                    );
+                });
+
+            });
+
+
+        });
+
         return $menu;
 
     }
