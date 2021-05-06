@@ -12,11 +12,11 @@ class TransferHistoryTransformer extends JsonResource
     public function toArray($request)
     {
         //convert string to carbon
-        $receivedAt = optional(Carbon::parse($this->received_at));
+        // $receivedAt = optional(Carbon::parse($this->received_at));
         $data = [
             'id' => $this->id,
             'title' => $this->title,
-            'received_at' => $receivedAt->format('d-m-Y H:i:s'),
+            'received_at' => $this->received_at,
             'shop_id' => $this->shop_id,
             'shop_name' => optional($this->shop)->name,
             'company_id' => $this->company_id,

@@ -115,11 +115,13 @@
                               @select="handleSelect"
                               clearable
                             ></el-autocomplete>
+
                             <div
                               class="el-form-item__error"
                               v-if="form.errors.has('products')"
                               v-text="form.errors.first('products')"
                             ></div>
+                          
                           </el-form-item>
                         </div>
                       </div>
@@ -184,6 +186,7 @@
                     ></i>
                   </div>
                 </div>
+
               </div>
 
               <div class="card-footer d-flex justify-content-end">
@@ -279,6 +282,8 @@ export default {
           })
         )
         .then((response) => {
+          console.log('ok');
+          console.log(this.modelForm);
           this.loading = false;
           this.modelForm = response.data.data;
         });
