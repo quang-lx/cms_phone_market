@@ -2,50 +2,36 @@
 
 namespace Modules\Mon\Events;
 
+use Modules\Media\Repositories\StoringMedia;
 use Modules\Mon\Entities\User;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserWasCreated
+
+class UserWasCreated implements StoringMedia
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    protected $entity;
-    protected $data;
-
     /**
-     * Create a new event instance.
-     *
-     * @param User $user
-     * @param $data
+     * @var User
      */
-    public function __construct(User $user, $data)
+    private $model;
+    private $data;
+    public function __construct(User $model, $data)
     {
-        $this->entity = $user;
+        $this->model = $model;
         $this->data = $data;
     }
-
     /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
+     * Return the entity
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
-    }
-
     public function getEntity()
     {
-        return $this->entity;
+        return $this->model;
     }
 
-    public function submissionData()
+    /**
+     * Return the ALL data sent
+     * @return array
+     */
+    public function getSubmissionData()
     {
         return $this->data;
     }

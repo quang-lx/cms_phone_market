@@ -148,6 +148,16 @@
                                                                      v-text="form.errors.first('shop_id')"></div>
                                                             </el-form-item>
 
+                                                            
+                                                                <single-media zone="thumbnail" class="mb-4"
+                                                                  @singleFileSelected="selectSingleFile($event, 'modelForm')"
+                                                                  label="Ảnh đại diện"
+                                                                  entity="Modules\Mon\Entities\User"
+                                                                  :entity-id="$route.params.userId"></single-media>
+                                                            <div class="el-form-item__error"  style="margin-left:208px"
+                                                                v-if="form.errors.has('medias_single.thumbnail')"
+                                                                v-text="form.errors.first('medias_single.thumbnail')"></div>
+
 
                                                             <el-form-item :label="$t('user.label.shop_id')"
                                                                           :class="{'el-form-item is-error': form.errors.has('shop_id') }">
@@ -242,8 +252,13 @@
 <script>
     import axios from 'axios';
     import Form from 'form-backend-validation';
-
+    import Tinymce from '../utils/Tinymce';
+    import SingleFileSelector from '../../mixins/SingleFileSelector.js';
     export default {
+        mixins: [SingleFileSelector],
+        components: {
+            Tinymce,
+        },
         props: {
             locales: {default: null},
             pageTitle: {default: null, String},
