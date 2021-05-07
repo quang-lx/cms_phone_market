@@ -58,6 +58,17 @@
                                                                 v-if="form.errors.has('medias_single.thumbnail')"
                                                                 v-text="form.errors.first('medias_single.thumbnail')"></div>
                                                 </div>
+
+                                                <div class="col-md-12 mb-4">
+                                                      <single-media zone="banner"
+                                                                  @singleFileSelected="selectSingleFile($event, 'modelForm')"
+                                                                  label="Banner"
+                                                                  entity="Modules\Mon\Entities\Shop"
+                                                                  :entity-id="$route.params.shopId"></single-media>
+                                                            <div class="el-form-item__error"  style="margin-left:208px"
+                                                                v-if="form.errors.has('medias_single.banner')"
+                                                                v-text="form.errors.first('medias_single.banner')"></div>
+                                                </div>
                                                 <div class="col-md-12">
                                                     <el-form-item :label="$t('shop.label.name')"
                                                                   :class="{'el-form-item is-error': form.errors.has('name') }">
