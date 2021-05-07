@@ -35,4 +35,8 @@ class EloquentApiShopRepository implements ApiShopRepository
 		$result = Shop::query()->paginate($request->get('per_page', 10));
 		return $result;
 	}
+	public function detail(Request $request, $id) {
+		return Shop::query()->find($id);
+	}
+
 }

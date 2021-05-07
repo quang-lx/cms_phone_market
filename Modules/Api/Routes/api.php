@@ -177,6 +177,13 @@ Route::prefix('/category')->group(function () {
 	]);
 
 });
+Route::prefix('/shop')->group(function () {
+	Route::get('/{id}/detail', [
+		'as' => 'apife.shop.detail',
+		'uses' => 'ShopController@detail',
+	]);
+
+});
 Route::prefix('rating')->group(function ($router) {
 
 	Route::get('/{product_id}/list', [

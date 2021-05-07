@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\ApiShopRepository;
+use Modules\Api\Transformers\ShopFullTransformer;
 use Modules\Api\Transformers\ShopTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Http\Controllers\ApiController;
@@ -20,6 +21,12 @@ class ShopController extends ApiController
 		parent::__construct($auth);
 
 		$this->apiShopRepository = $apiShopRepository;
+	}
+
+	public function detail(Request $request, $id) {
+		$shop = $this->apiShopRepository->detail($request,$id);
+		$data = $shop ? new ShopFullTransformer($shop) : null;
+		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
 
 	public function shopNearest(Request $request)
