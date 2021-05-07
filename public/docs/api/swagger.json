@@ -2613,6 +2613,23 @@
                         "required": false,
                         "type": "string",
                         "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
                     }
                 ],
                 "responses": {
@@ -2773,6 +2790,23 @@
                         "description": "media|1|2|3|4|5",
                         "required": false,
                         "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "required": false,
+                        "type": "integer",
                         "format": "text"
                     }
                 ],
