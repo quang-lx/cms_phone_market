@@ -32,10 +32,10 @@ Route::prefix('/app')->group(function () {
         'as' => 'api.app.area',
         'uses' => 'AppController@allArea',
     ]);
-	Route::get('shop/nearest', [
-		'uses' => 'ShopController@shopNearest',
-		'as' => 'apife.shop.shopNearest',
-	]);
+    Route::get('shop/nearest', [
+        'uses' => 'ShopController@shopNearest',
+        'as' => 'apife.shop.shopNearest',
+    ]);
 });
 
 
@@ -104,34 +104,32 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
         'uses' => 'UserController@logout',
         'as' => 'apife.user.logout',
     ]);
-	Route::post('change-password', [
-		'uses' => 'UserController@changePassword',
-		'as' => 'apife.user.changePassword',
-	]);
-	Route::get('profile', [
-		'uses' => 'UserController@profile',
-		'as' => 'apife.user.profile',
-	]);
+    Route::post('change-password', [
+        'uses' => 'UserController@changePassword',
+        'as' => 'apife.user.changePassword',
+    ]);
+    Route::get('profile', [
+        'uses' => 'UserController@profile',
+        'as' => 'apife.user.profile',
+    ]);
 });
-
-
 
 
 Route::prefix('/home')->group(function () {
 
-	Route::get('/', [
-		'as' => 'apife.home.index',
-		'uses' => 'HomeController@index',
-	]);
+    Route::get('/', [
+        'as' => 'apife.home.index',
+        'uses' => 'HomeController@index',
+    ]);
 
 });
 
 
 Route::prefix('/search')->group(function () {
-	Route::get('/', [
-		'as' => 'apife.search.search',
-		'uses' => 'SearchController@search',
-	]);
+    Route::get('/', [
+        'as' => 'apife.search.search',
+        'uses' => 'SearchController@search',
+    ]);
     Route::get('/suggestion', [
         'as' => 'apife.search.suggestion',
         'uses' => 'SearchController@listSuggestion',
@@ -140,91 +138,95 @@ Route::prefix('/search')->group(function () {
 });
 
 Route::prefix('/product')->group(function () {
-	Route::get('/', [
-		'as' => 'apife.product.list',
-		'uses' => 'ProductController@listByCategory',
-	]);
-	Route::get('/by-service', [
-		'as' => 'apife.product.listByService',
-		'uses' => 'ProductController@listByService',
-	]);
-	Route::get('/{id}/detail', [
-		'as' => 'apife.product.detail',
-		'uses' => 'ProductController@detail',
-	]);
-	Route::get('/{id}/related', [
-		'as' => 'apife.product.related',
-		'uses' => 'ProductController@related',
-	]);
-	Route::get('/{id}/suggested', [
-		'as' => 'apife.product.suggested',
-		'uses' => 'ProductController@suggested',
-	]);
+    Route::get('/', [
+        'as' => 'apife.product.list',
+        'uses' => 'ProductController@listByCategory',
+    ]);
+    Route::get('/by-service', [
+        'as' => 'apife.product.listByService',
+        'uses' => 'ProductController@listByService',
+    ]);
+    Route::get('/{id}/detail', [
+        'as' => 'apife.product.detail',
+        'uses' => 'ProductController@detail',
+    ]);
+    Route::get('/{id}/related', [
+        'as' => 'apife.product.related',
+        'uses' => 'ProductController@related',
+    ]);
+    Route::get('/{id}/suggested', [
+        'as' => 'apife.product.suggested',
+        'uses' => 'ProductController@suggested',
+    ]);
+    Route::get('/shop/{shop_id}/list', [
+        'as' => 'apife.product.listByShop',
+        'uses' => 'ProductController@listByShop',
+    ]);
 });
 
 Route::prefix('/category')->group(function () {
-	Route::get('/{category_id}/problem-brand', [
-		'as' => 'apife.category.problemBrand',
-		'uses' => 'CategoryController@getProblemBrandByCat',
-	]);
-	Route::get('/{category_id}/sub', [
-		'as' => 'apife.category.sub',
-		'uses' => 'CategoryController@listSubCat',
-	]);
-	Route::get('/services', [
-		'as' => 'apife.category.services',
-		'uses' => 'CategoryController@listByServiceType',
-	]);
+    Route::get('/{category_id}/problem-brand', [
+        'as' => 'apife.category.problemBrand',
+        'uses' => 'CategoryController@getProblemBrandByCat',
+    ]);
+    Route::get('/{category_id}/sub', [
+        'as' => 'apife.category.sub',
+        'uses' => 'CategoryController@listSubCat',
+    ]);
+    Route::get('/services', [
+        'as' => 'apife.category.services',
+        'uses' => 'CategoryController@listByServiceType',
+    ]);
 
 });
 Route::prefix('/shop')->group(function () {
-	Route::get('/{id}/detail', [
-		'as' => 'apife.shop.detail',
-		'uses' => 'ShopController@detail',
-	]);
+    Route::get('/{id}/detail', [
+        'as' => 'apife.shop.detail',
+        'uses' => 'ShopController@detail',
+    ]);
 
 });
 Route::prefix('rating')->group(function ($router) {
 
-	Route::get('/{product_id}/list', [
-		'uses' => 'RatingController@listByProduct',
-		'as' => 'apife.rating.listByProduct',
-	]);
-	Route::get('/shop/{shop_id}/list', [
-		'uses' => 'RatingController@listByShop',
-		'as' => 'apife.rating.listByShop',
-	]);
+    Route::get('/{product_id}/list', [
+        'uses' => 'RatingController@listByProduct',
+        'as' => 'apife.rating.listByProduct',
+    ]);
+    Route::get('/shop/{shop_id}/list', [
+        'uses' => 'RatingController@listByShop',
+        'as' => 'apife.rating.listByShop',
+    ]);
 });
 Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
-	Route::post('file', [
-		'uses' => 'MediaController@store',
-		'as' => 'apife.media.store',
-	]);
+    Route::post('file', [
+        'uses' => 'MediaController@store',
+        'as' => 'apife.media.store',
+    ]);
 });
 
 Route::middleware(['auth:api'])->group(function ($router) {
-	Route::prefix('shop')->group(function ($router) {
-		Route::get('bao-hanh', [
-			'uses' => 'ShopController@shopBaoHanh',
-			'as' => 'apife.shop.baohanh',
-		]);
-	});
-	Route::prefix('product')->group(function ($router) {
-		Route::get('bao-hanh', [
-			'uses' => 'ProductController@baohanh',
-			'as' => 'apife.product.baohanh',
-		]);
-	});
-	Route::prefix('rating')->group(function ($router) {
-		Route::post('/', [
-			'uses' => 'RatingController@store',
-			'as' => 'apife.rating.store',
-		]);
-		Route::post('/shop', [
-			'uses' => 'RatingController@storeShop',
-			'as' => 'apife.rating.storeShop',
-		]);
-	});
+    Route::prefix('shop')->group(function ($router) {
+        Route::get('bao-hanh', [
+            'uses' => 'ShopController@shopBaoHanh',
+            'as' => 'apife.shop.baohanh',
+        ]);
+    });
+    Route::prefix('product')->group(function ($router) {
+        Route::get('bao-hanh', [
+            'uses' => 'ProductController@baohanh',
+            'as' => 'apife.product.baohanh',
+        ]);
+    });
+    Route::prefix('rating')->group(function ($router) {
+        Route::post('/', [
+            'uses' => 'RatingController@store',
+            'as' => 'apife.rating.store',
+        ]);
+        Route::post('/shop', [
+            'uses' => 'RatingController@storeShop',
+            'as' => 'apife.rating.storeShop',
+        ]);
+    });
 });
 
 
