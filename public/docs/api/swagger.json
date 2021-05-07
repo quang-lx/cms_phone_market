@@ -2556,7 +2556,7 @@
                         "in": "query",
                         "name": "rating",
                         "description": "media|1|2|3|4|5",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     }
@@ -2717,7 +2717,7 @@
                         "in": "query",
                         "name": "rating",
                         "description": "media|1|2|3|4|5",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     }
