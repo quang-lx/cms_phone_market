@@ -140,4 +140,31 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
         return $query->active()->paginate($request->get('per_page', 10));
 
     }
+
+    //TODO
+
+    public function buyNow(Request $request)
+    {
+        $query = $this->model->query();
+
+
+        if ($keyword = $request->get('q')) {
+            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+        }
+        return $query->active()->paginate($request->get('per_page', 10));
+
+    }
+
+    //TODO
+    public function bestSell(Request $request)
+    {
+        $query = $this->model->query();
+
+
+        if ($keyword = $request->get('q')) {
+            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+        }
+        return $query->active()->paginate($request->get('per_page', 10));
+
+    }
 }

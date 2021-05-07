@@ -1033,6 +1033,166 @@
                 }
             }
         },
+        "/home/buy-now/list": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "home"
+                ],
+                "summary": "Mua luon",
+                "description": "Mua luon",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "q",
+                        "description": "Search value",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "default": "1",
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "default": 10,
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
+        "/home/best-sell/list": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "home"
+                ],
+                "summary": "Mua nhieu nhat",
+                "description": "Mua nhieu nhat",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "q",
+                        "description": "Search value",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "default": "1",
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "default": 10,
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
         "/app/shop/nearest": {
             "get": {
                 "tags": [

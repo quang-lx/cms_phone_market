@@ -12,6 +12,8 @@ interface ProductRepository
     public function listByService(Request $request);
 
     public function listBaoHanh(Request $request);
+    public function buyNow(Request $request);
+    public function bestSell(Request $request);
 
     public function detail($id);
 

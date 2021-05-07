@@ -121,7 +121,14 @@ Route::prefix('/home')->group(function () {
         'as' => 'apife.home.index',
         'uses' => 'HomeController@index',
     ]);
-
+    Route::get('/buy-now/list', [
+        'as' => 'apife.home.buyNow',
+        'uses' => 'HomeController@buyNow',
+    ]);
+    Route::get('/best-sell/list', [
+        'as' => 'apife.home.bestSell',
+        'uses' => 'HomeController@bestSell',
+    ]);
 });
 
 
