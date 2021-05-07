@@ -27,7 +27,7 @@ class ShopFullTransformer extends JsonResource
 	        'rating_user' => $this->rating_user,
 	        'product_number' => $this->products->count(),
 	        'time_offline' => '20 phút trước',
-            'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null
+            'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null,
             'banner' => $this->banner?  new MediaShortTransformer($this->banner): null
 
 
