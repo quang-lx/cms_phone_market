@@ -3,6 +3,7 @@
 namespace Modules\Shop\Http\Requests\TransferHistory;
 
 use Illuminate\Foundation\Http\FormRequest;
+use \App\Rules\CountProduct;
 
 class CreateTransferHistoryRequest extends FormRequest
 {
@@ -12,6 +13,7 @@ class CreateTransferHistoryRequest extends FormRequest
             'title' => 'required',
             'received_at' => 'required',
             'shop_id' => 'required',
+            'products' => new CountProduct
         ];
     }
 

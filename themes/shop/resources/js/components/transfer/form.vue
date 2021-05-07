@@ -115,11 +115,13 @@
                               @select="handleSelect"
                               clearable
                             ></el-autocomplete>
+
                             <div
                               class="el-form-item__error"
                               v-if="form.errors.has('products')"
                               v-text="form.errors.first('products')"
                             ></div>
+                          
                           </el-form-item>
                         </div>
                       </div>
@@ -174,7 +176,7 @@
                     <el-input-number style="width: 100%"
                             v-model="pinfo.count" :min="1"
                             :max="100000000"
-                            placeholder="Giá"></el-input-number>
+                            placeholder="Số lượng"></el-input-number>
                   </div>
                   <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
                     <i
@@ -184,6 +186,7 @@
                     ></i>
                   </div>
                 </div>
+
               </div>
 
               <div class="card-footer d-flex justify-content-end">
@@ -226,7 +229,6 @@ export default {
         status: 1,
         received_at: new Date("Y-m-d H:i:s"),
         shop_id: "",
-        product_key: "",
         product_key: "",
         products: [],
       },
@@ -280,6 +282,8 @@ export default {
           })
         )
         .then((response) => {
+          console.log('ok');
+          console.log(this.modelForm);
           this.loading = false;
           this.modelForm = response.data.data;
         });
