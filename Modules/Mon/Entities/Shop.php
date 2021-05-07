@@ -68,6 +68,11 @@ class Shop extends Model
         return $this->filesByZone('thumbnail')->first();
     }
 
+    public function getBannerAttribute()
+    {
+        return $this->filesByZone('banner')->first();
+    }
+
     public function products() {
     	return $this->hasMany(Product::class, 'shop_id');
     }
