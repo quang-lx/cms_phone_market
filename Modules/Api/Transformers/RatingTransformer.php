@@ -17,7 +17,9 @@ class RatingTransformer extends JsonResource
             'comment' => $this->comment,
             'user_id' => $this->user_id,
             'user_name' => optional($this->user)->name,
-	        'user_avatar' => ($this->user && $this->user->avatar ) ? new MediaShortTransformer($this->user->avatar) : null
+	        'created_at'=> $this->created_at->format('H:i d/m/Y'),
+	        'user_avatar' => ($this->user && $this->user->avatar ) ? new MediaShortTransformer($this->user->avatar) : null,
+	        'files' => $this->files ? MediaShortTransformer::collection($this->files) : null,
         ];
 
 

@@ -122,7 +122,7 @@ class ProductDetailTransformer extends JsonResource {
 		];
 		$mediaRating = $this->statisticRatingFile($id);
 		$group[] = [
-			'rating' => '‘media’',
+			'rating' => 'media',
 			'total' => $mediaRating
 		];
 		$ratings = $this->statisticRating($id);
