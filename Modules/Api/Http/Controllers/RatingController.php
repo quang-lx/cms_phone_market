@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Events\ProductRatingCreated;
+use Modules\Api\Events\ShopRatingCreated;
 use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Transformers\RatingShopTransformer;
@@ -98,9 +99,11 @@ class RatingController extends ApiController
 			return $this->respond([], ErrorCode::ERR32_MSG, ErrorCode::ERR32);
 		}
 
-		$request = $request->only('shop_id', 'rating', 'comment', 'parent_id', 'files');
+		$data = $request->only('shop_id', 'rating', 'comment', 'parent_id', 'files');
 
-		$data = $this->ratingShopRepo->create(array_merge($request, ['user_id' => $user->id]));
+		$model = $this->ratingShopRepo->create(array_merge($data, ['user_id' => $user->id]));
+		event(new ShopRatingCreated($request['shop_id']));
+
 		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
 

@@ -23,6 +23,8 @@ class ShopTransformer extends JsonResource
             'lat' => $this->lat,
             'lng' => $this->lng,
             'place' => $this->place,
+	        'rating_avg' => $this->rating_avg,
+	        'rating_user' => $this->rating_user,
             'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null
 
 
