@@ -67,4 +67,8 @@ class Shop extends Model
     {
         return $this->filesByZone('thumbnail')->first();
     }
+
+    public function products() {
+    	return $this->hasMany(Product::class, 'shop_id');
+    }
 }

@@ -6,7 +6,7 @@ namespace Modules\Api\Transformers;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
-class ShopTransformer extends JsonResource
+class ShopFullTransformer extends JsonResource
 {
 
 
@@ -25,6 +25,8 @@ class ShopTransformer extends JsonResource
             'place' => $this->place,
 	        'rating_avg' => $this->rating_avg,
 	        'rating_user' => $this->rating_user,
+	        'product_number' => $this->products->count(),
+	        'time_offline' => '20 phút trước',
             'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null
 
 
@@ -33,6 +35,8 @@ class ShopTransformer extends JsonResource
 
         return $data;
     }
+
+
 
 
 

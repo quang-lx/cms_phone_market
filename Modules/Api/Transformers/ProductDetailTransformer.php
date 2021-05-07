@@ -30,7 +30,7 @@ class ProductDetailTransformer extends JsonResource {
 			'warranty_time' => $this->warranty_time,
 			'type' => $this->type,
 			'brand_name' => optional($this->brand)->name,
-			'shop' => $this->shop ? new ShopTransformer($this->shop) : null,
+			'shop' => $this->shop ? new ShopFullTransformer($this->shop) : null,
 			'attributes' => $this->getProductAttribute($this->attributeValues),
 			'detail_information' => $this->getDetailInformation($this->pinformation),
 
