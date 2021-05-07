@@ -183,6 +183,10 @@ Route::prefix('rating')->group(function ($router) {
 		'uses' => 'RatingController@listByProduct',
 		'as' => 'apife.rating.listByProduct',
 	]);
+	Route::get('/shop/{shop_id}/list', [
+		'uses' => 'RatingController@listByShop',
+		'as' => 'apife.rating.listByShop',
+	]);
 });
 Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
 	Route::post('file', [
@@ -209,7 +213,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'uses' => 'RatingController@store',
 			'as' => 'apife.rating.store',
 		]);
-
+		Route::post('/shop', [
+			'uses' => 'RatingController@storeShop',
+			'as' => 'apife.rating.storeShop',
+		]);
 	});
 });
 

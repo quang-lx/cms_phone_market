@@ -13,14 +13,17 @@ use Modules\Api\Repositories\Eloquent\EloquentCategoryRepository;
 use Modules\Api\Repositories\Eloquent\EloquentHomeSettingRepository;
 use Modules\Api\Repositories\Eloquent\EloquentProductRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingRepository;
+use Modules\Api\Repositories\Eloquent\EloquentRatingShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentSearchRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\ProductRepository;
 use Modules\Api\Repositories\RatingRepository;
+use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Mon\Entities\Pcategory;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
+use Modules\Mon\Entities\RatingShop;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -163,6 +166,12 @@ class ApiServiceProvider extends ServiceProvider
 		    RatingRepository::class,
 		    function () {
 			    return new EloquentRatingRepository(new Rating());
+		    }
+	    );
+	    $this->app->bind(
+		    RatingShopRepository::class,
+		    function () {
+			    return new EloquentRatingShopRepository(new RatingShop());
 		    }
 	    );
     }

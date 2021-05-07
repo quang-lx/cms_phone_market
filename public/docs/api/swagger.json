@@ -2590,6 +2590,167 @@
                     }
                 }
             }
+        },
+        "/rating/shop": {
+            "post": {
+                "tags": [
+                    "rating"
+                ],
+                "summary": "danh gia cua hang",
+                "description": "danh gia cua hang",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "shop_id",
+                        "description": "shop_id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "parent_id",
+                        "description": "parent_id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "rating",
+                        "description": "rating",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "comment",
+                        "description": "comment",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "files",
+                        "description": "List file",
+                        "required": false,
+                        "type": "array",
+
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/definitions/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
+        "/rating/shop/{shop_id}/list": {
+            "get": {
+                "tags": [
+                    "rating"
+                ],
+                "summary": "ds rating theo cua hang",
+                "description": "",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "shop_id",
+                        "description": "ID cua hang",
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "rating",
+                        "description": "media|1|2|3|4|5",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
         }
     },
     "securityDefinitions": {

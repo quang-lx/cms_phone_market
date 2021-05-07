@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Media\Traits\MediaRelation;
 
-class RatingFile extends Model
+class RatingShopFile extends Model
 {
 
-    protected $table = 'rating_file';
+    protected $table = 'rating_shop_file';
     protected $fillable = [
         'id',
-        'rating_id',
+        'shop_rating_id',
         'file_id'
     ];
 
