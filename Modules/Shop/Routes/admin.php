@@ -271,7 +271,24 @@ Route::group(['prefix' => '/vtimportexcel'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/storageproduct'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.storageproduct.index',
+        'uses' => 'StorageProduct\StorageProductController@index',
+        'middleware' => 'permission:shop.storageproduct.index'
+    ]);
+
+    Route::get('{storageproduct}/edit', [
+        'as' => 'shop.storageproduct.edit',
+        'uses' => 'StorageProduct\StorageProductController@edit',
+        'middleware' => 'permission:shop.storageproduct.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

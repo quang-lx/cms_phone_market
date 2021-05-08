@@ -108,7 +108,7 @@ class UserSidebarExtender extends AbstractAdminSidebar
         $menu->group('shop management', function (Group $group) {
             $group->hideHeading(true);
             $group->item(trans('ch::sidebar.product management'), function (Item $item) {
-                $item->icon('fa fa-shopping-cart');
+                $item->icon('el-icon-goods');
                 $item->weight(10);
                 $item->authorize(
                     $this->auth->hasAccess('shop.product.index')
@@ -205,7 +205,7 @@ class UserSidebarExtender extends AbstractAdminSidebar
         $menu->group('transfer management', function (Group $group) {
             $group->hideHeading(true);
             $group->item(trans('ch::sidebar.transfer management'), function (Item $item) {
-                $item->icon('fa fa-shopping-cart');
+                $item->icon('fa fa-truck');
                 $item->weight(10);
                 $item->authorize(
                     $this->auth->hasAccess('shop.transfer.index')
@@ -218,6 +218,30 @@ class UserSidebarExtender extends AbstractAdminSidebar
                     $item->route('shop.transfer.index');
                     $item->authorize(
                         $this->auth->hasAccess('shop.transfer.index')
+                    );
+                });
+
+            });
+
+
+        });
+
+        $menu->group('storage product management', function (Group $group) {
+            $group->hideHeading(true);
+            $group->item(trans('ch::sidebar.storage product'), function (Item $item) {
+                $item->icon('fas fa-save');
+                $item->weight(10);
+                $item->authorize(
+                    $this->auth->hasAccess('shop.storageproduct.index')
+                );
+
+                $item->item(trans('ch::sidebar.storage product'), function (Item $item) {
+
+                    $item->weight(0);
+
+                    $item->route('shop.storageproduct.index');
+                    $item->authorize(
+                        $this->auth->hasAccess('shop.storageproduct.index')
                     );
                 });
 
