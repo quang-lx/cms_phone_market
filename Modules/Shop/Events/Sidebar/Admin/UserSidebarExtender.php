@@ -108,7 +108,7 @@ class UserSidebarExtender extends AbstractAdminSidebar
         $menu->group('shop management', function (Group $group) {
             $group->hideHeading(true);
             $group->item(trans('ch::sidebar.product management'), function (Item $item) {
-                $item->icon('el-icon-s-goods');
+                $item->icon('el-icon-goods');
                 $item->weight(10);
                 $item->authorize(
                     $this->auth->hasAccess('shop.product.index')
