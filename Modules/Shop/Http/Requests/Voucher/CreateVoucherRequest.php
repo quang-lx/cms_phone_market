@@ -15,7 +15,7 @@ class CreateVoucherRequest extends FormRequest
             'require_min_amount' => 'required',
             'total' => 'required',
             'actived_at' => 'required',
-            'expired_at' => 'required',
+            'expired_at' => 'required|after_or_equal:actived_at',
             'type' => 'required',
             'discount_type' => 'required',
         ];
@@ -42,6 +42,7 @@ class CreateVoucherRequest extends FormRequest
             'total.required' => 'Tổng số mã là bắt buộc',
             'actived_at.required' => 'Thời gian sử dụng mã là bắt buộc',
             'expired_at.required' => 'Thời gian sử dụng mã là bắt buộc',
+            'expired_at.after_or_equal' => 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu',
             'type.required' => 'Loại mã là bắt buộc',
             'discount_type.required' => 'Loại giảm giá là bắt buộc',
             
