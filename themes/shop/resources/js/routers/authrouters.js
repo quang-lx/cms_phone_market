@@ -40,6 +40,9 @@ import VtImportExcelDetail from './../components/vtimportexcel/detail';
 import VtImportExcelList from './../components/vtimportexcel/index';
 import VtImportExcelCreate from './../components/vtimportexcel/create';
 
+import StorageProductForm from './../components/storageproduct/form';
+import StorageProductList from './../components/storageproduct/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -317,6 +320,21 @@ export default [
         component: VtImportExcelDetail,
         props: {
             pageTitle: 'vtimportexcel.label.detail_title',
+        },
+    },
+
+    // storage product
+    {
+        path: '/shop-admin/storageproduct',
+        name: 'shop.storageproduct.index',
+        component: StorageProductList,
+    },
+	{
+        path: '/shop-admin/storageproduct/:storageproductId/edit',
+        name: 'shop.storageproduct.edit',
+        component: StorageProductForm,
+        props: {
+            pageTitle: 'storageproduct.label.update_storageproduct',
         },
     },
  

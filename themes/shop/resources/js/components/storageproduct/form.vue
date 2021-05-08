@@ -10,8 +10,8 @@
                   <el-breadcrumb-item>
                     <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
                   </el-breadcrumb-item>
-                  <el-breadcrumb-item :to="{ name: 'shop.transfer.index' }"
-                    >{{ $t("transfer.label.manager") }}
+                  <el-breadcrumb-item :to="{ name: 'shop.storageproduct.index' }"
+                    >{{ $t("storageproduct.label.manager") }}
                   </el-breadcrumb-item>
                   <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
                 </el-breadcrumb>
@@ -44,6 +44,7 @@
                   label-width="200px"
                   label-position="left"
                   v-loading.body="loading"
+                  :disabled="true"
                 >
                   <div class="row">
                     <div
@@ -53,7 +54,7 @@
                       <div class="row">
                         <div class="col-md-12">
                           <el-form-item
-                            :label="$t('transfer.label.title')"
+                            :label="$t('storageproduct.label.title')"
                             :class="{
                               'el-form-item is-error': form.errors.has('title'),
                             }"
@@ -69,7 +70,7 @@
 
                         <div class="col-md-12">
                           <el-form-item
-                            :label="$t('transfer.label.shop_id')"
+                            :label="$t('storageproduct.label.shop_id')"
                             :class="{
                               'el-form-item is-error': form.errors.has(
                                 'shop_id'
@@ -78,7 +79,7 @@
                           >
                             <el-select
                               v-model="modelForm.shop_id"
-                              :placeholder="$t('transfer.label.shop_id')"
+                              :placeholder="$t('storageproduct.label.shop_id')"
                               filterable
                               style="width: 100% !important"
                             >
@@ -100,7 +101,7 @@
 
                         <div class="col-md-12">
                           <el-form-item
-                            :label="$t('transfer.label.products')"
+                            :label="$t('storageproduct.label.products')"
                             :class="{
                               'el-form-item is-error': form.errors.has(
                                 'products'
@@ -130,7 +131,7 @@
                       <div class="row">
                         <div class="col-md-12">
                           <el-form-item
-                            :label="$t('transfer.label.received_at')"
+                            :label="$t('storageproduct.label.received_at')"
                             :class="{
                               'el-form-item is-error': form.errors.has(
                                 'received_at'
@@ -169,22 +170,17 @@
                   :key="key"
                 >
                   <div class="col-md-3">
-                    <el-input v-model="pinfo.name"></el-input>
+                    <el-input v-model="pinfo.name" :disabled="true"></el-input>
                   </div>
 
                   <div class="col-md-2">
                     <el-input-number style="width: 100%"
                             v-model="pinfo.count" :min="1"
                             :max="100000000"
+                            :disabled="true"
                             placeholder="Số lượng"></el-input-number>
                   </div>
-                  <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
-                    <i
-                      class="el-icon-circle-close"
-                      style="color: red; cursor: pointer"
-                      @click="removeInfo(key)"
-                    ></i>
-                  </div>
+                  
                 </div>
 
               </div>
@@ -197,10 +193,7 @@
                   :loading="loading"
                   class="btn btn-flat"
                 >
-                  {{ $t("mon.button.save") }}
-                </el-button>
-                <el-button class="btn btn-flat" size="small" @click="onCancel()"
-                  >{{ $t("mon.button.cancel") }}
+                  {{ $t("storageproduct.button.save") }}
                 </el-button>
               </div>
             </div>
@@ -250,7 +243,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "shop.transfer.index" });
+          this.$router.push({ name: "shop.storageproduct.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -260,25 +253,14 @@ export default {
           });
         });
     },
-    onCancel() {
-      this.$confirm(this.$t("mon.cancel.Are you sure to cancel?"), {
-        confirmButtonText: this.$t("mon.cancel.Yes"),
-        cancelButtonText: this.$t("mon.cancel.No"),
-        type: "warning",
-      })
-        .then(() => {
-          this.$router.push({ name: "shop.transfer.index" });
-        })
-        .catch(() => {});
-    },
 
     fetchData() {
       this.loading = true;
       let locale = this.$route.params.locale ? this.$route.params.locale : "en";
       axios
         .get(
-          route("apishop.transfer.find", {
-            transferhistory: this.$route.params.transferId,
+          route("apishop.storageproduct.find", {
+            storageproduct: this.$route.params.storageproductId,
           })
         )
         .then((response) => {
@@ -288,26 +270,12 @@ export default {
     },
 
     getRoute() {
-      if (this.$route.params.transferId !== undefined) {
-        return route("apishop.transfer.update", {
-          transferhistory: this.$route.params.transferId,
+      if (this.$route.params.storageproductId !== undefined) {
+        return route("apishop.storageproduct.update", {
+          storageproduct: this.$route.params.storageproductId,
         });
       }
-      return route("apishop.transfer.store");
-    },
-
-    fetchShop() {
-      const properties = {
-        page: 0,
-        per_page: 1000,
-        check_company: true,
-      };
-
-      axios
-        .get(route("api.shop.index", _.merge(properties, {})))
-        .then((response) => {
-          this.shopArr = response.data.data;
-        });
+      return route("apishop.storageproduct.store");
     },
 
     onSearchProduct(queryString, cb) {
@@ -340,8 +308,7 @@ export default {
   },
 
   mounted() {
-    this.fetchShop();
-    if (this.$route.params.transferId !== undefined) {
+    if (this.$route.params.storageproductId !== undefined) {
       this.fetchData();
     }
   },

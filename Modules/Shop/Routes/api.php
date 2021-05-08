@@ -382,7 +382,32 @@ Route::middleware('auth:api')->prefix('/transfers')->group(function (){
         'uses' => 'TransferHistory\TransferHistoryController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/storageproducts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.storageproduct.index',
+        'uses' => 'StorageProduct\StorageProductController@index',
+    ]);
+    Route::post('/{storageproduct}/edit', [
+            'as' => 'apishop.storageproduct.update',
+            'uses' => 'StorageProduct\StorageProductController@update',
+        ]);
+   Route::get('/{storageproduct}', [
+              'as' => 'apishop.storageproduct.find',
+              'uses' => 'StorageProduct\StorageProductController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'apishop.storageproduct.store',
+        'uses' => 'StorageProduct\StorageProductController@store',
+    ]);
+
+    Route::delete('/{storageproduct}', [
+        'as' => 'apishop.storageproduct.destroy',
+        'uses' => 'StorageProduct\StorageProductController@destroy',
+    ]);
+});
 // append
+
 
 
 

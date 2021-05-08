@@ -44,6 +44,7 @@ return [
 	'vtcategory' => 'Danh mục',
 	'vtproduct' => 'Vật tư',
     'transfer management' => 'Quản lý chuyển kho',
+    'storage product' => 'Nhập kho',
 	'vtimportexcel' => 'Nhập linh kiện',
 
 
