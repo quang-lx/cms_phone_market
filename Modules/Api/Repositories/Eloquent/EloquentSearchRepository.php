@@ -24,6 +24,19 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
 			// search in product
 
 			$query = Product::query();
+            // filter
+            if ($category_id = $request->get('category_id')) {
+
+                $query->whereHas('pcategories', function ($q) use ($category_id) {
+                    $q->where('pcategory.id', $category_id);
+                });
+            }
+            if ($from_price = $request->get('from_price')) {
+                $query->where('product.price', '>=', $from_price);
+            }
+            if ($to_price = $request->get('to_price')) {
+                $query->where('product.price', '<=', $to_price);
+            }
 			$query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
 			$products = $query->active()->paginate($request->get('per_page', 10));
 		}
@@ -47,6 +60,21 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             // search in product
 
             $query = Product::query();
+
+            // filter
+            if ($category_id = $request->get('category_id')) {
+
+                $query->whereHas('pcategories', function ($q) use ($category_id) {
+                    $q->where('pcategory.id', $category_id);
+                });
+            }
+            if ($from_price = $request->get('from_price')) {
+                $query->where('product.price', '>=', $from_price);
+            }
+            if ($to_price = $request->get('to_price')) {
+                $query->where('product.price', '<=', $to_price);
+            }
+
             $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
             $products = $query->select(['name'])->limit($limit)->get()->pluck('name')->toArray();
             $result = array_merge($result, $products);
