@@ -40,11 +40,15 @@ class SearchController extends ApiController
     }
 	public function search(Request $request)
 	{
-		list($shop, $productions) = $this->searchRepo->search($request);
+		list($shop, $products) = $this->searchRepo->search($request);
 		$data = [
 			'shop' => $shop? new SearchShopTransformer($shop): null,
-			'products' => $productions? ProductTransformer::collection($productions): null,
+			'products' => $products? ProductTransformer::collection($products): null,
 		];
+        if ($products->count() && $request->get('q')) {
+            $user = Auth::user();
+            insert_user_search(optional($user)->id, $request->header('fcm_token'), $products);
+        }
 		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
 }

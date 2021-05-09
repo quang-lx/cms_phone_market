@@ -4,6 +4,7 @@ namespace Modules\Api\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\ProductRepository;
@@ -27,13 +28,17 @@ class ProductController extends ApiController
 
     public function listByCategory(Request $request)
     {
-        $data = ProductTransformer::collection($this->productRepo->listByCategory($request, $request->get('include_sub', 0)));
+        $products = $this->productRepo->listByCategory($request, $request->get('include_sub', 0));
+        $this->logUserSearch($request, $products);
+        $data = ProductTransformer::collection($products);
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
     public function listByService(Request $request)
     {
-        $data = ProductTransformer::collection($this->productRepo->listByService($request));
+        $products = $this->productRepo->listByService($request);
+        $data = ProductTransformer::collection($products);
+        $this->logUserSearch($request, $products);
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
@@ -66,5 +71,12 @@ class ProductController extends ApiController
     {
         $data = ProductTransformer::collection($this->productRepo->listByShop($request, $shop_id));
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
+
+    public function logUserSearch(Request $request, $products) {
+        if ($products->count() && $request->get('q')) {
+            $user = Auth::user();
+            insert_user_search(optional($user)->id, $request->header('fcm_token'), $products);
+        }
     }
 }
