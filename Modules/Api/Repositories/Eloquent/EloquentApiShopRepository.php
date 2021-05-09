@@ -15,28 +15,44 @@ use Modules\Mon\Entities\News;
 use Modules\Mon\Entities\Shop;
 use Modules\Mon\Entities\UserMissionDaily;
 
-class EloquentApiShopRepository implements ApiShopRepository
+class EloquentApiShopRepository extends ApiBaseRepository implements ApiShopRepository
 {
 
-	public function getShopNearest($lat, $lng) {
-		$result = new Collection();
-		Shop::query()->whereNotNull(['lat','lng'])->chunk(100, function ($shops) use ($lat, $lng, $result) {
-				foreach ($shops as $shop) {
-					if (map_distance_km($shop->lat, $shop->lng, $lat, $lng) <= env('SHOP_NEAREST_KM', 5)) {
-						$result->push($shop);
-					}
-					if ($result->count() == 20) return false;
-				}
-		});
-		return $result;
-	}
-	public function getShopBaoHanh(Request $request, $user) {
+    public function getShopNearest($lat, $lng)
+    {
+        $result = new Collection();
+        Shop::query()->whereNotNull(['lat', 'lng'])->chunk(100, function ($shops) use ($lat, $lng, $result) {
+            foreach ($shops as $shop) {
+                if (map_distance_km($shop->lat, $shop->lng, $lat, $lng) <= env('SHOP_NEAREST_KM', 5)) {
+                    $result->push($shop);
+                }
+                if ($result->count() == 20) return false;
+            }
+        });
+        return $result;
+    }
 
-		$result = Shop::query()->paginate($request->get('per_page', 10));
-		return $result;
-	}
-	public function detail(Request $request, $id) {
-		return Shop::query()->find($id);
-	}
+    public function getShopBaoHanh(Request $request, $user)
+    {
+
+        $result = Shop::query()->paginate($request->get('per_page', 10));
+        return $result;
+    }
+
+    public function getList(Request $request)
+    {
+
+        $query = Shop::query();
+        if ($keyword = $request->get('q')) {
+            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+        }
+        $result = $query->paginate($request->get('per_page', 10));
+        return $result;
+    }
+
+    public function detail(Request $request, $id)
+    {
+        return Shop::query()->find($id);
+    }
 
 }
