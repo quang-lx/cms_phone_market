@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\ApiShopRepository;
+use Modules\Api\Repositories\ProductRepository;
+use Modules\Api\Transformers\ProductTransformer;
 use Modules\Api\Transformers\ShopFullTransformer;
 use Modules\Api\Transformers\ShopTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
@@ -17,11 +19,14 @@ class ShopController extends ApiController
     /** @var ApiShopRepository */
     public $apiShopRepository;
 
-    public function __construct(Authentication $auth, ApiShopRepository $apiShopRepository)
+    /** @var ProductRepository */
+    public $productRepo;
+    public function __construct(Authentication $auth, ApiShopRepository $apiShopRepository, ProductRepository $productRepo)
     {
         parent::__construct($auth);
 
         $this->apiShopRepository = $apiShopRepository;
+        $this->productRepo = $productRepo;
     }
 
     public function detail(Request $request, $id)
@@ -68,5 +73,23 @@ class ShopController extends ApiController
         $user = $this->auth->user();
         $shops = $this->apiShopRepository->getShopBaoHanh($request, $user);
         return $this->respond(ShopTransformer::collection($shops), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
+
+    public function mostPopular(Request $request, $shop_id) {
+        $products = $this->productRepo->listByShop($request, $shop_id);
+        return [
+          [
+              'label' => 'XEM MUA LUÔN',
+              'items' => ProductTransformer::collection($products)
+          ],
+            [
+                'label' => 'SỬA CHỮA',
+                'items' => ProductTransformer::collection($products)
+            ],
+            [
+                'label' => 'BẢO HÀNH',
+                'items' => ProductTransformer::collection($products)
+            ]
+        ];
     }
 }

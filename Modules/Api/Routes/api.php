@@ -191,6 +191,10 @@ Route::prefix('/shop')->group(function () {
         'as' => 'apife.shop.detail',
         'uses' => 'ShopController@detail',
     ]);
+    Route::get('/{id}/most-popular', [
+        'as' => 'apife.shop.mostPopular',
+        'uses' => 'ShopController@mostPopular',
+    ]);
     Route::get('/search', [
         'as' => 'apife.shop.search',
         'uses' => 'ShopController@search',
