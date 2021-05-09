@@ -19,8 +19,8 @@ class CreateUserSearch extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->timestamps();
-            $table->integer('user_id');
-            $table->integer('fcm_token');
+            $table->index('user_id');
+            $table->index('fcm_token');
         });
     }
 
