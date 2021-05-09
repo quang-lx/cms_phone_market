@@ -195,6 +195,10 @@ Route::prefix('/shop')->group(function () {
         'as' => 'apife.shop.search',
         'uses' => 'ShopController@search',
     ]);
+    Route::get('/suggestion', [
+        'as' => 'apife.shop.listSuggestion',
+        'uses' => 'ShopController@listSuggestion',
+    ]);
 });
 Route::prefix('rating')->group(function ($router) {
 

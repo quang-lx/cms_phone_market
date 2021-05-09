@@ -12,6 +12,7 @@ use Modules\Mon\Entities\Game;
 use Modules\Mon\Entities\Item;
 use Modules\Mon\Entities\Mission;
 use Modules\Mon\Entities\News;
+use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Shop;
 use Modules\Mon\Entities\UserMissionDaily;
 
@@ -54,5 +55,17 @@ class EloquentApiShopRepository extends ApiBaseRepository implements ApiShopRepo
     {
         return Shop::query()->find($id);
     }
+    public function listSuggestion(Request $request)
+    {
+        $result = [];
+        if ($keyword = $request->get('q')) {
+            $limit = 6;
+            // search in shop
+            $query = Shop::query();
+            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $result = $query->select(['name'])->limit($limit)->get()->pluck('name')->toArray();
 
+        }
+        return $result;
+    }
 }

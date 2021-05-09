@@ -30,7 +30,11 @@ class ShopController extends ApiController
         $data = $shop ? new ShopFullTransformer($shop) : null;
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
-
+    public function listSuggestion(Request $request)
+    {
+        $data = $this->apiShopRepository->listSuggestion($request);
+        return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+    }
     public function search(Request $request)
     {
 
