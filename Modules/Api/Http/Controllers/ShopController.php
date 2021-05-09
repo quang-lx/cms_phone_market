@@ -77,7 +77,7 @@ class ShopController extends ApiController
 
     public function mostPopular(Request $request, $shop_id) {
         $products = $this->productRepo->listByShop($request, $shop_id);
-        return [
+        $data =  [
           [
               'label' => 'XEM MUA LUÔN',
               'items' => ProductTransformer::collection($products)
@@ -91,5 +91,7 @@ class ShopController extends ApiController
                 'items' => ProductTransformer::collection($products)
             ]
         ];
+        return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
     }
 }
