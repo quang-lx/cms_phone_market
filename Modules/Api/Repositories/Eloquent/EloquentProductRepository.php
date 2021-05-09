@@ -118,7 +118,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
         $query->where('id', '!=', $id);
         if ($product) {
             $query->whereHas('pcategories', function ($query) use ($product) {
-                $query->whereIn('pcategory.id', $product->pcategories->pluck('id')->all()->toArray());
+                $query->whereIn('pcategory.id', $product->pcategories->pluck('id')->all());
             });
 
             $query->where('shop_id', '<>', $product->shop_id);
