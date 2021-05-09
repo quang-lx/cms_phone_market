@@ -11,19 +11,19 @@ use Modules\Mon\Entities\Shop;
 class EloquentSearchRepository extends ApiBaseRepository implements SearchRepository
 {
 
-	public function search(Request $request)
-	{
-		$shop = [];
-		$products = [];
-		if ($keyword = $request->get('q')) {
-			// search in shop
-			$query = Shop::query();
-			$query->whereRaw("MATCH (name, address) AGAINST (?)", $this->fullTextWildcards($keyword));
-			$shop = $query->active()->first();
+    public function search(Request $request)
+    {
+        $shop = [];
+        $products = [];
+        if ($keyword = $request->get('q')) {
+            // search in shop
+            $query = Shop::query();
+            $query->whereRaw("MATCH (name, address) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $shop = $query->active()->first();
 
-			// search in product
+            // search in product
 
-			$query = Product::query();
+            $query = Product::query();
             // filter
             if ($category_id = $request->get('category_id')) {
 
@@ -37,11 +37,11 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             if ($to_price = $request->get('to_price')) {
                 $query->where('product.price', '<=', $to_price);
             }
-			$query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
-			$products = $query->active()->paginate($request->get('per_page', 10));
-		}
-		return [$shop, $products];
-	}
+            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $products = $query->active()->paginate($request->get('per_page', 10));
+        }
+        return [$shop, $products];
+    }
     public function listSuggestion(Request $request)
     {
         $result = [];
