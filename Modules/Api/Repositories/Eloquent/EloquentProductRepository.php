@@ -113,7 +113,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
     //Sản phẩm tương tự: Lấy sản phẩm cùng danh mục nhưng khác cửa hàng.
     public function getRelated($id, Request $request)
     {
-        $product = Product::query()->with('pcategoryAsm')->first();
+        $product = Product::query()->where('id', $id)->with('pcategoryAsm')->first();
         $query = $this->model->query();
         $query->where('id', '!=', $id);
         if ($product) {
