@@ -43,7 +43,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             $products = $query->active()->paginate($request->get('per_page', 10));
 
             if ($products->count()) {
-                insert_user_search(optional($user)->id, $request->get('fcm_token'), $products);
+                insert_user_search(optional($user)->id, $request->header('fcm_token'), $products);
             }
 
         }
