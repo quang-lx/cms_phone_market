@@ -10,6 +10,6 @@
         "Modules\\Api\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
-    "files": [],
+    "files": ["helpers.php"],
     "requires": []
 }

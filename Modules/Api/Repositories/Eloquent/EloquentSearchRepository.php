@@ -3,6 +3,7 @@
 namespace Modules\Api\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Mon\Entities\Product;
@@ -13,6 +14,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
 
     public function search(Request $request)
     {
+        $user = Auth::user();
         $shop = [];
         $products = [];
         if ($keyword = $request->get('q')) {
@@ -39,9 +41,15 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             }
             $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
             $products = $query->active()->paginate($request->get('per_page', 10));
+
+            if ($products->count()) {
+                insert_user_search(optional($user)->id, $request->get('fcm_token'), $products);
+            }
+
         }
         return [$shop, $products];
     }
+
     public function listSuggestion(Request $request)
     {
         $result = [];

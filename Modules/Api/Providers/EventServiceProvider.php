@@ -15,10 +15,12 @@ use Modules\Api\Listeners\GenerateLuckyDrawHistory;
 use Modules\Api\Listeners\GenerateUserTurnDaily;
 use Modules\Api\Listeners\IncrementUserTurn;
 use Modules\Api\Listeners\InsertCardHistory;
+use Modules\Api\Listeners\InsertUserSearch;
 use Modules\Api\Listeners\SummaryProductRating;
 use Modules\Api\Listeners\SummaryShopRating;
 use Modules\Api\Listeners\UpdateGamePointUsed;
 use Modules\Api\Listeners\UpdateUserCoin;
+use Modules\Mon\Entities\UserSearch;
 
 class EventServiceProvider extends ServiceProvider {
 	protected $listen = [
@@ -28,7 +30,11 @@ class EventServiceProvider extends ServiceProvider {
 		],
 		ShopRatingCreated::class => [
 			SummaryShopRating::class
-		]
+		],
+
+        UserSearch::class => [
+            InsertUserSearch::class
+        ]
 
 	];
 }
