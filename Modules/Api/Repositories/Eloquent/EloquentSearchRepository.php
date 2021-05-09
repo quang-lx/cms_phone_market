@@ -33,14 +33,14 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
     {
         $result = [];
         if ($keyword = $request->get('q')) {
-            $limit = 6;
+            $limit = 10;
             // search in shop
             $query = Shop::query();
             $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
-            $shop = $query->select(['name'])->first();
-            if ($shop) {
-                $result[] = $shop->name;
-                $limit = 5;
+            $result = $query->select(['name'])->limit(5)->get()->pluck('name')->toArray();
+            if ($result) {
+
+                $limit = $limit - count($result);
             }
 
 
