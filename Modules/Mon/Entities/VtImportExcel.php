@@ -15,6 +15,8 @@ class VtImportExcel extends Model
         'filepath',
         'number_product',
         'status',
+        'company_id',
+        'shop_id'
     ];
 
     public function vtImportProduct()

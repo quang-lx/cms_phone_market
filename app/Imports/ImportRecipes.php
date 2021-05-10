@@ -3,11 +3,12 @@
 namespace App\Imports;
 
 use Modules\Mon\Entities\VtImportProduct;
+use Modules\Mon\Entities\VtProduct;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
-
+use Illuminate\Support\Facades\Auth;
 class ImportRecipes implements ToModel, WithHeadingRow
 {
    protected $rows = 0;
@@ -29,12 +30,18 @@ class ImportRecipes implements ToModel, WithHeadingRow
          return;
       }
       $this->rows+=1;
-      return  VtImportProduct::create([
+      $company_id = Auth::user()->company_id;
+      $exist = VtProduct::where('id',$row['ma_vat_tu'])->first();
+      $data = [
          'vt_import_excel_id' => $this->idExcelImport,
          'vt_product_id' => $row['ma_vat_tu'],
          'vt_product_name' => $row['ten_vat_tu'],
          'amount' => $row['so_luong'],
-      ]);
+      ];
+      if($exist->company_id != $company_id){
+         $data['note']='Mã vật tư đã tồn tại';
+      }
+      return  VtImportProduct::create($data);
    }
 
    // public function collection(Collection $rows)
