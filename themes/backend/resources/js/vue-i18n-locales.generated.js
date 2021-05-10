@@ -556,6 +556,24 @@ export default {
                 "delete success": "Xóa Tỉnh Thành Phố  thành công."
             }
         },
+        "rank": {
+            "label": {
+                "rank": "Rank",
+                "id": "ID",
+                "name": "Tên",
+                "description": "Mô tả",
+                "image": "Ảnh",
+                "point": "Điểm",
+                "create_rank": "Tạo rank",
+                "update_rank": "Cập nhật rank",
+                "detail_rank": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo rank thành công.",
+                "update success": "Cập nhật rank thành công.",
+                "delete success": "Xóa rank thành công."
+            }
+        },
         "role": {
             "label": {
                 "id": "ID",
@@ -616,7 +634,9 @@ export default {
             "homesetting": "Màn home",
             "customer": "Tài khoản khách hàng",
             "attribute": "Thuộc tính",
-            "product": "Sản phẩm"
+            "product": "Sản phẩm",
+            "product information": "Thông tính chi tiết",
+            "voucher management": "Quản lý khuyến mại"
         },
         "user": {
             "label": {
@@ -649,6 +669,39 @@ export default {
                 "delete success": "Xóa tài khoản thành công.",
                 "change password success": "Đổi mật khẩu thành công.",
                 "not allow self delete": "Không cho phép xóa tài khoản bạn đang đăng nhập."
+            }
+        },
+        "voucher": {
+            "label": {
+                "id": "ID",
+                "title": "Tên",
+                "code": "Mã giảm giá",
+                "discount_amount": "Giảm",
+                "code-help": "Vui lòng chỉ nhập các kí tự chữ cái (A-Z), số (0-9).",
+                "time-active": "Thời gian sử dụng mã",
+                "products": "Danh sách sản phẩm có thể áp dụng mã",
+                "require_min_amount": "Giá trị đơn hàng tối thiểu áp dụng",
+                "total": "Tổng số mã",
+                "total_used": "Đã dùng",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "create_voucher": "Tạo mã",
+                "update_voucher": "Chỉnh sửa Voucher",
+                "list": "Chương trình khuyến mại",
+                "manager": "Quản lý voucher",
+                "btn_add_voucher": "Tạo mã giảm giá",
+                "updated_by": "Người cập nhật",
+                "type_name": "Loại mã",
+                "status": "Trạng thái"
+            },
+            "list": {
+                "status": "Trạng thái"
+            },
+            "message": {
+                "create success": "Tạo voucher thành công.",
+                "update success": "Cập nhật voucher thành công.",
+                "delete success": "Xóa voucher thành công.",
+                "not allow self delete": "Không cho phép xóa voucher bạn đang đăng nhập."
             }
         }
     }

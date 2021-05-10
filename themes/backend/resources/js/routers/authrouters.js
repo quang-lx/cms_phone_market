@@ -64,6 +64,9 @@ import PInformationList from './../components/pinformation/index';
 import VoucherList from './../components/voucher/index';
 import VoucherForm from './../components/voucher/form';
 
+import RankList from './../components/rank/index';
+import RankForm from './../components/rank/form';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -539,6 +542,29 @@ export default [
         component: VoucherForm,
         props: {
             pageTitle: 'voucher.label.update_voucher',
+        },
+    },
+
+    // rank
+    {
+        path: '/admin/rank',
+        name: 'admin.rank.index',
+        component: RankList,
+    },
+    {
+        path: '/admin/rank/create',
+        name: 'admin.rank.create',
+        component: RankForm,
+        props: {
+            pageTitle: 'rank.label.create_rank',
+        },
+    },
+    {
+        path: '/admin/rank/:rankId/edit',
+        name: 'admin.rank.edit',
+        component: RankForm,
+        props: {
+            pageTitle: 'rank.label.update_rank',
         },
     },
  

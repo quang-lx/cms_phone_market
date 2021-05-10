@@ -557,7 +557,32 @@ Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
         'uses' => 'Voucher\VoucherController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/ranks')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.rank.index',
+        'uses' => 'Rank\RankController@index',
+    ]);
+    Route::post('/{rank}/edit', [
+            'as' => 'api.rank.update',
+            'uses' => 'Rank\RankController@update',
+        ]);
+   Route::get('/{rank}', [
+              'as' => 'api.rank.find',
+              'uses' => 'Rank\RankController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.rank.store',
+        'uses' => 'Rank\RankController@store',
+    ]);
+
+    Route::delete('/{rank}', [
+        'as' => 'api.rank.destroy',
+        'uses' => 'Rank\RankController@destroy',
+    ]);
+});
 // append
+
 
 
 
