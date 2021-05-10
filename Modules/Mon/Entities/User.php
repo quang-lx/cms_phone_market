@@ -192,28 +192,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     }
 
 
-    public function getRankNameAttribute($value)
+    public function rank()
     {
-        $rank_name = '';
-        switch ($this->rank) {
-            case 1:
-                $rank_name = 'Cơ bản';
-                break;
-            case 2:
-                $rank_name = 'Bạc';
-                break;
-            case 3:
-                $rank_name = 'Vàng';
-                break;
-            case 4:
-                $rank_name = 'Bạch Kim';
-                break;
-            case 5:
-                $rank_name = 'Kim Cương';
-                break;
-
-        }
-        return $rank_name;
+       return $this->belongsTo(Rank::class,'rank_id');
     }
 
     public function getGenderNameAttribute($value)

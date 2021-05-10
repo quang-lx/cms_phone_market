@@ -58,13 +58,13 @@
                   :visible.sync="dialogRank"
                 >
                   <el-form :model="form">
-                    <el-select v-model="modelForm.rank" placeholder="Chọn xếp hạng">
+                    <el-select v-model="modelForm.rank_id" placeholder="Chọn xếp hạng">
                       
                       <el-option
                         v-for="item in rank"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
                       >
                       </el-option>
                     </el-select>
@@ -104,7 +104,7 @@
                                 {{ modelForm.birthday }}
                               </div>
                               <div>
-                                {{ $t("account.label.gender_name") }}:
+                                {{ $t("account.label.gender") }}:
                                 {{ modelForm.gender_name }}
                               </div>
                             </div>
@@ -181,26 +181,6 @@ export default {
       },
       dialogRank: false,
       rank: [
-        {
-          value: 1,
-          label: "Cơ bản",
-        },
-        {
-          value: 2,
-          label: "Bạc",
-        },
-        {
-          value: 3,
-          label: "Vàng",
-        },
-        {
-          value: 4,
-          label: "Bạch Kim",
-        },
-        {
-          value: 5,
-          label: "Kim Cương",
-        },
       ],
       status: [
         {
@@ -305,9 +285,19 @@ export default {
     showDataModal(key) {
       this.dialogRank = true;
     },
+    fetchRank() {
+      let routeUri = "";
+        this.loading = true;
+        routeUri = route('api.rank.index',{page: 1,per_page:1000 })
+        axios.get(routeUri).then((response) => {
+          this.loading = false;
+          this.rank = response.data.data;
+        });
+    },
   },
   mounted() {
     this.fetchData();
+    this.fetchRank();
   },
   computed: {},
 };
