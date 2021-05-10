@@ -17,6 +17,7 @@ class UserTransformer extends JsonResource
             'name' => $this->name,
 	        'birthday' => $this->birthday,
 	        'rank' => $this->rank,
+	        'rank_point' => $this->rank_point,
 	        'phone' => $this->phone,
 	        'gender' => $this->gender,
 	        'email' => $this->email,

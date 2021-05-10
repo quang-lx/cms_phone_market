@@ -99,7 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
      */
     protected $fillable = [
         'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
-        'fcm_token', 'lat', 'lng', 'status', 'phone', 'province_id', 'district_id', 'phoenix_id', 'is_admin_company', 'company_id', 'shop_id', 'rank', 'birthday', 'gender'
+        'fcm_token', 'lat', 'lng', 'status', 'phone', 'province_id', 'district_id', 'phoenix_id', 'is_admin_company', 'company_id', 'shop_id', 'rank_id', 'birthday', 'gender','rank_point'
     ];
 
     /**
@@ -211,7 +211,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             case 5:
                 $rank_name = 'Kim Cương';
                 break;
-          
+
         }
         return $rank_name;
     }
@@ -225,11 +225,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
                 break;
             case 2:
                 $gender_name = 'Nữ';
-                break;      
+                break;
         }
         return $gender_name;
     }
-    
+
     public function getThumbnailAttribute()
     {
         return $this->filesByZone('thumbnail')->first();
