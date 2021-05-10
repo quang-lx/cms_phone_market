@@ -16,5 +16,6 @@ class VtImportProduct extends Model
         'vt_product_id',
         'vt_product_name',
         'amount',
+        'note'
     ];
 }

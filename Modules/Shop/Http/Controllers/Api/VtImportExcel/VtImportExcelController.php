@@ -17,7 +17,7 @@ use App\Imports\ImportRecipes;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 class VtImportExcelController extends ApiController
 {
     /**
@@ -51,11 +51,15 @@ class VtImportExcelController extends ApiController
             DB::transaction(function () {
                 $file = request()->file('file');
                 $path = Storage::putFileAs('public/file-excel',$file,$file->getClientOriginalName());
+                $user = Auth::user();
                 $dataImportExcel = [
                     'filepath' => $path,
                     'number_product' => 0,
                     'status' => 1,
+                    'company_id' => $user->company_id,
+                    'shop_id' => $user->shop_id,
                 ];
+                
                 $importExcel = $this->vtimportexcelRepository->create($dataImportExcel);
                 $import = new ImportRecipes($importExcel->id);
                 Excel::import($import, request()->file('file'));
