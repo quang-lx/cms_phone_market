@@ -399,7 +399,7 @@ export default [
         name: 'admin.account.detail',
         component: AccountDetail,
         props: {
-            pageTitle: 'banners.label.update_title',
+            pageTitle: 'account.label.detail_account',
         },
     },
 

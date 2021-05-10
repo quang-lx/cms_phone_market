@@ -157,6 +157,8 @@ export default {
                 "email": "Email",
                 "info": "Liên hệ",
                 "rank": "Hạng",
+                "phone": "Số điện thoại",
+                "username": "Username",
                 "created_at": "Ngày tạo",
                 "status": "Trạng thái",
                 "birthday": "Ngày sinh",
@@ -165,7 +167,8 @@ export default {
                 "updated_by": "Nguời cập nhật",
                 "updated_at": "Ngày cập nhật",
                 "create_account": "Tạo",
-                "update_account": "Cập nhật"
+                "update_account": "Cập nhật",
+                "detail_account": "Chi tiết tài khoản"
             },
             "message": {
                 "create success": "Tạo thành công.",

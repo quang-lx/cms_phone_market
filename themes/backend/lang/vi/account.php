@@ -8,6 +8,8 @@ return [
         'email' => 'Email',
         'info' => 'Liên hệ',
         'rank' => 'Hạng',
+        'phone' => 'Số điện thoại',
+        'username' => 'Username',
         'created_at' => 'Ngày tạo',
         'status' => 'Trạng thái',
         'birthday' => 'Ngày sinh',
@@ -20,6 +22,7 @@ return [
 
         'create_account' => 'Tạo',
         'update_account' => 'Cập nhật',
+        'detail_account' => 'Chi tiết tài khoản',
     ],
 
     'message' => [
