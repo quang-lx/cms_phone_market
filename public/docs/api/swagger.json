@@ -88,6 +88,14 @@
                         "format": "text"
                     },
                     {
+                        "in": "query",
+                        "name": "type",
+                        "description": "Search type",
+                        "required": false,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
                         "in": "path",
                         "name": "shop_id",
                         "description": "Shop id",

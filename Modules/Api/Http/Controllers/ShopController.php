@@ -80,14 +80,17 @@ class ShopController extends ApiController
         $data =  [
           [
               'label' => 'XEM MUA LUÔN',
+	          'type' => 'buy_now',
               'items' => ProductTransformer::collection($products)
           ],
             [
                 'label' => 'SỬA CHỮA',
+	            'type' => 'sua_chua',
                 'items' => ProductTransformer::collection($products)
             ],
             [
                 'label' => 'BẢO HÀNH',
+	            'type' => 'bao_hanh',
                 'items' => ProductTransformer::collection($products)
             ]
         ];
