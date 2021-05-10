@@ -260,7 +260,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\RankRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentRankRepository(new \Modules\Mon\Entities\Rank());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

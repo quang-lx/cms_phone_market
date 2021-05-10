@@ -508,7 +508,29 @@ Route::group(['prefix' => '/voucher'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/rank'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.rank.index',
+        'uses' => 'Rank\RankController@index',
+        'middleware' => 'permission:admin.rank.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.rank.create',
+        'uses' => 'Rank\RankController@create',
+        'middleware' => 'permission:admin.rank.create'
+    ]);
+
+    Route::get('{rank}/edit', [
+        'as' => 'admin.rank.edit',
+        'uses' => 'Rank\RankController@edit',
+        'middleware' => 'permission:admin.rank.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
