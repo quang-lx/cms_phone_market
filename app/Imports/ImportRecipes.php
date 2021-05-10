@@ -31,14 +31,16 @@ class ImportRecipes implements ToModel, WithHeadingRow
       }
       $this->rows+=1;
       $company_id = Auth::user()->company_id;
-      $exist = VtProduct::where('id',$row['ma_vat_tu'])->first();
+      $exist_vt = VtProduct::find($row['ma_vat_tu']);
+      $exist_company = isset($exist_vt) ? $exist_vt->company_id : $company_id;
+      
       $data = [
          'vt_import_excel_id' => $this->idExcelImport,
          'vt_product_id' => $row['ma_vat_tu'],
          'vt_product_name' => $row['ten_vat_tu'],
          'amount' => $row['so_luong'],
       ];
-      if($exist->company_id != $company_id){
+      if($exist_company != $company_id){
          $data['note']='Mã vật tư đã tồn tại';
       }
       return  VtImportProduct::create($data);

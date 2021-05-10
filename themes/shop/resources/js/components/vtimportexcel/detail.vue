@@ -87,7 +87,7 @@
                             @sort-change="handleSortChange"
                           >
                             <el-table-column
-                              prop="id"
+                              prop="vt_product_id"
                               :label="$t('vtimportproduct.label.ma_vat_tu')"
                               width="150"
                               sortable="custom"
@@ -101,6 +101,13 @@
                             <el-table-column
                               prop="amount"
                                :label="$t('vtimportproduct.label.amount')"
+                              sortable="custom"
+                            >
+                            </el-table-column>
+
+                            <el-table-column
+                              prop="note"
+                               :label="$t('vtimportproduct.label.note')"
                               sortable="custom"
                             >
                             </el-table-column>

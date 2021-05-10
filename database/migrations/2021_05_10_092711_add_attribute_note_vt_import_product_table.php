@@ -14,7 +14,7 @@ class AddAttributeNoteVtImportProductTable extends Migration
     public function up()
     {
         Schema::table('vt_import_product', function (Blueprint $table) {
-            $table->string('note');
+            $table->string('note')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddAttributeNoteVtImportProductTable extends Migration
     public function down()
     {
         Schema::table('vt_import_product', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('note');
         });
     }
 }
