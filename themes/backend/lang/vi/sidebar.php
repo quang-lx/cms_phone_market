@@ -49,5 +49,7 @@ return [
     'product' => 'Sản phẩm',
     'product information' => 'Thông tính chi tiết',
     'voucher management' => 'Quản lý khuyến mại',
+    'ranking' => 'Xếp hạng',
+    'ship type' => 'Hình thức vận chuyển',
 
 ];

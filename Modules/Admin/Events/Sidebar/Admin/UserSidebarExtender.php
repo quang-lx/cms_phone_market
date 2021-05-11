@@ -242,7 +242,24 @@ class UserSidebarExtender extends AbstractAdminSidebar
                         $this->auth->hasAccess('admin.banners.index')
                     );
                 });
+	            $item->item(trans('backend::sidebar.ranking'), function (Item $item) {
 
+		            $item->weight(0);
+
+		            $item->route('admin.rank.index');
+		            $item->authorize(
+			            $this->auth->hasAccess('admin.rank.index')
+		            );
+	            });
+$item->item(trans('backend::sidebar.ship type'), function (Item $item) {
+
+		            $item->weight(0);
+
+		            $item->route('admin.shiptype.index');
+		            $item->authorize(
+			            $this->auth->hasAccess('admin.shiptype.index')
+		            );
+	            });
 
             });
         });
