@@ -4,6 +4,7 @@
 namespace Modules\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Mon\Entities\Rank;
 
 class UserTransformer extends JsonResource
 {
@@ -16,7 +17,7 @@ class UserTransformer extends JsonResource
             'username' => $this->username,
             'name' => $this->name,
 	        'birthday' => $this->birthday,
-	        'rank' => $this->rank ? new RankTransformer($this->rank): null,
+	        'rank' => $this->rank_id ? Rank::rankById($this->rank_id): null,
 	        'rank_point' => $this->rank_point,
 	        'phone' => $this->phone,
 	        'gender' => $this->gender,

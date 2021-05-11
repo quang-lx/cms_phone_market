@@ -22,10 +22,7 @@ class CachedEloquentRankRepository implements RankRepository
         });
     }
 	public function rankDetail(Request $request, $rankId) {
-    	$key = sprintf(CacheKey::RANK_DETAIL, $rankId);
-		return  Cache::rememberForever($key, function () use ($rankId) {
-			$rank = Rank::query()->find($rankId);
-			return new RankTransformer($rank);
-		});
+
+		return  Rank::rankById($rankId);
 	}
 }
