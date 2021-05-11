@@ -2788,7 +2788,7 @@
                 }
             }
         },
-        "/user/address": {
+        "/user/address/list": {
             "get": {
                 "tags": [
                     "user"

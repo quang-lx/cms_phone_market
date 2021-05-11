@@ -255,7 +255,7 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'uses' => 'AddressController@update',
 			'as' => 'apife.address.update',
 		]);
-		Route::get('/', [
+		Route::get('/list', [
 			'uses' => 'AddressController@index',
 			'as' => 'apife.address.index',
 		]);
