@@ -581,7 +581,32 @@ Route::middleware('auth:api')->prefix('/ranks')->group(function (){
         'uses' => 'Rank\RankController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/shiptypes')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.shiptype.index',
+        'uses' => 'ShipType\ShipTypeController@index',
+    ]);
+    Route::post('/{shiptype}/edit', [
+            'as' => 'api.shiptype.update',
+            'uses' => 'ShipType\ShipTypeController@update',
+        ]);
+   Route::get('/{shiptype}', [
+              'as' => 'api.shiptype.find',
+              'uses' => 'ShipType\ShipTypeController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.shiptype.store',
+        'uses' => 'ShipType\ShipTypeController@store',
+    ]);
+
+    Route::delete('/{shiptype}', [
+        'as' => 'api.shiptype.destroy',
+        'uses' => 'ShipType\ShipTypeController@destroy',
+    ]);
+});
 // append
+
 
 
 
