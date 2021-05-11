@@ -10,6 +10,7 @@ use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentRankRepository;
+use Modules\Api\Repositories\Eloquent\Cached\EloquentShipTypeRepository;
 use Modules\Api\Repositories\Eloquent\EloquentAddressRepository;
 use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentCategoryRepository;
@@ -24,11 +25,13 @@ use Modules\Api\Repositories\RankRepository;
 use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
+use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Mon\Entities\Address;
 use Modules\Mon\Entities\Pcategory;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
 use Modules\Mon\Entities\RatingShop;
+use Modules\Mon\Entities\ShipType;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -189,6 +192,12 @@ class ApiServiceProvider extends ServiceProvider
 		    RankRepository::class,
 		    function () {
 			    return new CachedEloquentRankRepository();
+		    }
+	    );
+	    $this->app->bind(
+		    ShipTypeRepository::class,
+		    function () {
+			    return new EloquentShipTypeRepository(new ShipType());
 		    }
 	    );
     }
