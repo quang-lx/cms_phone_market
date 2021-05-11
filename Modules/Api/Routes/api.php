@@ -222,6 +222,15 @@ Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
     ]);
 });
 
+Route::prefix('rank')->group(function ($router) {
+
+	Route::get('/', [
+		'uses' => 'RankController@index',
+		'as' => 'apife.rank.index',
+	]);
+
+});
+
 Route::middleware(['auth:api'])->group(function ($router) {
     Route::prefix('shop')->group(function ($router) {
         Route::get('bao-hanh', [

@@ -9,6 +9,7 @@ use Modules\Api\Repositories\ApiShopRepository;
 use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
+use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentRankRepository;
 use Modules\Api\Repositories\Eloquent\EloquentAddressRepository;
 use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentCategoryRepository;
@@ -19,6 +20,7 @@ use Modules\Api\Repositories\Eloquent\EloquentRatingShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentSearchRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\ProductRepository;
+use Modules\Api\Repositories\RankRepository;
 use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
@@ -181,6 +183,12 @@ class ApiServiceProvider extends ServiceProvider
 		    AddressRepository::class,
 		    function () {
 			    return new EloquentAddressRepository(new Address());
+		    }
+	    );
+	    $this->app->bind(
+		    RankRepository::class,
+		    function () {
+			    return new CachedEloquentRankRepository();
 		    }
 	    );
     }

@@ -2,6 +2,8 @@
 
 namespace Modules\Admin\Repositories\Eloquent;
 
+use App\Models\CacheKey;
+use Illuminate\Support\Facades\Cache;
 use Modules\Admin\Repositories\RankRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Modules\Admin\Events\Rank\RankWasCreated;
@@ -14,6 +16,7 @@ class EloquentRankRepository extends BaseRepository implements RankRepository
     {
         $model = $this->model->create($data);
         event(new RankWasCreated($model, $data));
+	    Cache::forget(CacheKey::RANK_ALL);
         return $model;
     }
 
@@ -21,6 +24,7 @@ class EloquentRankRepository extends BaseRepository implements RankRepository
     {
         $model->update($data);
         event(new RankWasUpdated($model, $data));
+	    Cache::forget(CacheKey::RANK_ALL);
         return $model;
     }
 
@@ -52,6 +56,6 @@ class EloquentRankRepository extends BaseRepository implements RankRepository
                 $q->orWhere('name','LIKE', "%{$keyword}%");
             });
         }
-        return $query->paginate($request->get('per_page', 10));    
+        return $query->paginate($request->get('per_page', 10));
     }
 }

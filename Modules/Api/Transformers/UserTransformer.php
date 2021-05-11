@@ -16,7 +16,7 @@ class UserTransformer extends JsonResource
             'username' => $this->username,
             'name' => $this->name,
 	        'birthday' => $this->birthday,
-	        'rank' => $this->rank,
+	        'rank' => $this->rank ? new RankTransformer($this->rank): null,
 	        'rank_point' => $this->rank_point,
 	        'phone' => $this->phone,
 	        'gender' => $this->gender,
