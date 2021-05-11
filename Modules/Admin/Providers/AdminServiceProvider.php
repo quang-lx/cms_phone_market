@@ -267,7 +267,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\ShipTypeRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentShipTypeRepository(new \Modules\Mon\Entities\ShipType());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

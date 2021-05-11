@@ -529,7 +529,29 @@ Route::group(['prefix' => '/rank'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/shiptype'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.shiptype.index',
+        'uses' => 'ShipType\ShipTypeController@index',
+        'middleware' => 'permission:admin.shiptype.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.shiptype.create',
+        'uses' => 'ShipType\ShipTypeController@create',
+        'middleware' => 'permission:admin.shiptype.create'
+    ]);
+
+    Route::get('{shiptype}/edit', [
+        'as' => 'admin.shiptype.edit',
+        'uses' => 'ShipType\ShipTypeController@edit',
+        'middleware' => 'permission:admin.shiptype.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

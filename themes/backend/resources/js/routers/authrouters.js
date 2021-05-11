@@ -67,6 +67,10 @@ import VoucherForm from './../components/voucher/form';
 import RankList from './../components/rank/index';
 import RankForm from './../components/rank/form';
 
+import ShipTypeList from './../components/shiptype/index';
+import ShipTypeForm from './../components/shiptype/form';
+
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -565,6 +569,29 @@ export default [
         component: RankForm,
         props: {
             pageTitle: 'rank.label.update_rank',
+        },
+    },
+
+     // ship_type
+     {
+        path: '/admin/shiptype',
+        name: 'admin.shiptype.index',
+        component: ShipTypeList,
+    },
+    {
+        path: '/admin/shiptype/create',
+        name: 'admin.shiptype.create',
+        component: ShipTypeForm,
+        props: {
+            pageTitle: 'shiptype.label.create_shiptype',
+        },
+    },
+    {
+        path: '/admin/shiptype/:shiptypeId/edit',
+        name: 'admin.shiptype.edit',
+        component: ShipTypeForm,
+        props: {
+            pageTitle: 'shiptype.label.update_shiptype',
         },
     },
  
