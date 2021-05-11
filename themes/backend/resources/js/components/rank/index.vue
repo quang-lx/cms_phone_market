@@ -75,6 +75,8 @@
                                         <el-table-column  prop="description" :label="$t('rank.label.description')" sortable="custom">  </el-table-column>
                                         <el-table-column  prop="point" :label="$t('rank.label.point')" sortable="custom">
                                         </el-table-column>
+                                        <el-table-column  prop="max_point" :label="$t('rank.label.max_point')" sortable="custom">
+                                        </el-table-column>
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
                                                 <edit-button

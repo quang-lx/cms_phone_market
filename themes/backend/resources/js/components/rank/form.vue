@@ -89,6 +89,21 @@
                             ></div>
                           </el-form-item>
                         </div>
+                           <div class="col-md-10">
+                          <el-form-item
+                            :label="$t('rank.label.max_point')"
+                            :class="{
+                              'el-form-item is-error': form.errors.has('max_point'),
+                            }"
+                          >
+                            <el-input v-model="modelForm.max_point"></el-input>
+                            <div
+                              class="el-form-item__error"
+                              v-if="form.errors.has('max_point')"
+                              v-text="form.errors.first('max_point')"
+                            ></div>
+                          </el-form-item>
+                        </div>
                         <div class="col-md-10">
                           <single-media
                             zone="thumbnail"
@@ -156,6 +171,7 @@ export default {
         name: "",
         description: "",
         point: "",
+        max_point: "",
       },
     };
   },

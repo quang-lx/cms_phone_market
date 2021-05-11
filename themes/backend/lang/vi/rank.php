@@ -7,6 +7,7 @@ return [
         'description' => 'Mô tả',
         'image' => 'Ảnh',
         'point' => 'Điểm',
+        'max_point' => 'Điểm tối đa',
 
         'create_rank' => 'Tạo rank',
         'update_rank' => 'Cập nhật rank',

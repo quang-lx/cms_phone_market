@@ -567,6 +567,7 @@ export default {
                 "description": "Mô tả",
                 "image": "Ảnh",
                 "point": "Điểm",
+                "max_point": "Điểm tối đa",
                 "create_rank": "Tạo rank",
                 "update_rank": "Cập nhật rank",
                 "detail_rank": "Chi tiết"
@@ -653,7 +654,9 @@ export default {
             "attribute": "Thuộc tính",
             "product": "Sản phẩm",
             "product information": "Thông tính chi tiết",
-            "voucher management": "Quản lý khuyến mại"
+            "voucher management": "Quản lý khuyến mại",
+            "ranking": "Xếp hạng",
+            "ship type": "Hình thức vận chuyển"
         },
         "user": {
             "label": {
