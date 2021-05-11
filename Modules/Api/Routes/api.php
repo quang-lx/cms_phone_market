@@ -245,6 +245,21 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'as' => 'apife.rating.storeShop',
         ]);
     });
+
+	Route::prefix('user/address')->group(function ($router) {
+		Route::post('/', [
+			'uses' => 'AddressController@store',
+			'as' => 'apife.address.store',
+		]);
+		Route::post('/{address}', [
+			'uses' => 'AddressController@update',
+			'as' => 'apife.address.update',
+		]);
+		Route::get('/', [
+			'uses' => 'AddressController@index',
+			'as' => 'apife.address.index',
+		]);
+	});
 });
 
 

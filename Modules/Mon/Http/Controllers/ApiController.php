@@ -2,6 +2,8 @@
 
 namespace Modules\Mon\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Modules\Mon\Auth\Contracts\Authentication;
 
 class ApiController extends BaseController
@@ -17,5 +19,10 @@ class ApiController extends BaseController
             'message' => $message,
             'data' => $data
         ]);
+    }
+
+    public function validate(Request $request, $rules, $messages = [], $customAttribute = []) {
+	    $validator = Validator::make($request->all(),$rules, $messages, $customAttribute);
+	    return $validator;
     }
 }

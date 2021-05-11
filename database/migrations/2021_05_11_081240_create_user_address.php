@@ -24,6 +24,8 @@ class CreateUserAddress extends Migration
             $table->unsignedInteger('phoenix_id')->nullable();
             $table->tinyInteger('default')->default(0)->nullable();
             $table->timestamps();
+	        $table->softDeletes();
+
         });
     }
 

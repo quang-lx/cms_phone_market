@@ -4,10 +4,12 @@ namespace Modules\Api\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Modules\Api\Repositories\AddressRepository;
 use Modules\Api\Repositories\ApiShopRepository;
 use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
+use Modules\Api\Repositories\Eloquent\EloquentAddressRepository;
 use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentCategoryRepository;
 use Modules\Api\Repositories\Eloquent\EloquentHomeSettingRepository;
@@ -20,6 +22,7 @@ use Modules\Api\Repositories\ProductRepository;
 use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
+use Modules\Mon\Entities\Address;
 use Modules\Mon\Entities\Pcategory;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
@@ -172,6 +175,12 @@ class ApiServiceProvider extends ServiceProvider
 		    RatingShopRepository::class,
 		    function () {
 			    return new EloquentRatingShopRepository(new RatingShop());
+		    }
+	    );
+	    $this->app->bind(
+		    AddressRepository::class,
+		    function () {
+			    return new EloquentAddressRepository(new Address());
 		    }
 	    );
     }

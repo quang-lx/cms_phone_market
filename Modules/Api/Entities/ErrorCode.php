@@ -37,6 +37,7 @@ class ErrorCode
     const ERR31 = 31;
     const ERR32 = 32;
 
+    const ERR422 = 422;
     const ERR500 = 500;
     const SUCCESS = 0;
 
@@ -72,6 +73,7 @@ class ErrorCode
     const ERR30_MSG = 'Vui lòng nhập mật khẩu cũ';
     const ERR31_MSG = 'Vui lòng nhập đánh giá';
     const ERR32_MSG = 'Đánh giá không hợp lệ';
+
 
 
     const ERR500_MSG = 'Hệ thống đang bận. Vui lòng thử lại';
