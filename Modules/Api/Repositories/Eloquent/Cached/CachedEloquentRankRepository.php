@@ -17,7 +17,7 @@ class CachedEloquentRankRepository implements RankRepository
 
     public function getAll(Request $request) {
         return  Cache::rememberForever(CacheKey::RANK_ALL, function () use ($request) {
-             $ranks = Rank::query()->get();
+             $ranks = Rank::query()->orderBy('point')->get();
              return RankTransformer::collection($ranks);
         });
     }
