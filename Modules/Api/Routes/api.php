@@ -36,6 +36,10 @@ Route::prefix('/app')->group(function () {
         'uses' => 'ShopController@shopNearest',
         'as' => 'apife.shop.shopNearest',
     ]);
+	Route::get('/ship-type', [
+		'as' => 'api.app.shipType',
+		'uses' => 'AppController@listShipType',
+	]);
 });
 
 
