@@ -406,7 +406,20 @@ Route::middleware('auth:api')->prefix('/storageproducts')->group(function (){
         'uses' => 'StorageProduct\StorageProductController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/shopshiptypes')->group(function (){
+
+    Route::get('/', [
+        'as' => 'shopapi.shopshiptype.index',
+        'uses' => 'ShopShipType\ShopShipTypeController@index',
+    ]);
+    Route::post('/', [
+        'as' => 'shopapi.shopshiptype.create_or_update',
+        'uses' => 'ShopShipType\ShopShipTypeController@create_or_update',
+    ]);
+
+});
 // append
+
 
 
 
