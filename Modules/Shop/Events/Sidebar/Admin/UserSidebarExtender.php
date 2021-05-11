@@ -250,6 +250,22 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
         });
 
+	    $menu->group('ship type', function (Group $group) {
+		    $group->hideHeading(true);
+		    $group->item(trans('ch::sidebar.ship type'), function (Item $item) {
+			    $item->icon('fas fa-truck');
+			    $item->weight(10);
+			    $item->authorize(
+				    $this->auth->hasAccess('shop.shopshiptype.index')
+			    );
+
+			    $item->route('shop.shopshiptype.index');
+
+		    });
+
+
+	    });
+
         return $menu;
 
     }
