@@ -11,11 +11,13 @@ class RankTransformer extends JsonResource
 
     public function toArray($request)
     {
+
         $data = [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-	        'point' => $this->point
+	        'point' => $this->point,
+	        'max_point' => $this->max_point,
         ];
 
 

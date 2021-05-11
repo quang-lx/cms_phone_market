@@ -20,6 +20,7 @@ class Rank extends Model
         'name',
         'description',
         'point',
+        'max_point',
     ];
 
     public function getThumbnailAttribute()
