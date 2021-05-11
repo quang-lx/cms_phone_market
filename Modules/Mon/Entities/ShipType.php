@@ -13,4 +13,9 @@ class ShipType extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function ShopShipType()
+    {
+        return $this->hasMany(ShopShipType::class,'ship_type_id');
+    }
 }
