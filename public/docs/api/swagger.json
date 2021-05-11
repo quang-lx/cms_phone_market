@@ -2575,7 +2575,14 @@
                     "application/x-www-form-urlencoded"
                 ],
                 "parameters": [
-
+                    {
+                        "in": "query",
+                        "name": "shop_id",
+                        "description": "shop_id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    }
                 ],
                 "responses": {
                     "200": {

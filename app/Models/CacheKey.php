@@ -24,6 +24,7 @@ class CacheKey
         const RANK_DETAIL = 'RANK_%s_DETAIL';
 
         const SHIP_TYPE_ALL = 'SHIP_TYPE_ALL';
+        const SHIP_TYPE_SHOP = 'SHIP_TYPE_SHOP_%s';
 
 
 }

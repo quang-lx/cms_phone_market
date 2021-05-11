@@ -2,6 +2,7 @@
 
 namespace Modules\Shop\Repositories\Eloquent;
 
+use App\Models\CacheKey;
 use Modules\Shop\Repositories\ShopShipTypeRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
@@ -13,11 +14,11 @@ class EloquentShopShipTypeRepository extends BaseRepository implements ShopShipT
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = ShipType::query();
- 
+
         if ($relations) {
             $query = $query->with($relations);
         }
-      
+
         if ($request->get('search') !== null) {
             $code = $request->get('search');
             $query->where('code', 'LIKE', "%{$code}%");
@@ -39,5 +40,6 @@ class EloquentShopShipTypeRepository extends BaseRepository implements ShopShipT
         $data->shop_id =Auth::user()->shop_id;
         $data->status = $data->status == 2?1:2;
         $data->save();
+	    $cacheKey = sprintf(CacheKey::SHIP_TYPE_SHOP, $data->shop_id);
     }
 }
