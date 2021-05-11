@@ -12,6 +12,7 @@ class CreateRankRequest extends FormRequest
             'name' => 'required|unique:rank,name',
             'description' => 'required',
             'point' => 'required|integer',
+            'max_point' => 'required|integer|gt:point',
         ];
     }
 
@@ -32,7 +33,11 @@ class CreateRankRequest extends FormRequest
             'name.unique' => 'Tên đã tồn tại',
             'description.required' => 'Mô tả là bắt buộc',
             'point.required' => 'Mô tả là bắt buộc',
-            'point.integer' => 'Điểm phải là số nguyên'
+            'point.integer' => 'Điểm phải là số nguyên',
+            'max_point.required' => 'Mô tả là bắt buộc',
+            'max_point.integer' => 'Điểm phải là số nguyên',
+            'max_point.gt' => 'Điểm tuyệt đối phải lớn hơn điểm'
+
         ];
     }
 
