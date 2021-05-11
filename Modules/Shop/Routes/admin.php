@@ -287,7 +287,18 @@ Route::group(['prefix' => '/storageproduct'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/shopshiptype'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.shopshiptype.index',
+        'uses' => 'ShopShipType\ShopShipTypeController@index',
+        'middleware' => 'permission:shop.shopshiptype.index'
+    ]);
+
+
+});
 // append
+
 
 
 

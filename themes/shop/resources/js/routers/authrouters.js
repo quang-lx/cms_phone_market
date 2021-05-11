@@ -43,6 +43,8 @@ import VtImportExcelCreate from './../components/vtimportexcel/create';
 import StorageProductForm from './../components/storageproduct/form';
 import StorageProductList from './../components/storageproduct/index';
 
+import ShopShipTypeList from './../components/shopshiptype/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -337,6 +339,12 @@ export default [
             pageTitle: 'storageproduct.label.update_storageproduct',
         },
     },
- 
+
+    // shopshiptype
+    {
+        path: '/shop-admin/shopshiptype',
+        name: 'shop.shopshiptype.index',
+        component: ShopShipTypeList,
+    },
 
 ];

@@ -447,6 +447,17 @@ export default {
                 "delete success": "Xóa chi nhánh thành công."
             }
         },
+        "shopshiptype": {
+            "label": {
+                "shopshiptype": "Hình thức vận chuyển",
+                "id": "ID",
+                "name": "Tên",
+                "status": "Trạng thái"
+            },
+            "message": {
+                "update success": "Cập nhật hình thức vận chuyển thành công."
+            }
+        },
         "sidebar": {
             "system administration": "Quản trị",
             "roles and permission": "Roles and permission",
