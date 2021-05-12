@@ -605,7 +605,32 @@ Route::middleware('auth:api')->prefix('/shiptypes')->group(function (){
         'uses' => 'ShipType\ShipTypeController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/orders')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.orders.index',
+        'uses' => 'Orders\OrdersController@index',
+    ]);
+    Route::post('/{orders}/edit', [
+            'as' => 'api.orders.update',
+            'uses' => 'Orders\OrdersController@update',
+        ]);
+   Route::get('/{orders}', [
+              'as' => 'api.orders.find',
+              'uses' => 'Orders\OrdersController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.orders.store',
+        'uses' => 'Orders\OrdersController@store',
+    ]);
+
+    Route::delete('/{orders}', [
+        'as' => 'api.orders.destroy',
+        'uses' => 'Orders\OrdersController@destroy',
+    ]);
+});
 // append
+
 
 
 
