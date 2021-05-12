@@ -212,7 +212,7 @@
                                                                 <div class="col-md-3 col-sm-6">
                                                                     <el-input-number style="width: 100%"
                                                                                      v-model="itemValue.sale_price"
-                                                                                     :min="0" :max="100000000"
+                                                                                     :min="0" :max="100"
                                                                                      placeholder="Giá khuyến mại"></el-input-number>
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
@@ -471,7 +471,7 @@
                                                           :class="{'el-form-item is-error': form.errors.has('sale_price') }">
 
                                                 <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.sale_price"></el-input-number>
+                                                                 :max="100" v-model="modelForm.sale_price"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('sale_price')"
                                                      v-text="form.errors.first('sale_price')"></div>

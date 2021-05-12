@@ -20,6 +20,7 @@ class CreateProductRequest extends FormRequest
             'amount' => 'required',
             'price' => 'required',
             'category_id' => 'required',
+            'sale_price' => 'numeric|min:0|max:100'
         ];
 
         return $rules;
@@ -50,6 +51,10 @@ class CreateProductRequest extends FormRequest
             'amount.required' => 'Số lượng là bắt buộc',
             'price.required' => 'Giá bán là bắt buộc',
             'category_id.required' => 'Danh mục là bắt buộc',
+            'sale_price.numeric' => 'Giá khuyến mãi phải là số',
+            'sale_price.min' => 'Giá khuyến mãi nhỏ nhất là 0%',
+            'sale_price.max' => 'Giá khuyến mãi lớn nhất là 100%',
+
         ];
     }
 
