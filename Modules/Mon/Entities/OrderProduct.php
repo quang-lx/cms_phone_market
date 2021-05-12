@@ -14,7 +14,7 @@ class OrderProduct extends Model
         'order_id',
         'product_id',
         'product_attribute_value_id',
-        'quatity',
+        'quantity',
         'price',
         'note',
     ];
