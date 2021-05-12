@@ -15,11 +15,13 @@ use Modules\Api\Repositories\Eloquent\EloquentAddressRepository;
 use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentCategoryRepository;
 use Modules\Api\Repositories\Eloquent\EloquentHomeSettingRepository;
+use Modules\Api\Repositories\Eloquent\EloquentOrderRepository;
 use Modules\Api\Repositories\Eloquent\EloquentProductRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentSearchRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
+use Modules\Api\Repositories\OrderRepository;
 use Modules\Api\Repositories\ProductRepository;
 use Modules\Api\Repositories\RankRepository;
 use Modules\Api\Repositories\RatingRepository;
@@ -27,6 +29,7 @@ use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Mon\Entities\Address;
+use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\Pcategory;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
@@ -198,6 +201,12 @@ class ApiServiceProvider extends ServiceProvider
 		    ShipTypeRepository::class,
 		    function () {
 			    return new EloquentShipTypeRepository(new ShipType());
+		    }
+	    );
+	    $this->app->bind(
+		    OrderRepository::class,
+		    function () {
+			    return new EloquentOrderRepository(new Orders());
 		    }
 	    );
     }

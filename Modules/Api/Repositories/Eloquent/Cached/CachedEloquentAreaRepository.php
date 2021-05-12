@@ -4,19 +4,27 @@ namespace Modules\Api\Repositories\Eloquent\Cached;
 
 use App\Models\CacheKey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Modules\Api\Repositories\AreaRepository;
+use Modules\Mon\Entities\District;
+use Modules\Mon\Entities\Phoenix;
 use Modules\Mon\Entities\Province;
 
 class CachedEloquentAreaRepository implements AreaRepository
 {
 
+	/**
+	 * @return Collection
+	 */
     public function getProvinces() {
        return  Cache::rememberForever(CacheKey::PROVINCE_ALL, function ()  {
             return Province::query()->get();
         });
     }
-
+	/**
+	 * @return Collection
+	 */
     public function getDistricts(Request $request) {
         $provinceId = null;
         $cacheKey = CacheKey::DISTRICT_ALL;
@@ -24,14 +32,16 @@ class CachedEloquentAreaRepository implements AreaRepository
             $cacheKey = sprintf(CacheKey::DISTRICT_BY_PROVINCE, $provinceId);
         }
         return  Cache::rememberForever($cacheKey, function () use ($provinceId) {
-            $query = Province::query();
+            $query = District::query();
             if ($provinceId) {
                 $query = $query->where('province_id', $provinceId);
             }
             return $query->get();
         });
     }
-
+	/**
+	 * @return Collection
+	 */
     public function getPhoenixes(Request $request) {
 
         $districtId  = null;
@@ -41,9 +51,9 @@ class CachedEloquentAreaRepository implements AreaRepository
         }
         return  Cache::rememberForever($cacheKey, function () use ($districtId) {
 
-            $query = Province::query();
+            $query = Phoenix::query();
             if ($districtId) {
-                $query = $query->where('province_id', $districtId);
+                $query = $query->where('district_id', $districtId);
             }
             return $query->get();
         });

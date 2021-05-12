@@ -36,5 +36,8 @@ class Province extends Model
         'type',
         'phone_code',
     ];
+    public static function getProvinceCached($id) {
+
+    }
 
 }

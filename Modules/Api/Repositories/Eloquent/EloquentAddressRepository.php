@@ -38,4 +38,8 @@ class EloquentAddressRepository extends ApiBaseRepository implements AddressRepo
 
 		return $query->paginate($request->get('per_page', 10));
 	}
+
+	public function findById(Request $request, $id) {
+		return $this->model->find($id);
+	}
 }

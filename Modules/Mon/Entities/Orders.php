@@ -9,6 +9,11 @@ class Orders extends Model
 {
     use  SoftDeletes;
 
+    const TYPE_SUA_CHUA = 'sua_chua';
+    const TYPE_BAO_HANH = 'bao_hanh';
+    const TYPE_MUA_HANG = 'mua_hang';
+
+
     protected $table = 'orders';
     protected $fillable = [
         'user_id',
@@ -22,6 +27,8 @@ class Orders extends Model
         'discount',
         'ship_fee',
         'pay_price',
+
+	    'ship_address_id',
         'ship_province_id',
         'ship_province_name',
         'ship_district_id',

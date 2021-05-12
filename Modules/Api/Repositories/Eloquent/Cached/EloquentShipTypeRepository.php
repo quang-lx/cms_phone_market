@@ -42,4 +42,9 @@ class EloquentShipTypeRepository  implements ShipTypeRepository
 
 		});
 	}
+
+	public function findById(Request $request, $id) {
+    	return ShipType::find($id);
+
+	}
 }
