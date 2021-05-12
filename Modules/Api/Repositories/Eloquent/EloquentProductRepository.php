@@ -3,12 +3,14 @@
 namespace Modules\Api\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Modules\Api\Repositories\ProductRepository;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Mon\Entities\Pcategory;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Shop;
+use Modules\Mon\Entities\UserSearch;
 
 class EloquentProductRepository extends ApiBaseRepository implements ProductRepository
 {
@@ -128,9 +130,25 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
     }
 
     //TODO
+	//Khách hàng đã từng tìm kiếm: Hiển thị các kết quả từng tìm kiếm của khách hàng
+	//Khách hàng chưa từng tìm kiếm: Hiển thị sản phẩm bán chạy nhất cả sàn.
     public function getSuggested($id, Request $request)
     {
-        $query = $this->model->query();
+	    $query = UserSearch::query();
+    	if($user = Auth::user()) {
+    		$query->where('user_id', $user->id);
+
+	    } else if ($fcmToken = $request->get('fcm_token')) {
+		    $query->where('fcm_token', $fcmToken);
+	    } else {
+    		$query->whereRaw('1=0');
+	    }
+	    if ($query->count()) {
+		    $productSearch = $this->model->query();
+		    $productSearch->whereIn('id', $query->select('product_id'));
+		    return $productSearch->active()->paginate($request->get('per_page', 10));
+	    }
+	    $query = $this->model->query();
         $query->where('id', '!=', $id);
         return $query->active()->paginate($request->get('per_page', 10));
 
