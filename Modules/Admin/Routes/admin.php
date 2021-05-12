@@ -550,7 +550,29 @@ Route::group(['prefix' => '/shiptype'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/orders'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.orders.index',
+        'uses' => 'Orders\OrdersController@index',
+        'middleware' => 'permission:admin.orders.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.orders.create',
+        'uses' => 'Orders\OrdersController@create',
+        'middleware' => 'permission:admin.orders.create'
+    ]);
+
+    Route::get('{orders}/edit', [
+        'as' => 'admin.orders.edit',
+        'uses' => 'Orders\OrdersController@edit',
+        'middleware' => 'permission:admin.orders.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
