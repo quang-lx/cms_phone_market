@@ -27,60 +27,66 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class OrderController extends ApiController
 {
 
-	/** @var OrderRepository */
-	public $orderRepo;
+    /** @var OrderRepository */
+    public $orderRepo;
 
-	public function __construct(Authentication $auth, OrderRepository $orderRepo, ShipTypeRepository $shipTypeRepo, AreaRepository $areaRepo, AddressRepository $addressRepo)
-	{
-		parent::__construct($auth);
+    public function __construct(Authentication $auth, OrderRepository $orderRepo, ShipTypeRepository $shipTypeRepo, AreaRepository $areaRepo, AddressRepository $addressRepo)
+    {
+        parent::__construct($auth);
 
-		$this->orderRepo = $orderRepo;
-		$this->shipTypeRepo = $shipTypeRepo;
-		$this->areaRepo = $areaRepo;
-		$this->addressRepo = $addressRepo;
-	}
-	public function store(Request $request) {
+        $this->orderRepo = $orderRepo;
+        $this->shipTypeRepo = $shipTypeRepo;
+        $this->areaRepo = $areaRepo;
+        $this->addressRepo = $addressRepo;
+    }
 
-
-		$validator = $this->validateStore($request);
-		if ($validator->fails()) {
-			$errors = $validator->errors();
-			return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
-		}
+    public function store(Request $request)
+    {
 
 
+        $validator = $this->validateStore($request);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
+        }
+
+        $result = $this->orderRepo->placeMultipleOrder($request, Auth::user());
+        if ($result === true) {
+            return $this->respond(null, ErrorCode::SUCCESS, ErrorCode::SUCCESS);
+        }
+        list ($errorMsg, $errorCode) = $result;
+        return $this->respond(null, $errorMsg, $errorCode);
+
+    }
 
 
+    public function validateStore(Request $request)
+    {
+        $orderType = $request->get('type');
+        $rules = [];
+        $messages = [];
+        $rules = [
+            'orders.*.order_type' => 'required',
+            'orders.*.ship_type_id' => 'required',
+            'orders.*.ship_address_id' => 'required',
+            'orders.*.quantity' => 'required',
+            'orders.*.product_id' => 'required',
+        ];
 
-	}
+        $orders = $request->get('orders');
+        foreach ($orders as $key => $value) {
+            $messages['orders.' . $key . '.type.required'] = trans('api.messages.attribute is required', ['attribute' => 'Loại đơn hàng']);
+            $messages['orders.' . $key . '.ship_type_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Hình thức vận chuyển']);
+            $messages['orders.' . $key . '.ship_address_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']);
+            $messages['orders.' . $key . '.quantity.required'] = trans('api.messages.attribute is required', ['attribute' => 'Số lượng']);
+            $messages['orders.' . $key . '.product_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Sản phẩm']);
 
+        }
 
-	public function validateStore(Request $request) {
-		$orderType = $request->get('type');
-		$rules = [];
-		$messages = [];
-		$rules = [
-			'orders.*.order_type' => 'required',
-			'orders.*.ship_type_id' => 'required',
-			'orders.*.ship_address_id' => 'required',
-			'orders.*.quantity' => 'required',
-			'orders.*.product_id' => 'required',
-		];
+        if ($orderType == Orders::TYPE_SUA_CHUA) {
 
-		$orders = $request->get('orders');
-		foreach ($orders as $key => $value) {
-			$messages['orders.' . $key .'.type.required'] = trans('api.messages.attribute is required', ['attribute' => 'Loại đơn hàng']);
-			$messages['orders.' . $key .'.ship_type_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Hình thức vận chuyển']);
-			$messages['orders.' . $key .'.ship_address_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']);
-			$messages['orders.' . $key .'.quantity.required'] = trans('api.messages.attribute is required', ['attribute' => 'Số lượng']);
-			$messages['orders.' . $key .'.product_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Sản phẩm']);
+        }
+        return $this->validate($request, $rules, $messages);
 
-		}
-
-		if ($orderType == Orders::TYPE_SUA_CHUA) {
-
-		}
-		return $this->validate($request, $rules, $messages);
-
-	}
+    }
 }

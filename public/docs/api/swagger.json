@@ -19,6 +19,9 @@
             "name": "rank",
             "description": "Xep Hang"
         },{
+            "name": "order",
+            "description": "Don hang"
+        },{
             "name": "rating",
             "description": "Rating"
         },
@@ -62,6 +65,73 @@
         "https"
     ],
     "paths": {
+        "/order/place-order": {
+            "post": {
+                "tags": [
+                    "order"
+                ],
+                "summary": "dat hang",
+                "description": "dat hang",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "orders",
+                        "description": "Danh sach order",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/OrderData"
+                        }
+                    }
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/definitions/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
         "/product/shop/{shop_id}/list": {
             "get": {
                 "security": [
@@ -3786,27 +3856,27 @@
         }
     },
     "definitions": {
-        "Game": {
+        "OrderData": {
             "type": "object",
             "properties": {
-                "id": {
+                "product_id": {
                     "type": "integer"
                 },
-                "name": {
-                    "type": "string"
+                "product_attribute_value_id": {
+                    "type": "integer"
                 },
-                "type": {
-                    "type": "string"
+                "ship_type_id": {
+                    "type": "integer"
                 },
-                "status": {
-                    "type": "string"
+                "ship_address_id": {
+                    "type": "integer"
                 },
-                "thumbnail": {
-                    "type": "object"
+                "quantity": {
+                    "type": "integer"
+                },
+                "note": {
+                    "type": "string"
                 }
-            },
-            "xml": {
-                "name": "User"
             }
         },
         "User": {

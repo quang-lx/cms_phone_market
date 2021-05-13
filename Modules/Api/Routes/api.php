@@ -36,10 +36,10 @@ Route::prefix('/app')->group(function () {
         'uses' => 'ShopController@shopNearest',
         'as' => 'apife.shop.shopNearest',
     ]);
-	Route::get('/ship-type', [
-		'as' => 'api.app.shipType',
-		'uses' => 'AppController@listShipType',
-	]);
+    Route::get('/ship-type', [
+        'as' => 'api.app.shipType',
+        'uses' => 'AppController@listShipType',
+    ]);
 });
 
 
@@ -228,10 +228,10 @@ Route::middleware(['auth:api'])->prefix('media')->group(function ($router) {
 
 Route::prefix('rank')->group(function ($router) {
 
-	Route::get('/', [
-		'uses' => 'RankController@index',
-		'as' => 'apife.rank.index',
-	]);
+    Route::get('/', [
+        'uses' => 'RankController@index',
+        'as' => 'apife.rank.index',
+    ]);
 
 });
 
@@ -259,20 +259,27 @@ Route::middleware(['auth:api'])->group(function ($router) {
         ]);
     });
 
-	Route::prefix('user/address')->group(function ($router) {
-		Route::post('/', [
-			'uses' => 'AddressController@store',
-			'as' => 'apife.address.store',
-		]);
-		Route::post('/{address}', [
-			'uses' => 'AddressController@update',
-			'as' => 'apife.address.update',
-		]);
-		Route::get('/list', [
-			'uses' => 'AddressController@index',
-			'as' => 'apife.address.index',
-		]);
-	});
+    Route::prefix('user/address')->group(function ($router) {
+        Route::post('/', [
+            'uses' => 'AddressController@store',
+            'as' => 'apife.address.store',
+        ]);
+        Route::post('/{address}', [
+            'uses' => 'AddressController@update',
+            'as' => 'apife.address.update',
+        ]);
+        Route::get('/list', [
+            'uses' => 'AddressController@index',
+            'as' => 'apife.address.index',
+        ]);
+    });
+
+    Route::prefix('order')->group(function ($router) {
+        Route::get('/place-order', [
+            'uses' => 'OrderController@store',
+            'as' => 'apife.order.store',
+        ]);
+    });
 });
 
 

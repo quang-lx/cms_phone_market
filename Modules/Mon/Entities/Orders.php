@@ -37,4 +37,8 @@ class Orders extends Model
         'ship_phoenix_name',
         'ship_address',
     ];
+
+    public function orderProducts() {
+        $this->hasMany(OrderProduct::class, 'order_id', 'id');
+    }
 }
