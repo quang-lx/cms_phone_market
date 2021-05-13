@@ -185,7 +185,7 @@ class EloquentOrderRepository implements OrderRepository
         $order = $this->model->create($orderData);
         if($order) {
             $orderProductData['order_id'] = $order->id;
-            OrderProduct::create($order);
+            OrderProduct::create($orderProductData);
         }
 
         return true;
