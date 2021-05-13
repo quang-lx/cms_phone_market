@@ -92,7 +92,10 @@
                         "required": true,
                         "type": "array",
                         "items": {
-                            "$ref": "#/definitions/OrderData"
+                            "schema": {
+                                "$ref": "#/definitions/OrderData"
+                            }
+
                         }
                     }
 
