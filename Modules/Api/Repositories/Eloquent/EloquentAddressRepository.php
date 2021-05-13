@@ -23,7 +23,7 @@ class EloquentAddressRepository extends ApiBaseRepository implements AddressRepo
 	}
 
 	public function update($model, $data) {
-		$model = $model->update($data);
+		$model->update($data);
 		$this->syncDefault($model);
 		return $model;
 	}
