@@ -86,7 +86,7 @@
                 ],
                 "parameters": [
                     {
-                        "in": "formData",
+                        "in": "body",
                         "name": "orders",
                         "description": "Danh sach order",
                         "required": true,
