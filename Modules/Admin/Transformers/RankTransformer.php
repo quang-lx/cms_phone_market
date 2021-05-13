@@ -17,6 +17,7 @@ class RankTransformer extends JsonResource
             'name' => $this->name,
             'description'=> $this->description,
             'point' => $this->point,
+              'max_point' => $this->max_point,
             'thumbnail' => $this->thumbnail,
             'urls' => [
                 'delete_url' => route('api.rank.destroy', $this->id),
