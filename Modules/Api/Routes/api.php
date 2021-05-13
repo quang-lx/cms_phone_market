@@ -275,7 +275,7 @@ Route::middleware(['auth:api'])->group(function ($router) {
     });
 
     Route::prefix('order')->group(function ($router) {
-        Route::get('/place-order', [
+        Route::post('/place-order', [
             'uses' => 'OrderController@store',
             'as' => 'apife.order.store',
         ]);
