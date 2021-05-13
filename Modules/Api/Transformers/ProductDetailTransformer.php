@@ -12,7 +12,7 @@ class ProductDetailTransformer extends JsonResource {
 
 
 	public function toArray($request) {
-		list ($attribute, $attributeValue ) = $this->getProductAttribute($this->productAttributes, $this->attributeValues);
+		list ($attribute, $attributeValue ) = $this->getProductAttribute($this->attributes, $this->attributeValues);
 		$data = [
 			'id' => $this->id,
 			'sku' => $this->sku,
