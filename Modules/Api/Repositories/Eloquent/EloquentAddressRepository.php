@@ -18,12 +18,13 @@ class EloquentAddressRepository extends ApiBaseRepository implements AddressRepo
 
 	public function create($data) {
 		$model = $this->model->create($data);
-
+		$this->syncDefault($model);
 		return $model;
 	}
 
 	public function update($model, $data) {
-		$model->update($data);
+		$model = $model->update($data);
+		$this->syncDefault($model);
 		return $model;
 	}
 
@@ -41,5 +42,10 @@ class EloquentAddressRepository extends ApiBaseRepository implements AddressRepo
 
 	public function findById(Request $request, $id) {
 		return $this->model->find($id);
+	}
+	public function syncDefault($model) {
+		if ($model->default) {
+			$this->model->newQuery()->where('user_id', $model->user_id)->where('id', '<>', $model->id)->update(['default' => 0]);
+		}
 	}
 }
