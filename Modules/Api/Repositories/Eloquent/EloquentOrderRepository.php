@@ -129,7 +129,7 @@ class EloquentOrderRepository implements OrderRepository
 
     }
 
-    public function placeOrder($requestParams, User $user, ShipType $shipType, Address $shipAddress, Province $province, District $district, Phoenix $phoenix, Product $product, ProductAttributeValue $productAttributeValue)
+    public function placeOrder($requestParams, User $user, ShipType $shipType, Address $shipAddress, Province $province, District $district, Phoenix $phoenix, Product $product,  $productAttributeValue)
     {
         $orderData = [];
         $orderProductData = [];
