@@ -68,7 +68,7 @@ class EloquentOrderRepository implements OrderRepository
         try {
             foreach ($orders as $order) {
                 $quantity = $order['quantity'];
-                $shipType = $this->shipTypeRepo->findById($request, $orders['ship_type_id']);
+                $shipType = $this->shipTypeRepo->findById($request, $order['ship_type_id']);
                 if (!$shipType) {
                     return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
                 }
