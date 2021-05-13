@@ -136,7 +136,7 @@
                               'el-form-item is-error': form.errors.has('list_attribute'),
                             }"
                                     >
-                                        <el-select
+                                        <el-select clearable 
                                             v-model="modelForm.attribute_id"
                                             placeholder=""
                                             @change="changeAttribute"
@@ -728,6 +728,7 @@
       },
       changeAttribute() {
         const itemInRoot = _.findIndex(this.list_attribute, {id: this.modelForm.attribute_id})
+        console.log(itemInRoot)
         if (itemInRoot !== -1) {
           if (this.modelForm.attribute_selected) {
             this.list_selected_values[this.modelForm.attribute_selected.id] = _.cloneDeep(this.modelForm.attribute_selected);
@@ -737,6 +738,9 @@
           if (this.list_selected_values[this.modelForm.attribute_selected.id]) {
             this.modelForm.attribute_selected.values = _.cloneDeep(this.list_selected_values[this.modelForm.attribute_selected.id].values);
           }
+        }else{
+            this.modelForm.attribute_id = ""
+            this.modelForm.attribute_selected = null
         }
       },
 
