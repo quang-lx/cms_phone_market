@@ -371,7 +371,7 @@ export default {
                 "sku": "SKU",
                 "amount": "Số lượng",
                 "price": "Giá bán",
-                "sale_price": "Giá khuyến mại",
+                "sale_price": "Giá khuyến mại(%)",
                 "category_id": "Danh mục",
                 "problem_id": "Vấn đề sửa chữa",
                 "company_id": "Cửa hàng",
@@ -487,7 +487,8 @@ export default {
             "vtproduct": "Vật tư",
             "transfer management": "Quản lý chuyển kho",
             "storage product": "Nhập kho",
-            "vtimportexcel": "Nhập linh kiện"
+            "vtimportexcel": "Nhập linh kiện",
+            "ship type": "Hình thức vận chuyển"
         },
         "storageproduct": {
             "label": {

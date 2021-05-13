@@ -136,7 +136,7 @@
                               'el-form-item is-error': form.errors.has('list_attribute'),
                             }"
                                     >
-                                        <el-select
+                                        <el-select clearable 
                                             v-model="modelForm.attribute_id"
                                             placeholder=""
                                             @change="changeAttribute"
@@ -212,7 +212,7 @@
                                                                 <div class="col-md-3 col-sm-6">
                                                                     <el-input-number style="width: 100%"
                                                                                      v-model="itemValue.sale_price"
-                                                                                     :min="0" :max="100000000"
+                                                                                     :min="0" :max="100"
                                                                                      placeholder="Giá khuyến mại"></el-input-number>
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
@@ -471,7 +471,7 @@
                                                           :class="{'el-form-item is-error': form.errors.has('sale_price') }">
 
                                                 <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.sale_price"></el-input-number>
+                                                                 :max="100" v-model="modelForm.sale_price"></el-input-number>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('sale_price')"
                                                      v-text="form.errors.first('sale_price')"></div>
@@ -728,6 +728,7 @@
       },
       changeAttribute() {
         const itemInRoot = _.findIndex(this.list_attribute, {id: this.modelForm.attribute_id})
+        console.log(itemInRoot)
         if (itemInRoot !== -1) {
           if (this.modelForm.attribute_selected) {
             this.list_selected_values[this.modelForm.attribute_selected.id] = _.cloneDeep(this.modelForm.attribute_selected);
@@ -737,6 +738,9 @@
           if (this.list_selected_values[this.modelForm.attribute_selected.id]) {
             this.modelForm.attribute_selected.values = _.cloneDeep(this.list_selected_values[this.modelForm.attribute_selected.id].values);
           }
+        }else{
+            this.modelForm.attribute_id = ""
+            this.modelForm.attribute_selected = null
         }
       },
 
