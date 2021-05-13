@@ -12,6 +12,7 @@ class ProductDetailTransformer extends JsonResource {
 
 
 	public function toArray($request) {
+		list ($attribute, $attributeValue ) = $this->getProductAttribute($this->productAttributes, $this->attributeValues);
 		$data = [
 			'id' => $this->id,
 			'sku' => $this->sku,
@@ -31,7 +32,8 @@ class ProductDetailTransformer extends JsonResource {
 			'type' => $this->type,
 			'brand_name' => optional($this->brand)->name,
 			'shop' => $this->shop ? new ShopFullTransformer($this->shop) : null,
-			'attributes' => $this->getProductAttribute($this->attributeValues),
+			'attribute_title' => optional($attribute)->name,
+			'attributes' => $attributeValue,
 			'detail_information' => $this->getDetailInformation($this->pinformation),
 
 			'files' => $this->files ? MediaShortTransformer::collection($this->files) : null,
@@ -47,18 +49,28 @@ class ProductDetailTransformer extends JsonResource {
 		return $data;
 	}
 
-	public function getProductAttribute($productValues) {
+	public function getProductAttribute($productAttributes,$productValues) {
 		$result = [];
-		foreach ($productValues as $item) {
-			$result[] = [
-				'value_id' => $item->id,
-				'value_name' => $item->name,
-				'price' => $item->pivot->price,
-				'sale_price' => $item->pivot->sale_price,
-				'amount' => $item->pivot->amount,
-			];
+		$attribute = null;
+		foreach ($productAttributes as $item) {
+			$attribute = $item;
 		}
-		return $result;
+		if ($attribute) {
+			foreach ($productValues as $item) {
+				if ($item->attribute_id == $attribute->id) {
+					$result[] = [
+						'value_id' => $item->id,
+						'value_name' => $item->name,
+						'price' => $item->pivot->price,
+						'sale_price' => $item->pivot->sale_price,
+						'amount' => $item->pivot->amount,
+					];
+				}
+
+			}
+		}
+
+		return [$attribute, $result];
 	}
 
 	public function getDetailInformation($pinformation) {

@@ -30,14 +30,6 @@ class OrderController extends ApiController
 	/** @var OrderRepository */
 	public $orderRepo;
 
-	/** @var ShipTypeRepository */
-	public $shipTypeRepo;
-
-	/** @var AreaRepository */
-	public $areaRepo;
-
-	/** @var AddressRepository */
-	public $addressRepo;
 	public function __construct(Authentication $auth, OrderRepository $orderRepo, ShipTypeRepository $shipTypeRepo, AreaRepository $areaRepo, AddressRepository $addressRepo)
 	{
 		parent::__construct($auth);
@@ -56,68 +48,34 @@ class OrderController extends ApiController
 			return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
 		}
 
-		$shipType = $this->shipTypeRepo->findById($request, $request->get('ship_type_id'));
-		if (!$shipType) {
-			return $this->respond(null, trans('api.messages.order.data invalid'), ErrorCode::ERR422);
-		}
 
-		$shipAddress = $this->addressRepo->findById($request, $request->get('ship_address_id'));
-		if (!$shipAddress) {
-			return $this->respond(null, trans('api.messages.order.data invalid'), ErrorCode::ERR422);
-		}
 
-		$shipProvince = $this->getShipProvince($shipAddress->province_id);
-		if (!$shipProvince) {
-			return $this->respond(null, trans('api.messages.order.data invalid'), ErrorCode::ERR422);
-		}
-
-		$request->request->add(['province_id' => $shipAddress->province_id, 'district_id' => $shipAddress->phoenix_id]);
-
-		$shipDistrict = $this->getShipDistrict($request, $shipAddress->district_id);
-		if (!$shipDistrict) {
-			return $this->respond(null, trans('api.messages.order.data invalid'), ErrorCode::ERR422);
-		}
-
-		$shipPhoenix = $this->getShipPhoenix($request, $shipAddress->phoenix_id);
-		if (!$shipPhoenix) {
-			return $this->respond(null, trans('api.messages.order.data invalid'), ErrorCode::ERR422);
-		}
 
 
 	}
 
-	protected function getShipProvince($province_id) {
-		$provinces = $this->areaRepo->getProvinces();
-		return $provinces->where('id', $province_id)->first();
-	}
-
-	protected function getShipDistrict(Request $request, $district_id) {
-		$districts = $this->areaRepo->getDistricts($request);
-		return $districts->where('id', $district_id)->first();
-	}
-
-	protected function getShipPhoenix(Request $request, $phoenix_id) {
-		$phoenixs = $this->areaRepo->getPhoenixes($request);
-		return $phoenixs->where('id', $phoenix_id)->first();
-	}
 
 	public function validateStore(Request $request) {
 		$orderType = $request->get('type');
 		$rules = [];
 		$messages = [];
 		$rules = [
-			'order_type' => 'required',
-			'ship_type_id' => 'required',
-			'ship_address_id' => 'required',
-			'quantity' => 'required',
-		];
-		$messages = [
-			'type.required' => trans('api.messages.attribute is required', ['attribute' => 'Loại đơn hàng']),
-			'ship_type_id.required' => trans('api.messages.attribute is required', ['attribute' => 'Hình thức vận chuyển']),
-			'ship_address_id.required' => trans('api.messages.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']),
-			'quantity.required' => trans('api.messages.attribute is required', ['attribute' => 'Số lượng']),
+			'orders.*.order_type' => 'required',
+			'orders.*.ship_type_id' => 'required',
+			'orders.*.ship_address_id' => 'required',
+			'orders.*.quantity' => 'required',
+			'orders.*.product_id' => 'required',
 		];
 
+		$orders = $request->get('orders');
+		foreach ($orders as $key => $value) {
+			$messages['orders.' . $key .'.type.required'] = trans('api.messages.attribute is required', ['attribute' => 'Loại đơn hàng']);
+			$messages['orders.' . $key .'.ship_type_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Hình thức vận chuyển']);
+			$messages['orders.' . $key .'.ship_address_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']);
+			$messages['orders.' . $key .'.quantity.required'] = trans('api.messages.attribute is required', ['attribute' => 'Số lượng']);
+			$messages['orders.' . $key .'.product_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Sản phẩm']);
+
+		}
 
 		if ($orderType == Orders::TYPE_SUA_CHUA) {
 
