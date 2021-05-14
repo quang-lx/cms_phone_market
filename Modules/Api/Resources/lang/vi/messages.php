@@ -2,6 +2,7 @@
 return [
     'validate' => [
     	'attribute is required' => 'Vui lòng nhập :attribute',
+    	'value not allow' => 'Giá trị :attribute không hợp lệ',
     	'address not your own' => 'Bạn không có quyền cập nhật địa chỉ của người khác',
 
     ],

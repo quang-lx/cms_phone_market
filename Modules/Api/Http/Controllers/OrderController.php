@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\AddressRepository;
 use Modules\Api\Repositories\AreaRepository;
@@ -66,16 +67,18 @@ class OrderController extends ApiController
         $rules = [];
         $messages = [];
         $rules = [
-            'orders.*.order_type' => 'required',
+            'orders.*.order_type' => ['required', Rule::in(Orders::TYPE_SUA_CHUA, Orders::TYPE_BAO_HANH, Orders::TYPE_MUA_HANG)],
             'orders.*.ship_type_id' => 'required',
             'orders.*.ship_address_id' => 'required',
             'orders.*.quantity' => 'required',
             'orders.*.product_id' => 'required',
+
         ];
 
         $orders = $request->get('orders');
         foreach ($orders as $key => $value) {
             $messages['orders.' . $key . '.order_type.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Loại đơn hàng']);
+            $messages['orders.' . $key . '.order_type.in'] = trans('api::messages.validate.value not allow', ['attribute' => 'Loại đơn hàng']);
             $messages['orders.' . $key . '.ship_type_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Hình thức vận chuyển']);
             $messages['orders.' . $key . '.ship_address_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']);
             $messages['orders.' . $key . '.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
