@@ -52,7 +52,7 @@ class OrderController extends ApiController
 
         $result = $this->orderRepo->placeMultipleOrder($request, Auth::user());
         if ($result === true) {
-            return $this->respond(null, ErrorCode::SUCCESS_MSGS, ErrorCode::SUCCESS);
+            return $this->respond(null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
         }
         list ($errorMsg, $errorCode) = $result;
         return $this->respond(null, $errorMsg, $errorCode);
