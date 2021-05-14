@@ -87,7 +87,7 @@ class AddressController extends ApiController
 
 		$user = Auth::user();
 		if ($user->id != $address->user_id) {
-			return $this->respond(null, trans('api.messages.validate.address not your own') , ErrorCode::ERR422);
+			return $this->respond(null, trans('api::messages.validate.address not your own') , ErrorCode::ERR422);
 
 		}
 
@@ -99,12 +99,12 @@ class AddressController extends ApiController
 			'phoenix_id' => 'required',
 			'address' => 'required',
 		], [
-			'fullname.required' => trans('api.messages.validate.attribute is required', ['attribute' => 'Họ tên']),
-			'phone.required' => trans('api.messages.validate.attribute is required', ['attribute' => 'Số điện thoại']),
-			'province_id.required' => trans('api.messages.validate.attribute is required', ['attribute' => 'Tỉnh/Thành phố']),
-			'district_id.required' => trans('api.messages.validate.attribute is required', ['attribute' => 'Quận/Huyện']),
-			'phoenix_id.required' => trans('api.messages.validate.attribute is required', ['attribute' => 'Phường/Xã']),
-			'address.required' => trans('api.messages.validate.attribute is required', ['attribute' => 'Địa chỉ cụ thể']),
+			'fullname.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Họ tên']),
+			'phone.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Số điện thoại']),
+			'province_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Tỉnh/Thành phố']),
+			'district_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Quận/Huyện']),
+			'phoenix_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Phường/Xã']),
+			'address.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ cụ thể']),
 		]);
 		if ($validator->fails()) {
 			$errors = $validator->errors();
@@ -136,7 +136,7 @@ class AddressController extends ApiController
 	public function destroy(Request $request, Address $address) {
 		$user = Auth::user();
 		if ($address->user_id != $user->id) {
-			return $this->respond(null, trans('api.messages.validate.address not your own'), ErrorCode::ERR422);
+			return $this->respond(null, trans('api::messages.validate.address not your own'), ErrorCode::ERR422);
 		}
 		$this->addressRepo->delete($address);
 		return $this->respond(null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
