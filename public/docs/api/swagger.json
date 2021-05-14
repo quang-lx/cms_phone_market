@@ -2855,7 +2855,7 @@
                         "in": "formData",
                         "name": "fullname",
                         "description": "fullname",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -2863,7 +2863,7 @@
                         "in": "formData",
                         "name": "phone",
                         "description": "phone",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -2871,7 +2871,7 @@
                         "in": "formData",
                         "name": "address",
                         "description": "address",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -2879,7 +2879,7 @@
                         "in": "formData",
                         "name": "province_id",
                         "description": "province_id",
-                        "required": true,
+                        "required": false,
                         "type": "integer",
                         "format": "text"
                     },
@@ -2887,7 +2887,7 @@
                         "in": "formData",
                         "name": "province_name",
                         "description": "province_name",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -2896,7 +2896,7 @@
                         "in": "formData",
                         "name": "district_id",
                         "description": "district_id",
-                        "required": true,
+                        "required": false,
                         "type": "integer",
                         "format": "text"
                     },
@@ -2904,7 +2904,7 @@
                         "in": "formData",
                         "name": "district_name",
                         "description": "district_name",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -2912,7 +2912,7 @@
                         "in": "formData",
                         "name": "phoenix_id",
                         "description": "phoenix_id",
-                        "required": true,
+                        "required": false,
                         "type": "integer",
                         "format": "text"
                     },
@@ -2920,7 +2920,7 @@
                         "in": "formData",
                         "name": "phoenix_name",
                         "description": "phoenix_name",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "format": "text"
                     },
@@ -2928,7 +2928,7 @@
                         "in": "formData",
                         "name": "default",
                         "description": "default",
-                        "required": true,
+                        "required": false,
                         "type": "integer",
                         "format": "text"
                     }

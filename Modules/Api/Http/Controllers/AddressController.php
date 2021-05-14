@@ -80,11 +80,6 @@ class AddressController extends ApiController
 			return $this->respond(null, trans('api::messages.validate.address not your own') , ErrorCode::ERR422);
 
 		}
-		$validator = $this->validateStore($request);
-		if ($validator->fails()) {
-			$errors = $validator->errors();
-			return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
-		}
 
 		$data = $request->only(
 			'fullname',
