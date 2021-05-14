@@ -313,7 +313,18 @@ Route::group(['prefix' => '/orders'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/shopcategory'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.shopcategory.index',
+        'uses' => 'ShopCategory\ShopCategoryController@index',
+        'middleware' => 'permission:shop.shopcategory.index'
+    ]);
+
+
+});
 // append
+
 
 
 
