@@ -16,6 +16,7 @@ class OrderProduct extends Model
         'product_attribute_value_id',
         'quantity',
         'price',
+        'price_sale',
         'note',
     ];
 }
