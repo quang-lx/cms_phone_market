@@ -4,6 +4,7 @@ namespace Modules\Api\Transformers;
 
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Api\Repositories\AreaRepository;
 
 
 class AddressTransformer extends JsonResource
@@ -12,6 +13,7 @@ class AddressTransformer extends JsonResource
 
     public function toArray($request)
     {
+
         $data = [
             'id' => $this->id,
             'fullname' => $this->fullname,

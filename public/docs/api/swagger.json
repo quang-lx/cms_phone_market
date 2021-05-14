@@ -2740,6 +2740,15 @@
                     },
                     {
                         "in": "formData",
+                        "name": "province_name",
+                        "description": "province_name",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+
+                    {
+                        "in": "formData",
                         "name": "district_id",
                         "description": "district_id",
                         "required": true,
@@ -2748,10 +2757,26 @@
                     },
                     {
                         "in": "formData",
+                        "name": "district_name",
+                        "description": "district_name",
+                        "required": true,
+                        "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
                         "name": "phoenix_id",
                         "description": "phoenix_id",
                         "required": true,
                         "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "phoenix_name",
+                        "description": "phoenix_name",
+                        "required": true,
+                        "type": "string",
                         "format": "text"
                     },
                     {

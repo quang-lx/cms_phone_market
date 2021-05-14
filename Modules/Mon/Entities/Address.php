@@ -18,6 +18,9 @@ class Address extends Model
         'province_id',
         'district_id',
         'phoenix_id',
+        'province_name',
+        'district_name',
+        'phoenix_name',
         'default',
     ];
 

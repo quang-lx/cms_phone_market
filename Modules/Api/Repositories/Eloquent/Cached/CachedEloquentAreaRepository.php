@@ -71,4 +71,21 @@ class CachedEloquentAreaRepository implements AreaRepository
             ];
         });
     }
+    public function getProvinceById($provinceId) {
+    	$request = new Request();
+	    $provinces = $this->getProvinces();
+	    return $provinces->where('id', $provinceId)->first();
+    }
+	public function getDistrictById($provinceId, $districtId) {
+		$request = new Request();
+		$request->request->add(['province_id' => $provinceId]);
+		$provinces = $this->getDistricts($request);
+		return $provinces->where('id', $districtId)->first();
+	}
+	public function getPhoenixById($districtId, $phoenixId) {
+		$request = new Request();
+		$request->request->add(['district_id' => $districtId]);
+		$provinces = $this->getDistricts($request);
+		return $provinces->where('id', $phoenixId)->first();
+	}
 }

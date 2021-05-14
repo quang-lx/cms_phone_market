@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Events\ProductRatingCreated;
 use Modules\Api\Events\ShopRatingCreated;
@@ -23,6 +24,7 @@ use Modules\Api\Transformers\RatingTransformer;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Entities\Address;
+use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\Rating;
 use Modules\Mon\Entities\RatingShop;
 use Modules\Mon\Entities\SmsToken;
@@ -46,26 +48,11 @@ class AddressController extends ApiController
 
 
         $user = Auth::user();
-
-        $validator = $this->validate($request, [
-        	'fullname' => 'required',
-        	'phone' => 'required',
-        	'province_id' => 'required',
-        	'district_id' => 'required',
-        	'phoenix_id' => 'required',
-        	'address' => 'required',
-        ], [
-        	'fullname.required' => trans('attribute is required', ['attribute' => 'Họ tên']),
-        	'phone.required' => trans('attribute is required', ['attribute' => 'Số điện thoại']),
-        	'province_id.required' => trans('attribute is required', ['attribute' => 'Tỉnh/Thành phố']),
-        	'district_id.required' => trans('attribute is required', ['attribute' => 'Quận/Huyện']),
-        	'phoenix_id.required' => trans('attribute is required', ['attribute' => 'Phường/Xã']),
-        	'address.required' => trans('attribute is required', ['attribute' => 'Địa chỉ cụ thể']),
-        ]);
-        if ($validator->fails()) {
-        	$errors = $validator->errors();
-            return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
-        }
+	    $validator = $this->validateStore($request);
+	    if ($validator->fails()) {
+		    $errors = $validator->errors();
+		    return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
+	    }
 
 
         $data = $request->only(
@@ -75,6 +62,9 @@ class AddressController extends ApiController
 	        'province_id',
 	        'district_id',
 	        'phoenix_id',
+	        'province_name',
+	        'district_name',
+	        'phoenix_name',
 	        'default');
 
         $model = $this->addressRepo->create(array_merge($data, ['user_id' => $user->id]));
@@ -90,27 +80,11 @@ class AddressController extends ApiController
 			return $this->respond(null, trans('api::messages.validate.address not your own') , ErrorCode::ERR422);
 
 		}
-
-		$validator = $this->validate($request, [
-			'fullname' => 'required',
-			'phone' => 'required',
-			'province_id' => 'required',
-			'district_id' => 'required',
-			'phoenix_id' => 'required',
-			'address' => 'required',
-		], [
-			'fullname.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Họ tên']),
-			'phone.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Số điện thoại']),
-			'province_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Tỉnh/Thành phố']),
-			'district_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Quận/Huyện']),
-			'phoenix_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Phường/Xã']),
-			'address.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ cụ thể']),
-		]);
+		$validator = $this->validateStore($request);
 		if ($validator->fails()) {
 			$errors = $validator->errors();
 			return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
 		}
-
 
 		$data = $request->only(
 			'fullname',
@@ -119,6 +93,9 @@ class AddressController extends ApiController
 			'province_id',
 			'district_id',
 			'phoenix_id',
+			'province_name',
+			'district_name',
+			'phoenix_name',
 			'default');
 
 		$model = $this->addressRepo->update($address, $data);
@@ -140,6 +117,38 @@ class AddressController extends ApiController
 		}
 		$this->addressRepo->delete($address);
 		return $this->respond(null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
+	}
+
+
+
+	public function validateStore(Request $request)
+	{
+		$rules= [
+			'fullname' => 'required',
+			'phone' => 'required',
+			'province_id' => 'required',
+			'district_id' => 'required',
+			'phoenix_id' => 'required',
+			'province_name' => 'required',
+			'district_name' => 'required',
+			'phoenix_name' => 'required',
+			'address' => 'required',
+		];
+
+		$messages = [
+			'fullname.required' => trans('attribute is required', ['attribute' => 'Họ tên']),
+			'phone.required' => trans('attribute is required', ['attribute' => 'Số điện thoại']),
+			'province_id.required' => trans('attribute is required', ['attribute' => 'Tỉnh/Thành phố']),
+			'district_id.required' => trans('attribute is required', ['attribute' => 'Quận/Huyện']),
+			'phoenix_id.required' => trans('attribute is required', ['attribute' => 'Phường/Xã']),
+			'province_name.required' => trans('attribute is required', ['attribute' => 'Tỉnh/Thành phố']),
+			'district_name.required' => trans('attribute is required', ['attribute' => 'Quận/Huyện']),
+			'phoenix_name.required' => trans('attribute is required', ['attribute' => 'Phường/Xã']),
+			'address.required' => trans('attribute is required', ['attribute' => 'Địa chỉ cụ thể']),
+		];
+
+		return $this->validate($request, $rules, $messages);
 
 	}
 }
