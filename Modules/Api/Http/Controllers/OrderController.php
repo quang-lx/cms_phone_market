@@ -75,11 +75,11 @@ class OrderController extends ApiController
 
         $orders = $request->get('orders');
         foreach ($orders as $key => $value) {
-            $messages['orders.' . $key . '.type.required'] = trans('api.messages.attribute is required', ['attribute' => 'Loại đơn hàng']);
-            $messages['orders.' . $key . '.ship_type_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Hình thức vận chuyển']);
-            $messages['orders.' . $key . '.ship_address_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']);
-            $messages['orders.' . $key . '.quantity.required'] = trans('api.messages.attribute is required', ['attribute' => 'Số lượng']);
-            $messages['orders.' . $key . '.product_id.required'] = trans('api.messages.attribute is required', ['attribute' => 'Sản phẩm']);
+            $messages['orders.' . $key . '.type.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Loại đơn hàng']);
+            $messages['orders.' . $key . '.ship_type_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Hình thức vận chuyển']);
+            $messages['orders.' . $key . '.ship_address_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']);
+            $messages['orders.' . $key . '.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
+            $messages['orders.' . $key . '.product_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']);
 
         }
 
