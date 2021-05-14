@@ -165,13 +165,13 @@ class EloquentOrderRepository implements OrderRepository
         $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
         $orderProductData['quantity'] = $requestParams['quantity'];
         $orderProductData['price'] = $product->price;
-        $orderProductData['price_sale'] = $product->price_sale;
+        $orderProductData['price_sale'] = $product->price_sale?? 0;
         $orderProductData['product_id'] = $product->id;
         $orderProductData['note'] = $requestParams['note'];
 
         if ($productAttributeValue) {
             $orderProductData['price'] = $productAttributeValue->price;
-            $orderProductData['price_sale'] = $productAttributeValue->price_sale;
+            $orderProductData['price_sale'] = $productAttributeValue->price_sale?? 0;
 
             $productPrice = $productAttributeValue->price;
             if ($productAttributeValue->price_sale) {
