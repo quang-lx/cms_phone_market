@@ -264,7 +264,15 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Shop\Repositories\OrdersRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentOrdersRepository(new \Modules\Mon\Entities\Orders());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

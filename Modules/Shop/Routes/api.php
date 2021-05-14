@@ -418,7 +418,32 @@ Route::middleware('auth:api')->prefix('/shopshiptypes')->group(function (){
     ]);
 
 });
+Route::middleware('auth:api')->prefix('/orders')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.orders.index',
+        'uses' => 'Orders\OrdersController@index',
+    ]);
+    Route::post('/{orders}/edit', [
+            'as' => 'apishop.orders.update',
+            'uses' => 'Orders\OrdersController@update',
+        ]);
+   Route::get('/{orders}', [
+              'as' => 'apishop.orders.find',
+              'uses' => 'Orders\OrdersController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'apishop.orders.store',
+        'uses' => 'Orders\OrdersController@store',
+    ]);
+
+    Route::delete('/{orders}', [
+        'as' => 'apishop.orders.destroy',
+        'uses' => 'Orders\OrdersController@destroy',
+    ]);
+});
 // append
+
 
 
 

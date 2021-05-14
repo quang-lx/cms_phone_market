@@ -297,7 +297,24 @@ Route::group(['prefix' => '/shopshiptype'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/orders'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.orders.index',
+        'uses' => 'Orders\OrdersController@index',
+        'middleware' => 'permission:shop.orders.index'
+    ]);
+
+    Route::get('{orders}/detail', [
+        'as' => 'shop.orders.detail',
+        'uses' => 'Orders\OrdersController@detail',
+        'middleware' => 'permission:shop.orders.detail'
+    ]);
+
+
+});
 // append
+
 
 
 

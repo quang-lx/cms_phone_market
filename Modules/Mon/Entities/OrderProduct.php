@@ -19,4 +19,8 @@ class OrderProduct extends Model
         'price_sale',
         'note',
     ];
+
+    public function product() {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+     }
 }
