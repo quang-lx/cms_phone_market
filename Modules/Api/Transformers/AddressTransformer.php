@@ -23,6 +23,9 @@ class AddressTransformer extends JsonResource
 	        'province_id'=> $this->province_id,
 	        'district_id'=> $this->district_id,
 	        'phoenix_id'=> $this->phoenix_id,
+	        'province_name'=> $this->province_name,
+	        'district_name'=> $this->district_name,
+	        'phoenix_name'=> $this->phoenix_name,
 
         ];
 
