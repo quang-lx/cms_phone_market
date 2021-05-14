@@ -70,33 +70,33 @@ class EloquentOrderRepository implements OrderRepository
                 $quantity = $order['quantity'];
                 $shipType = $this->shipTypeRepo->findById($request, $order['ship_type_id']);
                 if (!$shipType) {
-                    return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
                 }
 
                 $shipAddress = $this->addressRepo->findById($request, $order['ship_address_id']);
                 if (!$shipAddress) {
-                    return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
                 }
 
                 $shipProvince = $this->getShipProvince($shipAddress->province_id);
                 if (!$shipProvince) {
-                    return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
                 }
 
                 $request->request->add(['province_id' => $shipAddress->province_id, 'district_id' => $shipAddress->phoenix_id]);
 
                 $shipDistrict = $this->getShipDistrict($request, $shipAddress->district_id);
                 if (!$shipDistrict) {
-                    return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
                 }
 
                 $shipPhoenix = $this->getShipPhoenix($request, $shipAddress->phoenix_id);
                 if (!$shipPhoenix) {
-                    return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
                 }
                 $product = Product::find($order['product_id']);
                 if (!$product) {
-                    return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
                 }
 
                 // validate so luong san pham
@@ -104,14 +104,14 @@ class EloquentOrderRepository implements OrderRepository
                 if (isset($order['product_attribute_value_id']) && !empty($order['product_attribute_value_id'])) {
                     $productAttributeValue = ProductAttributeValue::find($order['product_attribute_value_id']);
                     if (!$productAttributeValue) {
-                        return [trans('api.messages.order.data invalid'), ErrorCode::ERR422];
+                        return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
                     }
                     if ($productAttributeValue->amount < $quantity) {
-                        return [trans('api.messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
+                        return [trans('api::messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
                     }
                 } else {
                     if ($product->amount < $quantity) {
-                        return [trans('api.messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
+                        return [trans('api::messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
                     }
                 }
 
@@ -123,7 +123,7 @@ class EloquentOrderRepository implements OrderRepository
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            return [trans('api.messages.order.internal server error'), ErrorCode::ERR500];
+            return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
         }
         return true;
 
