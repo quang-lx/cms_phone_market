@@ -272,6 +272,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'AddressController@index',
             'as' => 'apife.address.index',
         ]);
+	    Route::post('/{address}/delete', [
+		    'uses' => 'AddressController@destroy',
+		    'as' => 'apife.address.destroy',
+	    ]);
     });
 
     Route::prefix('order')->group(function ($router) {

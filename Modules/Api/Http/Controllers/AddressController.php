@@ -133,4 +133,13 @@ class AddressController extends ApiController
 
 	}
 
+	public function destroy(Request $request, Address $address) {
+		$user = Auth::user();
+		if ($address->user_id != $user->id) {
+			return $this->respond(null, trans('api.messages.address not your own'), ErrorCode::ERR422);
+		}
+		$this->addressRepo->delete($address);
+		return $this->respond(null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
+	}
 }

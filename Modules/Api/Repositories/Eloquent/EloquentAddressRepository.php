@@ -27,7 +27,9 @@ class EloquentAddressRepository extends ApiBaseRepository implements AddressRepo
 		$this->syncDefault($model);
 		return $model;
 	}
-
+	public function delete($model) {
+		return $model->delete();
+	}
 
 	public function serverPagingFor(Request $request, User $user) {
 		$query = $this->model->newQuery();

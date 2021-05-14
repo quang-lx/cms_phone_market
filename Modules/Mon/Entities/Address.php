@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
+	use SoftDeletes;
     protected $table = 'user_address';
     public $timestamps = false;
     protected $fillable = [
