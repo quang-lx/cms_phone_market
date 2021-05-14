@@ -13,9 +13,13 @@ class Orders extends Model
     const TYPE_BAO_HANH = 'bao_hanh';
     const TYPE_MUA_HANG = 'mua_hang';
 
+    const STATUS_WAIT = 0;
+    const STATUS_DONE = 1;
+
 
     protected $table = 'orders';
     protected $fillable = [
+        'id',
         'user_id',
         'company_id',
         'shop_id',
@@ -36,9 +40,31 @@ class Orders extends Model
         'ship_phoenix_id',
         'ship_phoenix_name',
         'ship_address',
+        'created_at'
     ];
 
     public function orderProducts() {
-        $this->hasMany(OrderProduct::class, 'order_id', 'id');
+       return $this->belongsTo(OrderProduct::class, 'id','order_id');
+    }
+
+    public function shop() {
+        return $this->belongsTo(Shop::class, 'shop_id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getStatusNameAttribute($value) {
+        $statusName = '';
+        switch ($this->status) {
+            case self::STATUS_WAIT:
+                $statusName = 'Chưa xác nhận';
+                break;
+            case self::STATUS_DONE:
+                $statusName = 'Xác nhận';
+                break;
+        }
+        return $statusName;
     }
 }

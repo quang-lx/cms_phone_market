@@ -45,6 +45,9 @@ import StorageProductList from './../components/storageproduct/index';
 
 import ShopShipTypeList from './../components/shopshiptype/index';
 
+import OrderDetail from './../components/orders/detail';
+import OrderList from './../components/orders/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -345,6 +348,22 @@ export default [
         path: '/shop-admin/shopshiptype',
         name: 'shop.shopshiptype.index',
         component: ShopShipTypeList,
+    },
+
+     //vtimportexcel
+     {
+        path: '/shop-admin/orders',
+        name: 'shop.orders.index',
+        component: OrderList,
+    },
+
+    {
+        path: '/shop-admin/orders/:ordersId/detail',
+        name: 'shop.orders.detail',
+        component: OrderDetail,
+        props: {
+            pageTitle: 'orders.label.detail_title',
+        },
     },
 
 ];
