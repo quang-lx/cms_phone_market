@@ -156,26 +156,28 @@
 
             </div>
             <el-dialog
+                title="Crop ảnh"
                 :visible.sync="cropVisible"
                 :close-on-click-modal="false"
                 :show-close	="false"
                 :destroy-on-close="true"
+                class="crop-dialog"
                 width="50%">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-10">
                         <section class="cropper-area">
                             <div class="img-cropper">
                                 <vue-cropper
                                     v-if="cropFile"
                                     ref="cropper"
-
+                                    :aspect-ratio="aspectRatio"
                                     :src="cropFile"
                                     preview=".preview"
                                 />
                             </div>
                         </section>
                     </div>
-                    <div class="col-2" v-if="false">
+                    <div class="col-2"  >
                         <div class="row">
                             <div class="col-12">
                                 <el-form
@@ -278,7 +280,8 @@
           },
 
         },
-        cropFile: null
+        cropFile: null,
+        aspectRatio: 3/2
       };
     },
     methods: {
@@ -434,7 +437,14 @@
 
 
       },
+      getAspectRatio() {
+        if (this.cropForm.rotationW && this.cropForm.rotationH) {
+          return this.cropForm.rotationW / this.cropForm.rotationH
+        }
+        return 3 / 2
+      },
       changeAspectRatio() {
+        this.aspectRatio = this.getAspectRatio()
         this.$refs.cropper.setAspectRatio(this.aspectRatio)
       },
       cropImage() {
@@ -485,7 +495,7 @@
           Authorization: `Bearer ${userApiToken.content}`,
         };
       },
-      aspectRatio() {
+      aspectRatioT() {
         if (this.cropForm.rotationW && this.cropForm.rotationH) {
           return this.cropForm.rotationW / this.cropForm.rotationH
         }
@@ -569,5 +579,11 @@
 
     .cropped-image img {
         max-width: 100%;
+    }
+    .crop-dialog .el-dialog__header {
+        background: #E6A23C;
+    }
+    .crop-dialog .el-dialog__title {
+        color:#ffffff;
     }
 </style>
