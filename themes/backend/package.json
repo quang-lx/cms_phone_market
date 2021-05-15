@@ -28,6 +28,7 @@
     "sass": "^1.25.0",
     "sass-loader": "8.*",
     "v-clipboard": "^2.2.2",
+    "vue-cropperjs": "^4.2.0",
     "vue-data-tables": "^3.4.5",
     "vue-events": "^3.1.0",
     "vue-google-autocomplete": "^1.1.0",
