@@ -198,7 +198,7 @@
                 </div>
 
                 <span slot="footer" class="dialog-footer">
-                    <el-button size="small" @click="noCropImage">Giữ nguyên</el-button>
+                    <el-button type="danger" size="small" @click="noCropImage">Giữ nguyên</el-button>
                     <el-button type="warning" size="small" @click="cropImage">Crop</el-button>
                     <el-button type="info" size="small" @click="cancelImage">Hủy</el-button>
                 </span>
