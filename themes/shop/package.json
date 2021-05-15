@@ -41,6 +41,7 @@
     "vue2-dropzone": "^3.6.0",
     "vue2-google-maps": "^0.10.7",
     "vuedraggable": "^2.23.2",
+    "vue-cropperjs": "^4.2.0",
     "webpack-shell-plugin": "^0.5.0"
   },
   "devDependencies": {
