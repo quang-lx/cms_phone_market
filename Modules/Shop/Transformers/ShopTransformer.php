@@ -31,6 +31,7 @@ class ShopTransformer extends JsonResource
             'lat' => $this->lat,
             'lng' => $this->lng,
             'place' => $this->place,
+            'products' => $this->products,
 
              'urls' => [
                 'delete_url' => route('api.shop.destroy', $this->id),

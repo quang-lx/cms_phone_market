@@ -48,6 +48,8 @@ import ShopShipTypeList from './../components/shopshiptype/index';
 import OrderDetail from './../components/orders/detail';
 import OrderList from './../components/orders/index';
 
+import DashboardList from './../components/dashboard/index';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -364,6 +366,13 @@ export default [
         props: {
             pageTitle: 'orders.label.detail_title',
         },
+    },
+
+    //dashboard
+    {
+        path: '/shop-admin',
+        name: 'shop.dashboard.index',
+        component: DashboardList,
     },
 
 ];
