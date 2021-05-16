@@ -1,6 +1,18 @@
-  <div class="small">
-    <bar-chart />
-  </div>
+<div>
+    <div class="card-header">{{ $t('dashboard.label.shop-product') }}</div>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="card">
+
+                <div class="card-body">
+                  <div class="small">
+                    <bar-chart :chart-data="datacollection"></bar-chart>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 import { Bar } from "vue-chartjs";
@@ -11,21 +23,13 @@ export default {
     return {
       listShopName: [],
       listCountProduct: [],
+      datacollection: null,
     };
   },
-  mounted() {
-    this.fetchShop();
+  async mounted() {
+    await this.fetchShop();
     this.renderChart(
-      {
-        labels: this.listShopName,
-        datasets: [
-          {
-            label: "Sản phẩm",
-            backgroundColor: "#f87979",
-            data: this.listCountProduct,
-          },
-        ],
-      },
+      this.datacollection, 
       { responsive: true, maintainAspectRatio: false }
     );
   },
@@ -49,6 +53,17 @@ export default {
             });
             this.listCountProduct.push(productCount);
           });
+
+          this.datacollection = {
+              labels: this.listShopName,
+              datasets: [
+                {
+                  label: "Sản phẩm",
+                  backgroundColor: "#f87979",
+                  data: this.listCountProduct,
+                },
+              ],
+            };
         });
     },
   },
