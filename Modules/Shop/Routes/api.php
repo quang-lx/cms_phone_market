@@ -445,25 +445,13 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
 
     Route::get('/', [
-        'as' => 'api.shopcategory.index',
+        'as' => 'apishop.shopcategory.index',
         'uses' => 'ShopCategory\ShopCategoryController@index',
     ]);
-    Route::post('/{shopcategory}/edit', [
-            'as' => 'api.shopcategory.update',
-            'uses' => 'ShopCategory\ShopCategoryController@update',
-        ]);
-   Route::get('/{shopcategory}', [
-              'as' => 'api.shopcategory.find',
-              'uses' => 'ShopCategory\ShopCategoryController@find',
-          ]);
-    Route::post('/', [
-        'as' => 'api.shopcategory.store',
-        'uses' => 'ShopCategory\ShopCategoryController@store',
-    ]);
 
-    Route::delete('/{shopcategory}', [
-        'as' => 'api.shopcategory.destroy',
-        'uses' => 'ShopCategory\ShopCategoryController@destroy',
+    Route::post('/', [
+        'as' => 'apishop.shopcategory.create_or_delete',
+        'uses' => 'ShopCategory\ShopCategoryController@create_or_delete',
     ]);
 });
 // append

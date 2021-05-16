@@ -6,7 +6,7 @@
                     <div class="col-12">
                         <el-breadcrumb separator="/">
                             <el-breadcrumb-item>
-                                <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
                             </el-breadcrumb-item>
                             <el-breadcrumb-item  >{{ $t('shopshiptype.label.shopshiptype') }}
                             </el-breadcrumb-item>

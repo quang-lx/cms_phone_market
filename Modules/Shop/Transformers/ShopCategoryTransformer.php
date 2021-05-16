@@ -13,16 +13,11 @@ class ShopCategoryTransformer extends JsonResource
 
     public function toArray($request)
     {
-        $status_shop_ship_type = $this->ShopShipType()->where('shop_id',Auth::user()->shop_id)->first();
-
+        $status_shop_category = $this->shopCategory()->where('shop_id',Auth::user()->shop_id)->first();
         $data = [
             'id' => $this->id,
             'name' => $this->name,
-            'status_shop_ship_type' => isset($status_shop_ship_type)?$status_shop_ship_type['status']:1,
-
-             'urls' => [
-                'delete_url' => route('api.shopcategory.destroy', $this->id),
-            ],
+            'status_shop_category' => isset($status_shop_category)?1:0,
 
         ];
 

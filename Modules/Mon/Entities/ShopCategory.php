@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopCategory extends Model
 {
-    use  SoftDeletes;
 
     protected $table = 'shop_category';
     protected $fillable = [
@@ -16,4 +15,9 @@ class ShopCategory extends Model
         'category',
         'type'
     ];
+
+    public function pcategory()
+    {
+        return $this->hasMany(Pcategory::class,'category');
+    }
 }

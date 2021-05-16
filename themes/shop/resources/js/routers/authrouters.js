@@ -369,11 +369,11 @@ export default [
         },
     },
 
-        // shopcategory
-        {
-            path: '/shop-admin/shopcategory',
-            name: 'shop.shopcategory.index',
-            component: ShopCategoryList,
-        },
+    // shopcategory
+    {
+        path: '/shop-admin/shopcategory',
+        name: 'shop.shopcategory.index',
+        component: ShopCategoryList,
+    },
 
 ];

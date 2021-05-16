@@ -75,4 +75,14 @@ class ShopCategoryController extends ApiController
             'message' => trans('backend::shopcategory.message.delete success'),
         ]);
     }
+
+    public function create_or_delete(Request $request)
+    {
+        $this->shopcategoryRepository->create_or_delete($request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('backend::shopcategory.message.create success'),
+        ]);
+    }
 }
