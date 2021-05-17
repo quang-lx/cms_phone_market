@@ -6,9 +6,9 @@
                     <div class="col-12">
                         <el-breadcrumb separator="/">
                             <el-breadcrumb-item>
-                                <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
+                                <a href="/admin">{{ $t('mon.breadcrumb.home') }}</a>
                             </el-breadcrumb-item>
-                            <el-breadcrumb-item  >{{ $t('shopshiptype.label.shopshiptype') }}
+                            <el-breadcrumb-item  >{{ $t('shopcategory.label.shopcategory') }}
                             </el-breadcrumb-item>
 
                         </el-breadcrumb>
@@ -26,7 +26,7 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move;">
                                 <h3 class="card-title">
-                                    {{ $t('shopshiptype.label.shopshiptype') }}
+                                    {{ $t('shopcategory.label.shopcategory') }}
                                 </h3>
                             </div><!-- /.card-header -->
                             <div class="card-body">
@@ -39,15 +39,15 @@
                                             ref="dataTable"
                                             v-loading.body="tableIsLoading"
                                             @sort-change="handleSortChange">
-                                        <el-table-column prop="id" :label="$t('shopshiptype.label.id')" width="75" sortable="custom">
+                                        <el-table-column prop="id" :label="$t('shopcategory.label.id')" width="75" sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="name"  :label="$t('shopshiptype.label.name')" >
+                                        <el-table-column prop="name"  :label="$t('shopcategory.label.name')" >
                                         </el-table-column>
 
-                                        <el-table-column prop="actions" width="130" :label="$t('shopshiptype.label.status')" v-if="this.shop_id>0">
+                                        <el-table-column prop="actions" width="130" :label="$t('shopcategory.label.status')" v-if="this.shop_id>0">
                                             <template slot-scope="scope">
-                                                <el-switch v-model="scope.row.status_shop_ship_type" :inactive-value="1" :active-value="2"  @change="changStatus(scope.row.id)"></el-switch>
+                                                <el-switch v-model="scope.row.status_shop_category" :inactive-value="0" :active-value="1"  @change="changStatus(scope.row.id)"></el-switch>
                                             </template>
                                         </el-table-column>
                                     </el-table>
@@ -102,7 +102,7 @@
                     search: this.searchQuery,
                 };
 
-                axios.get(route('shopapi.shopshiptype.index', _.merge(properties, customProperties)))
+                axios.get(route('apishop.shopcategory.index', _.merge(properties, customProperties)))
                     .then((response) => {
                         this.tableIsLoading = false;
                         this.tableIsLoading = false;
@@ -114,7 +114,7 @@
                     });
             },
             changStatus(id){
-            axios.post(route('shopapi.shopshiptype.create_or_update'),{id: id})
+            axios.post(route('apishop.shopcategory.create_or_delete'),{id: id})
             .then((response) => {
                     
             });
