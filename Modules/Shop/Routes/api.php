@@ -442,7 +442,20 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'uses' => 'Orders\OrdersController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.shopcategory.index',
+        'uses' => 'ShopCategory\ShopCategoryController@index',
+    ]);
+
+    Route::post('/', [
+        'as' => 'apishop.shopcategory.create_or_delete',
+        'uses' => 'ShopCategory\ShopCategoryController@create_or_delete',
+    ]);
+});
 // append
+
 
 
 

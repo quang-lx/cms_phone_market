@@ -48,6 +48,9 @@ import ShopShipTypeList from './../components/shopshiptype/index';
 import OrderDetail from './../components/orders/detail';
 import OrderList from './../components/orders/index';
 
+import ShopCategoryList from './../components/shopcategory/index';
+
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -364,6 +367,13 @@ export default [
         props: {
             pageTitle: 'orders.label.detail_title',
         },
+    },
+
+    // shopcategory
+    {
+        path: '/shop-admin/shopcategory',
+        name: 'shop.shopcategory.index',
+        component: ShopCategoryList,
     },
 
 ];

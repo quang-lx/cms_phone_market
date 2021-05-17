@@ -41,4 +41,9 @@ class Pcategory extends Model
     {
         return $this->belongsToMany(Pcategory::class, 'brand_pcategory', 'pcategory_id','brand_id');
     }
+
+    public function shopCategory()
+    {
+        return $this->hasMany(ShopCategory::class,'category');
+    }
 }
