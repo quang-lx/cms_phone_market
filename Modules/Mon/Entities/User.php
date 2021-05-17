@@ -215,4 +215,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     {
         return $this->filesByZone('thumbnail')->first();
     }
+    public function addresses() {
+        return $this->hasMany(Address::class, 'user_id', 'id');
+    }
+    public function defaultAddress() {
+        return $this->addresses()->where('default', 1)->first();
+    }
 }
