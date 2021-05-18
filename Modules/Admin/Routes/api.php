@@ -629,7 +629,32 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'uses' => 'Orders\OrdersController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/paymentmethods')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.paymentmethod.index',
+        'uses' => 'PaymentMethod\PaymentMethodController@index',
+    ]);
+    Route::post('/{paymentmethod}/edit', [
+            'as' => 'api.paymentmethod.update',
+            'uses' => 'PaymentMethod\PaymentMethodController@update',
+        ]);
+   Route::get('/{paymentmethod}', [
+              'as' => 'api.paymentmethod.find',
+              'uses' => 'PaymentMethod\PaymentMethodController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.paymentmethod.store',
+        'uses' => 'PaymentMethod\PaymentMethodController@store',
+    ]);
+
+    Route::delete('/{paymentmethod}', [
+        'as' => 'api.paymentmethod.destroy',
+        'uses' => 'PaymentMethod\PaymentMethodController@destroy',
+    ]);
+});
 // append
+
 
 
 

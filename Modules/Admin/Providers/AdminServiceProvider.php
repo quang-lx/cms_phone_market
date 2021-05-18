@@ -281,7 +281,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\PaymentMethodRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentPaymentMethodRepository(new \Modules\Mon\Entities\PaymentMethod());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 
