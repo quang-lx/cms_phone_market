@@ -79,7 +79,7 @@ class EloquentOrderRepository implements OrderRepository {
 					return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
 				}
 
-				$request->request->add([ 'province_id' => $shipAddress->province_id, 'district_id' => $shipAddress->phoenix_id ]);
+				$request->request->add([ 'province_id' => $shipAddress->province_id, 'district_id' => $shipAddress->district_id ]);
 
 				$shipDistrict = $this->getShipDistrict($request, $shipAddress->district_id);
 				if (!$shipDistrict) {
