@@ -14,7 +14,7 @@ class AddOrderCol extends Migration
     public function up()
     {
 	    Schema::table('orders', function (Blueprint $table) {
-		   $table->boolean('type_other')->default(false)->nullable();
+//		   $table->boolean('type_other')->default(false)->nullable();
 	    });
 	    Schema::table('order_product', function (Blueprint $table) {
 
