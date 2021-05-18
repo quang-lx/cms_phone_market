@@ -17,10 +17,10 @@ class AddOrderCol extends Migration
 		   $table->boolean('type_other')->default(false)->nullable();
 	    });
 	    Schema::table('order_product', function (Blueprint $table) {
-		   
-		    $table->double('price', 12, 2)->default(0)->nullable();
-		    $table->double('price_sale', 12, 2)->default(0)->nullable();
-		    $table->text('note')->nullable();
+
+//		    $table->double('price', 12, 2)->default(0)->nullable();
+//		    $table->double('price_sale', 12, 2)->default(0)->nullable();
+		    $table->text('note')->nullable()->change();
 		    $table->unsignedBigInteger('product_id')->nullable()->change();
 		    $table->string('product_title', 1024)->nullable();
 	    });
