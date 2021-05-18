@@ -26,5 +26,7 @@ class CacheKey
         const SHIP_TYPE_ALL = 'SHIP_TYPE_ALL';
         const SHIP_TYPE_SHOP = 'SHIP_TYPE_SHOP_%s';
 
+	const PAYMENT_METHOD_ALL = 'PAYMENT_METHOD_ALL';
+	const PAYMENT_METHOD_SHOP = 'PAYMENT_METHOD_SHOP_%s';
 
 }

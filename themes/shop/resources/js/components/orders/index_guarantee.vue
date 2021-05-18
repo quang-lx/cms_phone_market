@@ -11,7 +11,7 @@
                     <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
                   </el-breadcrumb-item>
                   <el-breadcrumb-item
-                    >{{ $t("orders.label.orders") }}
+                    >{{ $t("orders.label.guarantee") }}
                   </el-breadcrumb-item>
                 </el-breadcrumb>
               </div>
@@ -207,8 +207,7 @@ export default {
         status : this.filter.status,
         shop : this.filter.shop,
         searchDate : this.filter.searchDate,
-        order_type : 'sua_chua',
-
+        order_type : 'bao_hanh',
       };
 
       axios

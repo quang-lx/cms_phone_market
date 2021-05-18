@@ -6,6 +6,7 @@ namespace Modules\Api\Http\Controllers;
 use Illuminate\Http\Request;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\AreaRepository;
+use Modules\Api\Repositories\PaymentMethodRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Api\Transformers\DistrictTransformer;
 use Modules\Api\Transformers\PhoenixesTransformer;
@@ -23,12 +24,16 @@ class AppController extends ApiController
 	/** @var ShipTypeRepository */
 	public $shipTypeRepo;
 
-    public function __construct(Authentication $auth, AreaRepository $areaRepository, ShipTypeRepository $shipTypeRepo)
+	/** @var PaymentMethodRepository */
+	public $paymentMethodRepo;
+
+    public function __construct(Authentication $auth, AreaRepository $areaRepository, ShipTypeRepository $shipTypeRepo, PaymentMethodRepository $paymentMethodRepo)
     {
         parent::__construct($auth);
 
         $this->areaRepository = $areaRepository;
         $this->shipTypeRepo = $shipTypeRepo;
+        $this->paymentMethodRepo = $paymentMethodRepo;
     }
 
     public function provinces()
@@ -65,4 +70,9 @@ class AppController extends ApiController
     	$data = $this->shipTypeRepo->getAll($request);
     	 return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
+
+	public function listPaymentMethod(Request $request) {
+		$data = $this->paymentMethodRepo->getAll($request);
+		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 }

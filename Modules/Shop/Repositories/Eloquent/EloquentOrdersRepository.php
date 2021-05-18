@@ -41,6 +41,14 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
         }
 
+        if ($request->get('order_type') !== null) {
+            $order_type = $request->get('order_type');
+            $query->where(function ($c) use ($order_type) {
+                $c->where('order_type', '=', $order_type);
+            });
+
+        }
+
         if ($request->get('status') !== null) {
             $status = $request->get('status');
             $query->where(function ($c) use ($status) {
