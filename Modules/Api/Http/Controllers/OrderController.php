@@ -69,7 +69,6 @@ class OrderController extends ApiController
             'orders.*.ship_type_id' => 'required',
             'orders.*.ship_address_id' => 'required',
             'orders.*.quantity' => 'required',
-            'orders.*.product_id' => 'required',
 
         ];
 
