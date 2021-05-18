@@ -2,11 +2,11 @@
 
 namespace Modules\Admin\Repositories\Eloquent;
 
-use Modules\Admin\Repositories\paymentMethodRepository;
+use Modules\Admin\Repositories\PaymentMethodRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
 
-class EloquentPaymentMethodRepository extends BaseRepository implements paymentMethodRepository
+class EloquentPaymentMethodRepository extends BaseRepository implements PaymentMethodRepository
 {
     public function serverPagingFor(Request $request, $relations = null)
     {
