@@ -99,33 +99,35 @@ class EloquentOrderRepository implements OrderRepository {
 					if (!$orderResult) {
 						throw new InternalErrorException('Tạo đơn hàng không thành công');
 					}
-				}
-
-				$product = Product::find($order['product_id']);
-				if (!$product) {
-					return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
-				}
-
-				// validate so luong san pham
-				$productAttributeValue = null;
-				if (isset($order['product_attribute_value_id']) && !empty($order['product_attribute_value_id'])) {
-					$productAttributeValue = ProductAttributeValue::find($order['product_attribute_value_id']);
-					if (!$productAttributeValue) {
+				} else {
+					$product = Product::find($order['product_id']);
+					if (!$product) {
 						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
 					}
-					if ($productAttributeValue->amount < $quantity) {
-						return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
+
+					// validate so luong san pham
+					$productAttributeValue = null;
+					if (isset($order['product_attribute_value_id']) && !empty($order['product_attribute_value_id'])) {
+						$productAttributeValue = ProductAttributeValue::find($order['product_attribute_value_id']);
+						if (!$productAttributeValue) {
+							return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+						}
+						if ($productAttributeValue->amount < $quantity) {
+							return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
+						}
+					} else {
+						if ($product->amount < $quantity) {
+							return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
+						}
 					}
-				} else {
-					if ($product->amount < $quantity) {
-						return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
+
+					$orderResult = $this->placeOrder($order, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix, $product, $productAttributeValue);
+					if (!$orderResult) {
+						throw new InternalErrorException('Tạo đơn hàng không thành công');
 					}
 				}
 
-				$orderResult = $this->placeOrder($order, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix, $product, $productAttributeValue);
-				if (!$orderResult) {
-					throw new InternalErrorException('Tạo đơn hàng không thành công');
-				}
+
 			}
 			DB::commit();
 
