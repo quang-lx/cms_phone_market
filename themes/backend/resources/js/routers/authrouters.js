@@ -70,6 +70,9 @@ import RankForm from './../components/rank/form';
 import ShipTypeList from './../components/shiptype/index';
 import ShipTypeForm from './../components/shiptype/form';
 
+import PaymentMethodList from './../components/paymentmethod/index';
+import PaymentMethodForm from './../components/paymentmethod/form';
+
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -592,6 +595,29 @@ export default [
         component: ShipTypeForm,
         props: {
             pageTitle: 'shiptype.label.update_shiptype',
+        },
+    },
+
+     // payment_method
+     {
+        path: '/admin/paymentmethod',
+        name: 'admin.paymentmethod.index',
+        component: PaymentMethodList,
+    },
+    {
+        path: '/admin/paymentmethod/create',
+        name: 'admin.paymentmethod.create',
+        component: PaymentMethodForm,
+        props: {
+            pageTitle: 'paymentmethod.label.create_paymentmethod',
+        },
+    },
+    {
+        path: '/admin/paymentmethod/:paymentmethodId/edit',
+        name: 'admin.paymentmethod.edit',
+        component: PaymentMethodForm,
+        props: {
+            pageTitle: 'paymentmethod.label.update_paymentmethod',
         },
     },
  

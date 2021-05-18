@@ -394,6 +394,20 @@ export default {
                 "delete success": "Xóa tin tức thành công."
             }
         },
+        "paymentmethod": {
+            "label": {
+                "paymentmethod": "Hình thức thanh toán",
+                "id": "ID",
+                "name": "Tên",
+                "create_paymentmethod": "Tạo hình thức thanh toán",
+                "update_paymentmethod": "Cập nhật  hình thức thanh toán"
+            },
+            "message": {
+                "create success": "Tạo hình thức thanh toán thành công.",
+                "update success": "Cập nhật hình thức thanh toán thành công.",
+                "delete success": "Xóa hình thức thanh toán thành công."
+            }
+        },
         "pcategory": {
             "label": {
                 "pcategory": "Danh mục sản phẩm",
@@ -520,7 +534,7 @@ export default {
                 "sku": "SKU",
                 "amount": "Số lượng",
                 "price": "Giá bán",
-                "sale_price": "Giá khuyến mại",
+                "sale_price": "Giá khuyến mại(%)",
                 "category_id": "Danh mục",
                 "problem_id": "Vấn đề sửa chữa",
                 "company_id": "Cửa hàng",
