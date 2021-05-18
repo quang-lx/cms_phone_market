@@ -63,8 +63,6 @@ class OrderController extends ApiController
 
     public function validateStore(Request $request)
     {
-        $orderType = $request->get('type');
-        $rules = [];
         $messages = [];
         $rules = [
             'orders.*.order_type' => ['required', Rule::in(Orders::TYPE_SUA_CHUA, Orders::TYPE_BAO_HANH, Orders::TYPE_MUA_HANG)],
@@ -77,18 +75,27 @@ class OrderController extends ApiController
 
         $orders = $request->get('orders');
         foreach ($orders as $key => $value) {
-            $messages['orders.' . $key . '.order_type.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Loại đơn hàng']);
+	        $orderType = $value['order_type']?? null;
+	        $typeOther = $value['type_other']?? null;
+	        if ($orderType == Orders::TYPE_SUA_CHUA && $typeOther) {
+		        $rules['orders.'.$key.'product_title'] = 'required';
+		        $rules['orders.'.$key.'note'] = 'required';
+	        } else {
+		        $rules['orders.'.$key.'product_id'] = 'required';
+	        }
+
+		        $messages['orders.' . $key . '.order_type.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Loại đơn hàng']);
             $messages['orders.' . $key . '.order_type.in'] = trans('api::messages.validate.value not allow', ['attribute' => 'Loại đơn hàng']);
             $messages['orders.' . $key . '.ship_type_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Hình thức vận chuyển']);
             $messages['orders.' . $key . '.ship_address_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']);
             $messages['orders.' . $key . '.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
             $messages['orders.' . $key . '.product_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']);
+            $messages['orders.' . $key . '.product_title.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Tên dòng máy']);
+            $messages['orders.' . $key . '.note.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Mô tả chi tiết lỗi']);
 
         }
 
-        if ($orderType == Orders::TYPE_SUA_CHUA) {
 
-        }
         return $this->validate($request, $rules, $messages);
 
     }

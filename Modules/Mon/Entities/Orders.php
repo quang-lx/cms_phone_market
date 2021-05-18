@@ -40,7 +40,8 @@ class Orders extends Model
         'ship_phoenix_id',
         'ship_phoenix_name',
         'ship_address',
-        'created_at'
+        'created_at',
+	    'type_other'
     ];
 
     public function orderProducts() {
