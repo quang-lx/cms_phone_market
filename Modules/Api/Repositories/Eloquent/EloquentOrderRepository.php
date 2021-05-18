@@ -139,7 +139,7 @@ class EloquentOrderRepository implements OrderRepository {
 	}
 
 	public function syncMedia($requestParams, $orderProduct) {
-		$files = $requestParams['files'] ?? null
+		$files = $requestParams['files'] ?? null;
 		    if ($files && is_array($files)) {
 			    foreach ($files as $file) {
 				    $zone = 'image';
