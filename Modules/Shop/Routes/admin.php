@@ -305,11 +305,19 @@ Route::group(['prefix' => '/orders'], function ( ) {
         'middleware' => 'permission:shop.orders.index'
     ]);
 
+    Route::get('/guarantee', [
+        'as' => 'shop.ordersguarantee.index',
+        'uses' => 'Orders\OrdersController@index',
+        'middleware' => 'permission:shop.orders.index'
+    ]);
+
     Route::get('{orders}/detail', [
         'as' => 'shop.orders.detail',
         'uses' => 'Orders\OrdersController@detail',
         'middleware' => 'permission:shop.orders.detail'
     ]);
+
+    
 
 
 });
