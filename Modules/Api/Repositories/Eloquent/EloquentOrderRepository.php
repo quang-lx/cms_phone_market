@@ -65,6 +65,7 @@ class EloquentOrderRepository implements OrderRepository {
 			foreach ($orders as $order) {
 				$orderType = $order['order_type'];
 				$quantity = $order['quantity'];
+				// don hang sua chua
 				if ($orderType == Orders::TYPE_BAO_HANH) {
 					$product = Product::find($order['product_id']);
 					if (!$product) {
@@ -168,7 +169,7 @@ class EloquentOrderRepository implements OrderRepository {
     }
 	public function placeOrderBaoHanh($requestParams, User $user, Product $product) {
 		list($orderData, $orderProductData) = $this->parseOrderDataBaoHanh($requestParams, $user, $product);
-		$orderProductData['product_title'] = $requestParams['product_title'];
+		$orderProductData['product_title'] = $product->name;
 		$orderData['company_id'] = $product->company_id;
 		$orderData['shop_id'] = $product->shop_id;
 
