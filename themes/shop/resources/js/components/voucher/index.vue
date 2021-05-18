@@ -83,7 +83,7 @@
                                         </el-table-column>
 
                                         <el-table-column prop="discount_amount" :label="$t('voucher.label.discount_amount')"
-                                            sortable="custom" width="80">
+                                            sortable="custom"  >
                                         </el-table-column>
 
                                         <el-table-column prop="actived_at" :label="$t('voucher.label.status')" sortable="custom"  >
@@ -95,7 +95,7 @@
                                         <el-table-column prop="total" :label="$t('voucher.label.total')" sortable="custom" width="130" >
                                         </el-table-column>
 
-                                        <el-table-column prop="total_used" :label="$t('voucher.label.total_used')" sortable="custom" width="100">
+                                        <el-table-column prop="total_used" :label="$t('voucher.label.total_used')" sortable="custom" width="120">
                                         </el-table-column>
 
                                         <el-table-column prop="created_by" :label="$t('voucher.label.updated_by')" sortable="custom" width="140">

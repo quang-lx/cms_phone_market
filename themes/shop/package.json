@@ -17,7 +17,7 @@
     "codemirror": "^5.42.2",
     "datatables.net": "^1.10.19",
     "datatables.net-bs": "^1.10.19",
-    "element-ui": "^2.13.0",
+    "element-ui": "^2.15.1",
     "font-awesome": "^4.7.0",
     "form-backend-validation": "^2.3.9",
     "less": "^3.11.1",
@@ -28,6 +28,7 @@
     "sass": "^1.25.0",
     "sass-loader": "8.*",
     "v-clipboard": "^2.2.2",
+    "vue-cropperjs": "^4.2.0",
     "vue-data-tables": "^3.4.5",
     "vue-events": "^3.1.0",
     "vue-google-autocomplete": "^1.1.0",
@@ -41,7 +42,6 @@
     "vue2-dropzone": "^3.6.0",
     "vue2-google-maps": "^0.10.7",
     "vuedraggable": "^2.23.2",
-    "vue-cropperjs": "^4.2.0",
     "webpack-shell-plugin": "^0.5.0"
   },
   "devDependencies": {
