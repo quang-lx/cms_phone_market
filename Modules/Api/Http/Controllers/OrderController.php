@@ -78,10 +78,10 @@ class OrderController extends ApiController
 	        $orderType = $value['order_type']?? null;
 	        $typeOther = $value['type_other']?? null;
 	        if ($orderType == Orders::TYPE_SUA_CHUA && $typeOther) {
-		        $rules['orders.'.$key.'product_title'] = 'required';
-		        $rules['orders.'.$key.'note'] = 'required';
+		        $rules['orders.'.$key.'.product_title'] = 'required';
+		        $rules['orders.'.$key.'.note'] = 'required';
 	        } else {
-		        $rules['orders.'.$key.'product_id'] = 'required';
+		        $rules['orders.'.$key.'.product_id'] = 'required';
 	        }
 
 		        $messages['orders.' . $key . '.order_type.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Loại đơn hàng']);
