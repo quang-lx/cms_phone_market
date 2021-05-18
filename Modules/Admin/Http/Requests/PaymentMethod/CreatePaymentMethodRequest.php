@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Http\Requests\paymentMethod;
+namespace Modules\Admin\Http\Requests\PaymentMethod;
 
 use Illuminate\Foundation\Http\FormRequest;
 
