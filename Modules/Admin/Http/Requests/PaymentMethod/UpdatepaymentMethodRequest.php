@@ -4,7 +4,7 @@ namespace Modules\Admin\Http\Requests\PaymentMethod;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatepaymentMethodRequest extends FormRequest
+class UpdatePaymentMethodRequest extends FormRequest
 {
     public function rules()
     {
