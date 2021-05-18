@@ -63,69 +63,84 @@ class EloquentOrderRepository implements OrderRepository {
 		DB::beginTransaction();
 		try {
 			foreach ($orders as $order) {
-				$quantity = $order['quantity'];
-				$shipType = $this->shipTypeRepo->findById($request, $order['ship_type_id']);
-				if (!$shipType) {
-					return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
-				}
-
-				$shipAddress = $this->addressRepo->findById($request, $order['ship_address_id']);
-				if (!$shipAddress) {
-					return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
-				}
-
-				$shipProvince = $this->getShipProvince($shipAddress->province_id);
-				if (!$shipProvince) {
-					return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
-				}
-
-				$request->request->add([ 'province_id' => $shipAddress->province_id, 'district_id' => $shipAddress->district_id ]);
-
-				$shipDistrict = $this->getShipDistrict($request, $shipAddress->district_id);
-				if (!$shipDistrict) {
-					return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
-				}
-
-				$shipPhoenix = $this->getShipPhoenix($request, $shipAddress->phoenix_id);
-				if (!$shipPhoenix) {
-					return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
-				}
-
-				// check neu sua chua khac
-				$typeOther = $order['type_other']?? 0;
 				$orderType = $order['order_type'];
-				if ($typeOther && $orderType == Orders::TYPE_SUA_CHUA) {
-					$orderResult = $this->placeOrderSuaChuaKhac($order, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix);
-					if (!$orderResult) {
-						throw new InternalErrorException('Tạo đơn hàng không thành công');
-					}
-				} else {
+				$quantity = $order['quantity'];
+				if ($orderType == Orders::TYPE_BAO_HANH) {
 					$product = Product::find($order['product_id']);
 					if (!$product) {
 						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
 					}
-
-					// validate so luong san pham
-					$productAttributeValue = null;
-					if (isset($order['product_attribute_value_id']) && !empty($order['product_attribute_value_id'])) {
-						$productAttributeValue = ProductAttributeValue::find($order['product_attribute_value_id']);
-						if (!$productAttributeValue) {
-							return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
-						}
-						if ($productAttributeValue->amount < $quantity) {
-							return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
-						}
-					} else {
-						if ($product->amount < $quantity) {
-							return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
-						}
-					}
-
-					$orderResult = $this->placeOrder($order, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix, $product, $productAttributeValue);
+					$orderResult = $this->placeOrderBaoHanh($order, $user, $product);
 					if (!$orderResult) {
 						throw new InternalErrorException('Tạo đơn hàng không thành công');
 					}
 				}
+				else {
+					$shipType = $this->shipTypeRepo->findById($request, $order['ship_type_id']);
+					if (!$shipType) {
+						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+					}
+
+					$shipAddress = $this->addressRepo->findById($request, $order['ship_address_id']);
+					if (!$shipAddress) {
+						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+					}
+
+					$shipProvince = $this->getShipProvince($shipAddress->province_id);
+					if (!$shipProvince) {
+						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+					}
+
+					$request->request->add([ 'province_id' => $shipAddress->province_id, 'district_id' => $shipAddress->district_id ]);
+
+					$shipDistrict = $this->getShipDistrict($request, $shipAddress->district_id);
+					if (!$shipDistrict) {
+						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+					}
+
+					$shipPhoenix = $this->getShipPhoenix($request, $shipAddress->phoenix_id);
+					if (!$shipPhoenix) {
+						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+					}
+
+					// check neu sua chua khac
+					$typeOther = $order['type_other']?? 0;
+
+					if ($typeOther && $orderType == Orders::TYPE_SUA_CHUA) {
+						$orderResult = $this->placeOrderSuaChuaKhac($order, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix);
+						if (!$orderResult) {
+							throw new InternalErrorException('Tạo đơn hàng không thành công');
+						}
+					} else {
+						$product = Product::find($order['product_id']);
+						if (!$product) {
+							return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+						}
+
+
+						// validate so luong san pham
+						$productAttributeValue = null;
+						if (isset($order['product_attribute_value_id']) && !empty($order['product_attribute_value_id'])) {
+							$productAttributeValue = ProductAttributeValue::find($order['product_attribute_value_id']);
+							if (!$productAttributeValue) {
+								return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
+							}
+							if ($productAttributeValue->amount < $quantity) {
+								return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
+							}
+						} else {
+							if ($product->amount < $quantity) {
+								return [ trans('api::messages.order.product out of stock', [ 'name' => $product->name ]), ErrorCode::ERR422 ];
+							}
+						}
+
+						$orderResult = $this->placeOrder($order, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix, $product, $productAttributeValue);
+						if (!$orderResult) {
+							throw new InternalErrorException('Tạo đơn hàng không thành công');
+						}
+					}
+				}
+
 
 
 			}
@@ -151,7 +166,24 @@ class EloquentOrderRepository implements OrderRepository {
 			    }
 		    }
     }
+	public function placeOrderBaoHanh($requestParams, User $user, Product $product) {
+		list($orderData, $orderProductData) = $this->parseOrderDataBaoHanh($requestParams, $user, $product);
+		$orderProductData['product_title'] = $requestParams['product_title'];
+		$orderData['company_id'] = $product->company_id;
+		$orderData['shop_id'] = $product->shop_id;
 
+		$order = $this->model->create($orderData);
+		if ($order) {
+			$orderProductData['order_id'] = $order->id;
+			$orderProduct = OrderProduct::create($orderProductData);
+			if (!$orderProduct) {
+				return false;
+			}
+			$this->syncMedia($requestParams, $orderProduct);
+		}
+
+		return true;
+	}
 	public function placeOrderSuaChuaKhac($requestParams, User $user, ShipType $shipType, Address $shipAddress, Province $province, District $district, Phoenix $phoenix) {
 		list($orderData, $orderProductData) = $this->parseOrderData($requestParams, $user, $shipType, $shipAddress, $province, $district, $phoenix);
 		$orderProductData['product_title'] = $requestParams['product_title'];
@@ -172,6 +204,8 @@ class EloquentOrderRepository implements OrderRepository {
 
 		list($orderData, $orderProductData) = $this->parseOrderData($requestParams, $user, $shipType, $shipAddress, $province, $district, $phoenix);
 		$orderProductData['product_title'] = $product->name;
+		$orderData['company_id'] = $product->company_id;
+		$orderData['shop_id'] = $product->shop_id;
 		$productPrice = $product->price;
 		if ($product->price_sale) {
 			$productPrice = $productPrice * (100 - $productPrice->price_sale) / 100;
@@ -213,8 +247,7 @@ class EloquentOrderRepository implements OrderRepository {
 		$orderData = [];
 		$orderProductData = [];
 		$orderData['user_id'] = $user->id;
-		$orderData['company_id'] = $user->company_id;
-		$orderData['shop_id'] = $user->shop_id;
+
 		$orderData['ship_type_id'] = $shipType->id;
 
 		// ship
@@ -244,5 +277,24 @@ class EloquentOrderRepository implements OrderRepository {
 		return [ $orderData, $orderProductData ];
 	}
 
+	public function parseOrderDataBaoHanh($requestParams, User $user, Product $product) {
+		$orderData = [];
+		$orderProductData = [];
+		$orderData['user_id'] = $user->id;
 
+		// ship
+
+
+		$orderData['status'] = 0;
+		$orderData['payment_status'] = 0;
+		$orderData['order_type'] = $requestParams['order_type'];
+		$orderData['ship_fee'] = 0;
+		$orderData['discount'] = 0;
+
+		$orderProductData['quantity'] = $requestParams['quantity'];
+		$orderProductData['note'] = $requestParams['note'];
+
+
+		return [ $orderData, $orderProductData ];
+	}
 }
