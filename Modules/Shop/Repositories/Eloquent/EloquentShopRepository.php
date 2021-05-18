@@ -62,6 +62,39 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
         return $query->paginate($request->get('per_page', 10));
     }
 
+    public function getListShop(Request $request, $relations = null)
+    {
+        $query = $this->newQueryBuilder();
+        if ($relations) {
+            $query = $query->with($relations);
+        }
+
+        $query->where('company_id', Auth::user()->company_id);
+       
+
+        if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
+            $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
+
+            $query->orderBy($request->get('order_by'), $order);
+        } else {
+            $query->orderBy('id', 'asc');
+        }
+
+        $listShop = $query->get();
+        $listShopName = [];
+        $listCountProduct = [];
+        foreach ($listShop as $shop){
+            $listShopName[] = $shop->name;
+            $productCount = 0;
+            foreach ($shop->products as $product){
+                $productCount += (int) $product->amount;
+            }
+            $listCountProduct[] = $productCount;
+        }
+
+        return array('listShopName' => $listShopName, 'listCountProduct' => $listCountProduct);
+    }
+
     public function create($data)
     {
         $model = $this->model->create($data);

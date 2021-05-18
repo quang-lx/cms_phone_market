@@ -454,6 +454,15 @@ Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
         'uses' => 'ShopCategory\ShopCategoryController@create_or_delete',
     ]);
 });
+
+//dashboard
+Route::middleware('auth:api')->prefix('/dashboard')->group(function (){
+
+    Route::get('/listShop', [
+        'as' => 'apishop.dashboard.listShop',
+        'uses' => 'Dashboard\DashboardController@listShop',
+    ]);
+});
 // append
 
 
