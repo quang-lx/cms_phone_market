@@ -51,6 +51,6 @@ return [
     'voucher management' => 'Quản lý khuyến mại',
     'ranking' => 'Xếp hạng',
     'ship type' => 'Hình thức vận chuyển',
-    'payment EloquentPaymentMethodRepositorymethod' => 'Phương thức thanh toán',
+    'payment method' => 'Phương thức thanh toán',
 
 ];
