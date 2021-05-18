@@ -2,6 +2,7 @@
 return [
     'label' => [
         'orders' => 'Quản lý đơn hàng sửa chữa',
+        'guarantee' => 'Quản lý đơn hàng bảo hành',
         'id' => 'Mã giao dịch',
         'user_name' => 'User',
         'product_name' => 'Sản phẩm',

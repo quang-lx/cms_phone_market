@@ -48,6 +48,8 @@ import ShopShipTypeList from './../components/shopshiptype/index';
 import OrderDetail from './../components/orders/detail';
 import OrderList from './../components/orders/index';
 
+import OrderGuaranteeList from './../components/orders/index_guarantee';
+
 import ShopCategoryList from './../components/shopcategory/index';
 
 
@@ -353,7 +355,7 @@ export default [
         component: ShopShipTypeList,
     },
 
-     //vtimportexcel
+     //order
      {
         path: '/shop-admin/orders',
         name: 'shop.orders.index',
@@ -367,6 +369,12 @@ export default [
         props: {
             pageTitle: 'orders.label.detail_title',
         },
+    },
+
+    {
+        path: '/shop-admin/orders/guarantee',
+        name: 'shop.ordersguarantee.index',
+        component: OrderGuaranteeList,
     },
 
     // shopcategory
