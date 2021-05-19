@@ -73,6 +73,8 @@ import ShipTypeForm from './../components/shiptype/form';
 import PaymentMethodList from './../components/paymentmethod/index';
 import PaymentMethodForm from './../components/paymentmethod/form';
 
+import FbNotificationList from './../components/fbnotification/index';
+import FbNotificationForm from './../components/fbnotification/form';
 
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
@@ -618,6 +620,29 @@ export default [
         component: PaymentMethodForm,
         props: {
             pageTitle: 'paymentmethod.label.update_paymentmethod',
+        },
+    },
+
+    // fbnotification
+    {
+        path: '/admin/fbnotification',
+        name: 'admin.fbnotification.index',
+        component: FbNotificationList,
+    },
+    {
+        path: '/admin/fbnotification/create',
+        name: 'admin.fbnotification.create',
+        component: FbNotificationForm,
+        props: {
+            pageTitle: 'fbnotification.label.create_title',
+        },
+    },
+    {
+        path: '/admin/fbnotification/:fbnotificationId/edit',
+        name: 'admin.fbnotification.edit',
+        component: FbNotificationForm,
+        props: {
+            pageTitle: 'fbnotification.label.update_title',
         },
     },
  

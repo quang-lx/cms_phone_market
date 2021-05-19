@@ -653,7 +653,32 @@ Route::middleware('auth:api')->prefix('/paymentmethods')->group(function (){
         'uses' => 'PaymentMethod\PaymentMethodController@destroy',
     ]);
 });
+Route::middleware('auth:api')->prefix('/fbnotifications')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.fbnotification.index',
+        'uses' => 'FbNotification\FbNotificationController@index',
+    ]);
+    Route::post('/{fbnotification}/edit', [
+            'as' => 'api.fbnotification.update',
+            'uses' => 'FbNotification\FbNotificationController@update',
+        ]);
+   Route::get('/{fbnotification}', [
+              'as' => 'api.fbnotification.find',
+              'uses' => 'FbNotification\FbNotificationController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.fbnotification.store',
+        'uses' => 'FbNotification\FbNotificationController@store',
+    ]);
+
+    Route::delete('/{fbnotification}', [
+        'as' => 'api.fbnotification.destroy',
+        'uses' => 'FbNotification\FbNotificationController@destroy',
+    ]);
+});
 // append
+
 
 
 

@@ -288,7 +288,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\FbNotificationRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentFbNotificationRepository(new \Modules\Mon\Entities\FbNotification());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 
