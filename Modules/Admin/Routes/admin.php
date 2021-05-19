@@ -592,7 +592,29 @@ Route::group(['prefix' => '/paymentmethod'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/fbnotification'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.fbnotification.index',
+        'uses' => 'FbNotification\FbNotificationController@index',
+        'middleware' => 'permission:admin.fbnotification.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.fbnotification.create',
+        'uses' => 'FbNotification\FbNotificationController@create',
+        'middleware' => 'permission:admin.fbnotification.create'
+    ]);
+
+    Route::get('{fbnotification}/edit', [
+        'as' => 'admin.fbnotification.edit',
+        'uses' => 'FbNotification\FbNotificationController@edit',
+        'middleware' => 'permission:admin.fbnotification.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

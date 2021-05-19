@@ -302,6 +302,26 @@ export default {
                 "delete success": "Xóa Quận huyện thành công."
             }
         },
+        "fbnotification": {
+            "label": {
+                "fbnotification": "Quản lý notification",
+                "id": "ID",
+                "title": "Tiêu đề noti",
+                "content": "Nội dung",
+                "topic": "Hệ điều hành",
+                "scheduled_at": "Thời gian gửi",
+                "sent": "Trạng thái",
+                "updated_at": "Ngày cập nhật",
+                "create_title": "Tạo notification",
+                "update_title": "Cập nhật notification",
+                "detail_title": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo notification thành công.",
+                "update success": "Cập nhật notification thành công.",
+                "delete success": "Xóa notification thành công."
+            }
+        },
         "media": {
             "label": {
                 "media": "Media",
@@ -670,7 +690,8 @@ export default {
             "product information": "Thông tính chi tiết",
             "voucher management": "Quản lý khuyến mại",
             "ranking": "Xếp hạng",
-            "ship type": "Hình thức vận chuyển"
+            "ship type": "Hình thức vận chuyển",
+            "payment method": "Phương thức thanh toán"
         },
         "user": {
             "label": {
