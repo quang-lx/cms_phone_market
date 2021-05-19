@@ -70,10 +70,13 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop="price"
+                      prop=""
                       :label="$t('vtproduct.label.price')"
                       sortable="custom"
                     >
+                      <template slot-scope="scope">
+                      <span>{{Intl.NumberFormat().format(scope.row.price)}}</span>
+                    </template>
                     </el-table-column>
 
                     <el-table-column
