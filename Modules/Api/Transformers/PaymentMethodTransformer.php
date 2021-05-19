@@ -15,6 +15,7 @@ class PaymentMethodTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'name' => $this->name,
+	        'price' => 0
 
         ];
 

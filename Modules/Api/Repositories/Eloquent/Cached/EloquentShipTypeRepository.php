@@ -33,7 +33,7 @@ class EloquentShipTypeRepository  implements ShipTypeRepository
 			if ($shopId) {
 				$subQuery = ShopShipType::query()->where('shop_id', $shopId);
 				$subQuery->where('status', ShopShipType::TYPE_OFF)->select('ship_type_id');
-				$data = ShipType::query()->whereNotIn('id', $subQuery);
+				$data = ShipType::query()->whereNotIn('id', $subQuery)->get();
 				return ShipTypeTransformer::collection($data);
 			} else {
 				$data = ShipType::query()->get();
