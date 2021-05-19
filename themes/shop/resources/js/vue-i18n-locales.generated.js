@@ -217,6 +217,12 @@ export default {
                 "delete success": "Xóa Tài khoản cửa hàng thành công."
             }
         },
+        "dashboard": {
+            "label": {
+                "shop-product": "Thống kê sản phẩm số lượng sản phẩm chi nhánh"
+            },
+            "list": []
+        },
         "media": {
             "label": {
                 "media": "Media",

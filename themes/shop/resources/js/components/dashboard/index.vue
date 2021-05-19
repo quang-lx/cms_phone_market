@@ -1,47 +1,34 @@
 <template>
- <span>
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header">{{ $t("dashboard.label.shop-product") }}</div>
 
- </span>
-
-
+        <div class="card-body">
+          <div>
+            <bar-chart />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
+
 <script>
-    import axios from 'axios';
-    import Form from 'form-backend-validation';
-    import Tinymce from '../utils/Tinymce'
+import BarChart from "./BarChart.js";
 
-    export default {
-        components: {Tinymce},
-        props: {
-            locales: {default: null},
-            pageTitle: {default: null, String},
-        },
-        data() {
-            return {
-                form: new Form(),
-
-                loading: false,
-                modelForm: {
-                   content:''
-
-
-                },
-            };
-        },
-        methods: {
-
-
-
-        },
-        mounted() {
-
-
-        },
-        computed: {}
-    }
+export default {
+  name: "app",
+  components: {
+    BarChart,
+  },
+};
 </script>
 
-<style scoped>
-
+<style>
+.small {
+  max-width: 600px;
+  margin: 150px auto;
+}
 </style>

@@ -48,6 +48,7 @@ import ShopShipTypeList from './../components/shopshiptype/index';
 import OrderDetail from './../components/orders/detail';
 import OrderList from './../components/orders/index';
 
+import DashboardList from './../components/dashboard/index';
 import OrderGuaranteeList from './../components/orders/index_guarantee';
 
 import ShopCategoryList from './../components/shopcategory/index';
@@ -371,6 +372,12 @@ export default [
         },
     },
 
+    //dashboard
+    {
+        path: '/shop-admin',
+        name: 'shop.dashboard.index',
+        component: DashboardList,
+    },
     {
         path: '/shop-admin/orders/guarantee',
         name: 'shop.ordersguarantee.index',
