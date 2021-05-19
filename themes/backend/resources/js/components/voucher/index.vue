@@ -82,8 +82,11 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="discount_amount" :label="$t('voucher.label.discount_amount')"
+                                        <el-table-column prop="" :label="$t('voucher.label.discount_amount')"
                                             sortable="custom" >
+                                             <template slot-scope="scope">
+                                            <span>{{Intl.NumberFormat().format(scope.row.discount_amount)}}</span>
+                                            </template>
                                         </el-table-column>
 
                                         <el-table-column prop="actived_at" :label="$t('voucher.label.status')" sortable="custom" width="110" >

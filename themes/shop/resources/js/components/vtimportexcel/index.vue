@@ -69,10 +69,13 @@
                     >
                     </el-table-column>
                     <el-table-column
-                      prop="number_product"
+                      prop=""
                       :label="$t('vtimportexcel.label.number_product')"
                       sortable="custom"
                     >
+                     <template slot-scope="scope">
+                        {{ Intl.NumberFormat().format(scope.row.number_product)}}
+                    </template>
                     </el-table-column>
 
                     <el-table-column

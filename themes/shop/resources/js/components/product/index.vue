@@ -132,7 +132,7 @@
 
                                         <el-table-column prop="" :label="$t('product.label.amount')" sortable="custom">
                                             <template slot-scope="scope">
-                                                {{ formatNumber(scope.row.amount)}}
+                                                {{ Intl.NumberFormat().format(scope.row.amount)}}
                                             </template>
                                         </el-table-column>
 
@@ -156,7 +156,7 @@
 
                                         <el-table-column prop="" :label="$t('product.label.price')" sortable="custom">
                                             <template slot-scope="scope">
-                                                {{ formatNumber(scope.row.price)}}
+                                                {{ Intl.NumberFormat().format(scope.row.price)}}
                                             </template>
                                         </el-table-column>
 
@@ -269,9 +269,6 @@
                         this.order_meta.order_by = properties.order_by;
                         this.order_meta.order = properties.order;
                     });
-            },
-            formatNumber(number){
-                return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
             },
             fetchBrand() {
                 const properties = {

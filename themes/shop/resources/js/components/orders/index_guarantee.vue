@@ -123,10 +123,13 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop="pay_price"
+                      prop=""
                       :label="$t('orders.label.pay_price')"
                       sortable="custom"
                     >
+                    <template slot-scope="scope">
+                      <span>{{Intl.NumberFormat().format(scope.row.pay_price)}}</span>
+                    </template>
                     </el-table-column>
 
                     <el-table-column
