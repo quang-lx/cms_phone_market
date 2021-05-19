@@ -112,8 +112,8 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         if ($request->get('name') !== null) {
             $query->where('name', '=', $request->get('name'));
         }
-        $query->select('permissions.*')->orderBy('group')->orderBy('title');
+	    $query->select('permissions.*')->orderBy('group')->orderBy('order_');
 
-        return $query->get();
+	    return $query->get();
     }
 }

@@ -1,10 +1,10 @@
 <template>
         <div class="row">
-            <div v-for="(group, index) in groupPermissions" :key="'g-' + index" class="col-md-4" style="margin-bottom: 15px">
+            <div v-for="(group, index) in groupPermissions" :key="'g-' + index" class="col-md-3" style="margin-bottom: 15px">
                 <div class="card" style="height:97%">
                     <div class="card-header ui-sortable-handle" style="cursor: move;">
                         <h3 class="card-title">
-                            {{$t('permission.group_mapping.' + index)}}
+                            {{group[0]? group[0].group_name: ''}}
                         </h3>
                         <div class="card-tools">
                             <el-button type="text" size="mini"
