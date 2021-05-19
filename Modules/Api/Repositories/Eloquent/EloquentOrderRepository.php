@@ -19,6 +19,7 @@ use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\ProductAttributeValue;
 use Modules\Mon\Entities\Province;
 use Modules\Mon\Entities\ShipType;
+use Modules\Mon\Entities\Shop;
 use Modules\Mon\Entities\User;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
@@ -188,6 +189,12 @@ class EloquentOrderRepository implements OrderRepository {
 	public function placeOrderSuaChuaKhac($requestParams, User $user, ShipType $shipType, Address $shipAddress, Province $province, District $district, Phoenix $phoenix) {
 		list($orderData, $orderProductData) = $this->parseOrderData($requestParams, $user, $shipType, $shipAddress, $province, $district, $phoenix);
 		$orderProductData['product_title'] = $requestParams['product_title'];
+		$orderData['shop_id'] = $requestParams['shop_id'];
+		$shop = Shop::find($requestParams['shop_id']);
+		if(!$shop) {
+			return false;
+		}
+		$orderData['company_id'] = $shop->company_id;
 		$order = $this->model->create($orderData);
 		if ($order) {
 			$orderProductData['order_id'] = $order->id;
