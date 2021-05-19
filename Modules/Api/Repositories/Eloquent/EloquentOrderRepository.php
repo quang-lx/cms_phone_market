@@ -216,7 +216,7 @@ class EloquentOrderRepository implements OrderRepository {
 		$orderProductData['price'] = $product->price;
 		$orderProductData['price_sale'] = $product->price_sale ?? 0;
 		$orderProductData['product_id'] = $product->id;
-		$orderProductData['note'] = $requestParams['note'];
+		$orderProductData['note'] = $requestParams['note']?? '';
 
 		if ($productAttributeValue) {
 			$orderProductData['price'] = $productAttributeValue->price;
@@ -272,7 +272,7 @@ class EloquentOrderRepository implements OrderRepository {
 		$orderData['discount'] = 0;
 
 		$orderProductData['quantity'] = $requestParams['quantity'];
-		$orderProductData['note'] = $requestParams['note'];
+		$orderProductData['note'] = $requestParams['note']?? '';
 
 
 		return [ $orderData, $orderProductData ];
@@ -293,7 +293,7 @@ class EloquentOrderRepository implements OrderRepository {
 		$orderData['discount'] = 0;
 
 		$orderProductData['quantity'] = $requestParams['quantity'];
-		$orderProductData['note'] = $requestParams['note'];
+		$orderProductData['note'] = $requestParams['note']?? '';
 
 
 		return [ $orderData, $orderProductData ];
