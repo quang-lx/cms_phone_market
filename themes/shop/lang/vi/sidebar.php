@@ -47,7 +47,9 @@ return [
     'storage product' => 'Nhập kho',
 	'vtimportexcel' => 'Nhập linh kiện',
 	'ship type' => 'Hình thức vận chuyển',
-
+	'order' => 'Đơn hàng',
+	'order sua chua' => 'Đơn hàng sửa chữa',
+	'order bao hanh' => 'Đơn hàng bảo hành',
 
 
 ];
