@@ -276,6 +276,37 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
 	    });
 
+	    $menu->group('order management', function (Group $group) {
+		    $group->hideHeading(true);
+		    $group->item(trans('ch::sidebar.order'), function (Item $item) {
+			    $item->icon('fas fa-save');
+			    $item->weight(10);
+			    $item->authorize(
+				    $this->auth->hasAccess('shop.orders.index')
+			    );
+
+			    $item->item(trans('ch::sidebar.order sua chua'), function (Item $item) {
+
+				    $item->weight(0);
+
+				    $item->route('shop.orders.index');
+				    $item->authorize(
+					    $this->auth->hasAccess('shop.orders.index')
+				    );
+			    });
+			    $item->item(trans('ch::sidebar.order bao hanh'), function (Item $item) {
+
+				    $item->weight(0);
+
+				    $item->route('shop.ordersguarantee.index');
+				    $item->authorize(
+					    $this->auth->hasAccess('shop.ordersguarantee.index')
+				    );
+			    });
+		    });
+
+
+	    });
         return $menu;
 
     }

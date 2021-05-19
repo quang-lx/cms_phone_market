@@ -52,5 +52,8 @@ return [
     'ranking' => 'Xếp hạng',
     'ship type' => 'Hình thức vận chuyển',
     'payment method' => 'Phương thức thanh toán',
+    'order' => 'Đơn hàng',
+    'order sua chua' => 'Đơn hàng sửa chữa',
+    'order bao hanh' => 'Đơn hàng bảo hành',
 
 ];
