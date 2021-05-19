@@ -50,12 +50,14 @@ class GenerateAdminPermission extends Command
             if ($this->startWith($routeName, 'admin')) {
                 $permission = Permission::findOrCreate($routeName);
                 $tokens = explode('.', $routeName);
-                if (isset($tokens[1])) {
-                    $permission->group = $tokens[1];
-                }
-                if (isset($tokens[2])) {
-                    $permission->title = $tokens[2];
-                }
+	            $tokenCount = count($tokens);
+	            if (isset($tokens[$tokenCount-2])) {
+		            $permission->group = $tokens[$tokenCount-2];
+		            $permission->group_name = $tokens[$tokenCount-2];
+	            }
+	            if (isset($tokens[$tokenCount-1])) {
+		            $permission->title = $tokens[$tokenCount-1];
+	            }
                 $permission->module = 'admin';
                 $permission->save();
             }
