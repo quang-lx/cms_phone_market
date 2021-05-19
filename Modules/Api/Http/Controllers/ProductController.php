@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\ProductRepository;
+use Modules\Api\Transformers\ProductBaoHanhTransformer;
 use Modules\Api\Transformers\ProductDetailTransformer;
 use Modules\Api\Transformers\ProductTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
@@ -51,7 +52,7 @@ class ProductController extends ApiController
 
     public function baohanh(Request $request)
     {
-        $data = ProductTransformer::collection($this->productRepo->listBaoHanh($request));
+        $data = ProductBaoHanhTransformer::collection($this->productRepo->listBaoHanh($request));
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
 
