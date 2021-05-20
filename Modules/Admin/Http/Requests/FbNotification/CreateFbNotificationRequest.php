@@ -11,7 +11,7 @@ class CreateFbNotificationRequest extends FormRequest
         return [
             'title' => 'required|unique:notifications,title',
             'content' => 'required',
-            'scheduled_at' => 'required|after:now',
+            'scheduled_at' => 'after:now',
         ];
     }
 
