@@ -432,6 +432,12 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
               'as' => 'apishop.orders.find',
               'uses' => 'Orders\OrdersController@find',
           ]);
+
+    Route::get('/{orders}/buysell', [
+        'as' => 'apishop.orders.findbuysell',
+        'uses' => 'Orders\OrdersController@findBuySell',
+    ]);
+
     Route::post('/', [
         'as' => 'apishop.orders.store',
         'uses' => 'Orders\OrdersController@store',

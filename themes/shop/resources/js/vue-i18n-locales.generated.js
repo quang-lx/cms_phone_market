@@ -315,6 +315,7 @@ export default {
             "label": {
                 "orders": "Quản lý đơn hàng sửa chữa",
                 "guarantee": "Quản lý đơn hàng bảo hành",
+                "buysell": "Quản lý đơn hàng mua bán",
                 "id": "Mã giao dịch",
                 "user_name": "User",
                 "product_name": "Sản phẩm",
@@ -525,7 +526,10 @@ export default {
             "transfer management": "Quản lý chuyển kho",
             "storage product": "Nhập kho",
             "vtimportexcel": "Nhập linh kiện",
-            "ship type": "Hình thức vận chuyển"
+            "ship type": "Hình thức vận chuyển",
+            "order": "Đơn hàng",
+            "order sua chua": "Đơn hàng sửa chữa",
+            "order bao hanh": "Đơn hàng bảo hành"
         },
         "storageproduct": {
             "label": {
