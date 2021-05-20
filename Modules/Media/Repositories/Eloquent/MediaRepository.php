@@ -66,17 +66,19 @@ class MediaRepository extends BaseRepository implements \Modules\Media\Repositor
         return $file;
     }
 
-    private function getPathFor(string $filename, int $folderId)
-    {
-        if ($folderId !== 0) {
-            $parent = app(\Modules\Media\Repositories\FolderRepository::class)->findFolder($folderId);
-            if ($parent !== null) {
-                return $parent->path->getRelativeUrl() . '/' . $filename;
-            }
-        }
+	private function getPathFor(string $filename, int $folderId)
+	{
+		$month = now()->format('Ym');
+		if ($folderId !== 0) {
+			$parent = app(\Modules\Media\Repositories\FolderRepository::class)->findFolder($folderId);
+			if ($parent !== null) {
+				return $parent->path->getRelativeUrl() . '/'.$month.'/' . $filename;
+			}
+		}
 
-        return '/media/' . $filename;
-    }
+
+		return '/media/'.$month.'/' . $filename;
+	}
 
     public function destroy($file)
     {
