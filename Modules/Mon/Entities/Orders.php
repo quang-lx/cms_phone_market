@@ -48,6 +48,10 @@ class Orders extends Model
        return $this->belongsTo(OrderProduct::class, 'id','order_id');
     }
 
+    public function orderBuySellProduts() {
+        return $this->hasMany(OrderProduct::class, 'order_id');
+     }
+
     public function shop() {
         return $this->belongsTo(Shop::class, 'shop_id');
     }

@@ -311,6 +311,18 @@ Route::group(['prefix' => '/orders'], function ( ) {
         'middleware' => 'permission:shop.orders.index'
     ]);
 
+    Route::get('/buysell', [
+        'as' => 'shop.ordersbuysell.index',
+        'uses' => 'Orders\OrdersController@index',
+        'middleware' => 'permission:shop.orders.index'
+    ]);
+
+    Route::get('{orders}/detail-buysell', [
+        'as' => 'shop.orders.detailbuysell',
+        'uses' => 'Orders\OrdersController@detail',
+        'middleware' => 'permission:shop.orders.detail'
+    ]);
+
     Route::get('{orders}/detail', [
         'as' => 'shop.orders.detail',
         'uses' => 'Orders\OrdersController@detail',
