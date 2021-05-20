@@ -8,10 +8,9 @@ class UpdateFbNotificationRequest extends FormRequest
 {
     public function rules()
     {
-        $fbnotification = $this->route()->parameter('fbnotification');
 
         return [
-            'title' => "required|unique:notifications,title,{$fbnotification->id}",
+            'title' => "required",
             'content' => 'required',
         ];
     }
