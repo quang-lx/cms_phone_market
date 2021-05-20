@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\GenerateI18NTranslation;
+use App\Console\Commands\SchedulerFbNoti;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         GenerateI18NTranslation::class,
-
+	    SchedulerFbNoti::class,
 
     ];
 
@@ -27,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
+	    $schedule->command('fbnoti-scheduler:run')->withoutOverlapping();
     }
 
     /**
