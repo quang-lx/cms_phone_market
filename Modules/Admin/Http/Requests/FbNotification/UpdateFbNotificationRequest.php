@@ -13,7 +13,6 @@ class UpdateFbNotificationRequest extends FormRequest
         return [
             'title' => "required|unique:notifications,title,{$fbnotification->id}",
             'content' => 'required',
-            'scheduled_at' => 'after:now',
         ];
     }
 
