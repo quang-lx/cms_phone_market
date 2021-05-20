@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\AdminNotiCreated;
 use App\Events\NeedCreateUserSmsToken;
+use App\Listeners\PushNotiWhenAdminNotiCreated;
 use App\Listeners\SendSmsToUserRegistered;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         NeedCreateUserSmsToken::class => [
             SendSmsToUserRegistered::class
         ],
+	    AdminNotiCreated::class => [
+		    PushNotiWhenAdminNotiCreated::class
+	    ],
     ];
 
     /**
