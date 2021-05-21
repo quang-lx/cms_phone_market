@@ -14,7 +14,7 @@ class AddDeleteByShop extends Migration
     public function up()
     {
         Schema::table('shop', function (Blueprint $table) {
-            $table->bigInteger('deleted_by')->nullable();
+            // $table->bigInteger('deleted_by')->nullable();
         });
     }
 
