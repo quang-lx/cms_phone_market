@@ -219,9 +219,13 @@ export default {
         },
         "dashboard": {
             "label": {
-                "shop-product": "Thống kê sản phẩm số lượng sản phẩm chi nhánh"
-            },
-            "list": []
+                "count-order": "Thống kê số đơn",
+                "revenue-order": "Thống kê doanh thu",
+                "totalRevenue": "Tổng doanh thu",
+                "paid": "Đã thanh toán",
+                "waitPaid": "Sẽ thanh toán",
+                "totalFee": "Tổng phí"
+            }
         },
         "media": {
             "label": {
@@ -525,7 +529,10 @@ export default {
             "transfer management": "Quản lý chuyển kho",
             "storage product": "Nhập kho",
             "vtimportexcel": "Nhập linh kiện",
-            "ship type": "Hình thức vận chuyển"
+            "ship type": "Hình thức vận chuyển",
+            "order": "Đơn hàng",
+            "order sua chua": "Đơn hàng sửa chữa",
+            "order bao hanh": "Đơn hàng bảo hành"
         },
         "storageproduct": {
             "label": {
