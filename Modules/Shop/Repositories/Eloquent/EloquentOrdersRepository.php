@@ -76,10 +76,6 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         return $query->paginate($request->get('per_page', 10));
     }
 
-    public function formatDate(){
-
-    }
-
     public function statistical(Request $request, $relations = null)
     {
         // select count(*) AS so_don,`order_type`,sum(`pay_price`) AS tong_tien, date(`created_at`) from `orders`
