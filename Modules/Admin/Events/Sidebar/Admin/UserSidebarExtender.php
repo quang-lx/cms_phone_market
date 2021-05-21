@@ -278,16 +278,24 @@ class UserSidebarExtender extends AbstractAdminSidebar {
 				$item->authorize(
 					$this->auth->hasAccess('admin.voucher.index')
 				);
+				$item->route('admin.voucher.index');
 
-				$item->item(trans('backend::sidebar.voucher management'), function (Item $item) {
+			});
 
-					$item->weight(0);
 
-					$item->route('admin.voucher.index');
-					$item->authorize(
-						$this->auth->hasAccess('admin.voucher.index')
-					);
-				});
+		});
+		$menu->group('noti', function (Group $group) {
+			$group->hideHeading(true);
+			$group->item(trans('backend::sidebar.fbnotification'), function (Item $item) {
+				$item->icon('fas fa-bell');
+				$item->weight(10);
+				$item->route('admin.fbnotification.index');
+				$item->authorize(
+					$this->auth->hasAccess('admin.fbnotification.index')
+				);
+
+
+
 
 			});
 
@@ -297,4 +305,5 @@ class UserSidebarExtender extends AbstractAdminSidebar {
 		return $menu;
 
 	}
+
 }

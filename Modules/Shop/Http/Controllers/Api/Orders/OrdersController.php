@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Modules\Mon\Entities\Orders;
 use Modules\Shop\Http\Requests\Orders\CreateOrdersRequest;
 use Modules\Shop\Transformers\OrdersTransformer;
+use Modules\Shop\Transformers\OrdersBuySellTransformer;
 use Modules\Shop\Http\Requests\Orders\UpdateOrdersRequest;
 use Modules\Shop\Repositories\OrdersRepository;
 use Illuminate\Routing\Controller;
@@ -35,11 +36,10 @@ class OrdersController extends ApiController
 
     public function statistical(Request $request)
     {
-        // return OrdersTransformer::collection($this->ordersRepository->serverPagingFor($request));
-
-        $this->ordersRepository->serverPagingFor($request);
         return $this->ordersRepository->statistical($request);
     }
+    
+
 
     public function all(Request $request)
     {
@@ -61,6 +61,11 @@ class OrdersController extends ApiController
     public function find(Orders $orders)
     {
         return new  OrdersTransformer($orders);
+    }
+
+    public function findBuySell(Orders $orders)
+    {
+        return new OrdersBuySellTransformer($orders);
     }
 
     public function update(Orders $orders, UpdateOrdersRequest $request)

@@ -50,6 +50,9 @@ import OrderList from './../components/orders/index';
 
 import DashboardList from './../components/dashboard/index';
 import OrderGuaranteeList from './../components/orders/index_guarantee';
+import OrderBuySellList from './../components/orders/index_buysell';
+import OrderBuySellDetail from './../components/orders/detail_buysell';
+
 
 import ShopCategoryList from './../components/shopcategory/index';
 
@@ -372,17 +375,34 @@ export default [
         },
     },
 
+    {
+        path: '/shop-admin/orders/guarantee',
+        name: 'shop.ordersguarantee.index',
+        component: OrderGuaranteeList,
+    },
+    
+    {
+        path: '/shop-admin/orders/buysell',
+        name: 'shop.ordersbuysell.index',
+        component: OrderBuySellList,
+    },
+
+    {
+        path: '/shop-admin/orders/:ordersId/detail-buysell',
+        name: 'shop.orders.detailbuysell',
+        component: OrderBuySellDetail,
+        props: {
+            pageTitle: 'orders.label.detail_title',
+        },
+    },
+
     //dashboard
     {
         path: '/shop-admin',
         name: 'shop.dashboard.index',
         component: DashboardList,
     },
-    {
-        path: '/shop-admin/orders/guarantee',
-        name: 'shop.ordersguarantee.index',
-        component: OrderGuaranteeList,
-    },
+    
 
     // shopcategory
     {

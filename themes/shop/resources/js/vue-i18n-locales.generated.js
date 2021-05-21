@@ -319,6 +319,7 @@ export default {
             "label": {
                 "orders": "Quản lý đơn hàng sửa chữa",
                 "guarantee": "Quản lý đơn hàng bảo hành",
+                "buysell": "Quản lý đơn hàng mua bán",
                 "id": "Mã giao dịch",
                 "user_name": "User",
                 "product_name": "Sản phẩm",

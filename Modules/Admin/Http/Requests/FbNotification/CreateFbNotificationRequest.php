@@ -9,9 +9,8 @@ class CreateFbNotificationRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:notifications,title',
+            'title' => 'required',
             'content' => 'required',
-            'scheduled_at' => 'required|after:now',
         ];
     }
 

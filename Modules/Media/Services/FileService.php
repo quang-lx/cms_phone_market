@@ -36,6 +36,9 @@ class FileService {
 		$savedFile = $this->file->createFromFile($file, $parentId);
 		$path = $this->getDestinationPath($savedFile->getOriginal('path')->getRelativeUrl());
 		$stream = fopen($file->getRealPath(), 'r+');
+		if (!$this->createDir($path)) {
+			return false;
+		}
 		$this->filesystem->disk($this->getConfiguredFilesystem())->writeStream($path, $stream, [
 			'visibility' => 'public',
 			'mimetype' => $savedFile->mimetype,
@@ -46,7 +49,14 @@ class FileService {
 
 		return $savedFile;
 	}
-
+	public function createDir($path) {
+		$path_parts = pathinfo($path);
+		$dir = $path_parts['dirname'];
+		if( !is_dir($dir) ) {
+			return $this->filesystem->disk($this->getConfiguredFilesystem())->makeDirectory($dir);
+		}
+		return true;
+	}
 	/**
 	 * Create the necessary thumbnails for the given file
 	 * @param $savedFile

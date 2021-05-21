@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
+use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 
@@ -17,7 +18,9 @@ class FcmService implements NotificationService
     protected $messaging;
     public function __construct(Messaging $messaging)
     {
-        $this->messaging = $messaging;
+	    $factory = (new Factory())->withServiceAccount('/home/isoft/www/server_data/phonemarket_fb.json');
+	    $this->messaging  = $factory->createMessaging();
+
     }
 
     public function sendNotification($deviceToken, $notificationData, $data)
