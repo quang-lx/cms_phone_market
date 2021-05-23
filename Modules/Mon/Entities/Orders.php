@@ -13,13 +13,14 @@ class Orders extends Model
     const TYPE_BAO_HANH = 'bao_hanh';
     const TYPE_MUA_HANG = 'mua_hang';
 
-    const STATUS_ORDER_CREATED = 'order_created'; // Chờ xác nhận
-    const STATUS_ORDER_CONFIRMED = 'order_confirmed';//Chờ giao hàng
-    const STATUS_ORDER_SENDING = 'order_sending';//Chờ nhận hàng
-    const STATUS_ORDER_FIXING = 'order_fixing'; //Chờ sửa chữa
-    const STATUS_ORDER_WARRANTING = 'order_warranting';//Chờ bảo hành
-    const STATUS_ORDER_DONE = 'order_done'; //Thành công
-    const STATUS_ORDER_CANCEL = 'order_cancel'; //Đã hủy
+    const STATUS_ORDER_CREATED = 'created'; // Chờ xác nhận
+    const STATUS_ORDER_WAIT_CLIENT_CONFIRM = 'wait_client'; // Chờ xác nhận
+    const STATUS_ORDER_CONFIRMED = 'confirmed';//Chờ giao hàng
+    const STATUS_ORDER_SENDING = 'sending';//Chờ nhận hàng
+    const STATUS_ORDER_FIXING = 'fixing'; //Chờ sửa chữa
+    const STATUS_ORDER_WARRANTING = 'warranting';//Chờ bảo hành
+    const STATUS_ORDER_DONE = 'done'; //Thành công
+    const STATUS_ORDER_CANCEL = 'cancel'; //Đã hủy
 
 
     protected $table = 'orders';
@@ -46,6 +47,8 @@ class Orders extends Model
         'ship_phoenix_name',
         'ship_address',
         'created_at',
+        'fix_time',
+        'fix_time_date',
         'type_other'
     ];
 
