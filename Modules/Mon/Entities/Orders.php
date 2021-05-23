@@ -76,11 +76,20 @@ class Orders extends Model
     {
         $statusName = '';
         switch ($this->status) {
-            case self::STATUS_WAIT:
-                $statusName = 'Chưa xác nhận';
+            case self::STATUS_ORDER_CREATED:
+                $statusName = 'Chờ xác nhận';
                 break;
-            case self::STATUS_DONE:
-                $statusName = 'Xác nhận';
+            case self::STATUS_ORDER_WAIT_CLIENT_CONFIRM:
+                $statusName = 'Chờ xác nhận';
+                break;
+            case self::STATUS_ORDER_FIXING:
+                $statusName = 'Chờ sửa chữa';
+                break;
+            case self::STATUS_ORDER_DONE:
+                $statusName = 'Thành công';
+                break;
+            case self::STATUS_ORDER_CANCEL:
+                $statusName = 'Đã hủy';
                 break;
         }
         return $statusName;

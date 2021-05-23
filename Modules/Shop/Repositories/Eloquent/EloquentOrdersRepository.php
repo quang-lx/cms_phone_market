@@ -6,7 +6,7 @@ use Modules\Shop\Repositories\OrdersRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 class EloquentOrdersRepository extends BaseRepository implements OrdersRepository
 {
     public function serverPagingFor(Request $request, $relations = null)
@@ -73,5 +73,19 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         }
 
         return $query->paginate($request->get('per_page', 10));
+    }
+
+    public function update($model, $data)
+    {
+        $data_update=[];
+        if($data['type']=='sua_chua'){
+            $data_update['total_price'] = $data['price'];
+            $data_update['pay_price'] = $data['price'];
+            $data_update['fix_time'] = $data['numberDate'];
+            $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
+            $data_update['status'] = 'wait_client';
+        }
+        
+        $model->update($data_update);
     }
 }
