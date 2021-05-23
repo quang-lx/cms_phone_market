@@ -20,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(NotificationService::class, function ($app) {
-            $messaging = app(Messaging::class);
-            return new FcmService($messaging);
+            return new FcmService();
         });
         $this->app->singleton(SendSmsService::class, function ($app) {
 

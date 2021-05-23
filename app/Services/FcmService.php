@@ -17,7 +17,7 @@ class FcmService implements NotificationService
      * @var Messaging
      */
     protected $messaging;
-    public function __construct(Messaging $messaging)
+    public function __construct()
     {
         $factory = (new Factory())->withServiceAccount('/home/isoft/www/server_data/phonemarket_fb.json');
 	    $this->messaging  = $factory->createMessaging();
