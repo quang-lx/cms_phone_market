@@ -21,11 +21,10 @@ class PushNotiWhenAdminNotiCreated implements ShouldQueue
 
     protected $notiService;
 
-    public function __construct(NotificationService $notificationService )
+    public function __construct(  )
     {
         $serviceAccount = ServiceAccount::fromValue('/home/isoft/www/server_data/phonemarket_fb.json');
         dd($serviceAccount);
-        $this->notiService =$notificationService;
     }
 
     /**
