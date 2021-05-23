@@ -46,7 +46,6 @@ class PushNotiWhenAdminNotiCreated implements ShouldQueue
         } else if ($topic == 'ios') {
             $this->notiService->sendNotificationToTopic($topic, $notificationData, $dataInNoti);
         } else {
-            $this->notiService->sendNotification('dIsmBrgmc0pfqB6IYqlUSy:APA91bFb3ffVRiP3ffcs-537VLGBiRA0ry9G600mr1lJ_GymxvQf5LrDbWE4ttSbSSc4gIx7tZLe8nWaG69Xjb5cfOybjiZ6nacR8NoNWFzYuAijXEONWmX-8XINAkytQnrGO0Uh3IFr', $notificationData, $dataInNoti);
             $this->notiService->sendNotificationToTopic('android', $notificationData, $dataInNoti);
             $this->notiService->sendNotificationToTopic('ios', $notificationData, $dataInNoti);
         }
