@@ -13,8 +13,13 @@ class Orders extends Model
     const TYPE_BAO_HANH = 'bao_hanh';
     const TYPE_MUA_HANG = 'mua_hang';
 
-    const STATUS_WAIT = 0;
-    const STATUS_DONE = 1;
+    const STATUS_ORDER_CREATED = 'order_created'; // Chờ xác nhận
+    const STATUS_ORDER_CONFIRMED = 'order_confirmed';//Chờ giao hàng
+    const STATUS_ORDER_SENDING = 'order_sending';//Chờ nhận hàng
+    const STATUS_ORDER_FIXING = 'order_fixing'; //Chờ sửa chữa
+    const STATUS_ORDER_WARRANTING = 'order_warranting';//Chờ bảo hành
+    const STATUS_ORDER_DONE = 'order_done'; //Thành công
+    const STATUS_ORDER_CANCEL = 'order_cancel'; //Đã hủy
 
 
     protected $table = 'orders';
@@ -32,7 +37,7 @@ class Orders extends Model
         'ship_fee',
         'pay_price',
 
-	    'ship_address_id',
+        'ship_address_id',
         'ship_province_id',
         'ship_province_name',
         'ship_district_id',
@@ -41,26 +46,31 @@ class Orders extends Model
         'ship_phoenix_name',
         'ship_address',
         'created_at',
-	    'type_other'
+        'type_other'
     ];
 
-    public function orderProducts() {
-       return $this->belongsTo(OrderProduct::class, 'id','order_id');
+    public function orderProducts()
+    {
+        return $this->belongsTo(OrderProduct::class, 'id', 'order_id');
     }
 
-    public function orderBuySellProduts() {
+    public function orderBuySellProduts()
+    {
         return $this->hasMany(OrderProduct::class, 'order_id');
-     }
+    }
 
-    public function shop() {
+    public function shop()
+    {
         return $this->belongsTo(Shop::class, 'shop_id');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function getStatusNameAttribute($value) {
+    public function getStatusNameAttribute($value)
+    {
         $statusName = '';
         switch ($this->status) {
             case self::STATUS_WAIT:
