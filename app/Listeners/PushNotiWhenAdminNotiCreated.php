@@ -20,9 +20,9 @@ class PushNotiWhenAdminNotiCreated implements ShouldQueue
 
     protected $notiService;
 
-    public function __construct( )
+    public function __construct(NotificationService $notificationService )
     {
-
+        $this->notiService =$notificationService;
     }
 
     /**
@@ -33,7 +33,6 @@ class PushNotiWhenAdminNotiCreated implements ShouldQueue
      */
     public function handle(AdminNotiCreated $event)
     {
-        $this->notiService = app(NotificationService::class);
         $notiData = $event->data;
         $topic = $notiData['topic'];
         $notificationData = ['title' => $notiData['title'], 'body' => $notiData['content']];
