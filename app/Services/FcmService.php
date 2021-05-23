@@ -74,7 +74,8 @@ class FcmService implements NotificationService
             $message = CloudMessage::withTarget('topic', $topic)
                 ->withNotification($notification) // optional
                 ->withData($data); // optional
-            $this->messaging->send($message);
+           $result =  $this->messaging->send($message);
+           Log::info($result);
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
         }
