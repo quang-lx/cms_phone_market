@@ -37,7 +37,9 @@ class PushNotiWhenAdminNotiCreated implements ShouldQueue
         $notiData = $event->data;
         $topic = $notiData['topic'];
         $notificationData = ['title' => $notiData['title'], 'body' => $notiData['content']];
-        $dataInNoti = [];
+        $dataInNoti = [
+            'type' => 1
+        ];
 
         if ($topic == 'android') {
             $this->notiService->sendNotificationToTopic($topic, $notificationData, $dataInNoti);
