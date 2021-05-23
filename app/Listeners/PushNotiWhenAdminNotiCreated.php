@@ -7,7 +7,6 @@ use App\Services\FcmService;
 use App\Services\NotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
  use Kreait\Firebase\Messaging;
-use Kreait\Firebase\ServiceAccount;
 use Kreait\Laravel\Firebase\FirebaseProjectManager;
 use Modules\Mon\Entities\FbNotification;
 use Illuminate\Bus\Queueable;
@@ -21,10 +20,9 @@ class PushNotiWhenAdminNotiCreated implements ShouldQueue
 
     protected $notiService;
 
-    public function __construct(  )
+    public function __construct( )
     {
-        $serviceAccount = ServiceAccount::fromValue('/home/isoft/www/server_data/phonemarket_fb.json');
-        dd($serviceAccount);
+
     }
 
     /**
@@ -35,6 +33,7 @@ class PushNotiWhenAdminNotiCreated implements ShouldQueue
      */
     public function handle(AdminNotiCreated $event)
     {
+        $this->notiService = app(NotificationService::class);
         $notiData = $event->data;
         $topic = $notiData['topic'];
         $notificationData = ['title' => $notiData['title'], 'body' => $notiData['content']];

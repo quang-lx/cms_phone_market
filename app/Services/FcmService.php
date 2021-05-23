@@ -9,6 +9,7 @@ use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 
 use Kreait\Firebase\Messaging;
+use Kreait\Firebase\ServiceAccount;
 
 class FcmService implements NotificationService
 {
@@ -18,7 +19,7 @@ class FcmService implements NotificationService
     protected $messaging;
     public function __construct(Messaging $messaging)
     {
-	    $factory = (new Factory())->withServiceAccount('/home/isoft/www/server_data/phonemarket_fb.json');
+        $factory = (new Factory())->withServiceAccount('/home/isoft/www/server_data/phonemarket_fb.json');
 	    $this->messaging  = $factory->createMessaging();
 
     }
