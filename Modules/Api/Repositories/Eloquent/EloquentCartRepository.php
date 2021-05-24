@@ -67,7 +67,7 @@ class EloquentCartRepository implements CartRepository {
 							->where('product_id', $productData['product_id'])->delete();
 						continue;
 					}
-					
+
 					$note = $productData['note']?? '';
 					$product = Product::find($productData['product_id']);
 					// validate product
@@ -121,6 +121,7 @@ class EloquentCartRepository implements CartRepository {
 
 			 'product_id' => $product->id,
 			 'shop_id' => $product->shop_id,
+			 'shop_name' => optional($product->shop)->name,
 			 'company_id' => $product->company_id,
 			 'product_attribute_value_id' => $productAttributeValue? $productAttributeValue->id : null,
 			 'quantity' => $quantity,
