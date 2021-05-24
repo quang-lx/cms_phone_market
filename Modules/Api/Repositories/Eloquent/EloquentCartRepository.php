@@ -54,18 +54,18 @@ class EloquentCartRepository implements CartRepository {
 			}
 			$products = $request->get('products');
 			if ($products && is_array($products)) {
-				foreach ($products as $product) {
+				foreach ($products as $productData) {
 					$quantity = $product['quantity']?? 1;
 					$note = $product['note']?? '';
-					$product = Product::find($product['product_id']);
+					$product = Product::find($productData['product_id']);
 					// validate product
 					if (!$product) {
 						DB::rollBack();
 						return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
 					}
 					$productAttributeValue = null;
-					if (isset($product['product_attribute_value_id']) && !empty($product['product_attribute_value_id'])) {
-						$productAttributeValue = ProductAttributeValue::find($product['product_attribute_value_id']);
+					if (isset($productData['product_attribute_value_id']) && !empty($productData['product_attribute_value_id'])) {
+						$productAttributeValue = ProductAttributeValue::find($productData['product_attribute_value_id']);
 						if (!$productAttributeValue) {
 							DB::rollBack();
 							return [ trans('api::messages.order.data invalid'), ErrorCode::ERR422 ];
