@@ -40,7 +40,7 @@ class EloquentCartRepository implements CartRepository {
 		return $cart;
 	}
 	protected function createOrGetCart($userId) {
-		$cart = $this->model->where('user_id', $userId)->first();
+		$cart = $this->model->where('user_id', $userId)->with('cartProducts')->first();
 		if (!$cart) {
 			$cart = $this->model->create([
 				'user_id' => $userId
