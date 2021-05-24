@@ -36,7 +36,7 @@ class CreateCart extends Migration
 		    $table->timestamps();
 		    $table->index('company_id');
 		    $table->index('shop_id');
-		    $table->index('order_id');
+		    $table->index('cart_id');
 		    $table->index('product_id');
 		    $table->index('product_attribute_value_id');
 	    });
