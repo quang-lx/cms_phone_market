@@ -50,8 +50,7 @@ class CartController extends ApiController {
 
 		$result = $this->cartRepo->updateCart($request, Auth::user());
 		if ($result instanceof Cart) {
-			$cart = $this->cartRepo->getCart($request, Auth::user());
-			return $this->respond(new CartTransformer($cart), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+			return $this->respond(new CartTransformer($result), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 		}
 		list ($errorMsg, $errorCode) = $result;
 		return $this->respond(null, $errorMsg, $errorCode);
