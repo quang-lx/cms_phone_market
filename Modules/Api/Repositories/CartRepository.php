@@ -17,4 +17,5 @@ use Modules\Mon\Entities\User;
 interface CartRepository
 {
 	public function updateCart (Request $request, User $user);
+	public function getCart (Request $request, User $user);
 }

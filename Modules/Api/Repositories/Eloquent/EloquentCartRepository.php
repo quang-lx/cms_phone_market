@@ -35,6 +35,10 @@ class EloquentCartRepository implements CartRepository {
 		$this->model = $model;
 
 	}
+	public function getCart(Request $request, User $user) {
+		$cart = $this->createOrGetCart($user->id);
+		return $cart;
+	}
 	protected function createOrGetCart($userId) {
 		$cart = $this->model->where('user_id', $userId)->first();
 		if (!$cart) {

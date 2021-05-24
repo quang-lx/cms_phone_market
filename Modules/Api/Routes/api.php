@@ -293,6 +293,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
 			'uses' => 'CartController@store',
 			'as' => 'apife.cart.store',
 		]);
+		Route::get('/detail', [
+			'uses' => 'CartController@detail',
+			'as' => 'apife.cart.detail',
+		]);
 	});
 });
 

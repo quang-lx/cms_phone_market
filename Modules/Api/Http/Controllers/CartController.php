@@ -57,6 +57,13 @@ class CartController extends ApiController {
 
 	}
 
+	public function detail(Request $request) {
+		$cart = $this->cartRepo->getCart($request, Auth::user());
+		return $this->respond($cart ? new CartTransformer($cart) : null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
+
+	}
+
 
 	public function validateStore(Request $request) {
 		$messages = [
