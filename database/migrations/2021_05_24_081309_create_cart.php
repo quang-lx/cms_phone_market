@@ -29,7 +29,7 @@ class CreateCart extends Migration
 		    $table->unsignedBigInteger('shop_id');
 		    $table->unsignedBigInteger('product_id');
 		    $table->unsignedBigInteger('product_attribute_value_id')->nullable();
-		    $table->integer('quatity');
+		    $table->integer('quantity');
 		    $table->text('note')->nullable();
 
 		    $table->softDeletes();

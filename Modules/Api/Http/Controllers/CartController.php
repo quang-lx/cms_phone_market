@@ -20,6 +20,7 @@ use Modules\Api\Repositories\OrderRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
+use Modules\Mon\Entities\Cart;
 use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\SmsToken;
 use Modules\Mon\Entities\User;
@@ -47,7 +48,7 @@ class CartController extends ApiController {
 		}
 
 		$result = $this->cartRepo->updateCart($request, Auth::user());
-		if ($result === true) {
+		if ($result instanceof Cart) {
 			return $this->respond(null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 		}
 		list ($errorMsg, $errorCode) = $result;

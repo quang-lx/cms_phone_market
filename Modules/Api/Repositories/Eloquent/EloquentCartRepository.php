@@ -83,6 +83,8 @@ class EloquentCartRepository implements CartRepository {
 					$this->addOrUpdateProduct( $cart, $product, $productAttributeValue, $quantity, $note);
 				}
 			}
+			DB::commit();
+			return $cart;
 		} catch (\Exception $exception) {
 			Log::info($exception->getMessage());
 			DB::rollBack();
