@@ -25,8 +25,8 @@ class CreateCart extends Migration
 	    Schema::create('cart_product', function (Blueprint $table) {
 		    $table->id();
 		    $table->unsignedBigInteger('cart_id');
-		    $table->unsignedBigInteger('company_id');
-		    $table->unsignedBigInteger('shop_id');
+		    $table->unsignedBigInteger('company_id')->nullable();
+		    $table->unsignedBigInteger('shop_id')->nullable();
 		    $table->unsignedBigInteger('product_id');
 		    $table->unsignedBigInteger('product_attribute_value_id')->nullable();
 		    $table->integer('quantity');
