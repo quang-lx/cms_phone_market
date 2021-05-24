@@ -82,8 +82,17 @@ class Orders extends Model
             case self::STATUS_ORDER_WAIT_CLIENT_CONFIRM:
                 $statusName = 'Chờ xác nhận';
                 break;
+            case self::STATUS_ORDER_CONFIRMED:
+                $statusName = 'Chờ giao hàng';
+                break;
+            case self::STATUS_ORDER_SENDING:
+                $statusName = 'Chờ nhận hàng';
+                break;
             case self::STATUS_ORDER_FIXING:
                 $statusName = 'Chờ sửa chữa';
+                break;
+            case self::STATUS_ORDER_WARRANTING:
+                $statusName = 'Chờ bảo hành';
                 break;
             case self::STATUS_ORDER_DONE:
                 $statusName = 'Thành công';
