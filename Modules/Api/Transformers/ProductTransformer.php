@@ -14,9 +14,9 @@ class ProductTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->price,
-            'sale_price' => $this->sale_price,
-            'discount' => 15,
+	        'price' => $this->price,
+	        'sale_price' => $this->price - ($this->sale_price * $this->price)/100,
+	        'discount' => $this->sale_price,
 	        'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null
 
         ];

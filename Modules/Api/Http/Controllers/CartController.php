@@ -18,6 +18,7 @@ use Modules\Api\Repositories\CartRepository;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\OrderRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
+use Modules\Api\Transformers\CartTransformer;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Entities\Cart;
@@ -49,7 +50,7 @@ class CartController extends ApiController {
 
 		$result = $this->cartRepo->updateCart($request, Auth::user());
 		if ($result instanceof Cart) {
-			return $this->respond(null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+			return $this->respond(new CartTransformer($result), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 		}
 		list ($errorMsg, $errorCode) = $result;
 		return $this->respond(null, $errorMsg, $errorCode);

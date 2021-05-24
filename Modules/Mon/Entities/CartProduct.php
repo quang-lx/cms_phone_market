@@ -26,4 +26,7 @@ class CartProduct extends Model
     public function product() {
         return $this->belongsTo(Product::class, 'product_id', 'id');
      }
+	public function productValue() {
+		return $this->belongsTo(ProductAttributeValue::class, 'product_attribute_value_id', 'id');
+	}
 }
