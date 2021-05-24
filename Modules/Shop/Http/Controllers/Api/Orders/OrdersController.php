@@ -34,6 +34,10 @@ class OrdersController extends ApiController
         return OrdersTransformer::collection($this->ordersRepository->serverPagingFor($request));
     }
 
+    public function statistical(Request $request)
+    {
+        return $this->ordersRepository->statistical($request);
+    }
     
 
 
