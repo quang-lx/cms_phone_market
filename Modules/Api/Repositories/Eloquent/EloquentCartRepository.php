@@ -98,6 +98,8 @@ class EloquentCartRepository implements CartRepository {
 		if ($cartProduct) {
 			$cartProduct->quantity = $quantity;
 			$cartProduct->note = $note;
+			$cartProduct->company_id = $product->company_id;
+			$cartProduct->shop_id = $product->shop_id;
 			$cartProduct->product_attribute_value_id = $productAttributeValue? $productAttributeValue->id : null;
 			$cartProduct->save();
 			return $cartProduct;
