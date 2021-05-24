@@ -59,7 +59,15 @@ class EloquentCartRepository implements CartRepository {
 			$products = $request->get('products');
 			if ($products && is_array($products)) {
 				foreach ($products as $productData) {
-					$quantity = $productData['quantity']?? 1;
+					$quantity = $productData['quantity']?? 0;
+
+					// neu quantity = 0 xoa sp khoi gio hang
+					if (!$quantity) {
+						CartProduct::query()->where('cart_id', $cart->id)
+							->where('product_id', $productData['product_id'])->delete();
+						continue;
+					}
+					
 					$note = $productData['note']?? '';
 					$product = Product::find($productData['product_id']);
 					// validate product
