@@ -104,6 +104,8 @@ class EloquentCartRepository implements CartRepository {
 			 'cart_id' => $cart->id,
 
 			 'product_id' => $product->id,
+			 'shop_id' => $product->shop_id,
+			 'company_id' => $product->company_id,
 			 'product_attribute_value_id' => $productAttributeValue? $productAttributeValue->id : null,
 			 'quantity' => $quantity,
 
