@@ -4,6 +4,7 @@
 namespace Modules\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Mon\Entities\Shop;
 
 class CartTransformer extends JsonResource
 {
@@ -33,7 +34,11 @@ class CartTransformer extends JsonResource
 			    $shops[$cartProduct->shop_id]['shop_id']= $cartProduct->shop_id;
 			    $shops[$cartProduct->shop_id]['shop_name']= $cartProduct->shop_name;
 			    $shops[$cartProduct->shop_id]['products'][] = new CartProductTransformer($cartProduct);
+				$shop = Shop::find($cartProduct->shop_id);
+				if ($shop) {
+					$shops[$cartProduct->shop_id]['thumbnail']= $shop->thumbnail?  new MediaShortTransformer($shop->thumbnail): null;
 
+				}
 		    }
 	    }
     	return $shops;
