@@ -288,6 +288,12 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'as' => 'apife.order.store',
         ]);
     });
+	Route::prefix('cart')->group(function ($router) {
+		Route::post('/update', [
+			'uses' => 'CartController@store',
+			'as' => 'apife.cart.store',
+		]);
+	});
 });
 
 
