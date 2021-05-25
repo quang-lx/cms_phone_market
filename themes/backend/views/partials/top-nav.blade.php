@@ -8,7 +8,7 @@
                 <a class="nav-link" data-toggle="dropdown" href="#"><span>{{ $currentUser->name }}</span> </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
-                    <a href="{{ route('admin.users.edit', ['user' => $currentUser->id]) }}"
+                    <a href="{{ route('admin.admins.edit', ['user' => $currentUser->id]) }}"
                        class="dropdown-item dropdown-footer">
                         {{trans('backend::profile.label.profile')}}
                     </a>
