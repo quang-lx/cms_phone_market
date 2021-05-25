@@ -1,15 +1,6 @@
 <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-            <div id="list-user-header">
-            
-           
-          </div>
-        </div>
+        <chat-messages></chat-messages>
     </li>
     <li class="nav-item dropdown">
        

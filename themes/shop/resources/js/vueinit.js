@@ -18,6 +18,7 @@ import DeleteComponent from './components/utils/DeleteComponent';
 import EditComponent from './components/utils/EditComponent';
 import SingleMedia from './components/media/js/components/SingleMedia';
 import MediaManager from './components/media/js/components/MediaManager';
+import ChatMessages from './components/message/chat_messages';
 import Clipboard from 'v-clipboard'
 
 import VueMobileDetection from 'vue-mobile-detection'
@@ -38,6 +39,7 @@ Vue.component('DeleteButton', DeleteComponent);
 Vue.component('EditButton',  EditComponent);
 Vue.component('SingleMedia', SingleMedia);
 Vue.component('MediaManager', MediaManager);
+Vue.component('ChatMessages', ChatMessages);
 
 
 const currentLocale = window.MonCMS.currentLocale;
