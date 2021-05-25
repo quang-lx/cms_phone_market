@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Modules\Api\Transformers;
+namespace Modules\Api\Transformers\Cart;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Mon\Entities\Shop;

@@ -4,6 +4,7 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Media\Entities\Media;
 use Modules\Media\Traits\MediaRelation;
 
 class CartProduct extends Model
@@ -22,6 +23,7 @@ class CartProduct extends Model
         'quantity',
 
         'note',
+        'product_img_id'
     ];
 
     public function product() {
@@ -30,4 +32,7 @@ class CartProduct extends Model
 	public function productValue() {
 		return $this->belongsTo(ProductAttributeValue::class, 'product_attribute_value_id', 'id');
 	}
+    public function productThumbnail() {
+        return $this->belongsTo(Media::class, 'product_img_id', 'id');
+    }
 }

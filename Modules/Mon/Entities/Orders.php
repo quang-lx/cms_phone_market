@@ -52,6 +52,9 @@ class Orders extends Model
         'type_other'
     ];
 
+    public function allOrderProducts() {
+        return $this->hasMany(OrderProduct::class, 'order_id');
+    }
     public function orderProducts()
     {
         return $this->belongsTo(OrderProduct::class, 'id', 'order_id');

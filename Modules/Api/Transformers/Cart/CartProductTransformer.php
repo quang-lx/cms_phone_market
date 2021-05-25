@@ -1,9 +1,10 @@
 <?php
 
 
-namespace Modules\Api\Transformers;
+namespace Modules\Api\Transformers\Cart;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Api\Transformers\ProductTransformer;
 
 class CartProductTransformer extends JsonResource
 {
