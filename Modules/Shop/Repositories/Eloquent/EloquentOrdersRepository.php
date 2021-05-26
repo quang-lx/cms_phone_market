@@ -161,4 +161,12 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         );
 
     }
+
+    public function updateGuarantee($model, $data)
+    {
+        $data_update =[
+            'status' => 'warranting'
+        ];
+        $model->update($data_update);
+    }
 }

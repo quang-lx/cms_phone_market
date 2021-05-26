@@ -453,8 +453,11 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.destroy',
         'uses' => 'Orders\OrdersController@destroy',
     ]);
-
     
+    Route::post('/{orders}/edit-guarantee', [
+        'as' => 'apishop.orders.update_guarantee',
+        'uses' => 'Orders\OrdersController@updateGuarantee',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
 

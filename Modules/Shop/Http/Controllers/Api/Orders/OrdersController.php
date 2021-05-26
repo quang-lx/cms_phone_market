@@ -78,6 +78,16 @@ class OrdersController extends ApiController
         ]);
     }
 
+    public function updateGuarantee(Orders $orders, Request $request)
+    {
+        $this->ordersRepository->updateGuarantee($orders, $request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
     public function destroy(Orders $orders)
     {
         $this->ordersRepository->destroy($orders);
