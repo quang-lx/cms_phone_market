@@ -17,9 +17,9 @@ return [
     ],
 
     'message' => [
-        'create success' => 'Tạo Chuyên mục  thành công.',
-        'update success' => 'Cập nhật Chuyên mục  thành công.',
-        'delete success' => 'Xóa Chuyên mục  thành công.',
+        'create success' => 'Tạo đơn hàng  thành công.',
+        'update success' => 'Cập nhật đơn hàng  thành công.',
+        'delete success' => 'Xóa đơn hàng  thành công.',
     ]
 
 ];

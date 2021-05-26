@@ -53,7 +53,7 @@ class OrdersController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::orders.message.create success'),
+            'message' => trans('ch::orders.message.create success'),
         ]);
     }
 
@@ -74,7 +74,7 @@ class OrdersController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::orders.message.update success'),
+            'message' => trans('ch::orders.message.update success'),
         ]);
     }
 
@@ -84,7 +84,7 @@ class OrdersController extends ApiController
 
         return response()->json([
             'errors' => false,
-            'message' => trans('backend::orders.message.delete success'),
+            'message' => trans('ch::orders.message.delete success'),
         ]);
     }
 }

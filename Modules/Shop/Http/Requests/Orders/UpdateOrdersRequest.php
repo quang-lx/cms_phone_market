@@ -8,7 +8,10 @@ class UpdateOrdersRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'price' => 'required|numeric',
+            'numberDate' => 'required|numeric',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +26,12 @@ class UpdateOrdersRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'price.required' => 'Giá là bắt buộc',
+            'price.numeric' => 'Giá phải là số',
+            'numberDate.required' => 'Số ngày là bắt buộc',
+            'numberDate.numeric' => 'Số ngày phải là số',
+        ];
     }
 
     public function translationMessages()

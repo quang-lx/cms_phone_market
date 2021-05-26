@@ -6,6 +6,7 @@ use Modules\Shop\Repositories\OrdersRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use Modules\Mon\Entities\Orders;
 
 class EloquentOrdersRepository extends BaseRepository implements OrdersRepository
@@ -76,6 +77,19 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         return $query->paginate($request->get('per_page', 10));
     }
 
+    public function update($model, $data)
+    {
+        $data_update=[];
+        if($data['type']=='sua_chua'){
+            $data_update['total_price'] = $data['price'];
+            $data_update['pay_price'] = $data['price'];
+            $data_update['fix_time'] = $data['numberDate'];
+            $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
+            $data_update['status'] = 'wait_client';
+        }
+
+        $model->update($data_update);
+    }
     public function statistical(Request $request, $relations = null)
     {
         // select count(*) AS so_don,`order_type`,sum(`pay_price`) AS tong_tien, date(`created_at`) from `orders`
@@ -117,7 +131,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
                 $curKey = $key;
                 $key ++;
             }
-            
+
             switch ($orderType){
                 case Orders::TYPE_SUA_CHUA: {
                     $listRepairCount[$curKey] = $record->so_don;
@@ -134,11 +148,11 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
                     $listBuyMoney[$curKey] = $record->tong_tien;
                     break;
                 }
-                default: 
+                default:
             }
         }
         return array(
-            'listDate' => $listDate, 
+            'listDate' => $listDate,
             'listRepairCount' => $listRepairCount, 'listRepairMoney' => $listRepairMoney,
             'listGuaranteeCount' => $listGuaranteeCount, 'listGuaranteeMoney' => $listGuaranteeMoney,
             'listBuyCount' => $listBuyCount, 'listBuyMoney' => $listBuyMoney,

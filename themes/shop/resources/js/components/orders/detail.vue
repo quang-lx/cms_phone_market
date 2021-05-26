@@ -99,6 +99,8 @@
                             {{ $t("orders.label.description") }}:
                             <div v-html="modelForm.description"></div>
                         </div> -->
+                        <popup-take-orders :data="modelForm"></popup-take-orders>
+                        
                     </div>
                   </div>
                 </div>
@@ -118,6 +120,7 @@ import Form from "form-backend-validation";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
 import MultipleMedia from "../media/js/components/MultipleMedia";
 import MultipleFileSelector from "../../mixins/MultipleFileSelector.js";
+import PopupTakeOrders from "./popup_take_orders";
 export default {
   props: {
     locales: { default: null },
@@ -126,6 +129,7 @@ export default {
   mixins: [SingleFileSelector, MultipleFileSelector],
   components: {
     MultipleMedia,
+    PopupTakeOrders
   },
   data() {
     return {
@@ -134,8 +138,8 @@ export default {
       loading: false,
       list_orders: [],
       modelForm: {},
-      dialogRank: false,
       message: "",
+      
     };
   },
   methods: {
@@ -152,9 +156,7 @@ export default {
       });
     },
 
-    showDataModal(key) {
-      this.dialogRank = true;
-    },
+
   },
   mounted() {
     this.fetchData();
