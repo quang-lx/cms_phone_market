@@ -324,7 +324,7 @@ class EloquentOrderRepository implements OrderRepository
 
     public function listOrder(Request $request) {
         $user = Auth::user();
-        $query = $this->model->newQuery()->where('user_id', $user->id)->with(['orderAllProducts', 'shop']);
+        $query = $this->model->newQuery()->where('user_id', $user->id)->with(['allOrderProducts', 'shop']);
         if ($type = $request->get('order_type')) {
             $query->where('order_type', $type);
         }
