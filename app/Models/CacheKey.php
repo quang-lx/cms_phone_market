@@ -20,6 +20,7 @@ class CacheKey
         const TAG_CATEGORY_BRAND = 'category_brand';
 
 
+        const ORDER_SETTING = 'ORDER_SETTING';
         const RANK_ALL = 'RANK_ALL';
         const RANK_DETAIL = 'RANK_%s_DETAIL';
 

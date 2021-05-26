@@ -15,8 +15,8 @@ class Orders extends Model
 
     const STATUS_ORDER_CREATED = 'created'; // Chờ xác nhận
     const STATUS_ORDER_WAIT_CLIENT_CONFIRM = 'wait_client'; // Chờ xác nhận
-    const STATUS_ORDER_CONFIRMED = 'confirmed';//Chờ giao hàng
-    const STATUS_ORDER_SENDING = 'sending';//Chờ nhận hàng
+    const STATUS_ORDER_CONFIRMED = 'confirmed';//Chờ nhận hàng
+    const STATUS_ORDER_SENDING = 'sending';//Chờ giao hàng
     const STATUS_ORDER_FIXING = 'fixing'; //Chờ sửa chữa
     const STATUS_ORDER_WARRANTING = 'warranting';//Chờ bảo hành
     const STATUS_ORDER_DONE = 'done'; //Thành công
