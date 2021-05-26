@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Api\Repositories\AddressRepository;
 use Modules\Api\Repositories\ApiShopRepository;
 use Modules\Api\Repositories\AreaRepository;
+use Modules\Api\Repositories\CartRepository;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentRankRepository;
@@ -14,6 +15,7 @@ use Modules\Api\Repositories\Eloquent\Cached\EloquentPaymentMethodRepository;
 use Modules\Api\Repositories\Eloquent\Cached\EloquentShipTypeRepository;
 use Modules\Api\Repositories\Eloquent\EloquentAddressRepository;
 use Modules\Api\Repositories\Eloquent\EloquentApiShopRepository;
+use Modules\Api\Repositories\Eloquent\EloquentCartRepository;
 use Modules\Api\Repositories\Eloquent\EloquentCategoryRepository;
 use Modules\Api\Repositories\Eloquent\EloquentHomeSettingRepository;
 use Modules\Api\Repositories\Eloquent\EloquentOrderRepository;
@@ -31,6 +33,7 @@ use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Mon\Entities\Address;
+use Modules\Mon\Entities\Cart;
 use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\PaymentMethod;
 use Modules\Mon\Entities\Pcategory;
@@ -216,6 +219,12 @@ class ApiServiceProvider extends ServiceProvider
 		    PaymentMethodRepository::class,
 		    function () {
 			    return new EloquentPaymentMethodRepository(new PaymentMethod());
+		    }
+	    );
+	    $this->app->bind(
+		    CartRepository::class,
+		    function () {
+			    return new EloquentCartRepository(new Cart());
 		    }
 	    );
     }

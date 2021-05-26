@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDeleteByShop extends Migration
+class AddCartProductShop extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddDeleteByShop extends Migration
      */
     public function up()
     {
-        Schema::table('shop', function (Blueprint $table) {
-            // $table->bigInteger('deleted_by')->nullable();
-        });
+	    Schema::table('cart_product', function (Blueprint $table) {
+		    $table->string('shop_name')->nullable();
+	    });
     }
 
     /**
@@ -25,8 +25,6 @@ class AddDeleteByShop extends Migration
      */
     public function down()
     {
-        Schema::table('shop', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }

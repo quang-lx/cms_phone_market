@@ -424,6 +424,12 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.index',
         'uses' => 'Orders\OrdersController@index',
     ]);
+
+    Route::get('/statistical', [
+        'as' => 'apishop.orders.statistical',
+        'uses' => 'Orders\OrdersController@statistical',
+    ]);
+
     Route::post('/{orders}/edit', [
             'as' => 'apishop.orders.update',
             'uses' => 'Orders\OrdersController@update',
@@ -447,6 +453,8 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.destroy',
         'uses' => 'Orders\OrdersController@destroy',
     ]);
+
+    
 });
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
 

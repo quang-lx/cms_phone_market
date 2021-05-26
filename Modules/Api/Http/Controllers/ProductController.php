@@ -6,7 +6,6 @@ namespace Modules\Api\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Api\Entities\ErrorCode;
-use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\ProductRepository;
 use Modules\Api\Transformers\ProductBaoHanhTransformer;
 use Modules\Api\Transformers\ProductDetailTransformer;

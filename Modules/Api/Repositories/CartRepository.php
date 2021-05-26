@@ -5,6 +5,7 @@ namespace Modules\Api\Repositories;
 
 use Illuminate\Http\Request;
 use Modules\Mon\Entities\Address;
+use Modules\Mon\Entities\Cart;
 use Modules\Mon\Entities\District;
 use Modules\Mon\Entities\Phoenix;
 use Modules\Mon\Entities\Product;
@@ -13,9 +14,8 @@ use Modules\Mon\Entities\Province;
 use Modules\Mon\Entities\ShipType;
 use Modules\Mon\Entities\User;
 
-interface OrderRepository
+interface CartRepository
 {
-	public function placeMultipleOrder (Request $request, User $user);
-	public function placeOrder($requestParams, User $user, ShipType $shipType, Address $shipAddress, Province $province, District $district, Phoenix $phoenix,  Product $product,  $productAttributeValue);
-	public function listOrder(Request $request);
+	public function updateCart (Request $request, User $user);
+	public function getCart (Request $request, User $user);
 }

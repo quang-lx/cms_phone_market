@@ -219,9 +219,13 @@ export default {
         },
         "dashboard": {
             "label": {
-                "shop-product": "Thống kê sản phẩm số lượng sản phẩm chi nhánh"
-            },
-            "list": []
+                "count-order": "Thống kê số đơn",
+                "revenue-order": "Thống kê doanh thu",
+                "totalRevenue": "Tổng doanh thu",
+                "paid": "Đã thanh toán",
+                "waitPaid": "Sẽ thanh toán",
+                "totalFee": "Tổng phí"
+            }
         },
         "media": {
             "label": {

@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/app')->group(function () {
-
+    Route::get('/setting', [
+        'as' => 'api.app.setting',
+        'uses' => 'AppController@setting',
+    ]);
     Route::get('/provinces', [
         'as' => 'api.app.provinces',
         'uses' => 'AppController@provinces',
@@ -287,7 +290,21 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@store',
             'as' => 'apife.order.store',
         ]);
+        Route::get('/list', [
+            'uses' => 'OrderController@getList',
+            'as' => 'apife.order.getList',
+        ]);
     });
+	Route::prefix('cart')->group(function ($router) {
+		Route::post('/update', [
+			'uses' => 'CartController@store',
+			'as' => 'apife.cart.store',
+		]);
+		Route::get('/detail', [
+			'uses' => 'CartController@detail',
+			'as' => 'apife.cart.detail',
+		]);
+	});
 });
 
 
