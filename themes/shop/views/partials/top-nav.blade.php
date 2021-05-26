@@ -1,5 +1,9 @@
 <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
+        <chat-messages></chat-messages>
+    </li>
+    <li class="nav-item dropdown">
+       
         <div class="d-flex">
             <div class="image">
                 <img src="{{ URL::asset('/themes/backend/images/avatar.svg') }}" class="img-circle elevation-2" alt="User Image" width="35">
@@ -30,3 +34,5 @@
 
 
 </ul>
+
+
