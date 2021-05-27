@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ClearVoucherCache;
 use App\Console\Commands\GenerateI18NTranslation;
 use App\Console\Commands\SchedulerFbNoti;
 use Illuminate\Console\Scheduling\Schedule;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         GenerateI18NTranslation::class,
 	    SchedulerFbNoti::class,
+        ClearVoucherCache::class,
 
     ];
 
@@ -29,6 +31,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 	    $schedule->command('fbnoti-scheduler:run')->withoutOverlapping();
+	    $schedule->command('voucher:clear-cache')->daily();
     }
 
     /**
