@@ -287,7 +287,7 @@ class EloquentOrderRepository implements OrderRepository
         $orderData['ship_phoenix_name'] = $phoenix->name;
 
 
-        $orderData['status'] = 0;
+        $orderData['status'] = Orders::STATUS_ORDER_CREATED;
         $orderData['payment_status'] = 0;
         $orderData['order_type'] = $requestParams['order_type'];
         $orderData['ship_fee'] = 0;
@@ -309,7 +309,7 @@ class EloquentOrderRepository implements OrderRepository
         // ship
 
 
-        $orderData['status'] = 0;
+        $orderData['status'] = Orders::STATUS_ORDER_CREATED;
         $orderData['payment_status'] = 0;
         $orderData['order_type'] = $requestParams['order_type'];
         $orderData['ship_fee'] = 0;
