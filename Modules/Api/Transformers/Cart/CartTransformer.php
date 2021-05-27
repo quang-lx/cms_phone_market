@@ -4,6 +4,7 @@
 namespace Modules\Api\Transformers\Cart;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Api\Transformers\MediaShortTransformer;
 use Modules\Mon\Entities\Shop;
 
 class CartTransformer extends JsonResource

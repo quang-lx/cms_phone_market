@@ -145,10 +145,7 @@ class AppController extends ApiController
                             'code' => 'created',
                             'label' => trans('order.order_status.created')
                         ],
-                        [
-                            'code' => 'confirmed',
-                            'label' => trans('order.order_status.confirmed')
-                        ],
+
                         [
                             'code' => 'warranting',
                             'label' => trans('order.order_status.warranting')
