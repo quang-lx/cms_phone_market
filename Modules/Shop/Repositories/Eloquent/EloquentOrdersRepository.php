@@ -164,9 +164,24 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
     public function updateGuarantee($model, $data)
     {
-        $data_update =[
-            'status' => 'warranting'
-        ];
-        $model->update($data_update);
+        if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => 'warranting'
+            ];
+            $model->update($data_update);
+    
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+        
+       
+        
     }
 }

@@ -187,9 +187,10 @@ export default {
         })
         .catch((error) => {
           this.loading = false;
+          this.dialogVisible = false;
           this.$notify.error({
-            title: this.$t("mon.error.Title"),
-            message: this.getSubmitError(this.form.errors),
+            title: 'Lỗi xác nhận',
+            message: error.response.data.message,
           });
         });
     },
