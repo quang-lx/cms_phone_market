@@ -47,6 +47,10 @@ Route::prefix('/app')->group(function () {
 		'as' => 'api.app.paymentmethod',
 		'uses' => 'AppController@listPaymentMethod',
 	]);
+    Route::get('/vouchers', [
+        'as' => 'api.app.vouchers',
+        'uses' => 'AppController@vouchers',
+    ]);
 });
 
 
