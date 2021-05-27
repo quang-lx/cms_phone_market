@@ -52,6 +52,7 @@ import DashboardList from './../components/dashboard/index';
 import OrderGuaranteeList from './../components/orders/index_guarantee';
 import OrderBuySellList from './../components/orders/index_buysell';
 import OrderBuySellDetail from './../components/orders/detail_buysell';
+import OrderGuaranteeDetail  from './../components/orders/detail_guarantee';
 
 
 import ShopCategoryList from './../components/shopcategory/index';
@@ -391,6 +392,15 @@ export default [
         path: '/shop-admin/orders/:ordersId/detail-buysell',
         name: 'shop.orders.detailbuysell',
         component: OrderBuySellDetail,
+        props: {
+            pageTitle: 'orders.label.detail_title',
+        },
+    },
+
+    {
+        path: '/shop-admin/orders/:ordersId/detail-guarantee',
+        name: 'shop.orders.detailguarantee',
+        component: OrderGuaranteeDetail,
         props: {
             pageTitle: 'orders.label.detail_title',
         },
