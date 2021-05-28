@@ -29,7 +29,16 @@ class EloquentCacheVoucherRepository implements VoucherRepository
     public function getListVoucher(Request $request)
     {
         $shopIds = $request->get('shop_ids', null);
+        $cacheKey = CacheKey::VOUCHER_ALL;
+        $data = [];
 
+        $systemVouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () {
+            $vouchers = $this->getVouchers();
+            return VoucherTransformer::collection($vouchers);
+        });
+
+        $data['system'] = $systemVouchers;
+        $data['shops'] = [];
         if ($shopIds) {
             $shopIds = explode(',', $shopIds);
             if ($shopIds && is_array($shopIds)) {
@@ -47,17 +56,8 @@ class EloquentCacheVoucherRepository implements VoucherRepository
                     ];
                 }
             }
-        } else {
-            $cacheKey = CacheKey::VOUCHER_ALL;
-            $data = [];
-
-            $systemVouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () {
-                $vouchers = $this->getVouchers();
-                return VoucherTransformer::collection($vouchers);
-            });
-
-            $data['system'] = $systemVouchers;
         }
+
 
 
 
