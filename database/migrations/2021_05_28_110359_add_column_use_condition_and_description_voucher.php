@@ -14,8 +14,8 @@ class AddColumnUseConditionAndDescriptionVoucher extends Migration
     public function up()
     {
         Schema::table('vouchers', function (Blueprint $table) {
-            $table->string('use_condition')->nullable();
-            $table->string('description')->nullable();
+            $table->text('use_condition')->nullable();
+            $table->text('description')->nullable();
         });
     }
 
