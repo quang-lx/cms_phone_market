@@ -122,11 +122,13 @@ class OrderController extends ApiController
         $messages = [];
         $rules = [
             'voucher_id' => 'required',
+            'shop_id' => 'required',
             'products.*.id' => 'required',
             'products.*.quantity' => 'required',
 
         ];
 
+        $messages['shop_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Cửa hàng']);
         $messages['voucher_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Mã giảm giá']);
         $messages['products.*.id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']);
         $messages['products.*.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
