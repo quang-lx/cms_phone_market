@@ -339,14 +339,14 @@ class EloquentOrderRepository implements OrderRepository
     }
 
     public function getShopDiscountAmount(Request $request) {
-        $voucherId = $request->get('voucher_id');
+        $voucherCode = $request->get('voucher_code');
         $shopId = $request->get('shop_id');
         $products = $request->get('products');
-        return $this->getVoucherAmount($voucherId, $shopId, $products);
+        return $this->getVoucherAmount($voucherCode, $shopId, $products);
     }
-    protected function getVoucherAmount($voucherId, $shopId, $products) {
+    protected function getVoucherAmount($voucherCode, $shopId, $products) {
 
-        $voucher = Voucher::find($voucherId);
+        $voucher = Voucher::query()->where('code',$voucherCode)->first();
         if (!$voucher) {
             return [false, 'Mã giảm giá không tồn tại'];
         }

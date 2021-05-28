@@ -121,7 +121,7 @@ class OrderController extends ApiController
     protected function validateCheckVoucher(Request $request) {
         $messages = [];
         $rules = [
-            'voucher_id' => 'required',
+            'voucher_code' => 'required',
             'shop_id' => 'required',
             'products.*.id' => 'required',
             'products.*.quantity' => 'required',
@@ -129,7 +129,7 @@ class OrderController extends ApiController
         ];
 
         $messages['shop_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Cửa hàng']);
-        $messages['voucher_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Mã giảm giá']);
+        $messages['voucher_code.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Mã giảm giá']);
         $messages['products.*.id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']);
         $messages['products.*.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
 
