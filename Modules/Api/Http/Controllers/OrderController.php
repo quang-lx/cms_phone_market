@@ -108,7 +108,7 @@ class OrderController extends ApiController
             $errors = $validator->errors();
             return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
         }
-        $result = $this->orderRepo->getDiscountAmount($request);
+        $result = $this->orderRepo->getShopDiscountAmount($request);
         list ($voucherAmount, $resultMsg) = $result;
         if ($voucherAmount === false) {
             return $this->respond(null, $resultMsg, ErrorCode::ERR422);
