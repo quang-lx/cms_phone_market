@@ -5,10 +5,11 @@ namespace Modules\Mon\Entities;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
+use Modules\Media\Traits\MediaRelation;
 
 class Voucher extends Model
 {
-    use  SoftDeletes, Userstamps;
+    use  SoftDeletes, Userstamps,MediaRelation;
 
     const TYPE_DISCOUNT_ALL = 1;
     const TYPE_DISCOUNT_PRODUCT = 2;
@@ -91,5 +92,9 @@ class Voucher extends Model
         return $statusName;
     }
 
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('thumbnail')->first();
+    }
 
 }

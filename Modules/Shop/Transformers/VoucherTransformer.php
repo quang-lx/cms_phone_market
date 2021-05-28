@@ -35,6 +35,8 @@ class VoucherTransformer extends JsonResource
             'created_name' => optional($this->creator)->name,
             'use_condition' => $this->use_condition,
             'description' => $this->description,
+            'thumbnail' => $this->thumbnail,
+
 
              'urls' => [
                 'delete_url' => route('api.voucher.destroy', $this->id),

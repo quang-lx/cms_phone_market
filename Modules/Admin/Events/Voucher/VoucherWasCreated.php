@@ -3,9 +3,10 @@
 namespace Modules\Admin\Events\Voucher;
 
 use Modules\Mon\Entities\Voucher;
+use Modules\Media\Repositories\StoringMedia;
 
 
-class VoucherWasCreated
+class VoucherWasCreated implements StoringMedia
 {
     /**
      * @var Voucher

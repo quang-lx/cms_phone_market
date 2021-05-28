@@ -2,11 +2,11 @@
 
 namespace Modules\Shop\Events\Voucher;
 
-// use Modules\Media\Repositories\StoringMedia;
+use Modules\Media\Repositories\StoringMedia;
 use Modules\Mon\Entities\Voucher;
 
 
-class VoucherWasUpdated
+class VoucherWasUpdated implements StoringMedia
 {
     /**
      * @var Voucher
