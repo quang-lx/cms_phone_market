@@ -61,14 +61,14 @@ class EloquentCacheVoucherRepository implements VoucherRepository
         $today = Carbon::now();
         $query->where(function($query) use ($today) {
             /** @var Builder $query */
-            $query->whereDate('actived_at', '>=', $today)
+            $query->whereDate('actived_at', '<=', $today)
                 ->orWhereNull('actived_at');
         });
 
         // query by expired date
         $query->where(function($query) use ($today) {
             /** @var Builder $query */
-            $query->whereDate('expired_at', '<=', $today)
+            $query->whereDate('expired_at', '>=', $today)
                 ->orWhereNull('expired_at');
         });
 
