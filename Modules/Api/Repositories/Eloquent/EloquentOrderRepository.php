@@ -407,6 +407,7 @@ class EloquentOrderRepository implements OrderRepository
         if ($voucher->discount_type == Voucher::DISCOUNT_PRICE) {
             $voucherAmount = $voucher->discount_amount;
         } else {
+            Log::info($voucher->discount_amount);
             $productPrice = $product->price;
             if ($product->price_sale) {
                 $productPrice = $productPrice * (100 - $productPrice->price_sale) / 100;
@@ -418,6 +419,7 @@ class EloquentOrderRepository implements OrderRepository
                     $productPrice = $productPrice * (100 - $productAttributeValue->price_sale) / 100;
                 }
             }
+            Log::info($productPrice);
             $voucherAmount = $voucher->discount_amount * $productPrice/100;
         }
 
