@@ -28,33 +28,39 @@ class EloquentCacheVoucherRepository implements VoucherRepository
 
     public function getListVoucher(Request $request)
     {
-        $shopIds = $request->get('shop_ids');
+        $shopIds = $request->get('shop_ids', null);
 
-        $shopIds = explode(',', $shopIds);
-
-        $cacheKey = CacheKey::VOUCHER_ALL;
-        $data = [];
-
-        $systemVouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () {
-            $vouchers = $this->getVouchers();
-            return VoucherTransformer::collection($vouchers);
-        });
-
-        $data['system'] = $systemVouchers;
-        if ($shopIds && is_array($shopIds)) {
-            $data['shops'] = [];
-            foreach ($shopIds as $shopId) {
-                $cacheKey = sprintf(CacheKey::VOUCHER_SHOP, $shopId);
-                $vouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () use ($shopId) {
-                    $vouchers = $this->getVouchers($shopId);
-                    return VoucherTransformer::collection($vouchers);
-                });
-                $data['shops'][] = [
-                    'shop_id' => $shopId,
-                    'vouchers' => $vouchers
-                ];
+        if ($shopIds) {
+            $shopIds = explode(',', $shopIds);
+            if ($shopIds && is_array($shopIds)) {
+                $data['shops'] = [];
+                foreach ($shopIds as $shopId) {
+                    if (!$shopId) continue;
+                    $cacheKey = sprintf(CacheKey::VOUCHER_SHOP, $shopId);
+                    $vouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () use ($shopId) {
+                        $vouchers = $this->getVouchers($shopId);
+                        return VoucherTransformer::collection($vouchers);
+                    });
+                    $data['shops'][] = [
+                        'shop_id' => $shopId,
+                        'vouchers' => $vouchers
+                    ];
+                }
             }
+        } else {
+            $cacheKey = CacheKey::VOUCHER_ALL;
+            $data = [];
+
+            $systemVouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () {
+                $vouchers = $this->getVouchers();
+                return VoucherTransformer::collection($vouchers);
+            });
+
+            $data['system'] = $systemVouchers;
         }
+
+
+
         return $data;
     }
 
