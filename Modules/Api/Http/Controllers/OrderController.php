@@ -103,7 +103,7 @@ class OrderController extends ApiController
     }
 
     public function getShopDiscountAmount(Request $request) {
-        $validator = $this->validateStore($request);
+        $validator = $this->validateCheckVoucher($request);
         if ($validator->fails()) {
             $errors = $validator->errors();
             return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
@@ -121,11 +121,13 @@ class OrderController extends ApiController
     protected function validateCheckVoucher(Request $request) {
         $messages = [];
         $rules = [
+            'voucher_id' => 'required',
             'products.*.id' => 'required',
             'products.*.quantity' => 'required',
 
         ];
 
+        $messages['voucher_id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Mã giảm giá']);
         $messages['products.*.id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']);
         $messages['products.*.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
 
