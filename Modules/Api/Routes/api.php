@@ -298,6 +298,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@getList',
             'as' => 'apife.order.getList',
         ]);
+        Route::get('/check-shop-voucher', [
+            'uses' => 'OrderController@getShopDiscountAmount',
+            'as' => 'apife.order.getShopDiscountAmount',
+        ]);
     });
 	Route::prefix('cart')->group(function ($router) {
 		Route::post('/update', [

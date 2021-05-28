@@ -101,4 +101,36 @@ class OrderController extends ApiController
         $orders = $this->orderRepo->listOrder($request);
         return $this->respond(OrderTransformer::collection($orders), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
     }
+
+    public function getShopDiscountAmount(Request $request) {
+        $validator = $this->validateStore($request);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
+        }
+        $result = $this->orderRepo->getDiscountAmount($request);
+        list ($voucherAmount, $resultMsg) = $result;
+        if ($voucherAmount === false) {
+            return $this->respond(null, $resultMsg, ErrorCode::ERR422);
+        }
+
+        return $this->respond($voucherAmount, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
+    }
+
+    protected function validateCheckVoucher(Request $request) {
+        $messages = [];
+        $rules = [
+            'products.*.id' => 'required',
+            'products.*.quantity' => 'required',
+
+        ];
+
+        $messages['products.*.id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']);
+        $messages['products.*.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
+
+
+
+        return $this->validate($request, $rules, $messages);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Modules\Api\Repositories\Eloquent;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,8 @@ use Modules\Mon\Entities\Province;
 use Modules\Mon\Entities\ShipType;
 use Modules\Mon\Entities\Shop;
 use Modules\Mon\Entities\User;
+use Modules\Mon\Entities\Voucher;
+use Modules\Mon\Entities\VoucherProduct;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class EloquentOrderRepository implements OrderRepository
@@ -334,4 +337,91 @@ class EloquentOrderRepository implements OrderRepository
         return $query->paginate($request->get('per_page', 10));
 
     }
+
+    public function getShopDiscountAmount(Request $request) {
+        $voucherId = $request->get('voucher_id');
+        $shopId = $request->get('shop_id');
+        $products = $request->get('products');
+        return $this->getVoucherAmount($voucherId, $shopId, $products);
+    }
+    protected function getVoucherAmount($voucherId, $shopId, $products) {
+
+        $voucher = Voucher::find($voucherId);
+        if (!$voucher) {
+            return [false, 'Mã giảm giá không tồn tại'];
+        }
+        if ($voucher->shop_id && $voucher->shop_id != $shopId) {
+            return [false, 'Mã giảm giá không hợp lệ'];
+        }
+        if ($voucher->total_used > $voucher->total) {
+            return [false, 'Mã giảm giá hết lượt sử dụng'];
+        }
+
+        if ($voucher->actived_at && $voucher->actived_at->gt(Carbon::now())) {
+            return [false, 'Mã giảm giá hết hạn sử dụng'];
+        }
+        if ($voucher->expired_at && $voucher->expired_at->lt(Carbon::now())) {
+            return [false, 'Mã giảm giá hết hạn sử dụng'];
+        }
+
+        $voucherTotalAmount = 0;
+
+        foreach ($products as $product) {
+            $productId = $product['id']?? null;
+            $quantity = $product['quantity'];
+            if (!$productId) {
+                return [false, 'Chưa chọn sản phẩm'];
+            }
+            $model = Product::find($product['id']);
+            $productAttributeValue = $product['product_attribute_id']?? null;
+            $attributeModel = ProductAttributeValue::find($productAttributeValue);
+            $voucherAmount = $this->calVoucherAmount($shopId, $voucher, $model, $attributeModel);
+            if ($voucherAmount) {
+                $voucherTotalAmount += $voucherAmount*$quantity;
+            }
+
+        }
+        return [$voucherTotalAmount, null];
+    }
+
+    protected function calVoucherAmount($shopId, Voucher $voucher, Product $product = null, ProductAttributeValue $productAttributeValue = null) {
+        if ($voucher->shop_id && $voucher->shop_id != $shopId) {
+            return false;
+        }
+        if ($voucher->total_used > $voucher->total) {
+            return false;
+        }
+        if ($voucher->type == Voucher::TYPE_DISCOUNT_PRODUCT) {
+            if (!$product) {
+                return false;
+            }
+            $checkProduct = VoucherProduct::query()->where([
+                'voucher_id' => $voucher->id,
+                'product_id' => $product->id,
+            ])->count();
+            if (!$checkProduct) {
+                return false;
+            }
+        }
+        if ($voucher->discount_type == Voucher::DISCOUNT_PRICE) {
+            $voucherAmount = $voucher->discount_amount;
+        } else {
+            $productPrice = $product->price;
+            if ($product->price_sale) {
+                $productPrice = $productPrice * (100 - $productPrice->price_sale) / 100;
+            }
+            if ($productAttributeValue) {
+
+                $productPrice = $productAttributeValue->price;
+                if ($productAttributeValue->price_sale) {
+                    $productPrice = $productPrice * (100 - $productAttributeValue->price_sale) / 100;
+                }
+            }
+            $voucherAmount = $voucher->discount_amount * $productPrice/100;
+        }
+
+        return $voucherAmount;
+
+    }
+
 }

@@ -13,6 +13,14 @@ class Voucher extends Model
     const TYPE_DISCOUNT_ALL = 1;
     const TYPE_DISCOUNT_PRODUCT = 2;
 
+
+    const DISCOUNT_PRICE = 1;
+    const DISCOUNT_PERCENT = 2;
+    protected $casts = [
+        'actived_at' => 'datetime',
+        'expired_at' => 'datetime',
+    ];
+
     protected $table = 'vouchers';
     protected $fillable = [
         'id',
