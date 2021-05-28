@@ -376,6 +376,7 @@ class EloquentOrderRepository implements OrderRepository
             $productAttributeValue = $product['product_attribute_id']?? null;
             $attributeModel = ProductAttributeValue::find($productAttributeValue);
             $voucherAmount = $this->calVoucherAmount($shopId, $voucher, $model, $attributeModel);
+            Log::info($voucherAmount);
             if ($voucherAmount) {
                 $voucherTotalAmount += $voucherAmount*$quantity;
             }
