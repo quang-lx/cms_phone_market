@@ -19,6 +19,8 @@ class UpdateVoucherRequest extends FormRequest
             'expired_at' => 'required',
             'type' => 'required',
             'discount_type' => 'required',
+            'use_condition' => 'required',
+            'description' => 'required',
         ];
     }
 
@@ -45,6 +47,8 @@ class UpdateVoucherRequest extends FormRequest
             'expired_at.required' => 'Thời gian sử dụng mã là bắt buộc',
             'type.required' => 'Loại mã là bắt buộc',
             'discount_type.required' => 'Loại giảm giá là bắt buộc',
+            'use_condition.required' => 'Điều kiện sử dụng là bắt buộc',
+            'description.required' => 'Chi tiết là bắt buộc',
             
         ];
     }

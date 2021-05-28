@@ -18,6 +18,8 @@ class CreateVoucherRequest extends FormRequest
             'expired_at' => 'required|after_or_equal:actived_at',
             'type' => 'required',
             'discount_type' => 'required',
+            'use_condition' => 'required',
+            'description' => 'required',
         ];
     }
 
@@ -45,6 +47,9 @@ class CreateVoucherRequest extends FormRequest
             'expired_at.after_or_equal' => 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu',
             'type.required' => 'Loại mã là bắt buộc',
             'discount_type.required' => 'Loại giảm giá là bắt buộc',
+            'use_condition.required' => 'Điều kiện sử dụng là bắt buộc',
+            'description.required' => 'Chi tiết là bắt buộc',
+
             
         ];
     }

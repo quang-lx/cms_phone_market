@@ -28,6 +28,8 @@ class Voucher extends Model
         'expired_at',
         'total',
         'total_used',
+        'use_condition',
+        'description',
         'created_by',
         'updated_by',
         'deleted_by',
