@@ -234,6 +234,13 @@
                         ></div>
                       </el-form-item>
                     </div>
+                    <div class="col-12">
+                        <single-media zone="thumbnail"
+                            @singleFileSelected="selectSingleFile($event, 'modelForm')"
+                            label="Ảnh đại diện"
+                            entity="Modules\Mon\Entities\Voucher"
+                            :entity-id="$route.params.voucherId"></single-media>
+                    </div>
                   
                   </div>
                 </div>
@@ -367,11 +374,13 @@
 <script>
 import axios from "axios";
 import Form from "form-backend-validation";
+import SingleFileSelector from '../../mixins/SingleFileSelector.js';
 import Tinymce from "../utils/Tinymce";
 
 export default {
+  mixins: [SingleFileSelector],
   components: {
-    Tinymce,
+    Tinymce
   },
   props: {
     pageTitle: { default: null, String },
