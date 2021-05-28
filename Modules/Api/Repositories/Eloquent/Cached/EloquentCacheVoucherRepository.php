@@ -49,7 +49,10 @@ class EloquentCacheVoucherRepository implements VoucherRepository
                     $vouchers = $this->getVouchers($shopId);
                     return VoucherTransformer::collection($vouchers);
                 });
-                $data['shops'][$shopId] = $vouchers;
+                $data['shops'][] = [
+                    'shop_id' => $shopId,
+                    'vouchers' => $vouchers
+                ];
             }
         }
         return $data;
