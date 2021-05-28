@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Admin\Repositories\VoucherRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Modules\Admin\Events\Voucher\VoucherWasUpdated;
+use Modules\Admin\Events\Voucher\VoucherWasCreated;
 
 class EloquentVoucherRepository extends BaseRepository implements VoucherRepository
 {
@@ -20,6 +21,7 @@ class EloquentVoucherRepository extends BaseRepository implements VoucherReposit
         if (isset($data['products']) && is_array($data['products'])) {
             $model->products()->sync($data['products']); //mảng product_id
         }
+        event(new VoucherWasCreated($model, $data));
 
         return $model;
     }

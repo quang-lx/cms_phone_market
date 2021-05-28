@@ -25,6 +25,7 @@ class EloquentVoucherRepository extends BaseRepository implements VoucherReposit
         if (isset($data['products']) && is_array($data['products'])) {
             $model->products()->sync($data['products']); //mảng product_id
         }
+        event(new VoucherWasCreated($model, $data));
         $cacheKey =  $cacheKey = sprintf(CacheKey::VOUCHER_SHOP, Auth::user()->shop_id);
         Cache::forget($cacheKey);
 

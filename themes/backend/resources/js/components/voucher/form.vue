@@ -100,7 +100,9 @@
                             placeholder="Thời gian bắt đầu hiệu lực"
                             v-model="modelForm.actived_at"
                             style="width: 100%"
-                            :class="{'el-form-item is-error': form.errors.has('code'),}"
+                            :class="{
+                              'el-form-item is-error': form.errors.has('code'),
+                            }"
                           ></el-date-picker>
                         </el-col>
                         <el-col class="line text-center" :span="2">-</el-col>
@@ -111,7 +113,9 @@
                             placeholder="Thời gian kết thúc hiệu lực"
                             v-model="modelForm.expired_at"
                             style="width: 100%"
-                            :class="{'el-form-item is-error': form.errors.has('code'),}"
+                            :class="{
+                              'el-form-item is-error': form.errors.has('code'),
+                            }"
                           ></el-date-picker>
                         </el-col>
                         <div
@@ -125,7 +129,6 @@
                           v-else-if="form.errors.has('expired_at')"
                           v-text="form.errors.first('expired_at')"
                         ></div>
-                      
                       </el-form-item>
                     </div>
 
@@ -151,8 +154,6 @@
                         ></div>
                       </el-form-item>
                     </div>
-
-                    
                   </div>
                 </div>
 
@@ -203,7 +204,6 @@
                           ),
                         }"
                       >
-
                         <el-input
                           v-model="modelForm.require_min_amount"
                         ></el-input>
@@ -222,11 +222,12 @@
                           'el-form-item is-error': form.errors.has('total'),
                         }"
                       >
-
-                        <el-input-number 
-                              v-model="modelForm.total" :min="0"
-                              :max="100000000"
-                              placeholder="Tổng số mã"></el-input-number>
+                        <el-input-number
+                          v-model="modelForm.total"
+                          :min="0"
+                          :max="100000000"
+                          placeholder="Tổng số mã"
+                        ></el-input-number>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('total')"
@@ -238,73 +239,151 @@
                 </div>
                 <div class="clear-both"></div>
               </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <el-form-item
+                    :label="$t('voucher.label.use_condition')"
+                    :class="{
+                      'el-form-item is-error': form.errors.has('use_condition'),
+                    }"
+                  >
+                    <div slot="label">
+                      <label class="el-form-item__label">{{
+                        $t("voucher.label.use_condition")
+                      }}</label>
+                    </div>
+                    <tinymce
+                      v-model="modelForm.use_condition"
+                      :height="500"
+                    ></tinymce>
+                    <div
+                      class="el-form-item__error"
+                      v-if="form.errors.has('use_condition')"
+                      v-text="form.errors.first('use_condition')"
+                    ></div>
+                  </el-form-item>
+                </div>
 
+                <div class="col-md-12">
+                  <el-form-item
+                    :label="$t('voucher.label.description')"
+                    :class="{
+                      'el-form-item is-error': form.errors.has('description'),
+                    }"
+                  >
+                    <div slot="label">
+                      <label class="el-form-item__label">{{
+                        $t("voucher.label.description")
+                      }}</label>
+                    </div>
+                    <tinymce
+                      v-model="modelForm.description"
+                      :height="500"
+                    ></tinymce>
+                    <div
+                      class="el-form-item__error"
+                      v-if="form.errors.has('description')"
+                      v-text="form.errors.first('description')"
+                    ></div>
+                  </el-form-item>
+                </div>
+              </div>
               <div class="row check-discount-product hide">
                 <!-- Danh sách product được giảm giá -->
-                    <div class="col-md-12">
-                      <el-table
-                        :data="modelForm.products"
-                        stripe
-                        style="width: 100%"
-                        ref="dataTable"
-                        v-loading.body="tableIsLoading">
-                          <el-table-column prop="id" :label="$t('product.label.id')" width="75">
-                          </el-table-column>
+                <div class="col-md-12">
+                  <el-table
+                    :data="modelForm.products"
+                    stripe
+                    style="width: 100%"
+                    ref="dataTable"
+                    v-loading.body="tableIsLoading"
+                  >
+                    <el-table-column
+                      prop="id"
+                      :label="$t('product.label.id')"
+                      width="75"
+                    >
+                    </el-table-column>
 
-                          <el-table-column prop=""  :label="$t('product.label.image')" >
-                              <template slot-scope="scope">
-                                  <img :src="scope.row.thumbnail.path_string" v-if="scope.row.thumbnail"
-                                        width="100" height="100" style="object-fit:contain"/>
-                              </template>
-                          </el-table-column>
+                    <el-table-column prop="" :label="$t('product.label.image')">
+                      <template slot-scope="scope">
+                        <img
+                          :src="scope.row.thumbnail.path_string"
+                          v-if="scope.row.thumbnail"
+                          width="100"
+                          height="100"
+                          style="object-fit: contain"
+                        />
+                      </template>
+                    </el-table-column>
 
-                          <el-table-column prop="name" :label="$t('product.label.name')">
+                    <el-table-column
+                      prop="name"
+                      :label="$t('product.label.name')"
+                    >
+                    </el-table-column>
 
-                          </el-table-column>
+                    <el-table-column
+                      prop=""
+                      :label="$t('product.label.amount')"
+                    >
+                      <template slot-scope="scope">
+                        {{ formatNumber(scope.row.amount) }}
+                      </template>
+                    </el-table-column>
 
-                          <el-table-column prop="" :label="$t('product.label.amount')">
-                              <template slot-scope="scope">
-                                  {{ formatNumber(scope.row.amount)}}
-                              </template>
-                          </el-table-column>
+                    <el-table-column
+                      prop=""
+                      :label="$t('product.label.category_id')"
+                    >
+                      <template slot-scope="scope">
+                        <span
+                          v-for="(item, index) in scope.row.category_name"
+                          :key="index"
+                        >
+                          <span
+                            v-if="scope.row.category_name.length - 1 == index"
+                            class="dont-break-out"
+                            >{{ item }}</span
+                          >
+                          <span v-else class="dont-break-out"
+                            >{{ item }},&nbsp</span
+                          >
+                        </span>
+                      </template>
+                    </el-table-column>
 
-                          <el-table-column prop="" :label="$t('product.label.category_id')">
-                              <template slot-scope="scope">
-                                  <span
-                                          v-for="(item, index) in scope.row.category_name"
-                                          :key="index"
-                                  >
-                                  <span v-if="scope.row.category_name.length-1==index" class="dont-break-out">{{item}}</span>
-                                  <span v-else class="dont-break-out">{{item}},&nbsp</span>
-                                  </span>
-                              </template>
-                          </el-table-column>
+                    <el-table-column prop="" :label="$t('product.label.price')">
+                      <template slot-scope="scope">
+                        {{ formatNumber(scope.row.price) }}
+                      </template>
+                    </el-table-column>
 
-                          <el-table-column prop="" :label="$t('product.label.price')">
-                              <template slot-scope="scope">
-                                  {{ formatNumber(scope.row.price)}}
-                              </template>
-                          </el-table-column>
+                    <el-table-column
+                      prop="status"
+                      :label="$t('product.list.status')"
+                    >
+                      <template slot-scope="scope">
+                        <span :style="{ color: scope.row.status_color }">{{
+                          scope.row.status_name
+                        }}</span>
+                      </template>
+                    </el-table-column>
 
-                          <el-table-column prop="status" :label="$t('product.list.status')">
-                              <template slot-scope="scope">
-                                  <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
-                              </template>
-                          </el-table-column>
-
-                        
-
-                          <el-table-column prop="actions" width="130">
-                              <template slot-scope="scope">
-                                <button type="button" class="el-button el-button--danger el-button--mini" @click="deleteProductVoucher(scope.row)">
-                                  <span><i class="fas fa-trash"></i></span>
-                                </button>
-                                
-                              </template>
-                          </el-table-column>
-                      </el-table>
-                    </div>
-                    <!-- End table -->
+                    <el-table-column prop="actions" width="130">
+                      <template slot-scope="scope">
+                        <button
+                          type="button"
+                          class="el-button el-button--danger el-button--mini"
+                          @click="deleteProductVoucher(scope.row)"
+                        >
+                          <span><i class="fas fa-trash"></i></span>
+                        </button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
+                <!-- End table -->
               </div>
             </div>
           </div>
@@ -361,6 +440,8 @@ export default {
         require_min_amount: "",
         total: "",
         product_key: "",
+        use_condition: "",
+        description: ""
       },
       locales: window.MonCMS.locales,
       list_discount_type: [
@@ -424,20 +505,22 @@ export default {
     },
 
     fetchData() {
-
       this.loading = true;
       let locale = this.$route.params.locale ? this.$route.params.locale : "en";
       axios
         .get(
-          route("api.admin.voucher.find", { voucher: this.$route.params.voucherId })
+          route("api.admin.voucher.find", {
+            voucher: this.$route.params.voucherId,
+          })
         )
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
-          if (this.modelForm.type == '2'){
-            $('.check-discount-product').removeClass('hide show').addClass("show");
+          if (this.modelForm.type == "2") {
+            $(".check-discount-product")
+              .removeClass("hide show")
+              .addClass("show");
           }
-          
         });
     },
 
@@ -454,8 +537,7 @@ export default {
         page: 0,
         per_page: 1000,
         search: queryString,
-        source: 'voucher',
-      
+        source: "voucher",
       };
 
       axios
@@ -475,24 +557,27 @@ export default {
       //add thêm vào biến products lưu danh sách các product đc giảm giá
       this.modelForm.products.push(item);
     },
-    deleteProductVoucher (item){
-      var removeByAttr = function(arr, attr, value){
+    deleteProductVoucher(item) {
+      var removeByAttr = function (arr, attr, value) {
         var i = arr.length;
-        while(i--){
-          if( arr[i] 
-              && arr[i].hasOwnProperty(attr) 
-              && (arguments.length > 2 && arr[i][attr] === value ) ){ 
-              arr.splice(i,1);
+        while (i--) {
+          if (
+            arr[i] &&
+            arr[i].hasOwnProperty(attr) &&
+            arguments.length > 2 &&
+            arr[i][attr] === value
+          ) {
+            arr.splice(i, 1);
           }
         }
         return arr;
-      }
-      removeByAttr(this.modelForm.products, 'id', item.id);
+      };
+      removeByAttr(this.modelForm.products, "id", item.id);
     },
 
-    changeTypeVoucher (){
-        $('.check-discount-product').toggleClass('hide').toggleClass("show");
-    }
+    changeTypeVoucher() {
+      $(".check-discount-product").toggleClass("hide").toggleClass("show");
+    },
   },
   mounted() {
     if (this.$route.params.voucherId !== undefined) {
@@ -514,7 +599,7 @@ export default {
   clear: both;
 }
 .el-autocomplete {
-    width: 100%;
+  width: 100%;
 }
 .hide {
   display: none;

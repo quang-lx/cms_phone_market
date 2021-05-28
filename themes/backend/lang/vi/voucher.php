@@ -22,6 +22,8 @@ return [
         'type_name' => 'Loại mã',
         'discount_amount' => 'Giảm',
         'status' => 'Trạng thái',
+        'use_condition' => 'Điều kiện sử dụng',
+        'description' => 'Chi tiết',
     ],
     'list' => [
         'status' => 'Trạng thái',

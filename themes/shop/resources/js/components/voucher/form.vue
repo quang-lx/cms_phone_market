@@ -234,9 +234,40 @@
                         ></div>
                       </el-form-item>
                     </div>
+                  
                   </div>
                 </div>
                 <div class="clear-both"></div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-12">
+                          <el-form-item :label="$t('voucher.label.use_condition')"
+                                        :class="{'el-form-item is-error': form.errors.has(  'use_condition') }">
+                              <div slot="label">
+                                  <label class="el-form-item__label">{{$t('voucher.label.use_condition')}}</label>
+                              </div>
+                              <tinymce v-model="modelForm.use_condition"
+                                        :height="500"></tinymce>
+                              <div class="el-form-item__error"
+                                    v-if="form.errors.has('use_condition')"
+                                    v-text="form.errors.first('use_condition')"></div>
+                          </el-form-item>
+                      </div>
+
+                      <div class="col-md-12">
+                          <el-form-item :label="$t('voucher.label.description')"
+                                        :class="{'el-form-item is-error': form.errors.has(  'description') }">
+                              <div slot="label">
+                                  <label class="el-form-item__label">{{$t('voucher.label.description')}}</label>
+                              </div>
+                              <tinymce v-model="modelForm.description"
+                                        :height="500"></tinymce>
+                              <div class="el-form-item__error"
+                                    v-if="form.errors.has('description')"
+                                    v-text="form.errors.first('description')"></div>
+                          </el-form-item>
+                      </div>
               </div>
 
               <div class="row check-discount-product hide">
@@ -361,6 +392,8 @@ export default {
         require_min_amount: "",
         total: "",
         product_key: "",
+        use_condition: "",
+        description: ""
       },
       locales: window.MonCMS.locales,
       list_discount_type: [

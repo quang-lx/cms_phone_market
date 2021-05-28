@@ -331,9 +331,9 @@ export default {
                 "detail_title": "Chi tiết đơn"
             },
             "message": {
-                "create success": "Tạo Chuyên mục  thành công.",
-                "update success": "Cập nhật Chuyên mục  thành công.",
-                "delete success": "Xóa Chuyên mục  thành công."
+                "create success": "Tạo đơn hàng  thành công.",
+                "update success": "Cập nhật đơn hàng  thành công.",
+                "delete success": "Xóa đơn hàng  thành công."
             }
         },
         "permission": {
@@ -641,7 +641,9 @@ export default {
                 "btn_add_voucher": "Tạo mã giảm giá",
                 "updated_by": "Người cập nhật",
                 "type_name": "Loại mã",
-                "status": "Trạng thái"
+                "status": "Trạng thái",
+                "use_condition": "Điều kiện sử dụng",
+                "description": "Chi tiết"
             },
             "list": {
                 "status": "Trạng thái"
