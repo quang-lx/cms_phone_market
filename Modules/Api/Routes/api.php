@@ -298,11 +298,11 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@getList',
             'as' => 'apife.order.getList',
         ]);
-        Route::get('/check-shop-voucher', [
+        Route::post('/check-shop-voucher', [
             'uses' => 'OrderController@getShopDiscountAmount',
             'as' => 'apife.order.getShopDiscountAmount',
         ]);
-        Route::get('/check-system-voucher', [
+        Route::post('/check-system-voucher', [
             'uses' => 'OrderController@getSystemDiscountAmount',
             'as' => 'apife.order.getSystemDiscountAmount',
         ]);
