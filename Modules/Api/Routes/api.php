@@ -302,6 +302,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@getShopDiscountAmount',
             'as' => 'apife.order.getShopDiscountAmount',
         ]);
+        Route::get('/check-system-voucher', [
+            'uses' => 'OrderController@getSystemDiscountAmount',
+            'as' => 'apife.order.getSystemDiscountAmount',
+        ]);
     });
 	Route::prefix('cart')->group(function ($router) {
 		Route::post('/update', [
