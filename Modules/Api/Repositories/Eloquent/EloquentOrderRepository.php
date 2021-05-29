@@ -297,7 +297,7 @@ class EloquentOrderRepository implements OrderRepository
         $orderData['ship_fee'] = 0;
         $orderData['discount'] = 0;
 
-        $orderProductData['quantity'] = $requestParams['quantity'];
+        $orderProductData['quantity'] = $requestParams['quantity']?? 0;
         $orderProductData['note'] = $requestParams['note'] ?? '';
 
 
@@ -484,7 +484,7 @@ class EloquentOrderRepository implements OrderRepository
                 $listProductId = $order['products']?? [];
                 $orderProducts = [];
                 foreach ($listProductId as $productData) {
-                    Log::info($productData);
+
                     $quantity = $productData['quantity'];
                     $productId = $productData['product_id'];
                     $product = Product::find($productId);
@@ -498,6 +498,7 @@ class EloquentOrderRepository implements OrderRepository
                     $orderProductTmp['product'] = $product;
                     $orderProductTmp['attribute'] = null;
                     $orderProductTmp['quantity'] = $productData['quantity'];
+
                     // validate so luong san pham
                     $productAttributeValue = null;
                     if (isset($productData['product_attribute_value_id']) && !empty($productData['product_attribute_value_id'])) {
