@@ -10,6 +10,7 @@ use Modules\Mon\Events\UserWasUpdated;
 use Modules\Mon\Entities\User;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository extends BaseRepository implements UserInterface
 {
@@ -174,5 +175,38 @@ class UserRepository extends BaseRepository implements UserInterface
             $query->groupBy(explode(",", $request->get('group_by')));
         }
         return $query->paginate($request->get('per_page', 10));
+    }
+
+    public function statistical(Request $request, $relations = null)
+    {
+        $listUser = DB::table('users')
+            ->selectRaw('count(*) AS total_user, date(created_at) AS ngay_tao')
+            ->where('type', User::TYPE_USER)->where('status', User::STATUS_ACTIVE)->whereNull('deleted_at')
+            ->where('created_at', '>=', date('Y-m-d', time()-30*86400).' 00:00:00')
+            ->groupBy('ngay_tao')
+            ->get();
+        $today = date('Y-m-d');
+        $last7day = date('Y-m-d', time()-7*86400);
+        $last30ay = date('Y-m-d', time()-30*86400);
+        $userToday = $userWeek = $userMonth = 0;
+        foreach ($listUser as $user){
+            if ($user->ngay_tao == $today){
+                $userToday += $user->total_user;
+                $userWeek += $user->total_user;
+                $userMonth += $user->total_user;
+            } else if ($user->ngay_tao >= $last7day){
+                $userWeek += $user->total_user;
+                $userMonth += $user->total_user;
+            } else if ($user->ngay_tao >= $last30ay){
+                $userMonth += $user->total_user;
+            }
+        }
+        return array(
+            'userToday' => $userToday, 
+            'userWeek' => $userWeek,
+            'userMonth' => $userMonth,
+        );
+        
+        
     }
 }

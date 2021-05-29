@@ -41,6 +41,12 @@ class UserController extends ApiController
         return UserTransformer::collection($this->userRepository->serverPagingFor($request));
     }
 
+    public function statistical(Request $request)
+    {
+        return $this->userRepository->statistical($request);
+    }
+    
+
     public function store(CreateUserRequest $request)
     {
         $username = $request->get('username');

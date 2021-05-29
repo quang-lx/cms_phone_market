@@ -33,7 +33,6 @@ class OrdersController extends ApiController
         return OrdersTransformer::collection($this->ordersRepository->serverPagingFor($request));
     }
 
-
     public function all(Request $request)
     {
         return OrdersTransformer::collection($this->ordersRepository->newQueryBuilder()->get());
@@ -74,5 +73,16 @@ class OrdersController extends ApiController
             'errors' => false,
             'message' => trans('backend::orders.message.delete success'),
         ]);
+    }
+
+    //dashboard
+    public function statistical(Request $request)
+    {
+        return $this->ordersRepository->statistical($request);
+    }
+
+    public function topCompany(Request $request)
+    {
+        return $this->ordersRepository->topCompany($request);
     }
 }
