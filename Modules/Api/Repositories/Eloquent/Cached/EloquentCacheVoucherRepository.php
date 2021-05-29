@@ -34,7 +34,7 @@ class EloquentCacheVoucherRepository implements VoucherRepository
 
         $systemVouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () {
             $vouchers = $this->getVouchers();
-            return VoucherTransformer::collection($vouchers);
+            return VoucherTransformer::collection($vouchers)->jsonSerialize();
         });
 
         $data['system'] = $systemVouchers;
@@ -48,7 +48,7 @@ class EloquentCacheVoucherRepository implements VoucherRepository
                     $cacheKey = sprintf(CacheKey::VOUCHER_SHOP, $shopId);
                     $vouchers = Cache::tags(CacheKey::TAG_VOUCHER)->rememberForever($cacheKey, function () use ($shopId) {
                         $vouchers = $this->getVouchers($shopId);
-                        return VoucherTransformer::collection($vouchers);
+                        return VoucherTransformer::collection($vouchers)->jsonSerialize();
                     });
                     $data['shops'][] = [
                         'shop_id' => $shopId,
