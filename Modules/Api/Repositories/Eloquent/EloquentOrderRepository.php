@@ -484,6 +484,7 @@ class EloquentOrderRepository implements OrderRepository
                 $listProductId = $order['products']?? [];
                 $orderProducts = [];
                 foreach ($listProductId as $productData) {
+                    Log::info($productData);
                     $quantity = $productData['quantity'];
                     $productId = $productData['product_id'];
                     $product = Product::find($productId);
