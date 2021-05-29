@@ -11,7 +11,7 @@ class VoucherTransformer extends JsonResource
 {
 
 
-    public function toArray($request)
+    public function jsonSerialize()
     {
 //        $listProduct = null;
 //        if ($this->type == Voucher::TYPE_DISCOUNT_PRODUCT) {
