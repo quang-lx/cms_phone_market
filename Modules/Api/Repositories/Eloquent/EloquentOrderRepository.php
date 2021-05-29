@@ -496,6 +496,7 @@ class EloquentOrderRepository implements OrderRepository
                     $orderProductTmp = [];
                     $orderProductTmp['product'] = $product;
                     $orderProductTmp['attribute'] = null;
+                    $orderProductTmp['quantity'] = $productData['quantity'];
                     // validate so luong san pham
                     $productAttributeValue = null;
                     if (isset($productData['product_attribute_value_id']) && !empty($productData['product_attribute_value_id'])) {
@@ -557,7 +558,7 @@ class EloquentOrderRepository implements OrderRepository
 
             $orderProductData['product_title'] = $product->name;
             $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
-            $orderProductData['quantity'] = $requestParams['quantity'];
+            $orderProductData['quantity'] = $productData['quantity'];
             $orderProductData['price'] = $product->price;
             $orderProductData['price_sale'] = $productPrice;
             $orderProductData['product_id'] = $product->id;
