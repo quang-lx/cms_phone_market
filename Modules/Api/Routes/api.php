@@ -294,6 +294,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@store',
             'as' => 'apife.order.store',
         ]);
+        Route::post('/place-order-product', [
+            'uses' => 'OrderController@storeBuyProduct',
+            'as' => 'apife.order.storeBuyProduct',
+        ]);
         Route::get('/list', [
             'uses' => 'OrderController@getList',
             'as' => 'apife.order.getList',

@@ -235,18 +235,19 @@ class EloquentOrderRepository implements OrderRepository
         $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
         $orderProductData['quantity'] = $requestParams['quantity'];
         $orderProductData['price'] = $product->price;
-        $orderProductData['price_sale'] = $product->price_sale ?? 0;
+        $orderProductData['price_sale'] = $productPrice;
         $orderProductData['product_id'] = $product->id;
         $orderProductData['note'] = $requestParams['note'] ?? '';
 
         if ($productAttributeValue) {
-            $orderProductData['price'] = $productAttributeValue->price;
-            $orderProductData['price_sale'] = $productAttributeValue->price_sale ?? 0;
 
             $productPrice = $productAttributeValue->price;
             if ($productAttributeValue->price_sale) {
                 $productPrice = $productPrice * (100 - $productAttributeValue->price_sale) / 100;
             }
+            $orderProductData['price'] = $productAttributeValue->price;
+
+            $orderProductData['price_sale'] =  $productPrice;
         }
         //TODO price
         $orderData['total_price'] = $productPrice;
@@ -255,7 +256,7 @@ class EloquentOrderRepository implements OrderRepository
         $order = $this->model->create($orderData);
         if ($order) {
             $orderProductData['order_id'] = $order->id;
-            $orderProductData['product_img_id']  = optional($product->thumbnail)->id;
+            $orderProductData['product_img_id'] = optional($product->thumbnail)->id;
             $orderProduct = OrderProduct::create($orderProductData);
             if (!$orderProduct) {
                 return false;
@@ -325,33 +326,39 @@ class EloquentOrderRepository implements OrderRepository
         return [$orderData, $orderProductData];
     }
 
-    public function listOrder(Request $request) {
+    public function listOrder(Request $request)
+    {
         $user = Auth::user();
         $query = $this->model->newQuery()->where('user_id', $user->id)->with(['allOrderProducts', 'shop']);
         if ($type = $request->get('order_type')) {
             $query->where('order_type', $type);
         }
-        if($status = $request->get('status')) {
+        if ($status = $request->get('status')) {
             $query->where('status', $status);
         }
         return $query->paginate($request->get('per_page', 10));
 
     }
-    public function getSystemDiscountAmount(Request $request) {
+
+    public function getSystemDiscountAmount(Request $request)
+    {
         $voucherCode = $request->get('voucher_code');
         $products = $request->get('products');
         return $this->getVoucherAmount($voucherCode, null, $products);
     }
 
-    public function getShopDiscountAmount(Request $request) {
+    public function getShopDiscountAmount(Request $request)
+    {
         $voucherCode = $request->get('voucher_code');
         $shopId = $request->get('shop_id');
         $products = $request->get('products');
         return $this->getVoucherAmount($voucherCode, $shopId, $products);
     }
-    protected function getVoucherAmount($voucherCode, $shopId, $products) {
 
-        $voucher = Voucher::query()->where('code',$voucherCode)->first();
+    protected function getVoucherAmount($voucherCode, $shopId, $products)
+    {
+
+        $voucher = Voucher::query()->where('code', $voucherCode)->first();
         if (!$voucher) {
             return [false, 'Mã giảm giá không tồn tại'];
         }
@@ -372,18 +379,18 @@ class EloquentOrderRepository implements OrderRepository
         $voucherTotalAmount = 0;
 
         foreach ($products as $product) {
-            $productId = $product['id']?? null;
+            $productId = $product['id'] ?? null;
             $quantity = $product['quantity'];
             if (!$productId) {
                 return [false, 'Chưa chọn sản phẩm'];
             }
             $model = Product::find($product['id']);
-            $productAttributeValue = $product['product_attribute_id']?? null;
+            $productAttributeValue = $product['product_attribute_id'] ?? null;
             $attributeModel = ProductAttributeValue::find($productAttributeValue);
             $voucherAmount = $this->calVoucherAmount($shopId, $voucher, $model, $attributeModel);
             Log::info($voucherAmount);
             if ($voucherAmount && $voucher->discount_type == Voucher::DISCOUNT_PERCENT) {
-                $voucherTotalAmount += $voucherAmount*$quantity;
+                $voucherTotalAmount += $voucherAmount * $quantity;
             }
             if ($voucherAmount && $voucher->discount_type == Voucher::DISCOUNT_PRICE) {
                 $voucherTotalAmount = $voucherAmount;
@@ -392,7 +399,8 @@ class EloquentOrderRepository implements OrderRepository
         return [$voucherTotalAmount, null];
     }
 
-    protected function calVoucherAmount($shopId, Voucher $voucher, Product $product = null, ProductAttributeValue $productAttributeValue = null) {
+    protected function calVoucherAmount($shopId, Voucher $voucher, Product $product = null, ProductAttributeValue $productAttributeValue = null)
+    {
         if ($voucher->shop_id && $voucher->shop_id != $shopId) {
             return false;
         }
@@ -427,10 +435,195 @@ class EloquentOrderRepository implements OrderRepository
                 }
             }
             Log::info($productPrice);
-            $voucherAmount = $voucher->discount_amount * $productPrice/100;
+            $voucherAmount = $voucher->discount_amount * $productPrice / 100;
         }
 
         return $voucherAmount;
+
+    }
+
+    public function placeMultipleOrderBuyProduct(Request $request, User $user)
+    {
+        $orders = $request->get('orders');
+        DB::beginTransaction();
+        try {
+            foreach ($orders as $order) {
+
+                $orderType = Orders::TYPE_MUA_HANG;
+                $shopId = $order['shop_id'];
+                $order['order_type'] = $orderType;
+
+                $shipType = $this->shipTypeRepo->findById($request, $order['ship_type_id']);
+                if (!$shipType) {
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+                }
+
+                $shipAddress = $this->addressRepo->findById($request, $order['ship_address_id']);
+                if (!$shipAddress) {
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+                }
+
+                $shipProvince = $this->getShipProvince($shipAddress->province_id);
+                if (!$shipProvince) {
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+                }
+
+                $request->request->add(['province_id' => $shipAddress->province_id, 'district_id' => $shipAddress->district_id]);
+
+                $shipDistrict = $this->getShipDistrict($request, $shipAddress->district_id);
+                if (!$shipDistrict) {
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+                }
+
+                $shipPhoenix = $this->getShipPhoenix($request, $shipAddress->phoenix_id);
+                if (!$shipPhoenix) {
+                    return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+                }
+
+                // check neu sua chua khac
+                $listProductId = $order['products']?? [];
+                $orderProducts = [];
+                foreach ($listProductId as $productData) {
+                    $quantity = $productData['quantity'];
+                    $productId = $productData['product_id'];
+                    $product = Product::find($productId);
+                    if (!$product) {
+                        return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+                    }
+
+                    $order['company_id'] = $product->company_id;
+
+                    $orderProductTmp = [];
+                    $orderProductTmp['product'] = $product;
+                    $orderProductTmp['attribute'] = null;
+                    // validate so luong san pham
+                    $productAttributeValue = null;
+                    if (isset($productData['product_attribute_value_id']) && !empty($productData['product_attribute_value_id'])) {
+                        $productAttributeValue = ProductAttributeValue::find($productData['product_attribute_value_id']);
+                        if (!$productAttributeValue) {
+                            return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+                        }
+                        if ($productAttributeValue->amount < $quantity) {
+                            return [trans('api::messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
+                        }
+                        $orderProductTmp['attribute'] = $productAttributeValue;
+                    } else {
+                        if ($product->amount < $quantity) {
+                            return [trans('api::messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
+                        }
+                    }
+                    $orderProducts[]= $orderProductTmp;
+
+                }
+
+
+                $orderResult = $this->placeOrderMultiProduct($order, $orderProducts, $shopId, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix);
+                if (!$orderResult) {
+                    throw new InternalErrorException('Tạo đơn hàng không thành công');
+                }
+            }
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
+        }
+        return true;
+
+    }
+
+    public function placeOrderMultiProduct($requestParams, $products, $shopId, User $user, ShipType $shipType, Address $shipAddress, Province $province, District $district, Phoenix $phoenix)
+    {
+
+        list($orderData, $orderProductData) = $this->parseOrderData($requestParams, $user, $shipType, $shipAddress, $province, $district, $phoenix);
+
+        $orderData['company_id'] = $requestParams['company_id'];
+        $orderData['shop_id'] = $requestParams['shop_id'];
+        $order = $this->model->create($orderData);
+
+        $totalPrice = 0;
+        $payPrice = 0;
+        $productsForVoucher = [];
+        foreach ($products as $productData) {
+            $product = $productData['product'];
+            $productAttributeValue = $productData['attribute'];
+
+
+            $productPrice = $product->price;
+            if ($product->price_sale) {
+                $productPrice = $productPrice * (100 - $productPrice->price_sale) / 100;
+            }
+
+            $orderProductData['product_title'] = $product->name;
+            $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
+            $orderProductData['quantity'] = $requestParams['quantity'];
+            $orderProductData['price'] = $product->price;
+            $orderProductData['price_sale'] = $productPrice;
+            $orderProductData['product_id'] = $product->id;
+            $orderProductData['note'] = $requestParams['note'] ?? '';
+
+            if ($productAttributeValue) {
+
+
+                $productPrice = $productAttributeValue->price;
+                if ($productAttributeValue->price_sale) {
+                    $productPrice = $productPrice * (100 - $productAttributeValue->price_sale) / 100;
+                }
+                $orderProductData['price'] = $productAttributeValue->price;
+
+                $orderProductData['price_sale'] =  $productPrice;
+            }
+            //TODO price
+            $totalPrice += $productPrice;
+
+            if ($order) {
+                $orderProductData['order_id'] = $order->id;
+                $orderProductData['product_img_id'] = optional($product->thumbnail)->id;
+                $orderProduct = OrderProduct::create($orderProductData);
+                if (!$orderProduct) {
+                    return false;
+                }
+
+
+            }
+            $productsForVoucher[] = [
+                'id' => $product->id,
+                'quantity' => $requestParams['quantity'],
+                'product_attribute_id' => $requestParams['product_attribute_id']?? null,
+            ];
+        }
+
+
+        $shopVoucherCode = $requestParams['shop_voucher_code']?? null;
+        $shopVoucherDiscount = 0;
+        if ($shopVoucherCode) {
+            $shopVoucher = Voucher::query()->where('code', $shopVoucherCode)->first();
+            $shopVoucherDiscount = $this->getVoucherAmount($shopVoucherCode, $shopId, $productsForVoucher);
+            $order->shop_voucher_id = optional($shopVoucher)->id;
+            $order->shop_voucher_code = $shopVoucherCode;
+            $order->shop_discount = $shopVoucherDiscount;
+        }
+
+        $sysVoucherCode = $requestParams['system_voucher_code']?? null;
+        $sysVoucherDiscount = 0;
+        if ($sysVoucherCode) {
+            $sysVoucher = Voucher::query()->where('code', $sysVoucherCode)->first();
+            $sysVoucherDiscount = $this->getVoucherAmount($sysVoucherCode, $shopId, $productsForVoucher);
+            $order->shop_voucher_id = optional($sysVoucher)->id;
+            $order->shop_voucher_code = $sysVoucherCode;
+            $order->sys_discount = $sysVoucherDiscount;
+        }
+
+        $order->discount = $shopVoucherDiscount + $sysVoucherDiscount;
+        $order->ship_fee = 0;
+        $order->total_price = $totalPrice;
+        $order->pay_price = $totalPrice - $sysVoucherDiscount - $shopVoucherDiscount;
+
+        $order->save();
+
+
+        return true;
 
     }
 

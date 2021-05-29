@@ -31,6 +31,52 @@ class OrderController extends ApiController
         $this->addressRepo = $addressRepo;
     }
 
+
+    public function storeBuyProduct(Request $request)
+    {
+
+
+        $validator = $this->validatOrderBuyProduct($request);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
+        }
+
+        $result = $this->orderRepo->placeMultipleOrderBuyProduct($request, Auth::user());
+        if ($result === true) {
+            return $this->respond(null, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+        }
+        list ($errorMsg, $errorCode) = $result;
+        return $this->respond(null, $errorMsg, $errorCode);
+
+    }
+    public function validatOrderBuyProduct(Request $request)
+    {
+        $rules = [
+            'orders.*.products' => 'required',
+            'orders.*.products.*.quantity' => 'required',
+            'orders.*.products.*.product_id' => 'required',
+            'orders.*.shop_id' => 'required',
+            'orders.*.ship_type_id' => 'required',
+            'orders.*.ship_address_id' => 'required',
+
+        ];
+        $messages = [
+            'orders.*.products.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']),
+            'orders.*.products.*.quantity.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']),
+            'orders.*.products.*.product_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']),
+            'orders.*.shop_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Cửa hàng']),
+            'orders.*.ship_type_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Hình thức vận chuyển']),
+            'orders.*.ship_address_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']),
+
+        ];
+
+
+
+        return $this->validate($request, $rules, $messages);
+
+    }
+
     public function store(Request $request)
     {
 
@@ -55,7 +101,7 @@ class OrderController extends ApiController
     {
         $messages = [];
         $rules = [
-            'orders.*.order_type' => ['required', Rule::in(Orders::TYPE_SUA_CHUA, Orders::TYPE_BAO_HANH, Orders::TYPE_MUA_HANG)],
+            'orders.*.order_type' => ['required', Rule::in(Orders::TYPE_SUA_CHUA, Orders::TYPE_BAO_HANH)],
             'orders.*.quantity' => 'required',
 
         ];
