@@ -29,8 +29,10 @@ class VoucherTransformer extends JsonResource
             'require_min_amount' => $this->require_min_amount,
             'use_condition'=> $this->use_condition,
             'description'=> $this->description,
-            'actived_at'=> $this->actived_at,
-            'expired_at'=> $this->expired_at,
+            'actived_at'=> optional($this->actived_at)->format('d/m/Y'),
+            'expired_at'=> optional($this->expired_at)->format('d/m/Y'),
+            'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null
+
 
         ];
 
