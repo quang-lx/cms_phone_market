@@ -129,4 +129,10 @@ class ProductController extends ApiController
 			->orWhereNull('company_id')->get();
 		return AttributeTransformer::collection($listAttribute);
 	}
+
+    //dashboard
+    public function topProduct(Request $request)
+    {
+        return $this->productRepository->topProduct($request);
+    }
 }

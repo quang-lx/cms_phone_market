@@ -224,7 +224,9 @@ export default {
                 "totalRevenue": "Tổng doanh thu",
                 "paid": "Đã thanh toán",
                 "waitPaid": "Sẽ thanh toán",
-                "totalFee": "Tổng phí"
+                "totalFee": "Tổng phí",
+                "top-category": "Top danh mục có doanh thu tốt nhất",
+                "top-product": "Top sản phẩm có doanh thu tốt nhất"
             }
         },
         "media": {
@@ -331,9 +333,9 @@ export default {
                 "detail_title": "Chi tiết đơn"
             },
             "message": {
-                "create success": "Tạo Chuyên mục  thành công.",
-                "update success": "Cập nhật Chuyên mục  thành công.",
-                "delete success": "Xóa Chuyên mục  thành công."
+                "create success": "Tạo đơn hàng  thành công.",
+                "update success": "Cập nhật đơn hàng  thành công.",
+                "delete success": "Xóa đơn hàng  thành công."
             }
         },
         "permission": {

@@ -13,6 +13,13 @@ use Modules\Shop\Events\Product\ProductWasUpdated;
 use Modules\Shop\Repositories\ProductRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 
+use Modules\Mon\Entities\OrderProduct;
+use Modules\Mon\Entities\Product;
+use Modules\Mon\Entities\Company;
+use Modules\Mon\Entities\Category;
+use Modules\Mon\Entities\PcategoryProduct;
+use Modules\Admin\Transformers\ProductTransformer;
+
 class EloquentProductRepository extends BaseRepository implements ProductRepository {
 
 	public function create($data) {
@@ -241,4 +248,103 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 
 		return $query->paginate($request->get('per_page', 10));
 	}
+
+	public static function processArr($listProduct){
+        $result = array();
+        foreach ($listProduct as $productId => $total){
+            $item['productId'] = $productId;
+            $item['totalRevenue'] = $total;
+            $result[] = $item;
+        }
+
+        usort($result, function (array $a, array $b) {
+            return $a['totalRevenue'] < $b['totalRevenue'];   
+        });
+        return $result;
+    }
+
+	public function topProduct(Request $request, $relations = null)
+    {
+		$user = Auth::user();
+		$companyId = $user->company_id;
+		$shopId = $user->shop_id;
+        $query = OrderProduct::query()
+			->join('orders','order_product.order_id','=','orders.id')
+			->select('order_product.*')->where('orders.company_id', $companyId);
+		if ($shopId){
+			$query->where('orders.shop_id', $shopId);
+		}
+
+		$orderProduct = $query->whereNull('order_product.deleted_at')->get();
+
+        $listProduct = array();
+        foreach ($orderProduct as $order){
+            $productId = $order->product_id;
+            if (array_key_exists($productId,$listProduct)){
+                $oldValue = $listProduct[$productId];
+            } else $oldValue = 0;
+            $listProduct[$productId] = $oldValue + intval($order->quantity * $order->price_sale);
+        }
+
+        $listProduct = self::processArr($listProduct);
+        $result = array();
+        foreach ($listProduct as $key => $product){
+            if ($key >= 5) break;
+            $key++;
+            $productDetail = Product::find($product['productId']);
+            $companyDetail = Company::find($productDetail->company_id);
+            $item['key'] = $key;
+            $item['productInfo'] = sprintf('%s. %s', '0'.$item['key'], $productDetail->name);
+            $item['shopInfo'] = sprintf('%s - %s - %sđ', $companyDetail->name, $companyDetail->address, number_format($product['totalRevenue'],0,",","."));
+            $result['topProduct'][] = $item;
+        }
+
+        //topCategory
+        $categories = Category::all();
+        $categoryWithRevenue = array();
+        foreach ($categories as $category){
+            //tim những sản phẩm thuộc category
+            $categoryProduct = PcategoryProduct::query()->where('category_id', $category->id)->get();
+            if (count($categoryProduct)){
+                $revenueCategory = self::getRevenue($categoryProduct, $listProduct, $category->id);
+				if ($revenueCategory){
+					$categoryWithRevenue[] = array(
+						'category_id' => $category->id,
+						'totalRevenue' => $revenueCategory,
+					);
+				}
+                
+            }
+            
+        }
+        usort($categoryWithRevenue, function (array $a, array $b) {
+            return $a['totalRevenue'] < $b['totalRevenue'];   
+        });
+
+        //lấy thêm tên chuyên mục, map kết quả trả về view
+        foreach ($categoryWithRevenue as $category){
+            $detailCategory = Category::find($category['category_id']);
+            $item = array();
+            $item['key'] = $key;
+            $index = $key < 10 ? '0'.$key : $key;
+            $item['value'] = sprintf('%s. %s - %sđ', $index, $detailCategory->title, 
+                    number_format($category['totalRevenue'],0,",","."));
+            $result['topCategory'][] = $item;
+        }
+        return $result;
+
+    }
+
+    public static function getRevenue($categoryProduct, $listProduct, $categoryId){
+        $revenue = 0;
+        foreach ($categoryProduct as $record){
+            foreach ($listProduct as $product){
+                if ($product['productId'] == $record->product_id){
+                    $revenue += $product['totalRevenue'];
+                }
+            }
+            
+        }
+        return $revenue;
+    }
 }
