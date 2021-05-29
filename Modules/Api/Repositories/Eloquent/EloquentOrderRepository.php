@@ -602,20 +602,20 @@ class EloquentOrderRepository implements OrderRepository
         $shopVoucherDiscount = 0;
         if ($shopVoucherCode) {
             $shopVoucher = Voucher::query()->where('code', $shopVoucherCode)->first();
-            $shopVoucherDiscount = $this->getVoucherAmount($shopVoucherCode, $shopId, $productsForVoucher);
+            list($shopVoucherDiscount) = $this->getVoucherAmount($shopVoucherCode, $shopId, $productsForVoucher);
             $order->shop_voucher_id = optional($shopVoucher)->id;
             $order->shop_voucher_code = $shopVoucherCode;
-            $order->shop_discount = $shopVoucherDiscount;
+            $order->shop_discount = $shopVoucherDiscount?? 0;
         }
 
         $sysVoucherCode = $requestParams['system_voucher_code']?? null;
         $sysVoucherDiscount = 0;
         if ($sysVoucherCode) {
             $sysVoucher = Voucher::query()->where('code', $sysVoucherCode)->first();
-            $sysVoucherDiscount = $this->getVoucherAmount($sysVoucherCode, $shopId, $productsForVoucher);
+            list($sysVoucherDiscount) = $this->getVoucherAmount($sysVoucherCode, $shopId, $productsForVoucher);
             $order->shop_voucher_id = optional($sysVoucher)->id;
             $order->shop_voucher_code = $sysVoucherCode;
-            $order->sys_discount = $sysVoucherDiscount;
+            $order->sys_discount = $sysVoucherDiscount?? 0;
         }
 
         $order->discount = $shopVoucherDiscount + $sysVoucherDiscount;
