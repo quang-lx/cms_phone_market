@@ -24,6 +24,7 @@ class UserTransformer extends JsonResource
 	        'phone' => $this->phone,
 	        'gender' => $this->gender,
 	        'email' => $this->email,
+            'total_order' => 10,
 	        'avatar' => $this->avatar? new MediaShortTransformer($this->avatar): null,
             'default_address' => $defaultAddress? new AddressTransformer($defaultAddress): null
 

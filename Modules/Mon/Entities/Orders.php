@@ -49,7 +49,13 @@ class Orders extends Model
         'created_at',
         'fix_time',
         'fix_time_date',
-        'type_other'
+        'type_other',
+        'shop_voucher_id',
+        'shop_voucher_code',
+        'shop_discount',
+        'sys_voucher_id',
+        'sys_voucher_code',
+        'sys_discount',
     ];
 
     public function allOrderProducts() {
@@ -57,7 +63,7 @@ class Orders extends Model
     }
     public function orderProducts()
     {
-        return $this->belongsTo(OrderProduct::class, 'order_id', 'id');
+        return $this->belongsTo(OrderProduct::class, 'id', 'order_id');
     }
 
     public function orderBuySellProduts()

@@ -2,8 +2,11 @@
 
 namespace Modules\Shop\Http\Controllers\Api\Voucher;
 
+use App\Models\CacheKey;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Modules\Mon\Entities\Voucher;
 use Modules\Shop\Http\Requests\Voucher\CreateVoucherRequest;
 use Modules\Shop\Transformers\VoucherTransformer;
@@ -69,6 +72,8 @@ class VoucherController extends ApiController
     public function destroy(Voucher $voucher)
     {
         $this->voucherRepository->destroy($voucher);
+        $cacheKey =  $cacheKey = sprintf(CacheKey::VOUCHER_SHOP, Auth::user()->shop_id);
+        Cache::forget($cacheKey);
 
         return response()->json([
             'errors' => false,

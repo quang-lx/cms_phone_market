@@ -2453,6 +2453,62 @@
                 }
             }
         },
+        "/app/vouchers": {
+            "get": {
+
+                "tags": [
+                    "app"
+                ],
+                "summary": "danh sach voucher",
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "shop_ids",
+                        "description": "shop_ids",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "error_code": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Data",
+                        "schema": {
+                            "$ref": "#/definitions/Response400"
+                        }
+                    }
+                }
+            }
+        },
         "/app/setting": {
             "get": {
                 "tags": [

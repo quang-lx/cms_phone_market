@@ -10,6 +10,7 @@ use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\PaymentMethodRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
+use Modules\Api\Repositories\VoucherRepository;
 use Modules\Api\Transformers\DistrictTransformer;
 use Modules\Api\Transformers\PhoenixesTransformer;
 use Modules\Api\Transformers\ProvinceTransformer;
@@ -30,13 +31,18 @@ class AppController extends ApiController
     /** @var PaymentMethodRepository */
     public $paymentMethodRepo;
 
-    public function __construct(Authentication $auth, AreaRepository $areaRepository, ShipTypeRepository $shipTypeRepo, PaymentMethodRepository $paymentMethodRepo)
+    /** @var VoucherRepository */
+    public $voucherRepo;
+
+    public function __construct(Authentication $auth, AreaRepository $areaRepository, ShipTypeRepository $shipTypeRepo, PaymentMethodRepository $paymentMethodRepo,
+                                VoucherRepository $voucherRepo)
     {
         parent::__construct($auth);
 
         $this->areaRepository = $areaRepository;
         $this->shipTypeRepo = $shipTypeRepo;
         $this->paymentMethodRepo = $paymentMethodRepo;
+        $this->voucherRepo = $voucherRepo;
     }
 
     public function provinces()
@@ -87,10 +93,17 @@ class AppController extends ApiController
         $paymentMethod = $this->paymentMethodRepo->getAll($request);
         $orderSetting = $this->getOrderSetting();
         $data = [
-          'ship_type' => $shipType,
-          'payment_method' => $paymentMethod,
-          'order_setting' => $orderSetting,
+            'ship_type' => $shipType,
+            'payment_method' => $paymentMethod,
+            'order_setting' => $orderSetting,
         ];
+        return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
+    }
+
+    public function vouchers(Request $request)
+    {
+        $data = $this->voucherRepo->getListVoucher($request);
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 
     }
@@ -145,10 +158,7 @@ class AppController extends ApiController
                             'code' => 'created',
                             'label' => trans('order.order_status.created')
                         ],
-                        [
-                            'code' => 'confirmed',
-                            'label' => trans('order.order_status.confirmed')
-                        ],
+
                         [
                             'code' => 'warranting',
                             'label' => trans('order.order_status.warranting')

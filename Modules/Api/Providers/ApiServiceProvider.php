@@ -11,6 +11,7 @@ use Modules\Api\Repositories\CartRepository;
 use Modules\Api\Repositories\CategoryRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentAreaRepository;
 use Modules\Api\Repositories\Eloquent\Cached\CachedEloquentRankRepository;
+use Modules\Api\Repositories\Eloquent\Cached\EloquentCacheVoucherRepository;
 use Modules\Api\Repositories\Eloquent\Cached\EloquentPaymentMethodRepository;
 use Modules\Api\Repositories\Eloquent\Cached\EloquentShipTypeRepository;
 use Modules\Api\Repositories\Eloquent\EloquentAddressRepository;
@@ -32,6 +33,7 @@ use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
+use Modules\Api\Repositories\VoucherRepository;
 use Modules\Mon\Entities\Address;
 use Modules\Mon\Entities\Cart;
 use Modules\Mon\Entities\Orders;
@@ -41,6 +43,7 @@ use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
 use Modules\Mon\Entities\RatingShop;
 use Modules\Mon\Entities\ShipType;
+use Modules\Mon\Entities\Voucher;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -227,5 +230,11 @@ class ApiServiceProvider extends ServiceProvider
 			    return new EloquentCartRepository(new Cart());
 		    }
 	    );
+        $this->app->bind(
+            VoucherRepository::class,
+            function () {
+                return new EloquentCacheVoucherRepository(new Voucher());
+            }
+        );
     }
 }

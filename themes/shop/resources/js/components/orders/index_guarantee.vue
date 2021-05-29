@@ -142,7 +142,7 @@
 
                     <el-table-column prop="actions" width="130">
                        <template slot-scope="scope">
-                                                <router-link :to="{name: 'shop.orders.detail', params: {ordersId: scope.row.id}}">
+                                                <router-link :to="{name: 'shop.orders.detailguarantee', params: {ordersId: scope.row.id}}">
                                                     <i class="el-icon-view"></i>
                                                 </router-link>
                                             </template>

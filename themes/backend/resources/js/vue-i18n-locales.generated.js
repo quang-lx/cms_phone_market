@@ -769,7 +769,9 @@ export default {
                 "btn_add_voucher": "Tạo mã giảm giá",
                 "updated_by": "Người cập nhật",
                 "type_name": "Loại mã",
-                "status": "Trạng thái"
+                "status": "Trạng thái",
+                "use_condition": "Điều kiện sử dụng",
+                "description": "Chi tiết"
             },
             "list": {
                 "status": "Trạng thái"

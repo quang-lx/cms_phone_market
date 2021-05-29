@@ -78,6 +78,11 @@ class OrdersController extends ApiController
         ]);
     }
 
+    public function updateGuarantee(Orders $orders, Request $request)
+    {
+        return $this->ordersRepository->updateGuarantee($orders, $request->all());
+    }
+
     public function destroy(Orders $orders)
     {
         $this->ordersRepository->destroy($orders);

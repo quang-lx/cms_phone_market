@@ -5,13 +5,22 @@ namespace Modules\Mon\Entities;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Wildside\Userstamps\Userstamps;
+use Modules\Media\Traits\MediaRelation;
 
 class Voucher extends Model
 {
-    use  SoftDeletes, Userstamps;
+    use  SoftDeletes, Userstamps,MediaRelation;
 
     const TYPE_DISCOUNT_ALL = 1;
     const TYPE_DISCOUNT_PRODUCT = 2;
+
+
+    const DISCOUNT_PRICE = 1;
+    const DISCOUNT_PERCENT = 2;
+    protected $casts = [
+        'actived_at' => 'datetime',
+        'expired_at' => 'datetime',
+    ];
 
     protected $table = 'vouchers';
     protected $fillable = [
@@ -28,6 +37,8 @@ class Voucher extends Model
         'expired_at',
         'total',
         'total_used',
+        'use_condition',
+        'description',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -81,5 +92,9 @@ class Voucher extends Model
         return $statusName;
     }
 
+    public function getThumbnailAttribute()
+    {
+        return $this->filesByZone('thumbnail')->first();
+    }
 
 }

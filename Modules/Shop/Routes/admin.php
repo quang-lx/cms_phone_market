@@ -329,6 +329,12 @@ Route::group(['prefix' => '/orders'], function ( ) {
         'middleware' => 'permission:shop.orders.detail'
     ]);
 
+    Route::get('{orders}/detail-guarantee', [
+        'as' => 'shop.orders.detailguarantee',
+        'uses' => 'Orders\OrdersController@detail',
+        'middleware' => 'permission:shop.orders.detail'
+    ]);
+
     
 
 

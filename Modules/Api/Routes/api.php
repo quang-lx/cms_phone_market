@@ -47,6 +47,10 @@ Route::prefix('/app')->group(function () {
 		'as' => 'api.app.paymentmethod',
 		'uses' => 'AppController@listPaymentMethod',
 	]);
+    Route::get('/vouchers', [
+        'as' => 'api.app.vouchers',
+        'uses' => 'AppController@vouchers',
+    ]);
 });
 
 
@@ -290,9 +294,21 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@store',
             'as' => 'apife.order.store',
         ]);
+        Route::post('/place-order-product', [
+            'uses' => 'OrderController@storeBuyProduct',
+            'as' => 'apife.order.storeBuyProduct',
+        ]);
         Route::get('/list', [
             'uses' => 'OrderController@getList',
             'as' => 'apife.order.getList',
+        ]);
+        Route::post('/check-shop-voucher', [
+            'uses' => 'OrderController@getShopDiscountAmount',
+            'as' => 'apife.order.getShopDiscountAmount',
+        ]);
+        Route::post('/check-system-voucher', [
+            'uses' => 'OrderController@getSystemDiscountAmount',
+            'as' => 'apife.order.getSystemDiscountAmount',
         ]);
     });
 	Route::prefix('cart')->group(function ($router) {
