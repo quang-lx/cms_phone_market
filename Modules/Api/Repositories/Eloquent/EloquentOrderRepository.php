@@ -337,6 +337,11 @@ class EloquentOrderRepository implements OrderRepository
         return $query->paginate($request->get('per_page', 10));
 
     }
+    public function getSystemDiscountAmount(Request $request) {
+        $voucherCode = $request->get('voucher_code');
+        $products = $request->get('products');
+        return $this->getVoucherAmount($voucherCode, null, $products);
+    }
 
     public function getShopDiscountAmount(Request $request) {
         $voucherCode = $request->get('voucher_code');

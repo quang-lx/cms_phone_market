@@ -137,4 +137,40 @@ class OrderController extends ApiController
 
         return $this->validate($request, $rules, $messages);
     }
+
+    public function getSystemDiscountAmount(Request $request) {
+        $validator = $this->validateCheckSystemVoucher($request);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return $this->respond($errors, $errors->first(), ErrorCode::ERR422);
+        }
+        $result = $this->orderRepo->getSystemDiscountAmount($request);
+        list ($voucherAmount, $resultMsg) = $result;
+        if ($voucherAmount === false) {
+            return $this->respond(null, $resultMsg, ErrorCode::ERR422);
+        }
+
+        return $this->respond($voucherAmount, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
+    }
+
+
+
+    protected function validateCheckSystemVoucher(Request $request) {
+        $messages = [];
+        $rules = [
+            'voucher_code' => 'required',
+            'products.*.id' => 'required',
+            'products.*.quantity' => 'required',
+
+        ];
+
+        $messages['voucher_code.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Mã giảm giá']);
+        $messages['products.*.id.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']);
+        $messages['products.*.quantity.required'] = trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']);
+
+
+
+        return $this->validate($request, $rules, $messages);
+    }
 }
