@@ -592,8 +592,8 @@ class EloquentOrderRepository implements OrderRepository
             }
             $productsForVoucher[] = [
                 'id' => $product->id,
-                'quantity' => $requestParams['quantity'],
-                'product_attribute_id' => $requestParams['product_attribute_id']?? null,
+                'quantity' => $productData['quantity'],
+                'product_attribute_id' => $productData['product_attribute_id']?? null,
             ];
         }
 
