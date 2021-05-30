@@ -13,6 +13,7 @@ use Modules\Shop\Repositories\OrdersRepository;
 use Illuminate\Routing\Controller;
 use Modules\Mon\Http\Controllers\ApiController;
 use Modules\Mon\Auth\Contracts\Authentication;
+use App\Events\ShopNotiCreated;
 
 class OrdersController extends ApiController
 {
@@ -71,7 +72,13 @@ class OrdersController extends ApiController
     public function update(Orders $orders, UpdateOrdersRequest $request)
     {
         $this->ordersRepository->update($orders, $request->all());
-
+        $data = [
+            'title' => 'Đơn sửa chữa',
+            'content' => 'Đơn sửa chữa '.$orders->id.' đã được xác nhận, vui lòng gửi hàng sửa chữa tới cửa hàng.',
+            'fcm_token' => $orders->user->fcm_token,
+            'type' => 'suachua_'.$orders->status
+        ];
+        event(new ShopNotiCreated($data));
         return response()->json([
             'errors' => false,
             'message' => trans('ch::orders.message.update success'),

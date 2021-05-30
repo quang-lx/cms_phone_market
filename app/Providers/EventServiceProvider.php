@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\AdminNotiCreated;
+use App\Events\ShopNotiCreated;
 use App\Events\NeedCreateUserSmsToken;
 use App\Listeners\PushNotiWhenAdminNotiCreated;
+use App\Listeners\PushNotiWhenSHopNotiCreated;
 use App\Listeners\SendSmsToUserRegistered;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
 	    AdminNotiCreated::class => [
 		    PushNotiWhenAdminNotiCreated::class
+	    ],
+        SHopNotiCreated::class => [
+		    PushNotiWhenShopNotiCreated::class
 	    ],
     ];
 
