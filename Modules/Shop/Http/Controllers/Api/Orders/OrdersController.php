@@ -87,6 +87,13 @@ class OrdersController extends ApiController
 
     public function updateGuarantee(Orders $orders, Request $request)
     {
+        $data = [
+            'title' => 'Đơn bảo hành',
+            'content' => 'Đơn bảo hành '.$orders->id.' đã được xác nhận, vui lòng gửi hàng bảo hành tới cửa hàng.',
+            'fcm_token' => $orders->user->fcm_token,
+            'type' => 'baohanh_'.$orders->status
+        ];
+        event(new ShopNotiCreated($data));
         return $this->ordersRepository->updateGuarantee($orders, $request->all());
     }
 
