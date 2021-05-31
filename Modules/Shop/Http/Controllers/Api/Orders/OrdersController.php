@@ -73,10 +73,10 @@ class OrdersController extends ApiController
     {
         $this->ordersRepository->update($orders, $request->all());
         $data = [
-            'title' => 'Đơn sửa chữa',
-            'content' => 'Đơn sửa chữa '.$orders->id.' đã được xác nhận, vui lòng gửi hàng sửa chữa tới cửa hàng.',
+            'title' => trans('order.notifications.sua_chua.title'),
+            'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $orders->id]),
             'fcm_token' => $orders->user->fcm_token,
-            'type' => 'suachua_'.$orders->status
+            'type' => trans('order.notifications.sua_chua.type', ['order_status' => $orders->status]),
         ];
         event(new ShopNotiCreated($data));
         return response()->json([
@@ -88,10 +88,10 @@ class OrdersController extends ApiController
     public function updateGuarantee(Orders $orders, Request $request)
     {
         $data = [
-            'title' => 'Đơn bảo hành',
-            'content' => 'Đơn bảo hành '.$orders->id.' đã được xác nhận, vui lòng gửi hàng bảo hành tới cửa hàng.',
+            'title' => trans('order.notifications.bao_hanh.title'),
+            'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $orders->id]),
             'fcm_token' => $orders->user->fcm_token,
-            'type' => 'baohanh_'.$orders->status
+            'type' => trans('order.notifications.bao_hanh.type', ['order_status' => $orders->status]),
         ];
         event(new ShopNotiCreated($data));
         return $this->ordersRepository->updateGuarantee($orders, $request->all());
