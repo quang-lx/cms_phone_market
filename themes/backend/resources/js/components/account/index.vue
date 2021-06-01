@@ -21,12 +21,13 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row justify-content-end mb-2">
-          <div class="col-md-6"></div>
+          <div class="col-md-5"></div>
           <div class="col-md-2">
             <el-select
               v-model="rank_value"
               @change="onSearchChange"
-              placeholder="Select"
+              placeholder="Hạng"
+              clearable
             >
               <el-option
                 v-for="item in rank"
@@ -41,7 +42,8 @@
             <el-select
               v-model="status_value"
               @change="onSearchChange"
-              placeholder="Select"
+              placeholder="Trạng thái"
+              clearable
             >
               <el-option
                 v-for="item in status"
@@ -52,12 +54,13 @@
               </el-option>
             </el-select>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <el-input
               prefix-icon="el-icon-search"
               @keyup.native="performSearch"
-              placeholder="Nhập ID, Tên,code,Mã số"
+              placeholder="Tên đăng nhập/SĐT/Email"
               v-model="searchQuery"
+              clearable
             >
             </el-input>
           </div>
@@ -143,13 +146,13 @@
                     <el-table-column
                       prop="updated_by"
                       :label="$t('account.label.updated_by')"
-                      sortable="custom"
+                      sortable="custom" width="140"
                     >
                     </el-table-column>
                     <el-table-column
                       prop="updated_at"
                       :label="$t('account.label.updated_at')"
-                      sortable="custom"
+                      sortable="custom" width="140"
                     >
                     </el-table-column>
 
@@ -235,8 +238,12 @@ export default {
 
       status: [
         {
+          value: 0,
+          label: "Chưa hoạt động",
+        },
+        {
           value: 1,
-          label: "Hoạt đông",
+          label: "Hoạt động",
         },
         {
           value: 2,
