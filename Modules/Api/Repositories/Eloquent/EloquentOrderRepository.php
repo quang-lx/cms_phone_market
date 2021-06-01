@@ -467,6 +467,8 @@ class EloquentOrderRepository implements OrderRepository
                 $shopId = $order['shop_id'];
                 $order['order_type'] = $orderType;
                 $order['payment_history_id'] = $paymentHistory->id;
+                $order['ship_type_id'] = $request->get('ship_type_id');
+                $order['ship_address_id'] = $request->get('ship_address_id');
 
                 $shipType = $this->shipTypeRepo->findById($request, $order['ship_type_id']);
                 if (!$shipType) {

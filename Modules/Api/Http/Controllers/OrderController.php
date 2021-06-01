@@ -58,8 +58,8 @@ class OrderController extends ApiController
             'orders.*.products.*.quantity' => 'required',
             'orders.*.products.*.product_id' => 'required',
             'orders.*.shop_id' => 'required',
-            'orders.*.ship_type_id' => 'required',
-            'orders.*.ship_address_id' => 'required',
+            'ship_type_id' => 'required',
+            'ship_address_id' => 'required',
 
         ];
         $messages = [
@@ -68,8 +68,8 @@ class OrderController extends ApiController
             'orders.*.products.*.quantity.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']),
             'orders.*.products.*.product_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']),
             'orders.*.shop_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Cửa hàng']),
-            'orders.*.ship_type_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Hình thức vận chuyển']),
-            'orders.*.ship_address_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']),
+            'ship_type_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Hình thức vận chuyển']),
+            'ship_address_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Địa chỉ nhận hàng']),
 
         ];
 
