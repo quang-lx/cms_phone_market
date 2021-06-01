@@ -23,6 +23,10 @@ class Orders extends Model
     const STATUS_ORDER_CANCEL = 'cancel'; //Đã hủy
 
 
+    const PAYMENT_NOT_PAID = 0;
+    const PAYMENT_PAID = 0;
+
+
     protected $table = 'orders';
     protected $fillable = [
         'id',
@@ -37,6 +41,7 @@ class Orders extends Model
         'discount',
         'ship_fee',
         'pay_price',
+        'payment_history_id',
 
         'ship_address_id',
         'ship_province_id',
@@ -75,7 +80,10 @@ class Orders extends Model
     {
         return $this->belongsTo(Shop::class, 'shop_id');
     }
-
+    public function paymentHistory()
+    {
+        return $this->belongsTo(PaymentHistory::class, 'payment_history_id');
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

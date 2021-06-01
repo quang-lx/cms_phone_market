@@ -16,6 +16,8 @@ use Modules\Mon\Entities\Address;
 use Modules\Mon\Entities\District;
 use Modules\Mon\Entities\OrderProduct;
 use Modules\Mon\Entities\Orders;
+use Modules\Mon\Entities\PaymentHistory;
+use Modules\Mon\Entities\PaymentMethod;
 use Modules\Mon\Entities\Phoenix;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\ProductAttributeValue;
@@ -445,13 +447,26 @@ class EloquentOrderRepository implements OrderRepository
     public function placeMultipleOrderBuyProduct(Request $request, User $user)
     {
         $orders = $request->get('orders');
+        $paymentMethodId = $request->get('payment_method_id');
         DB::beginTransaction();
         try {
+            $payAmount = 0;
+            $paymentMethod = PaymentMethod::find($paymentMethodId);
+            if (!$paymentMethod) {
+                return [trans('api::messages.order.data invalid'), ErrorCode::ERR422];
+            }
+            $paymentHistory = PaymentHistory::create([
+                'user_id' => $user->id,
+                'payment_method_id' => $paymentMethod->id,
+                'pay_amount' => 0,
+                'pay_method_name' => $paymentMethod->name,
+            ]);
             foreach ($orders as $order) {
 
                 $orderType = Orders::TYPE_MUA_HANG;
                 $shopId = $order['shop_id'];
                 $order['order_type'] = $orderType;
+                $order['payment_history_id'] = $paymentHistory->id;
 
                 $shipType = $this->shipTypeRepo->findById($request, $order['ship_type_id']);
                 if (!$shipType) {
@@ -521,10 +536,14 @@ class EloquentOrderRepository implements OrderRepository
 
 
                 $orderResult = $this->placeOrderMultiProduct($order, $orderProducts, $shopId, $user, $shipType, $shipAddress, $shipProvince, $shipDistrict, $shipPhoenix);
-                if (!$orderResult) {
+                if (! ($orderResult instanceof Orders)) {
                     throw new InternalErrorException('Tạo đơn hàng không thành công');
                 }
+                $payAmount += $orderResult->pay_price;
+
             }
+            $paymentHistory->pay_amount = $payAmount;
+            $paymentHistory->save();
             DB::commit();
 
         } catch (\Exception $exception) {
@@ -542,6 +561,7 @@ class EloquentOrderRepository implements OrderRepository
         list($orderData, $orderProductData) = $this->parseOrderData($requestParams, $user, $shipType, $shipAddress, $province, $district, $phoenix);
 
         $orderData['company_id'] = $requestParams['company_id'];
+        $orderData['payment_history_id'] = $requestParams['payment_history_id'];
         $orderData['shop_id'] = $requestParams['shop_id'];
         $order = $this->model->create($orderData);
 
@@ -626,7 +646,7 @@ class EloquentOrderRepository implements OrderRepository
         $order->save();
 
 
-        return true;
+        return $order;
 
     }
 

@@ -53,6 +53,7 @@ class OrderController extends ApiController
     public function validatOrderBuyProduct(Request $request)
     {
         $rules = [
+            'payment_method_id' => 'required',
             'orders.*.products' => 'required',
             'orders.*.products.*.quantity' => 'required',
             'orders.*.products.*.product_id' => 'required',
@@ -62,6 +63,7 @@ class OrderController extends ApiController
 
         ];
         $messages = [
+            'payment_method_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Phương thức thanh toán']),
             'orders.*.products.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']),
             'orders.*.products.*.quantity.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Số lượng']),
             'orders.*.products.*.product_id.required' => trans('api::messages.validate.attribute is required', ['attribute' => 'Sản phẩm']),
