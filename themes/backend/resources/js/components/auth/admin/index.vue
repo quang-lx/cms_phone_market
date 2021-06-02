@@ -34,7 +34,7 @@
                                         </el-select>
                                     </div>
                                     <div class="col-6">
-                                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
+                                        <el-input prefix-icon="el-icon-search" @keyup.native="performSearch" placeholder="Tên đăng nhập/SĐT/Email"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
@@ -80,7 +80,16 @@
                                                          sortable="custom">
 
                                         </el-table-column>
+                                        <el-table-column prop=""  :label="$t('user.label.image')" >
+                                            <template slot-scope="scope">
+                                                <img :src="scope.row.thumbnail.path_string" v-if="scope.row.thumbnail"
+                                                     width="100" height="100" style="object-fit:contain"/>
+                                            </template>
+                                        </el-table-column>
                                         <el-table-column prop="username" :label="$t('user.label.username')"
+                                                         sortable="custom"></el-table-column>
+
+                                        <el-table-column prop="phone" :label="$t('user.label.phone')"
                                                          sortable="custom"></el-table-column>
 
                                         <el-table-column prop="name" :label="$t('user.label.name')" sortable="custom">

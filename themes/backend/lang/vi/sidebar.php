@@ -17,7 +17,7 @@ return [
 
     'system administration' => 'Quản trị',
     'roles and permission' => 'Roles and permission',
-    'admins' => 'Tài khoản quản trị',
+    'admins' => 'Quản lý tài khoản CMS',
     'users' => 'Người dùng',
     'roles' => 'Nhóm quyền',
     'permissions' => 'Quyền',

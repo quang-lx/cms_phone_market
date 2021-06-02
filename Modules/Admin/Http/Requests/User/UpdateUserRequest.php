@@ -22,14 +22,14 @@ class UpdateUserRequest extends FormRequest
 
         $rules = [
             'name'=>"required",
-            'email' => "required|unique:users,email,{$user->id}|email",
-            'password_confirmation' => 'same:password'
+            'phone' => "required|unique:users,phone,{$user->id}",
+            'email' => "required|unique:users,email,{$user->id}|email|",
         ];
 
         if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}", new PhoneNumber()];
+            $rules['username'] = ['required',"unique:users,username,{$user->id}", new PhoneNumber(),'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
         } else {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}"];
+            $rules['username'] = ['required',"unique:users,username,{$user->id}",'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
         }
         return $rules;
     }
@@ -61,15 +61,15 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
+            'username.regex' => 'Tài khoản không được chứa dấu cách/ ký tự đặc biệt/ tên có dấu',
             'username.required' => 'Tài khoản là bắt buộc',
             'username.unique' => 'Tài khoản đã tồn tại trên hệ thống',
             'name.required' => 'Tên là bắt buộc',
             'email.unique' => 'Email đã được sử dung',
-            'password.required' => 'Mật khẩu là bắt buộc',
-            'password.confirmed' => 'Xác nhận mật khẩu không đúng',
-            'password_confirmation.same' => 'Xác nhận mật khẩu không đúng',
             'email.required' => 'Email là bắt buộc',
             'email.email' => 'Email sai định dạng',
+            'phone.unique' => 'Số điện thoại đã được sử dụng',
+            'phone.required' => 'Số điện thoại là bắt buộc',
         ];
     }
 }

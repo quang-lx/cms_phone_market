@@ -27,14 +27,15 @@ class CreateUserRequest extends FormRequest
 
             'name' => 'required',
             'email' => 'required|unique:users|email',
-            'password' => 'required|min:6',
+            'phone' => 'required|unique:users',
+            'password' => 'required|min:6|regex:/^((?!.*[\s])(?=.*[a-zA-Z])(?=.*\d))/',
             'password_confirmation' => 'required|same:password'
         ];
 
         if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required','unique:users', new PhoneNumber()];
+            $rules['username'] = ['required','unique:users', new PhoneNumber(),'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
         }else {
-            $rules['username'] = ['required',"unique:users,username"];
+            $rules['username'] = ['required',"unique:users,username",'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
         }
         return $rules;
     }
@@ -59,13 +60,19 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'username.required' => 'Tài khoản là bắt buộc',
+            'username.regex' => 'Tài khoản không được chứa dấu cách/ ký tự đặc biệt/ tên có dấu',
             'username.unique' => 'Tài khoản đã tồn tại trên hệ thống',
             'name.required' => 'Tên là bắt buộc',
             'email.unique' => 'Email đã được sử dụng',
             'email.required' => 'Email là bắt buộc',
             'email.email' => 'Email sai định dạng',
+
+            'phone.unique' => 'Số điện thoại đã được sử dụng',
+            'phone.required' => 'Số điện thoại là bắt buộc',
+
             'password.required' => 'Mật khẩu là bắt buộc',
             'password_confirmation.required' => 'Xác nhận mật khẩu không được để trống',
+            'password.regex' => 'Mật khẩu phải bao gồm ký tự chữ và số, không được chứa dấu cách',
             'password_confirmation.same' => 'Xác nhận mật khẩu không đúng',
             'password.same' => 'Xác nhận mật khẩu không đúng',
             'password.min' => 'Mật khẩu tối thiểu 6 ký tự'

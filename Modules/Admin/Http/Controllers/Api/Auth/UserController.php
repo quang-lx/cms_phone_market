@@ -78,7 +78,6 @@ class UserController extends ApiController
         $username = $request->get('username');
         $usernameFormatted = validate_isdn($username);
         $data = $request->all();
-
         if ($user->type == User::TYPE_USER) {
             $data['username'] = $usernameFormatted;
         }
