@@ -30,7 +30,7 @@ class ProductTransformer extends JsonResource
             's_height' => $this->s_height,
             'brand_id' => $this->brand_id,
             'brand_name' => optional($this->brand)->name,
-            'company_id' => $this->company_id,
+            'company_id' => optional($this->company_id),
             'company' => $this->company,
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),

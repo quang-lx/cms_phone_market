@@ -9,7 +9,7 @@ return [
         'create_shop' => 'Thêm mới',
         'name' => 'Tên chi nhánh',
         'address' => 'Địa chỉ',
-        'phone' => 'Số điện thoại',
+        'phone' => 'Liên hệ',
         'email' => 'Email',
         'status' => 'Trạng thái',
         'id' => 'ID',
