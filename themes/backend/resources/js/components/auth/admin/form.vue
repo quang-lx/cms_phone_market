@@ -60,7 +60,7 @@
                                              label-position="left"
                                              v-loading.body="loadingPassword"
                                     >
-                                        <el-form-item :label="$t('user.label.password')"
+                                        <el-form-item :label="$t('user.label.password_new')" style="margin-bottom:30px"
                                                       :class="{'el-form-item is-error': changepassForm.errors.has('password') }">
                                             <el-input v-model="modelForm.password" autocomplete="off"
                                                       type="password"></el-input>
@@ -68,7 +68,7 @@
                                                  v-if="changepassForm.errors.has('password')"
                                                  v-text="changepassForm.errors.first('password')"></div>
                                         </el-form-item>
-                                        <el-form-item :label="$t('user.label.password_confirmation')"
+                                        <el-form-item :label="$t('user.label.password_confirmation_new')"
                                                       :class="{'el-form-item is-error': changepassForm.errors.has('password_confirmation') }">
                                             <el-input v-model="modelForm.password_confirmation" autocomplete="off"
                                                       type="password"></el-input>
@@ -107,7 +107,6 @@
                                                      v-if="form.errors.has('name')"
                                                      v-text="form.errors.first('name')"></div>
                                             </el-form-item>
-
                                             <el-form-item :label="$t('user.label.email')"
                                                           :class="{'el-form-item is-error': form.errors.has('email') }">
                                                 <el-input v-model="modelForm.email"
@@ -115,6 +114,15 @@
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('email')"
                                                      v-text="form.errors.first('email')"></div>
+                                            </el-form-item>
+
+                                            <el-form-item :label="$t('user.label.phone')"
+                                                          :class="{'el-form-item is-error': form.errors.has('phone') }">
+                                                <el-input v-model="modelForm.phone"
+                                                          autocomplete="off"></el-input>
+                                                <div class="el-form-item__error"
+                                                     v-if="form.errors.has('phone')"
+                                                     v-text="form.errors.first('phone')"></div>
                                             </el-form-item>
                                             <el-form-item :label="$t('company.label.status')"
                                                           :class="{'el-form-item is-error': form.errors.has('status') }">
@@ -129,8 +137,26 @@
                                                      v-text="form.errors.first('status')"></div>
                                             </el-form-item>
 
+                                              <single-media class="mb-3"
+                                                zone="thumbnail"
+                                                @singleFileSelected="
+                                                  selectSingleFile($event, 'modelForm')
+                                                "
+                                                label="Ảnh đại diện"
+                                                entity="Modules\Mon\Entities\User"
+                                                :entity-id="$route.params.userId"
+                                              ></single-media>
+                                              <div
+                                                class="el-form-item__error"
+                                                style="margin-left: 208px"
+                                                v-if="form.errors.has('medias_single.thumbnail')"
+                                                v-text="
+                                                  form.errors.first('medias_single.thumbnail')
+                                                "
+                                              ></div>
                                             <div v-if="modelForm.is_new">
-                                                <el-form-item :label="$t('user.label.password')"
+                                              <div class="mb-4">
+                                                <el-form-item :label="$t('user.label.password')" 
                                                               :class="{'el-form-item is-error': form.errors.has('password') }">
                                                     <el-input v-model="modelForm.password"
                                                               autocomplete="off"
@@ -139,6 +165,7 @@
                                                          v-if="form.errors.has('password')"
                                                          v-text="form.errors.first('password')"></div>
                                                 </el-form-item>
+                                                </div>
                                                 <el-form-item
                                                     :label="$t('user.label.password_confirmation')"
                                                     :class="{'el-form-item is-error': form.errors.has('password_confirmation') }">
@@ -202,12 +229,14 @@
 <script>
   import axios from 'axios';
   import Form from 'form-backend-validation';
+  import SingleFileSelector from "../../../mixins/SingleFileSelector.js";
 
   export default {
     props: {
       locales: {default: null},
       pageTitle: {default: null, String},
     },
+    mixins: [SingleFileSelector],
     data() {
       return {
         form: new Form(),
@@ -218,6 +247,7 @@
           username: '',
           name: '',
           status: 1,
+          phone:'',
           email: '',
           phone: '',
           roles: [],

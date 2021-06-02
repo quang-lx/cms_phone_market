@@ -2,6 +2,7 @@
 return [
     'label' => [
         'id' => 'ID',
+        'image' => 'Ảnh',
         'username' => 'Tài khoản',
         'email' => 'Email',
         'name' => 'Tên',
@@ -10,16 +11,18 @@ return [
         'updated_at' => 'Ngày cập nhật',
         'password_confirmation' => 'Xác nhận mật khẩu',
         'password' => 'Mật khẩu',
+        'password_new' => 'Mật khẩu mới',
+        'password_confirmation_new' => 'Nhập lại mật khẩu mới',
         'create_user' => 'Tạo người dùng',
 
         'update_user' => 'Cập nhật',
-        'create_admin' => 'Thêm tài khoản',
+        'create_admin' => 'THÊM TÀI KHOẢN',
         'update_admin' => 'Cập nhật quản trị',
 
         'users' => 'Tài khoản',
         'roles' => 'Nhóm quyền',
         'change_password' => 'Đổi mật khẩu',
-        'admins' => 'Tài khoản quản trị'
+        'admins' => 'Quản lý tài khoản CMS'
 
 
     ],
