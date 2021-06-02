@@ -17,7 +17,7 @@ return [
 
         'update_user' => 'Cập nhật',
         'create_admin' => 'THÊM TÀI KHOẢN',
-        'update_admin' => 'Cập nhật quản trị',
+        'update_admin' => 'Sửa tài khoản',
 
         'users' => 'Tài khoản',
         'roles' => 'Nhóm quyền',

@@ -27,15 +27,16 @@ class CreateUserRequest extends FormRequest
 
             'name' => 'required',
             'email' => 'required|unique:users|email',
-            'phone' => 'required|unique:users',
             'password' => 'required|min:6|regex:/^((?!.*[\s])(?=.*[a-zA-Z])(?=.*\d))/',
             'password_confirmation' => 'required|same:password'
         ];
 
         if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required','unique:users', new PhoneNumber(),'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
+            $rules['username'] = ['required','unique:users', new PhoneNumber()];
         }else {
             $rules['username'] = ['required',"unique:users,username",'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
+            $rules['phone'] = ['required',"unique:users,phone", new PhoneNumber()];
+
         }
         return $rules;
     }
