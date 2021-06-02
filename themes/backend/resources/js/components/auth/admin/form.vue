@@ -94,7 +94,7 @@
                                         <div class="col-md-12">
                                             <el-form-item :label="$t('user.label.username')"
                                                           :class="{'el-form-item is-error': form.errors.has('username') }">
-                                                <el-input v-model="modelForm.username"
+                                                <el-input v-model="modelForm.username" :disabled="!modelForm.is_new"
                                                           autocomplete="off"></el-input>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('username')"
