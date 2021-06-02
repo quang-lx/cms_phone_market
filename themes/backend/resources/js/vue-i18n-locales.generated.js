@@ -211,8 +211,8 @@ export default {
             "messages": {
                 "selected items deleted": "Tệp vừa được xóa"
             },
-            "insert": "Insert image",
-            "remove_media": "Remove media",
+            "insert": "Thêm ảnh",
+            "remove_media": "Xóa ảnh",
             "Browse": "Chọn file"
         },
         "user": {

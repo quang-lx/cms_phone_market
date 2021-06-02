@@ -178,9 +178,6 @@
                                                 </el-form-item>
                                             </div>
 
-                                            <!-- <h3 style="font-size: 1.1rem;font-weight: 400;margin: 0;">
-                                                {{$t('user.tabs.roles')}}</h3>
-                                            <hr> -->
                                              <el-form-item
                                                     :label="$t('user.label.roles')"
                                                    >
