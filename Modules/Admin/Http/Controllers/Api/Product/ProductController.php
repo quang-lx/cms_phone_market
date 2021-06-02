@@ -75,4 +75,10 @@ class ProductController extends ApiController
             'message' => trans('backend::product.message.delete success'),
         ]);
     }
+
+    //dashboard
+    public function topProduct(Request $request)
+    {
+        return $this->productRepository->topProduct($request);
+    }
 }

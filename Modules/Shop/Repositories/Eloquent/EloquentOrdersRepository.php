@@ -98,7 +98,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         if ($relations) {
             $query = $query->with($relations);
         }
-        $query->selectRaw('count(*) AS so_don, order_type, sum(pay_price) AS tong_tien, date(created_at) AS ngay_tao');
+        $query->selectRaw('order_type, pay_price AS tong_tien, date(created_at) AS ngay_tao, payment_status, ship_fee AS tong_phi');
 
 		$user = Auth::user();
 		$query->where('company_id', $user->company_id);
@@ -106,7 +106,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			$query->where('shop_id', $user->shop_id);
 		}
 
-        $query->groupBy('order_type', 'ngay_tao');
+        // $query->groupBy('order_type', 'ngay_tao');
         $data =  $query->orderBy('ngay_tao', 'asc')->get();
         $listDate = [];
         $listRepairCount = [];
@@ -116,14 +116,25 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         $listBuyCount = [];
         $listBuyMoney = [];
         $key = 0;
-        $totalRevenue = 1000000000;
-        $paid = 900000000;
-        $waitPaid = 100000000;
-        $totalFee = 20000000;
+        $totalRevenue = 0;
+        $paid = 0;
+        $waitPaid = 0;
+        $totalFee = 0;
 
         foreach ($data as $record){
             $date = date('d-m-Y', strtotime($record->ngay_tao));
             $orderType = $record->order_type;
+
+            // tinh phi, doanh thu, tien da tra, sẽ tra
+            $totalRevenue += $record->tong_tien;
+            $totalFee += $record->tong_phi;
+            if ($record->payment_status){
+                $paid += $record->tong_tien;
+            } else {
+                $waitPaid += $record->tong_tien;
+            }
+            //end tính phi
+
             if (!in_array($date, $listDate)){
                 $listDate[$key] = $date;
                 $listRepairCount[$key] = $listRepairMoney[$key] = $listGuaranteeCount[$key] =
@@ -134,18 +145,18 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
             switch ($orderType){
                 case Orders::TYPE_SUA_CHUA: {
-                    $listRepairCount[$curKey] = $record->so_don;
-                    $listRepairMoney[$curKey] = $record->tong_tien;
+                    $listRepairCount[$curKey] ++;
+                    $listRepairMoney[$curKey] += $record->tong_tien;
                     break;
                 }
                 case Orders::TYPE_BAO_HANH: {
-                    $listGuaranteeCount[$curKey] = $record->so_don;
-                    $listGuaranteeMoney[$curKey] = $record->tong_tien;
+                    $listGuaranteeCount[$curKey] ++;
+                    $listGuaranteeMoney[$curKey] += $record->tong_tien;
                     break;
                 }
                 case Orders::TYPE_MUA_HANG: {
-                    $listBuyCount[$curKey] = $record->so_don;
-                    $listBuyMoney[$curKey] = $record->tong_tien;
+                    $listBuyCount[$curKey] ++;
+                    $listBuyMoney[$curKey] += $record->tong_tien;
                     break;
                 }
                 default:

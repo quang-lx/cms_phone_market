@@ -107,6 +107,7 @@ Route::middleware('auth:api')->prefix('auth')->group(function (){
         'uses' => 'Auth\UserController@index',
 
     ]);
+    
     Route::delete('users/{user}', [
         'as' => 'api.users.destroy',
         'uses' => 'Auth\UserController@destroy',
@@ -611,6 +612,7 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'api.orders.index',
         'uses' => 'Orders\OrdersController@index',
     ]);
+
     Route::post('/{orders}/edit', [
             'as' => 'api.orders.update',
             'uses' => 'Orders\OrdersController@update',
@@ -676,6 +678,37 @@ Route::middleware('auth:api')->prefix('/fbnotifications')->group(function (){
         'as' => 'api.fbnotification.destroy',
         'uses' => 'FbNotification\FbNotificationController@destroy',
     ]);
+});
+
+Route::middleware('auth:api')->prefix('/dashboards')->group(function (){
+    // alarm level
+
+    Route::get('users', [
+        'as' => 'api.dashboards.users',
+        'uses' => 'Auth\UserController@statistical',
+
+    ]);
+    Route::get('/shops', [
+        'as' => 'api.dashboards.shops',
+        'uses' => 'Shop\ShopController@statistical',
+
+    ]);
+
+    Route::get('/orders', [
+        'as' => 'api.dashboards.orders',
+        'uses' => 'Orders\OrdersController@statistical',
+    ]);
+
+    Route::get('/orders/topCompany', [
+        'as' => 'api.dashboards.topCompany',
+        'uses' => 'Orders\OrdersController@topCompany',
+    ]);
+
+    Route::get('/topProduct', [
+        'as' => 'api.dashboards.topProduct',
+        'uses' => 'Product\ProductController@topProduct',
+    ]);
+   
 });
 // append
 

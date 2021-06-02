@@ -480,6 +480,16 @@ Route::middleware('auth:api')->prefix('/dashboard')->group(function (){
         'uses' => 'Dashboard\DashboardController@listShop',
     ]);
 });
+
+Route::middleware('auth:api')->prefix('/dashboard')->group(function (){
+
+    Route::get('/topProduct', [
+        'as' => 'apishop.dashboards.topProduct',
+        'uses' => 'Product\ProductController@topProduct',
+    ]);
+});
+
+
 // append
 
 

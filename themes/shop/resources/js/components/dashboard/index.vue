@@ -75,7 +75,7 @@
 
         <div class="card-body">
           <div>
-            <line-chart :chart-data="dataCountOrder"></line-chart>
+            <line-chart :chart-data="dataCountOrder" :options="chartOptions"></line-chart>
           </div>
         </div>
       </div>
@@ -87,7 +87,39 @@
 
         <div class="card-body">
           <div>
-            <line-chart :chart-data="dataRevenueOrder"></line-chart>
+            <line-chart :chart-data="dataRevenueOrder" :options="chartOptions"></line-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top doanh thu -->
+    <div class="container-fluid" style="margin-top:30px">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <ul>
+                  <li style="font-weight:bold">{{ $t("dashboard.label.top-product") }}</li>
+                  <li v-for="product in topProduct" :key="product.key">
+                    {{ product.productInfo }} <br/> {{ product.shopInfo}}
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="row">
+                <ul>
+                  <li style="font-weight:bold">{{ $t("dashboard.label.top-category") }}</li>
+                  <li v-for="category in topCategory" :key="category.index">{{ category.value }}</li>
+                </ul>
+              </div>
+
+            </div>
+
           </div>
         </div>
       </div>
@@ -111,10 +143,14 @@ export default {
         totalFee: null,
         totalRevenue: null,
         waitPaid: null,
+        topProduct: [],
+        topCategory: [],
+        chartOptions:{ responsive: true, maintainAspectRatio: false }
       }
     },
     mounted () {
       this.getOrderStatistical();
+      this.getTopProduct();
     },
     methods: {
       formatNumber(number){
@@ -173,6 +209,17 @@ export default {
               };
           });
       },
+
+      getTopProduct() {
+        const properties = {};
+        axios
+          .get(route("apishop.dashboards.topProduct", _.merge(properties, {})))
+          .then((response) => {
+            this.topProduct = response.data.topProduct;
+            this.topCategory = response.data.topCategory;
+                        
+          });
+      },
     },
 };
 </script>
@@ -181,5 +228,8 @@ export default {
 .small {
   max-width: 600px;
   margin: 150px auto;
+}
+ul > li {
+  list-style-type: none;
 }
 </style>

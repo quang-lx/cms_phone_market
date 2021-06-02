@@ -80,6 +80,12 @@ class Orders extends Model
     {
         return $this->belongsTo(Shop::class, 'shop_id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
     public function paymentHistory()
     {
         return $this->belongsTo(PaymentHistory::class, 'payment_history_id');

@@ -68,4 +68,6 @@ class EloquentApiShopRepository extends ApiBaseRepository implements ApiShopRepo
         }
         return $result;
     }
+
+    
 }
