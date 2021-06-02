@@ -58,20 +58,27 @@
                   :visible.sync="dialogRank"
                 >
                   <el-form :model="form">
-                    <el-select v-model="modelForm.rank_id" placeholder="Chọn xếp hạng">
-                      
-                      <el-option
-                        v-for="item in rank"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id"
-                      >
-                      </el-option>
-                    </el-select>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <el-input v-model="modelForm.username" :disabled="true"></el-input>
+                      </div>
+                      <div class="col-md-12" style="margin-top:20px">
+                        <el-select v-model="modelForm.rank_id" placeholder="Chọn xếp hạng">
+                          
+                          <el-option
+                            v-for="item in rank"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                          >
+                          </el-option>
+                        </el-select>
+                      </div>
+                    </div>
                   </el-form>
                   <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="onSubmit()"
-                      >Sét rank</el-button
+                      >CẬP NHẬT</el-button
                     >
                   </span>
                 </el-dialog>
@@ -215,9 +222,9 @@ export default {
         this.message =
           "Bạn có muốn bỏ khóa tài khoản " + this.modelForm.username;
       }
-      this.$confirm(this.message, "Warning", {
-        confirmButtonText: "OK",
-        cancelButtonText: "Cancel",
+      this.$confirm(this.message, "Cảnh báo", {
+        confirmButtonText: "ĐỒNG Ý",
+        cancelButtonText: "HỦY",
         type: "warning",
       })
         .then(() => {
@@ -231,7 +238,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "Canceled",
+            message: "Đã hủy",
           });
         });
     },
