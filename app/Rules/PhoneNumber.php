@@ -35,6 +35,6 @@ class PhoneNumber implements Rule
      */
     public function message()
     {
-        return ':attribute không đúng định dạng';
+        return 'Số điện thoại không đúng định dạng';
     }
 }

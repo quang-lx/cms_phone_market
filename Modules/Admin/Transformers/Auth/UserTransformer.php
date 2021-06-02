@@ -20,7 +20,7 @@ class UserTransformer extends JsonResource
 	        'status_color' => $this->status_color,
             'roles' => $this->roles,
             'created_at' => optional($this->created_at)->format('d-m-Y'),
-            'updated_at' =>optional($this->updated_at)->format('d-m-Y h:i'),
+            'updated_at' =>optional($this->updated_at)->format('H:i d/m/Y'),
             'urls' => [
                 'delete_url' => route('api.users.destroy', $this->id),
             ],
