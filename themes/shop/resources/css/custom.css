@@ -196,14 +196,14 @@ footer.main-footer p.text-muted {
     hyphens: auto;
 
 }
-#center-text {          
+#center-text {
   display: flex;
   flex: 1;
-  flex-direction:column; 
+  flex-direction:column;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
   height:100%;
-  
+
 }
 #chat-circle {
   position: fixed;
@@ -211,7 +211,7 @@ footer.main-footer p.text-muted {
   right: 50px;
   background: #5A5EB9;
   width: 80px;
-  height: 80px;  
+  height: 80px;
   border-radius: 50%;
   color: white;
   padding: 28px;
@@ -241,9 +241,9 @@ footer.main-footer p.text-muted {
 
 .chat-box {
   display:none;
-  bottom:50px;  
+  bottom:50px;
   max-height:100vh;
-  border-radius:5px;  
+  border-radius:5px;
 }
 .chat-box-toggle {
   float:right;
@@ -254,17 +254,17 @@ footer.main-footer p.text-muted {
   background: #5A5EB9;
   height:70px;
   border-top-left-radius:5px;
-  border-top-right-radius:5px; 
+  border-top-right-radius:5px;
   color:white;
   text-align:center;
   font-size:20px;
   padding-top:17px;
 }
 .chat-box-body {
-  position: relative;  
-  height:280px;  
+  position: relative;
+  height:280px;
   height:auto;
-  border:1px solid #ccc;  
+  border:1px solid #ccc;
   overflow: hidden;
   background-color: white;
 }
@@ -278,13 +278,13 @@ footer.main-footer p.text-muted {
   right: 0;
   height:100%;
   position: absolute;
-  z-index: -1;   
+  z-index: -1;
 }
 #chat-input {
   background: #f4f7f9;
-  width:100%; 
+  width:100%;
   position:relative;
-  height:47px;  
+  height:47px;
   padding-top:10px;
   padding-right:50px;
   padding-bottom:10px;
@@ -297,7 +297,7 @@ footer.main-footer p.text-muted {
   border-top:none;
   border-bottom-right-radius:5px;
   border-bottom-left-radius:5px;
-  overflow:hidden;  
+  overflow:hidden;
 }
 .chat-input > form {
     margin-bottom: 0;
@@ -314,7 +314,7 @@ footer.main-footer p.text-muted {
 #chat-input:-moz-placeholder { /* Firefox 18- */
   color: #ccc;
 }
-.chat-submit {  
+.chat-submit {
   position:absolute;
   bottom:3px;
   right:10px;
@@ -324,13 +324,13 @@ footer.main-footer p.text-muted {
   border-radius:50%;
   color:#5A5EB9;
   width:35px;
-  height:35px;  
+  height:35px;
 }
 .chat-logs {
-  padding:15px; 
+  padding:15px;
   height:280px;
   overflow-y:scroll;
-  
+
 }
 
 .chat-logs::-webkit-scrollbar-track
@@ -341,7 +341,7 @@ footer.main-footer p.text-muted {
 
 .chat-logs::-webkit-scrollbar
 {
-  width: 5px;  
+  width: 5px;
   background-color: #F5F5F5;
 }
 
@@ -374,19 +374,19 @@ footer.main-footer p.text-muted {
 }
 .cm-msg-text {
   background:white;
-  padding:10px 15px 10px 15px;  
+  padding:10px 15px 10px 15px;
   color:#666;
   max-width:75%;
   float:left;
-  margin-left:10px; 
+  margin-left:10px;
   position:relative;
   margin-bottom:20px;
   border-radius:30px;
 }
 .chat-msg {
-  clear:both;    
+  clear:both;
 }
-.chat-msg.self > .cm-msg-text {  
+.chat-msg.self > .cm-msg-text {
   float:right;
   margin-right:10px;
   background: #5A5EB9;
@@ -400,4 +400,26 @@ footer.main-footer p.text-muted {
 .cm-msg-button {
     clear: both;
     margin-bottom: 70px;
+}
+.dont-break-out {
+
+    /* These are technically the same, but use both */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+
+}
+.el-button, btn {
+    text-transform: uppercase !important;
 }
