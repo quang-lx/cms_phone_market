@@ -22,6 +22,7 @@ class AccountTransformer extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'rank_id' => $this->rank_id,
+            'rank_point' => $this->rank_point,
             'rank_name' => isset($this->rank)?$this->rank->name:'',
             'created_at' => $this->created_at->format('H:i d/m/Y'),
             'status' => $this->status,

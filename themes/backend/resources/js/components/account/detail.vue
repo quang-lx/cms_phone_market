@@ -57,22 +57,48 @@
                   title="Tuỳ chỉnh xếp hạng"
                   :visible.sync="dialogRank"
                 >
-                  <el-form :model="form">
+                  <el-form 
+                    ref="form"
+                    :model="modelForm"
+                    label-width="150px"
+                    label-position="left"
+                    v-loading.body="loading"
+                  >
                     <div class="row">
-                      <div class="col-md-12">
-                        <el-input v-model="modelForm.username" :disabled="true"></el-input>
+                      <div class="col-md-offset-2 col-md-8">
+                        <p><b>Username:</b> {{ modelForm.username }}</p>
                       </div>
-                      <div class="col-md-12" style="margin-top:20px">
-                        <el-select v-model="modelForm.rank_id" placeholder="Chọn xếp hạng">
-                          
-                          <el-option
-                            v-for="item in rank"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id"
-                          >
-                          </el-option>
-                        </el-select>
+                      <div class="col-md-offset-2 col-md-8">
+                        <el-form-item
+                          :label="$t('account.label.rank_title')"
+                        >
+                          <el-select v-model="modelForm.rank_id" placeholder="Chọn xếp hạng">
+                            
+                            <el-option
+                              v-for="item in rank"
+                              :key="item.id"
+                              :label="item.name"
+                              :value="item.id"
+                            >
+                            </el-option>
+                          </el-select>
+                        </el-form-item>
+                      </div>
+
+                      <div class="col-md-offset-2 col-md-8">
+                        <el-form-item
+                          :label="$t('account.label.point')"
+                          :class="{
+                            'el-form-item is-error': form.errors.has('rank_point'),
+                          }"
+                        >
+                          <el-input v-model="modelForm.rank_point"></el-input>
+                          <div
+                              class="el-form-item__error"
+                              v-if="form.errors.has('rank_point')"
+                              v-text="form.errors.first('rank_point')"
+                            ></div>
+                        </el-form-item>
                       </div>
                     </div>
                   </el-form>
@@ -222,7 +248,7 @@ export default {
         this.message =
           "Bạn có muốn bỏ khóa tài khoản " + this.modelForm.username;
       }
-      this.$confirm(this.message, "Cảnh báo", {
+      this.$confirm(this.message, "Xác nhận", {
         confirmButtonText: "ĐỒNG Ý",
         cancelButtonText: "HỦY",
         type: "warning",
@@ -252,6 +278,7 @@ export default {
         .then((response) => {
           this.loading = false;
           this.dialogRank = false;
+
           this.fetchData();
           this.$message({
             type: "success",
@@ -310,4 +337,5 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

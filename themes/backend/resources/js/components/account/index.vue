@@ -100,8 +100,8 @@
                     >
                     </el-table-column>
                     <el-table-column
-                      prop="name"
-                      :label="$t('account.label.name')"
+                      prop="username"
+                      :label="$t('account.label.username')"
                       sortable="custom"
                     >
                     </el-table-column>

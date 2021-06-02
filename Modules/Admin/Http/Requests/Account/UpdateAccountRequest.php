@@ -8,7 +8,9 @@ class UpdateAccountRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            'rank_point' => 'required',
+        ];
     }
 
     public function translationRules()
@@ -23,7 +25,9 @@ class UpdateAccountRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        return [
+            'rank_point.required' => 'Điểm không được để trống',
+        ];
     }
 
     public function translationMessages()
