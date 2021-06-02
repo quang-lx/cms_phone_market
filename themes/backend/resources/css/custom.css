@@ -203,3 +203,6 @@ footer.main-footer p.text-muted {
     hyphens: auto;
 
 }
+.el-button, btn {
+    text-transform: uppercase !important;
+}
