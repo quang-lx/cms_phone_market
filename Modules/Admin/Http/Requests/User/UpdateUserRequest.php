@@ -28,7 +28,6 @@ class UpdateUserRequest extends FormRequest
         if ($userType == User::TYPE_USER) {
             $rules['username'] = ['required',"unique:users,username,{$user->id}", new PhoneNumber()];
         } else {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}",'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
             $rules['phone'] = ['required',"unique:users,phone,{$user->id}", new PhoneNumber()];
         }
         return $rules;

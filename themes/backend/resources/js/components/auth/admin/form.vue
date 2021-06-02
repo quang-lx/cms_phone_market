@@ -178,11 +178,13 @@
                                                 </el-form-item>
                                             </div>
 
-                                            <h3 style="font-size: 1.1rem;font-weight: 400;margin: 0;">
+                                            <!-- <h3 style="font-size: 1.1rem;font-weight: 400;margin: 0;">
                                                 {{$t('user.tabs.roles')}}</h3>
-                                            <hr>
-                                            <div style="margin-left:200px">
-                                                <el-checkbox style="margin-bottom:20px"
+                                            <hr> -->
+                                             <el-form-item
+                                                    :label="$t('user.label.roles')"
+                                                   >
+                                                   <el-checkbox style="margin-bottom:20px"
                                                              :indeterminate="isIndeterminate"
                                                              v-model="checkAll"
                                                              @change="handleCheckAllChange" border
@@ -197,7 +199,7 @@
                                                                  border size="medium">{{item.name}}
                                                     </el-checkbox>
                                                 </el-checkbox-group>
-                                            </div>
+                                                </el-form-item>
 
 
                                         </div>

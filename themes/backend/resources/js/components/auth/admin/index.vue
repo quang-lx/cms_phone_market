@@ -99,6 +99,24 @@
 
                                         </el-table-column>
 
+                                         <el-table-column prop="" :label="$t('user.label.roles')" sortable="custom">
+                                              <template slot-scope="scope">
+                                                    <span
+                                                    v-for="(item, index) in scope.row.roles"
+                                                    :key="index"
+                                                    >
+                                                    <span
+                                                        v-if="
+                                                        scope.row.roles.length - 1 == index
+                                                        "
+                                                    >
+                                                        {{ item.name }}</span
+                                                    >
+                                                    <span v-else> {{ item.name }},</span>
+                                                    </span>
+                                              </template>
+                                        </el-table-column>
+
                                         <el-table-column prop="status" :label="$t('company.label.status')" sortable="custom">
                                             <template slot-scope="scope">
                                                 <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>

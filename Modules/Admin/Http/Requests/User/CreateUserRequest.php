@@ -34,7 +34,7 @@ class CreateUserRequest extends FormRequest
         if ($userType == User::TYPE_USER) {
             $rules['username'] = ['required','unique:users', new PhoneNumber()];
         }else {
-            $rules['username'] = ['required',"unique:users,username",'regex:/(^([a-zA-Z]+)(\d+)?$)/u'];
+            $rules['username'] = ['required',"unique:users,username",'regex:/^[\w-]*$/'];
             $rules['phone'] = ['required',"unique:users,phone", new PhoneNumber()];
 
         }
