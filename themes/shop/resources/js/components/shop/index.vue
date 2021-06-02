@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col-5">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
-                                                  placeholder="Tên đăng nhập/SĐT/Email"
+                                                  placeholder="Tên chi nhánh/SĐT/Email"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
