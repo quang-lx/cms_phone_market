@@ -38,7 +38,7 @@ class EloquentCompanyRepository extends BaseRepository implements CompanyReposit
 
             $query->orderBy($request->get('order_by'), $order);
         } else {
-            $query->orderBy('id', 'asc');
+            $query->orderBy('id', 'desc');
         }
 
         return $query->paginate($request->get('per_page', 10));

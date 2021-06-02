@@ -13,6 +13,7 @@ use Modules\Shop\Repositories\OrdersRepository;
 use Illuminate\Routing\Controller;
 use Modules\Mon\Http\Controllers\ApiController;
 use Modules\Mon\Auth\Contracts\Authentication;
+use App\Events\ShopNotiCreated;
 
 class OrdersController extends ApiController
 {
@@ -71,7 +72,13 @@ class OrdersController extends ApiController
     public function update(Orders $orders, UpdateOrdersRequest $request)
     {
         $this->ordersRepository->update($orders, $request->all());
-
+        $data = [
+            'title' => trans('order.notifications.sua_chua.title'),
+            'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $orders->id]),
+            'fcm_token' => $orders->user->fcm_token,
+            'type' => trans('order.notifications.sua_chua.type', ['order_status' => $orders->status]),
+        ];
+        event(new ShopNotiCreated($data));
         return response()->json([
             'errors' => false,
             'message' => trans('ch::orders.message.update success'),
@@ -80,6 +87,13 @@ class OrdersController extends ApiController
 
     public function updateGuarantee(Orders $orders, Request $request)
     {
+        $data = [
+            'title' => trans('order.notifications.bao_hanh.title'),
+            'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $orders->id]),
+            'fcm_token' => $orders->user->fcm_token,
+            'type' => trans('order.notifications.bao_hanh.type', ['order_status' => $orders->status]),
+        ];
+        event(new ShopNotiCreated($data));
         return $this->ordersRepository->updateGuarantee($orders, $request->all());
     }
 
