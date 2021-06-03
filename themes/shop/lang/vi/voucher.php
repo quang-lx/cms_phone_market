@@ -2,7 +2,7 @@
 return [
     'label' => [
         'id' => 'ID',
-        'title' => 'Tên',
+        'title' => 'Tên chương trình',
         'code' => 'Mã giảm giá',
         'discount_amount' => 'Mức giảm',
         'code-help' => 'Vui lòng chỉ nhập các kí tự chữ cái (A-Z), số (0-9).',
@@ -20,7 +20,7 @@ return [
         'btn_add_voucher' => 'Tạo mã giảm giá',
         'updated_by' => 'Người cập nhật',
         'type_name' => 'Loại mã',
-        'discount_amount' => 'Giảm',
+        'discount_amount' => 'Số tiền giảm',
         'status' => 'Trạng thái',
         'use_condition' => 'Điều kiện sử dụng',
         'description' => 'Chi tiết',

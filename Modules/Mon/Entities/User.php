@@ -145,7 +145,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     public function shop()
     {
-        return $this->belongsTo(Company::class, 'shop_id');
+        return $this->belongsTo(Shop::class, 'shop_id');
     }
 
     public function getStatusNameAttribute($value)

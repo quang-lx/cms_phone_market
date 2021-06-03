@@ -30,6 +30,11 @@ class EloquentUserRepository extends BaseRepository implements UserRepository
             $query->where('status', $status);
         }
 
+        if ($request->get('shop_id') !== null) {
+            $shopId = $request->get('shop_id');
+            $query->where('shop_id', $shopId);
+        }
+
         if ($request->get('search') !== null) {
             $keyword = $request->get('search');
             $query->where(function ($q) use ($keyword) {

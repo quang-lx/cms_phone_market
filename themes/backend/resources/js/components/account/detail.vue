@@ -288,6 +288,7 @@ export default {
         .catch((error) => {
           this.loading = false;
           this.dialogRank = false;
+          this.fetchData();
           this.$notify.error({
             title: this.$t("mon.error.Title"),
             message: this.getSubmitError(this.form.errors),

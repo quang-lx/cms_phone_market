@@ -21,7 +21,19 @@
                             <div class="col-sm-9">
                                 <div class="row pull-right">
 
-                                    <div class="col-4">
+                                    <div class="col-2">
+
+                                        <el-select v-model="filter.shop_id" placeholder="Chi nhánh"
+                                                   @change="onSearchChange()" clearable>
+                                            <el-option
+                                                    v-for="item in listShop"
+                                                    :key="item.id"
+                                                    :label="item.name"
+                                                    :value="item.id">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+                                    <div class="col-3">
 
                                         <el-select v-model="filter.status" placeholder="Lọc theo trạng thái"
                                                    @change="onSearchChange()" clearable>
@@ -33,7 +45,7 @@
                                             </el-option>
                                         </el-select>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-4">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tên đăng nhập/SĐT/Email"
                                                   v-model="searchQuery">
@@ -80,13 +92,17 @@
                                                          sortable="custom">
 
                                         </el-table-column>
-                                        <el-table-column prop="name" :label="$t('user.label.username')"
+                                        <el-table-column prop="username" :label="$t('user.label.username')" width="140"
                                                          sortable="custom"/>
-                                        <el-table-column prop="email" :label="$t('user.label.phone')"
+                                        <el-table-column prop="name" :label="$t('user.label.name')" width="130"
+                                                         sortable="custom"/>
+                                        <el-table-column prop="phone" :label="$t('user.label.phone')" width="130"
                                                          sortable="custom"/>
                                         <el-table-column prop="email" :label="$t('user.label.email')"
                                                          sortable="custom"/>
-                                        <el-table-column prop="" :label="$t('user.label.role')"
+                                        <el-table-column prop="shop_name" :label="$t('user.label.shop_name')" width="110"
+                                                        sortable="custom"/>
+                                        <el-table-column prop="" :label="$t('user.label.role')" width="90"
                                                          sortable="custom"
                                                          >
                                         <template slot-scope="scope">
@@ -101,19 +117,19 @@
                                         </el-table-column>
 
 
-                                        <el-table-column prop="status" :label="$t('user.label.status')"
+                                        <el-table-column prop="status" :label="$t('user.label.status')" width="110"
                                                          sortable="custom">
                                             <template slot-scope="scope">
                                                 <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="updated_by" :label="$t('user.label.updated_by')"
+                                        <el-table-column prop="updated_by" :label="$t('user.label.updated_by')" width="140"
                                                          sortable="custom">
                                             <template slot-scope="scope">
                                                 {{ scope.row.created_name}}
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="updated_at" :label="$t('user.label.updated_at')"
+                                        <el-table-column prop="updated_at" :label="$t('user.label.updated_at')" width="140"
                                                          sortable="custom"/>
 
 
@@ -163,21 +179,19 @@
                 listFilterColumn: [],
                 listStatus: [
                     {
-                        value: 0,
-                        label: 'Chưa hoạt động'
-                    },
-                    {
                         value: 1,
                         label: 'Hoạt động'
                     },
                     {
                         value: 2,
-                        label: 'Đã khóa'
+                        label: 'Khóa'
                     }
                 ],
                 filter: {
                     status: ''
-                }
+                },
+                listShop: [],
+                isAdmin: false
 
             };
         },
@@ -190,7 +204,8 @@
                     order_by: this.order_meta.order_by,
                     order: this.order_meta.order,
                     search: this.searchQuery,
-                    status: this.filter.status
+                    status: this.filter.status,
+                    shop_id: this.filter.shop_id,
                 };
 
                 axios.get(route('api.user.index', _.merge(properties, customProperties)))
@@ -208,11 +223,26 @@
                 this.meta.current_page = 0;
                 this.queryServer({})
             },
+            fetchShop() {
+                const properties = {
+                    page: 0,
+                    per_page: 1000,
+                    check_company: true,
+                };
+
+                axios
+                    .get(route("api.shop.index", _.merge(properties, {})))
+                    .then((response) => {
+                        this.listShop = response.data.data;
+                
+                    });
+            },
 
         },
 
         mounted() {
             this.fetchData();
+            this.fetchShop();
 
         },
     }
