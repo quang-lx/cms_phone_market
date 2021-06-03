@@ -229,6 +229,11 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 			});
 		}
 
+		if ($request->get('shop_id') !== null) {
+            $shopId = $request->get('shop_id');
+            $query->where('shop_id', $shopId);
+        }
+
 		if ($request->get('brand_id') !== null) {
 			$brandId = $request->get('brand_id');
 			$query->where('brand_id', $brandId);

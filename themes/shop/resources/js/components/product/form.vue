@@ -580,7 +580,7 @@
           ],
           attribute_id: '',
           attribute_selected: null,
-          type: null,
+          type: 1,
           warranty_time: null,
           fix_time: null,
 

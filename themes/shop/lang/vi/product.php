@@ -26,6 +26,7 @@ return [
         'category_id' => 'Danh mục',
         'problem_id' => 'Vấn đề sửa chữa',
         'company_id' => 'Cửa hàng',
+        'shop_name' => 'Chi nhánh',
         'image' => 'Ảnh',
         'type' => 'Loại sản phẩm',
         'fix_time' => 'Thời gian sửa chữa (ngày)',

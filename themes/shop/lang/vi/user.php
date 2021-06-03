@@ -2,9 +2,9 @@
 return [
     'label' => [
         'id' => 'ID',
-        'username' => 'Tài khoản',
+        'username' => 'Tên đăng nhập',
         'email' => 'Email',
-        'name' => 'Tên',
+        'name' => 'Tên tài khoản',
         'phone' => 'Số điện thoại',
         'shop_id' => 'Chi nhánh',
         'created_at' => 'Ngày tạo',
@@ -12,16 +12,14 @@ return [
         'password_confirmation' => 'Xác nhận mật khẩu',
         'password' => 'Mật khẩu',
         'create_user' => 'Tạo tài khoản',
-
         'update_user' => 'Cập nhật',
         'create_admin' => 'Tạo quản trị',
         'update_admin' => 'Cập nhật quản trị',
-
         'users' => 'Tài khoản',
         'roles' => 'Nhóm quyền',
         'change_password' => 'Đổi mật khẩu',
         'admins' => 'Tài khoản quản trị',
-
+        'shop_name' => 'Chi nhánh',
         'manager' => 'Quản lý tài khoản',
         'btn_add_user' => 'Thêm tài khoản',
         'updated_by' => 'Người cập nhật',

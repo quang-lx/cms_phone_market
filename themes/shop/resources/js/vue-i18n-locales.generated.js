@@ -409,6 +409,7 @@ export default {
                 "category_id": "Danh mục",
                 "problem_id": "Vấn đề sửa chữa",
                 "company_id": "Cửa hàng",
+                "shop_name": "Chi nhánh",
                 "image": "Ảnh",
                 "type": "Loại sản phẩm",
                 "fix_time": "Thời gian sửa chữa (ngày)",
@@ -587,9 +588,9 @@ export default {
         "user": {
             "label": {
                 "id": "ID",
-                "username": "Tài khoản",
+                "username": "Tên đăng nhập",
                 "email": "Email",
-                "name": "Tên",
+                "name": "Tên tài khoản",
                 "phone": "Số điện thoại",
                 "shop_id": "Chi nhánh",
                 "created_at": "Ngày tạo",
@@ -604,6 +605,7 @@ export default {
                 "roles": "Nhóm quyền",
                 "change_password": "Đổi mật khẩu",
                 "admins": "Tài khoản quản trị",
+                "shop_name": "Chi nhánh",
                 "manager": "Quản lý tài khoản",
                 "btn_add_user": "Thêm tài khoản",
                 "updated_by": "Người cập nhật",
@@ -626,9 +628,9 @@ export default {
         "voucher": {
             "label": {
                 "id": "ID",
-                "title": "Tên",
+                "title": "Tên chương trình",
                 "code": "Mã giảm giá",
-                "discount_amount": "Giảm",
+                "discount_amount": "Số tiền giảm",
                 "code-help": "Vui lòng chỉ nhập các kí tự chữ cái (A-Z), số (0-9).",
                 "time-active": "Thời gian sử dụng mã",
                 "products": "Danh sách sản phẩm có thể áp dụng mã",

@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-4 d-flex align-items-center">
+                            <div class="col-sm-3 d-flex align-items-center">
                                 <el-breadcrumb separator="/">
                                     <el-breadcrumb-item>
                                         <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
@@ -16,8 +16,8 @@
                                 </el-breadcrumb>
 
                             </div>
-                            <div class="col-sm-8">
-                                <div class="row  pull-right">
+                            <div class="col-sm-9">
+                                <div class="row  pull-right col-sm-6">
 
                                     <div class="col-sm-6">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
@@ -67,7 +67,7 @@
                                         <el-table-column prop="id" :label="$t('voucher.label.id')" width="60" sortable="custom">
                                         </el-table-column>
 
-                                        <el-table-column prop="title" :label="$t('voucher.label.title')" sortable="address" width="70">
+                                        <el-table-column prop="title" :label="$t('voucher.label.title')" sortable="address" width="150">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.title}}</span>
                                             </template>
@@ -76,20 +76,22 @@
                                         <el-table-column prop="code" :label="$t('voucher.label.code')" sortable="custom" width="120">
                                         </el-table-column>
 
-                                        <el-table-column prop="type" :label="$t('voucher.label.type_name')" sortable="custom"  >
+                                        <el-table-column prop="type" :label="$t('voucher.label.type_name')" sortable="custom" width="120" >
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.type_name}}</span>
                                             </template>
                                         </el-table-column>
 
                                         <el-table-column prop="discount_amount" :label="$t('voucher.label.discount_amount')"
-                                            sortable="custom"  >
+                                            sortable="custom" width="140" >
                                              <template slot-scope="scope">
                                                 <span>{{Intl.NumberFormat().format(scope.row.discount_amount)}}</span>
+                                                <span v-if="scope.row.type == 1">VNĐ</span>
+                                                <span v-else>%</span>
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="actived_at" :label="$t('voucher.label.status')" sortable="custom"  >
+                                        <el-table-column prop="actived_at" :label="$t('voucher.label.status')" sortable="custom" width="130" >
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.status_name}}</span>
                                             </template>
