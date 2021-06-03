@@ -281,7 +281,8 @@
 
         },
         cropFile: null,
-        aspectRatio: 3/2
+        aspectRatio: 3/2,
+          listImageType: window.MonCMS.imageType
       };
     },
     methods: {
@@ -420,21 +421,24 @@
 
       },
       vdropzoneFileAdded(file) {
-        console.log(file)
-        const reader = new FileReader();
-        const that = this
-        reader.onload = (event) => {
-          this.cropFile = event.target.result;
-          // rebuild cropperjs with the updated source
-          that.$refs.cropper.replace(event.target.result);
+          if (_.includes(this.listImageType, file.type)) {
+              const reader = new FileReader();
+              const that = this
+              reader.onload = (event) => {
+                  this.cropFile = event.target.result;
+                  // rebuild cropperjs with the updated source
+                  that.$refs.cropper.replace(event.target.result);
 
-        };
-        reader.readAsDataURL(file);
-        this.cropVisible = true
-        setTimeout(function () {
-          $(".v-modal").remove();
-        }, 300);
-
+              };
+              reader.readAsDataURL(file);
+              this.cropVisible = true
+              setTimeout(function () {
+                  $(".v-modal").remove();
+              }, 300);
+          } else {
+              setTimeout(  () => {
+                  this.$refs.myVueDropzone.processQueue()
+              }, 300);
 
       },
       getAspectRatio() {

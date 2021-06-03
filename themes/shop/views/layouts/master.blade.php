@@ -94,7 +94,8 @@
         multipleLanguage: '{{config('mon.multiple_languages')}}',
         permissions: {!! json_encode($permissions) !!},
         permissionDenied: '{{trans('shop::mon.message.permission_denied')}}',
-        current_user: {!! json_encode($currentUser)!!}
+        current_user: {!! json_encode($currentUser)!!},
+        imageType: {!! json_encode(config('imagetype.images'))!!}
 
     };
 

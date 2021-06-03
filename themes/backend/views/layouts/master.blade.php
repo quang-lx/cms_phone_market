@@ -94,6 +94,7 @@
         multipleLanguage: '{{config('mon.multiple_languages')}}',
         permissions: {!! json_encode($permissions) !!},
         permissionDenied: '{{trans('backend::mon.message.permission_denied')}}',
+      imageType: {!! json_encode(config('imagetype.images'))!!}
 
     };
 
