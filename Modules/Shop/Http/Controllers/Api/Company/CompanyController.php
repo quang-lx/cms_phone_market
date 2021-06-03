@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Mon\Http\Controllers\ApiController;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Repositories\UserRepository;
-use Modules\Admin\Http\Requests\User\ChangePasswordRequest;
+use Modules\Shop\Http\Requests\User\ChangePasswordRequest;
 
 class CompanyController extends ApiController
 {

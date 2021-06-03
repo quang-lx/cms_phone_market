@@ -6,6 +6,7 @@ return [
         'cancel' => 'Hủy',
         'delete' => 'Xóa',
         'close' => 'Đóng',
+        'update' => 'Cập nhật',
 
     ],
     'all' => 'Tất cả',

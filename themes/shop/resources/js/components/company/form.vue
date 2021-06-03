@@ -46,14 +46,14 @@
                       <el-form-item
                         :label="$t('company.label.name')"
                         :class="{
-                          'el-form-item is-error': form.errors.has('username'),
+                          'el-form-item is-error': form.errors.has('name'),
                         }"
                       >
-                        <el-input v-model="modelForm.username"></el-input>
+                        <el-input v-model="modelForm.name"></el-input>
                         <div
                           class="el-form-item__error"
-                          v-if="form.errors.has('username')"
-                          v-text="form.errors.first('username')"
+                          v-if="form.errors.has('name')"
+                          v-text="form.errors.first('name')"
                         ></div>
                       </el-form-item>
                       <el-form-item
@@ -101,7 +101,7 @@
                           @singleFileSelected="
                             selectSingleFile($event, 'modelForm')
                           "
-                          label="Ảnh"
+                          label="Ảnh đại diện"
                           entity="Modules\Mon\Entities\Company"
                           :entity-id="modelForm.id"
                       ></single-media>
