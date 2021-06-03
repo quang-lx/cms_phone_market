@@ -5,8 +5,8 @@
         </el-button>
         <el-dialog
                 :visible.sync="dialogVisible"
-
-                :before-close="handleClose">
+                :destroy-on-close="true"
+                :show-close	="false">
 
             <media-for-editor single-modal hide-after-insert :event-name="this.eventName" @insertToEditor="insertToEditor"></media-for-editor>
 
