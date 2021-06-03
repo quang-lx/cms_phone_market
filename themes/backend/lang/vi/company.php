@@ -3,7 +3,7 @@ return [
     'label' => [
         'company' => 'Tài khoản cửa hàng',
         'id' => 'ID',
-        'username' => 'Username',
+        'username' => 'Tên đăng nhập',
 
         'name' => 'Tên cửa hàng',
         'email' => 'Email',
@@ -11,7 +11,7 @@ return [
         'slug' => 'Đường dẫn',
         'phone' => 'Số điện thoại',
         'address' => 'Địa chỉ',
-        'description' => 'Miêu tả',
+        'description' => 'Mô tả',
         'status' => 'Trạng thái',
         'level' => 'Cấp cửa hàng',
         'province' => 'Tỉnh/TP',
