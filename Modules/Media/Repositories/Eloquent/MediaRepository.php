@@ -1,6 +1,7 @@
 <?php
 namespace Modules\Media\Repositories\Eloquent;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Modules\Media\Events\FileIsCreating;
@@ -48,7 +49,7 @@ class MediaRepository extends BaseRepository implements \Modules\Media\Repositor
         $fileName = Str::uuid().'.'. $extension;
 
 
-        $data = [
+		$data = [
             'filename' => $fileName,
             'path' => $this->getPathFor($fileName, $parentId),
             'extension' => substr(strrchr($fileName, '.'), 1),
@@ -57,6 +58,14 @@ class MediaRepository extends BaseRepository implements \Modules\Media\Repositor
             'folder_id' => $parentId,
             'is_folder' => 0,
         ];
+
+		$user = Auth::user();
+		if ($user->company_id) {
+			$data['company_id'] = $user->company_id;
+		}
+		if ($user->shop_id) {
+			$data['shop_id'] = $user->shop_id;
+		}
 
         event($event = new FileIsCreating($data));
 
@@ -154,6 +163,7 @@ class MediaRepository extends BaseRepository implements \Modules\Media\Repositor
     public function serverPagingFor(Request $request, $relations = null)
     {
         $media = $this->newQueryBuilder();
+        $user = Auth::user();
         if ($relations) {
             $media = $media->with($relations);
         }
@@ -165,6 +175,12 @@ class MediaRepository extends BaseRepository implements \Modules\Media\Repositor
             $term = $request->get('search');
             $media->where('filename', 'LIKE', "%{$term}%");
         }
+		if ($user->company_id) {
+			$media->where('company_id', $user->company_id);
+		}
+		if ($user->shop_id) {
+			$media->where('shop_id', $user->shop_id);
+		}
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';

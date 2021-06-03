@@ -12,7 +12,7 @@ class Media extends Model implements Responsable
 {
     protected $table = 'medias';
 
-    protected $fillable = ['filename', 'path', 'mimetype', 'extension', 'filesize', 'is_folder', 'folder_id', 'title', 'description'];
+    protected $fillable = ['filename', 'path', 'mimetype', 'extension', 'filesize', 'is_folder', 'folder_id', 'title', 'description', 'company_id', 'shop_id'];
     protected $appends = ['path_string', 'media_type'];
     protected $casts = ['is_folder' => 'boolean',];
     /**
