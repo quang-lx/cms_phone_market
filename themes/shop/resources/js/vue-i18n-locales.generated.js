@@ -195,9 +195,9 @@ export default {
         },
         "company": {
             "label": {
-                "company": "Thông tin cửa hàng",
+                "company": "Quản lý tài khoản cửa hàng",
                 "id": "ID",
-                "username": "Username",
+                "username": "Tên đăng nhập",
                 "name": "Tên cửa hàng",
                 "email": "Email",
                 "branchnumber": "Số chi nhánh",
@@ -208,7 +208,7 @@ export default {
                 "status": "Trạng thái",
                 "level": "Cấp độ ưu tiên",
                 "create_title": "Tạo tài khoản",
-                "update_title": "Cập nhật",
+                "update_title": "Sửa thông tin",
                 "detail_title": "Chi tiết"
             },
             "message": {
@@ -252,8 +252,8 @@ export default {
             "messages": {
                 "selected items deleted": "Tệp vừa được xóa"
             },
-            "insert": "Insert image",
-            "remove_media": "Remove media",
+            "insert": "Thêm ảnh",
+            "remove_media": "Xóa ảnh",
             "Browse": "Chọn file"
         },
         "mon": {
@@ -262,7 +262,8 @@ export default {
                 "create": "Tạo",
                 "cancel": "Hủy",
                 "delete": "Xóa",
-                "close": "Đóng"
+                "close": "Đóng",
+                "update": "Cập nhật"
             },
             "all": "Tất cả",
             "confirm": "Xác nhận",

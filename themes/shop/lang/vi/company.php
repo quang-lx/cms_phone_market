@@ -1,9 +1,9 @@
 <?php
 return [
     'label' => [
-        'company' => 'Thông tin cửa hàng',
+        'company' => 'Quản lý tài khoản cửa hàng',
         'id' => 'ID',
-        'username' => 'Username',
+        'username' => 'Tên đăng nhập',
 
         'name' => 'Tên cửa hàng',
         'email' => 'Email',
@@ -16,7 +16,7 @@ return [
         'level' => 'Cấp độ ưu tiên',
 
         'create_title' => 'Tạo tài khoản',
-        'update_title' => 'Cập nhật',
+        'update_title' => 'Sửa thông tin',
         'detail_title' => 'Chi tiết'
     ],
 

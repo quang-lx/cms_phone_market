@@ -92,7 +92,7 @@
                       {{ $t("mon.button.cancel") }}</el-button
                     >
                     <el-button type="primary" @click="changePassword">
-                      {{ $t("mon.button.save") }}</el-button
+                      {{ $t("mon.button.update") }}</el-button
                     >
                   </span>
                 </el-dialog>
@@ -125,6 +125,12 @@
                     <div class="col-md-12 mx-auto">
                       <div class="row mb-3">
                         <div class="col-md-2">
+                          <span>{{ $t("company.label.username") }}</span>
+                        </div>
+                        <div class="col-md-10">{{ modelForm.username }}</div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-md-2">
                           <span>{{ $t("company.label.name") }}</span>
                         </div>
                         <div class="col-md-10">{{ modelForm.name }}</div>
@@ -155,13 +161,11 @@
                           <span>Ảnh</span>
                         </div>
                         <div class="col-md-10">
-                          <template slot-scope="scope">
                             <img
-                              :src="scope.row.thumbnail.path_string"
-                              v-if="scope.row.thumbnail"
+                              :src="modelForm.thumbnail.path_string"
+                              v-if="modelForm.thumbnail"
                               width="100"
                             />
-                          </template>
                         </div>
                       </div>
                     </div>
