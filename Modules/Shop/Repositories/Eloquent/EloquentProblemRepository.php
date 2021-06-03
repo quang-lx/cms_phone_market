@@ -20,6 +20,11 @@ class EloquentProblemRepository extends BaseRepository implements ProblemReposit
 		if ($relations) {
 			$query = $query->with($relations);
 		}
+		if ($catIds = $request->get('category_id')) {
+			$query->whereHas('problemPcategory', function ($q) use ($catIds) {
+				$q->whereIn('pcategory_id', $catIds);
+			});
+		}
 		return $query->select(['id', 'title'])->get();
 	}
 }

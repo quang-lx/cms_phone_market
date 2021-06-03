@@ -40,5 +40,14 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
         $categories = $query->select('id','name')->get()->toArray();
         return ($categories);
     }
+	public function getList(Request $request, $relations = null)
+		{
+			$query = $this->newQueryBuilder();
+			if ($relations) {
+				$query = $query->with($relations);
+			}
+			$categories = $query->select('id','name')->whereNull('parent_id')->get()->toArray();
+			return ($categories);
+		}
 
 }

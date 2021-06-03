@@ -94,7 +94,7 @@
                             </div>
                             <div class="card">
                                 <div class="card-header"  >
-                                    <h3 class="card-title">Thông tin chi tiêt</h3>
+                                    <h3 class="card-title">Thông tin chi tiết</h3>
                                     <div class="card-tools">
                                         <el-button size="mini" type="warning"  icon="el-icon-plus" @click="addMoreInfo">Thêm</el-button>
 
@@ -136,7 +136,7 @@
                               'el-form-item is-error': form.errors.has('list_attribute'),
                             }"
                                     >
-                                        <el-select clearable 
+                                        <el-select clearable
                                             v-model="modelForm.attribute_id"
                                             placeholder=""
                                             @change="changeAttribute"
@@ -291,19 +291,12 @@
                                             <el-form-item :label="$t('product.label.category_id')"
                                                           :class="{'el-form-item is-error': form.errors.has('category_id') }">
                                                 <div class="tree-container">
-                                                    <el-tree
 
-                                                        :data="category_tree_data"
-                                                        show-checkbox
-                                                        default-expand-all
-                                                        node-key="id"
-                                                        ref="tree"
-                                                        highlight-current
-                                                        check-on-click-node
-                                                        check-strictly
-                                                        @check="handleCheckChange"
-                                                        :props="defaultProps">
-                                                    </el-tree>
+                                                    <el-checkbox-group v-model="modelForm.category_id"  class="problem-container" @change="changeCategory">
+                                                        <el-checkbox v-for="(item,key) in category_tree_data" :key="key"
+                                                                     :label="item.id"> {{item.name}}
+                                                        </el-checkbox>
+                                                    </el-checkbox-group>
                                                 </div>
 
                                                 <div class="el-form-item__error"
@@ -316,7 +309,7 @@
                                 </div>
                             </div>
 
-                            <div class="card">
+                            <div class="card" v-if="modelForm.type == 2">
 
                                 <div class="card-body">
                                     <div class="row">
@@ -715,6 +708,13 @@
 
         });
       },
+        changeCategory() {
+            axios.get(route('apishop.product.problemByCat',{category_id: this.modelForm.category_id}))
+              .then((response) => {
+                  this.list_problem = response.data;
+
+              });
+        },
       updateValue: function (value) {
         // update parent data so that we can still v-model on the parent
         this.$emit('input', value);

@@ -108,7 +108,7 @@ class ProductController extends ApiController
     }
 	public function tree(Request $request)
 	{
-		$categoriesTreeData =  $this->pcategoryRepository->serverPagingForTree($request);
+		$categoriesTreeData =  $this->pcategoryRepository->getList($request);
 		$problemList =  $this->problemRepo->getList($request);
 		$listAttribute = $this->listAttribute();
 		$listInformation = $this->pinformationRepository->listAll();
@@ -135,4 +135,9 @@ class ProductController extends ApiController
     {
         return $this->productRepository->topProduct($request);
     }
+
+    public function problemByCat(Request $request) {
+		$problemList =  $this->problemRepo->getList($request);
+		return response()->json($problemList);
+	}
 }

@@ -158,6 +158,10 @@ Route::middleware('auth:api')->prefix('/products')->group(function (){
 		'as' => 'apishop.product.tree',
 		'uses' => 'Product\ProductController@tree',
 	]);
+	Route::get('/problem-by-category/list', [
+		'as' => 'apishop.product.problemByCat',
+		'uses' => 'Product\ProductController@problemByCat',
+	]);
 
 
 });
@@ -230,7 +234,7 @@ Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
         'as' => 'api.voucher.destroy',
         'uses' => 'Voucher\VoucherController@destroy',
     ]);
-    
+
 });
 
 Route::middleware('auth:api')->prefix('/attributes')->group(function (){
@@ -453,7 +457,7 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.destroy',
         'uses' => 'Orders\OrdersController@destroy',
     ]);
-    
+
     Route::post('/{orders}/edit-guarantee', [
         'as' => 'apishop.orders.update_guarantee',
         'uses' => 'Orders\OrdersController@updateGuarantee',
