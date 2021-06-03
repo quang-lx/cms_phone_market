@@ -370,6 +370,26 @@
                       </el-form-item>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <el-form-item
+                        :label="$t('company.label.description')"
+                        :class="{
+                          'el-form-item is-error': form.errors.has('description'),
+                        }"
+                      >
+                        <tinymce
+                          v-model="modelForm.description"
+                          :height="350"
+                        ></tinymce>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('description')"
+                          v-text="form.errors.first('description')"
+                        ></div>
+                      </el-form-item>
+                    </div>
+                  </div>
                 </el-form>
               </div>
               <!-- /.card-body -->
@@ -398,8 +418,12 @@
 <script>
 import axios from "axios";
 import Form from "form-backend-validation";
+import Tinymce from "../utils/Tinymce";
 
 export default {
+  components: {
+    Tinymce,
+  },
   props: {
     locales: { default: null },
     pageTitle: { default: null, String },

@@ -13,7 +13,7 @@ return [
         'address' => 'Địa chỉ',
         'description' => 'Miêu tả',
         'status' => 'Trạng thái',
-        'level' => 'Cấp độ ưu tiên',
+        'level' => 'Cấp cửa hàng',
         'province' => 'Tỉnh/TP',
         'district' => 'Quận/Huyện',
         'phoenix' => 'Xã/Phường',

@@ -53,7 +53,7 @@ class CompanyController extends ApiController {
 
     public function paramForCompany(Request $request) {
         return $request->only([
-            'name', 'description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by', 'address', 'phone'
+            'name','email','description', 'status', 'level', 'province_id', 'district_id', 'phoenix_id', 'created_by', 'deleted_by', 'address', 'phone'
         ]);
     }
     public function paramForUserCompanyCreate(Request $request) {
