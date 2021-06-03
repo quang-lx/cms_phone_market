@@ -21,7 +21,8 @@ class UpdateUserRequest extends FormRequest
             'name'=>"required",
             'email' => "required|unique:users,email,{$user->id}|email",
             'password_confirmation' => 'same:password',
-            'username' => ['required',"unique:users,username,{$user->id}"],
+            'phone' => "required|unique:users,phone,{$user->id}"
+
         ];
         return $rules;
     }
@@ -45,8 +46,6 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'Tài khoản là bắt buộc',
-            'username.unique' => 'Tài khoản đã tồn tại trên hệ thống',
             'name.required' => 'Tên là bắt buộc',
             'email.unique' => 'Email đã được sử dung',
             'password.required' => 'Mật khẩu là bắt buộc',
@@ -54,6 +53,8 @@ class UpdateUserRequest extends FormRequest
             'password_confirmation.same' => 'Xác nhận mật khẩu không đúng',
             'email.required' => 'Email là bắt buộc',
             'email.email' => 'Email sai định dạng',
+            'phone.unique' => 'Số điện thoại đã được sử dụng',
+            'phone.required' => 'Số điện thoại là bắt buộc',
         ];
     }
 }
