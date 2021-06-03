@@ -13,13 +13,13 @@
     <meta name="current-locale" content="{{ app()->getLocale() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
     <!-- Font Awesome -->
-    <link href="{{ asset('themes/backend/vendor/admin-lte/plugins/fontawesome-free/css/all.min.css') }}"
+    <link href="{{ asset('themes/shop/vendor/admin-lte/plugins/fontawesome-free/css/all.min.css') }}"
           rel="stylesheet">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-    <link href="{{ asset('themes/backend/vendor/admin-lte/dist/css/adminlte.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('themes/backend/vendor/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('themes/shop/vendor/admin-lte/dist/css/adminlte.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('themes/shop/vendor/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
     <style>
         .login-card-body .input-group .input-group-text, .register-card-body .input-group .input-group-text {
             background-color: transparent;
@@ -199,10 +199,10 @@
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
-<script src="{{ asset('themes/backend/vendor/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('themes/shop/vendor/admin-lte/plugins/jquery/jquery.min.js') }}"></script>
 
-<script src="{{ asset('themes/backend/vendor/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('themes/backend/vendor/admin-lte/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('themes/shop/vendor/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('themes/shop/vendor/admin-lte/dist/js/adminlte.min.js') }}"></script>
 @section('scripts')
 @show
 @stack('js-stack')

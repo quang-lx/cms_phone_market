@@ -54,6 +54,7 @@
                 tinymceId: this.id,
                 fullscreen: false,
                 languageTypeList: {
+                    'vi': 'vi',
                     'en': 'en',
                     'zh': 'zh_CN'
                 }
@@ -61,7 +62,7 @@
         },
         computed: {
             language () {
-                return this.languageTypeList['en']
+                return this.languageTypeList['vi']
             }
         },
         watch: {
