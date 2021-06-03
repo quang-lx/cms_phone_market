@@ -5,7 +5,8 @@ namespace Modules\Admin\Repositories\Eloquent;
 use Illuminate\Http\Request;
 use Modules\Admin\Repositories\CompanyRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
-
+use Modules\Admin\Events\Company\CompanyWasCreated;
+use Modules\Admin\Events\Company\CompanyWasUpdated;
 class EloquentCompanyRepository extends BaseRepository implements CompanyRepository
 {
     public function serverPagingFor(Request $request, $relations = null)
@@ -42,5 +43,19 @@ class EloquentCompanyRepository extends BaseRepository implements CompanyReposit
         }
 
         return $query->paginate($request->get('per_page', 10));
+    }
+
+    public function create($data)
+    {
+        $model = $this->model->create($data);
+        event(new CompanyWasCreated($model, $data));
+        return $model;
+    }
+
+    public function update($model, $data)
+    {
+        $model->update($data);
+        event(new CompanyWasUpdated($model, $data));
+        return $model;
     }
 }
