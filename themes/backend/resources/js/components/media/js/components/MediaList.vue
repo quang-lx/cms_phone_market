@@ -440,7 +440,7 @@
                   this.$refs.myVueDropzone.processQueue()
               }, 300);
 
-      },
+      }},
       getAspectRatio() {
         if (this.cropForm.rotationW && this.cropForm.rotationH) {
           return this.cropForm.rotationW / this.cropForm.rotationH
