@@ -3,6 +3,8 @@
 namespace Modules\Admin\Http\Requests\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Mon\Entities\Rank;
+use \Illuminate\Validation\Validator;
 
 class UpdateAccountRequest extends FormRequest
 {
@@ -11,6 +13,22 @@ class UpdateAccountRequest extends FormRequest
         return [
             'rank_point' => 'required',
         ];
+    }
+
+    public function withValidator(Validator $validator)
+    {
+        $point = $this->rank_point;
+        $rankId = $this->rank_id;
+
+        $result = Rank::find($rankId);
+        $validator->after(function ($validator) use ($result, $point) {
+            if ($point > $result->max_point || $point < $result->point){
+                $msg = sprintf ('Hạng %s có khoảng điểm %s - %s', $result->name, $result->point, $result->max_point);
+                $validator->errors()->add('Point', $msg);
+            }
+
+        });
+        return $validator;                    
     }
 
     public function translationRules()
