@@ -663,10 +663,6 @@
           this.loading = false;
           this.modelForm = response.data.data;
 
-          if (this.modelForm.category_id) {
-            this.setCheckedKeys(this.modelForm.category_id)
-          }
-
         });
       },
 
@@ -723,9 +719,7 @@
       handleCheckChange(checkedNode, treeCheckedStatus) {
         this.modelForm.category_id = treeCheckedStatus.checkedKeys
       },
-      setCheckedKeys(keys) {
-        this.$refs.tree.setCheckedKeys(keys);
-      },
+
       changeAttribute() {
         const itemInRoot = _.findIndex(this.list_attribute, {id: this.modelForm.attribute_id})
         console.log(itemInRoot)
