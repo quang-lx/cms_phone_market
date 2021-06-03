@@ -107,7 +107,7 @@
                                                         <div class="col-md-10">
                                                             <el-form-item :label="$t('user.label.username')"
                                                                           :class="{'el-form-item is-error': form.errors.has('username') }">
-                                                                <el-input v-model="modelForm.username"
+                                                                <el-input v-model="modelForm.username" :disabled="!modelForm.is_new"
                                                                           autocomplete="off"></el-input>
                                                                 <div class="el-form-item__error"
                                                                      v-if="form.errors.has('username')"
@@ -119,6 +119,15 @@
                                                                 <div class="el-form-item__error"
                                                                      v-if="form.errors.has('name')"
                                                                      v-text="form.errors.first('name')"></div>
+                                                            </el-form-item>
+                                                            
+                                                            <el-form-item :label="$t('user.label.phone')"
+                                                                          :class="{'el-form-item is-error': form.errors.has('phone') }">
+                                                                <el-input v-model="modelForm.phone"
+                                                                          autocomplete="off"></el-input>
+                                                                <div class="el-form-item__error"
+                                                                     v-if="form.errors.has('phone')"
+                                                                     v-text="form.errors.first('phone')"></div>
                                                             </el-form-item>
 
                                                             <el-form-item :label="$t('user.label.email')"
@@ -293,12 +302,8 @@
                         label: 'Hoạt động'
                     },
                     {
-                        value: 0,
-                        label: 'Chưa hoạt động'
-                    },
-                    {
                         value: 2,
-                        label: 'Đã khóa'
+                        label: 'Khóa'
                     }
                 ],
             };

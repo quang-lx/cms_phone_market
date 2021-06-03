@@ -85,7 +85,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     const TYPE_USER = 2;
     const TYPE_SHOP = 3;
 
-    const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_LOCK = 2;
 
@@ -154,13 +153,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         $statusName = '';
         switch ($this->status) {
             case self::STATUS_LOCK:
-                $statusName = 'Đã khóa';
+                $statusName = 'Khóa';
                 break;
             case self::STATUS_ACTIVE:
                 $statusName = 'Hoạt động';
-                break;
-            case self::STATUS_INACTIVE:
-                $statusName = 'Chưa hoạt động';
                 break;
         }
         return $statusName;
@@ -174,9 +170,6 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
                 break;
             case self::STATUS_ACTIVE:
                 $statusColor = '#219653';
-                break;
-            case self::STATUS_INACTIVE:
-                $statusColor = 'red';
                 break;
         }
         return $statusColor;
