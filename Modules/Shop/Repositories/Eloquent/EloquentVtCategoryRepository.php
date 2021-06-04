@@ -3,6 +3,7 @@
 namespace Modules\Shop\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Modules\Admin\Events\VtCategory\VtCategoryWasCreated;
 use Modules\Admin\Events\VtCategory\VtCategoryWasUpdated;
 use Modules\Shop\Repositories\VtCategoryRepository;
@@ -31,6 +32,12 @@ class EloquentVtCategoryRepository extends BaseRepository implements VtCategoryR
         if ($relations) {
             $query = $query->with($relations);
         }
+        
+		$user = Auth::user();
+		$query->where('company_id', $user->company_id);
+		if($user->shop_id) {
+			$query->where('shop_id', $user->shop_id);
+		}
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
