@@ -77,7 +77,7 @@ class Product extends Model {
 	}
 
 	public function attributeValues() {
-		return $this->belongsToMany(AttributeValue::class, 'product_attribute_values', 'product_id', 'value_id')->withPivot('price', 'sale_price', 'amount');
+		return $this->belongsToMany(AttributeValue::class, 'product_attribute_values', 'product_id', 'value_id')->withPivot('price', 'sale_price', 'amount', 'id');
 	}
 
 	public function prices() {

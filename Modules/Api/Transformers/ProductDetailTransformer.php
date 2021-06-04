@@ -59,10 +59,11 @@ class ProductDetailTransformer extends JsonResource {
 			foreach ($productValues as $item) {
 				if ($item->attribute_id == $attribute->id) {
 					$result[] = [
+						'product_attribute_value_id' => $item->pivot->id,
 						'value_id' => $item->id,
 						'value_name' => $item->name,
 						'price' => $item->pivot->price,
-						'sale_price' => $item->pivot->sale_price,
+						'sale_price' => $item->pivot->price - ($item->pivot->price*$item->pivot->sale_price/100),
 						'amount' => $item->pivot->amount,
 					];
 				}
