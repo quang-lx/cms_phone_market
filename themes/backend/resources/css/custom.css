@@ -192,7 +192,6 @@ footer.main-footer p.text-muted {
 
     -ms-word-break: break-all;
     /* This is the dangerous one in WebKit, as it breaks things wherever */
-    word-break: break-all;
     /* Instead use this non-standard one: */
     word-break: break-word;
 
@@ -213,7 +212,6 @@ footer.main-footer p.text-muted {
 
     -ms-word-break: break-all !important;
     /* This is the dangerous one in WebKit, as it breaks things wherever */
-    word-break: break-all !important;
     /* Instead use this non-standard one: */
     word-break: break-word !important;
 
