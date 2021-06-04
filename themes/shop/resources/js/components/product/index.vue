@@ -245,7 +245,11 @@
                     },
                     {
                         value: 0,
-                        label: 'Đã xóa'
+                        label: 'Đã ẩn'
+                    },
+                    {
+                        value: 2,
+                        label: 'Hàng sắp về'
                     },
 
                 ],
@@ -317,7 +321,7 @@
                     .get(route("api.shop.index", _.merge(properties, {})))
                     .then((response) => {
                         this.listShop = response.data.data;
-                
+
                     });
             },
 
@@ -337,7 +341,7 @@
         },
     }
 
-    
+
 </script>
 
 <style scoped>

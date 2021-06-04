@@ -232,7 +232,11 @@
                     },
                     {
                         value: 0,
-                        label: 'Đã xóa'
+                        label: 'Đã ẩn'
+                    },
+                    {
+                        value: 2,
+                        label: 'Hàng sắp về'
                     },
 
                 ],

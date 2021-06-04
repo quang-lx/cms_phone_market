@@ -15,6 +15,7 @@ class Product extends Model {
 	const TYPE_REPAIR = 2;
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
+	const STATUS_INCOMING = 2;
 
 	protected $table = 'product';
 	protected $fillable = [
@@ -102,7 +103,10 @@ class Product extends Model {
 				$statusName = 'Hoạt động';
 				break;
 			case self::STATUS_INACTIVE:
-				$statusName = 'Đã xóa';
+				$statusName = 'Đã ẩn';
+				break;
+				case self::STATUS_INCOMING:
+				$statusName = 'Hàng sắp về';
 				break;
 		}
 		return $statusName;
@@ -116,6 +120,9 @@ class Product extends Model {
 				break;
 			case self::STATUS_INACTIVE:
 				$statusColor = 'red';
+				break;
+			case self::STATUS_INCOMING:
+				$statusColor = '#2003fc';
 				break;
 		}
 		return $statusColor;

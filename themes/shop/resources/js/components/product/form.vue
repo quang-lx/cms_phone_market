@@ -592,14 +592,18 @@
         list_attribute: [],
         list_information: [],
         listStatus: [
-          {
-            value: 1,
-            label: 'Có'
-          },
-          {
-            value: 0,
-            label: 'Không'
-          },
+            {
+                value: 1,
+                label: 'Hoạt động'
+            },
+            {
+                value: 0,
+                label: 'Đã ẩn'
+            },
+            {
+                value: 2,
+                label: 'Hàng sắp về'
+            },
 
         ],
         listState: [
