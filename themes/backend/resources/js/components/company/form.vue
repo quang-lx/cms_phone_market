@@ -277,7 +277,7 @@
                       >
                         <el-select
                           v-model="modelForm.province_id"
-                          @change="changeProvince"
+                          @change="changeProvince" filterable
                           placeholder="Chọn tỉnh"
                         >
                           <el-option
@@ -305,7 +305,7 @@
                         }"
                       >
                         <el-select
-                          v-model="modelForm.district_id"
+                          v-model="modelForm.district_id" filterable 
                           placeholder="Chọn quận/huyện"
                           @change="changeDistrict"
                         >
@@ -334,7 +334,7 @@
                         }"
                       >
                         <el-select
-                          v-model="modelForm.phoenix_id"
+                          v-model="modelForm.phoenix_id" filterable
                           placeholder="Chọn xã/phường"
                         >
                           <el-option

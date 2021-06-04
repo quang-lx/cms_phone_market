@@ -20,6 +20,7 @@ class CreateCompanyRequest extends FormRequest
             'district_id' => 'required',
             'province_id' => 'required',
             'phoenix_id' => 'required',
+            'description' => 'required'
         ];
 
 
@@ -62,6 +63,7 @@ class CreateCompanyRequest extends FormRequest
             'district_id.required' => 'Quận huyện là bắt buộc',
             'province_id.required' => 'Tỉnh thành phố là bắt buộc',
             'phoenix_id.required' => 'Xã phường là bắt buộc',
+            'description.required' => 'Mô tả là bắt buộc',
         ];
     }
 }
