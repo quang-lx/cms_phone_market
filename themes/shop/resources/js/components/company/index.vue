@@ -44,7 +44,7 @@
                     v-loading.body="loadingPassword"
                   >
                     <el-form-item
-                      :label="$t('user.label.password')"
+                      :label="$t('user.label.password')" style="margin-bottom: 30px;"
                       :class="{
                         'el-form-item is-error': changepassForm.errors.has(
                           'password'
