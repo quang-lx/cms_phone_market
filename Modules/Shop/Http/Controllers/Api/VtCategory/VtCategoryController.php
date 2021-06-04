@@ -4,6 +4,7 @@ namespace Modules\Shop\Http\Controllers\Api\VtCategory;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Modules\Mon\Entities\VtCategory;
 use Modules\Shop\Http\Requests\VtCategory\CreateVtCategoryRequest;
 use Modules\Shop\Transformers\VtCategoryTransformer;
@@ -42,7 +43,11 @@ class VtCategoryController extends ApiController
 
     public function store(CreateVtCategoryRequest $request)
     {
-        $this->vtcategoryRepository->create($request->all());
+    	$data = $request->all();
+		$user = Auth::user();
+		$data['company_id'] = $user->company_id;
+		$data['shop_id'] = $user->shop_id;
+        $this->vtcategoryRepository->create($data);
 
         return response()->json([
             'errors' => false,

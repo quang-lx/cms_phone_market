@@ -4,6 +4,7 @@ namespace Modules\Shop\Http\Controllers\Api\VtProduct;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Modules\Mon\Entities\VtProduct;
 use Modules\Shop\Http\Requests\VtProduct\CreateVtProductRequest;
 use Modules\Shop\Transformers\VtProductTransformer;
@@ -42,7 +43,12 @@ class VtProductController extends ApiController
 
     public function store(CreateVtProductRequest $request)
     {
-        $this->vtproductRepository->create($request->all());
+    	$data = $request->get();
+		$user = Auth::user();
+
+		$data['company_id'] = $user->company_id;
+		$data['shop_id'] = $user->shop_id;
+        $this->vtproductRepository->create($data);
 
         return response()->json([
             'errors' => false,
