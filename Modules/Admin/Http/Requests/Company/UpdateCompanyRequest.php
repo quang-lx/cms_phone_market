@@ -17,6 +17,8 @@ class UpdateCompanyRequest extends FormRequest
             'district_id' => 'required',
             'province_id' => 'required',
             'phoenix_id' => 'required',
+            'description' => 'required'
+
         ];
         return $rules;
     }
@@ -43,6 +45,8 @@ class UpdateCompanyRequest extends FormRequest
             'district_id.required' => 'Quận huyện là bắt buộc',
             'province_id.required' => 'Tỉnh thành phố là bắt buộc',
             'phoenix_id.required' => 'Xã phường là bắt buộc',
+            'description.required' => 'Mô tả là bắt buộc',
+
         ];
     }
 
