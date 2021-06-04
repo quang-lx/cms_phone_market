@@ -206,7 +206,7 @@ footer.main-footer p.text-muted {
 .el-button, btn {
     text-transform: uppercase !important;
 }
-.el-table__row .cell {
+.el-table .cell {
     /* These are technically the same, but use both */
     overflow-wrap: break-word !important;
     word-wrap: break-word !important;
