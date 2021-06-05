@@ -39,7 +39,7 @@ class MediaTransformer extends JsonResource
             'is_folder' => $this->isFolder(),
             'media_type' => $this->media_type,
             'fa_icon' => FileHelper::getFaIcon($this->media_type),
-            'created_at' => optional($this->created_at)->format('d/m/Y H:i'),
+            'created_at' => optional($this->created_at)->format('H:i d/m/Y'),
             'folder_id' => $this->folder_id,
             'small_thumb' => $this->imagy->getThumbnail($this->path, 's'),
             'medium_thumb' => $this->imagy->getThumbnail($this->path, 'm'),
