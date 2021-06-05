@@ -21,20 +21,20 @@ class UploadMediaRequest extends FormRequest
 			$rules = [
 				'file' => [
 					'required',
-					new MaxFolderSizeRule(),
+					//new MaxFolderSizeRule(),
 					$mimetypes,
 					"file",
-					"size:". config('media.max-video-size')*1000,
+					"max:". config('media.max-video-size')*1000,
 				],
 			];
 		} else {
 			$rules = [
 				'file' => [
 					'required',
-					new MaxFolderSizeRule(),
+					//new MaxFolderSizeRule(),
 					$mimetypes,
 					"file",
-					"size:". config('media.max-image-size')*1000,
+					"max:". config('media.max-image-size')*1000,
 				],
 			];
 		}
@@ -46,7 +46,7 @@ class UploadMediaRequest extends FormRequest
 
 		$maxMsg = sprintf('File quá dung lượng. (Video %dMb, Image %dMb)', config('media.max-video-size'),config('media.max-image-size'));
         return [
-            'file.size' => $maxMsg,
+            'file.max' => $maxMsg,
             'file.mimetypes' => 'File không đúng định dạng',
         ];
     }
