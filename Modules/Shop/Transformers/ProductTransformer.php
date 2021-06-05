@@ -28,6 +28,7 @@ class ProductTransformer extends JsonResource
             's_width' =>$this->s_width,
             's_height' => $this->s_height,
             'brand_id' => $this->brand_id,
+            'shop_id' => $this->shop_id,
             'company_id' => $this->company_id,
             'company_name' => optional($this->company)->name,
             'shop_name' => optional($this->shop)->name,

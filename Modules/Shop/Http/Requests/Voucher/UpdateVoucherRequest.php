@@ -12,7 +12,7 @@ class UpdateVoucherRequest extends FormRequest
         $id = $this->route('voucher')->id; // lấy id bài post muốn update
         return [
             'title' => 'required',
-            'code' => 'required|unique:vouchers,id,{$id}|regex:/^[0-9][A-Za-z0-9 ]*$/',
+            'code' => 'required|unique:vouchers,id,{$id}|regex:/^[A-Za-z0-9]*$/',
             'discount_amount' => 'required',
             'require_min_amount' => 'required',
             'total' => 'required',

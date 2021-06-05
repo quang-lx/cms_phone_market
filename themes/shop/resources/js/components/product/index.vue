@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="row pull-right search-block">
-                            <div class="col-sm-3">
+                            <div :class="!this.currentShop ? 'col-sm-3' : 'col-sm-4'">
 
                                 <el-select v-model="filter.brand_id" placeholder="Lọc theo thương hiệu"
                                            @change="onSearchChange()" clearable>
@@ -53,7 +53,7 @@
                                 </el-select>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div :class="!this.currentShop ? 'col-sm-3' : 'col-sm-4'">
 
                                 <el-select v-model="filter.status" placeholder="Lọc theo trạng thái"
                                            @change="onSearchChange()" clearable>
@@ -66,7 +66,7 @@
                                 </el-select>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" v-if="!this.currentShop">
 
                                 <el-select v-model="filter.shop_id" placeholder="Lọc theo chi nhánh"
                                            @change="onSearchChange()" clearable>
@@ -79,7 +79,7 @@
                                 </el-select>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div :class="!this.currentShop ? 'col-sm-3' : 'col-sm-4'">
                                 <el-select v-model="filter.category_id" placeholder="Lọc theo danh mục"
                                            @change="onSearchChange()" clearable>
                                     <el-option
@@ -253,7 +253,8 @@
                     },
 
                 ],
-                listShop: []
+                listShop: [],
+                currentShop : window.MonCMS.current_user.shop_id,
 
             };
         },

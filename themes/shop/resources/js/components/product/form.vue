@@ -470,6 +470,31 @@
                                                      v-text="form.errors.first('sale_price')"></div>
                                             </el-form-item>
                                         </div>
+
+                                        <div class="col-md-12" v-if="!this.currentShop">
+                                          <el-form-item
+                                            :label="$t('product.label.shop_id')"
+                                            :class="{
+                                              'el-form-item is-error': form.errors.has('shop_id'),
+                                            }"
+                                          >
+                                            <el-select v-model="modelForm.shop_id" placeholder="Chọn chi nhánh">
+                                                <el-option
+                                                        v-for="item in listShop"
+                                                        :key="item.id"
+                                                        :label="item.name"
+                                                        :value="item.id">
+                                                </el-option>
+                                            </el-select>
+                                            <div
+                                              class="el-form-item__error"
+                                              v-if="form.errors.has('shop_id')"
+                                              v-text="form.errors.first('shop_id')"
+                                            ></div>
+
+                                          </el-form-item>
+                                        </div>
+
                                         <div class="col-md-12">
                                             <el-form-item :label="$t('product.label.brand_id')"
                                                           :class="{'el-form-item is-error': form.errors.has(  'brand_id') }">
@@ -583,6 +608,7 @@
           type: 1,
           warranty_time: null,
           fix_time: null,
+          shop_id: '',
 
         },
         locales: window.MonCMS.locales,
@@ -617,7 +643,8 @@
           },
 
         ],
-
+        currentShop : window.MonCMS.current_user.shop_id,
+        listShop: [],
 
       };
     },
@@ -763,7 +790,21 @@
       },
       removeInfo(index) {
         this.modelForm.pinformations.splice(index,1)
-      }
+      },
+      fetchShop() {
+        const properties = {
+            page: 0,
+            per_page: 1000,
+            check_company: true,
+        };
+
+        axios
+            .get(route("api.shop.index", _.merge(properties, {})))
+            .then((response) => {
+                this.listShop = response.data.data;
+        
+            });
+      },
     },
     mounted() {
 
@@ -771,6 +812,9 @@
       this.fetchBrand();
       if (this.$route.params.productId !== undefined) {
         this.fetchData();
+      }
+      if (!this.currentShop){
+        this.fetchShop();
       }
 
     },

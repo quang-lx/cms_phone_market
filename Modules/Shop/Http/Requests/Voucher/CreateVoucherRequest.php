@@ -11,7 +11,7 @@ class CreateVoucherRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'code' => 'required|unique:vouchers|regex:/^[0-9][A-Za-z0-9 ]*$/',
+            'code' => 'required|unique:vouchers|regex:/^[A-Za-z0-9]*$/',
             'discount_amount' => 'required',
             'require_min_amount' => 'required',
             'total' => 'required',

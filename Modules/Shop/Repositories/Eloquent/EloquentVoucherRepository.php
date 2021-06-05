@@ -74,10 +74,10 @@ class EloquentVoucherRepository extends BaseRepository implements VoucherReposit
             $query->where(function ($query) {
                 $query->whereNull('shop_id')
                       ->whereNull('company_id');
-            })->orWhere(function ($query) {
+            })->orWhere(function ($query) use ($companyId) {
                 $query->whereNull('shop_id')
                       ->where('company_id', $companyId);
-            })->orWhere(function ($query) {
+            })->orWhere(function ($query) use ($shopId, $companyId) {
                 $query->where('shop_id', $shopId)
                       ->where('company_id', $companyId);
             });
