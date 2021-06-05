@@ -7,14 +7,21 @@ return [
     |--------------------------------------------------------------------------
     */
     'allowed-types' => '.jpg,.png,.pdf,.jpeg,.doc,.docx,.ppt,.pptx,.rar,.zip,.mp4,.mov',
-    'allowed-mimetypes' => 'image/jpeg,image/png,image/jpg,image/gif,image/svg+xml,image/svg,application/x-rar-compressed,application/zip,application/msword,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,video/mp4,video/quicktime',
+    'allowed-mimetypes' => 'image/jpeg,image/png,image/jpg,image/gif,video/mp4,video/quicktime,video/x-matroska',
+	'allowed-video-mimetypes' => [
+		'video/mp4',
+		'video/quicktime',
+		'video/x-matroska'
+	],
     /*
     |--------------------------------------------------------------------------
     | Determine the max file size upload rate
     | Defined in MB
     |--------------------------------------------------------------------------
     */
-    'max-file-size' => '100',
+    'max-file-size' => 15,
+    'max-image-size' => 5,
+    'max-video-size' => 15,
 
     /*
     |--------------------------------------------------------------------------
