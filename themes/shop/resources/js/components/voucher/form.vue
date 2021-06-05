@@ -92,6 +92,30 @@
                     </div>
 
                     <div class="col-md-12">
+                      <el-form-item
+                        :label="$t('voucher.label.shop_id')"
+                        :class="{
+                          'el-form-item is-error': form.errors.has('shop_id'),
+                        }"
+                      >
+                        <el-select v-model="modelForm.shop_id" placeholder="Chọn chi nhánh">
+                            <el-option
+                                    v-for="item in listShop"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                        <div
+                          class="el-form-item__error"
+                          v-if="form.errors.has('shop_id')"
+                          v-text="form.errors.first('shop_id')"
+                        ></div>
+
+                      </el-form-item>
+                    </div>
+
+                    <div class="col-md-12">
                       <el-form-item label="Thời gian sử dụng mã">
                         <el-col :span="11">
                           <el-date-picker
@@ -151,7 +175,7 @@
                         ></div>
                       </el-form-item>
                     </div>
-
+                    
                     
                   </div>
                 </div>
@@ -183,9 +207,10 @@
                           ),
                         }"
                       >
-                        <el-input
-                          v-model="modelForm.discount_amount"
-                        ></el-input>
+                        <el-input-number 
+                              v-model="modelForm.discount_amount" :min="0"
+                              :max="100000000"
+                              placeholder="Mức giảm"></el-input-number>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('discount_amount')"
@@ -204,9 +229,10 @@
                         }"
                       >
 
-                        <el-input
-                          v-model="modelForm.require_min_amount"
-                        ></el-input>
+                        <el-input-number 
+                              v-model="modelForm.require_min_amount" :min="0"
+                              :max="100000000"
+                              placeholder="Giá trị đơn hàng tối thiểu áp dụng"></el-input-number>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('require_min_amount')"
@@ -237,7 +263,7 @@
                     <div class="col-12">
                         <single-media zone="thumbnail"
                             @singleFileSelected="selectSingleFile($event, 'modelForm')"
-                            label="Ảnh đại diện"
+                            label="Chọn ảnh"
                             entity="Modules\Mon\Entities\Voucher"
                             :entity-id="$route.params.voucherId"></single-media>
                     </div>
@@ -245,36 +271,6 @@
                   </div>
                 </div>
                 <div class="clear-both"></div>
-              </div>
-
-              <div class="row">
-                  <div class="col-md-12">
-                          <el-form-item :label="$t('voucher.label.use_condition')"
-                                        :class="{'el-form-item is-error': form.errors.has(  'use_condition') }">
-                              <div slot="label">
-                                  <label class="el-form-item__label">{{$t('voucher.label.use_condition')}}</label>
-                              </div>
-                              <tinymce v-model="modelForm.use_condition"
-                                        :height="500"></tinymce>
-                              <div class="el-form-item__error"
-                                    v-if="form.errors.has('use_condition')"
-                                    v-text="form.errors.first('use_condition')"></div>
-                          </el-form-item>
-                      </div>
-
-                      <div class="col-md-12">
-                          <el-form-item :label="$t('voucher.label.description')"
-                                        :class="{'el-form-item is-error': form.errors.has(  'description') }">
-                              <div slot="label">
-                                  <label class="el-form-item__label">{{$t('voucher.label.description')}}</label>
-                              </div>
-                              <tinymce v-model="modelForm.description"
-                                        :height="500"></tinymce>
-                              <div class="el-form-item__error"
-                                    v-if="form.errors.has('description')"
-                                    v-text="form.errors.first('description')"></div>
-                          </el-form-item>
-                      </div>
               </div>
 
               <div class="row check-discount-product hide">
@@ -344,6 +340,38 @@
                     </div>
                     <!-- End table -->
               </div>
+
+              <div class="row">
+                  <div class="col-md-12">
+                          <el-form-item :label="$t('voucher.label.use_condition')"
+                                        :class="{'el-form-item is-error': form.errors.has(  'use_condition') }">
+                              <div slot="label">
+                                  <label class="el-form-item__label">{{$t('voucher.label.use_condition')}}</label>
+                              </div>
+                              <tinymce v-model="modelForm.use_condition"
+                                        :height="200"></tinymce>
+                              <div class="el-form-item__error"
+                                    v-if="form.errors.has('use_condition')"
+                                    v-text="form.errors.first('use_condition')"></div>
+                          </el-form-item>
+                      </div>
+
+                      <div class="col-md-12">
+                          <el-form-item :label="$t('voucher.label.description')"
+                                        :class="{'el-form-item is-error': form.errors.has(  'description') }">
+                              <div slot="label">
+                                  <label class="el-form-item__label">{{$t('voucher.label.description')}}</label>
+                              </div>
+                              <tinymce v-model="modelForm.description"
+                                        :height="300"></tinymce>
+                              <div class="el-form-item__error"
+                                    v-if="form.errors.has('description')"
+                                    v-text="form.errors.first('description')"></div>
+                          </el-form-item>
+                      </div>
+              </div>
+
+              
             </div>
           </div>
 
@@ -402,7 +430,8 @@ export default {
         total: "",
         product_key: "",
         use_condition: "",
-        description: ""
+        description: "",
+        shop_id: "",
       },
       locales: window.MonCMS.locales,
       list_discount_type: [
@@ -428,6 +457,7 @@ export default {
       ],
 
       productSearchResult: [],
+      listShop: [],
     };
   },
   methods: {
@@ -534,9 +564,27 @@ export default {
 
     changeTypeVoucher (){
         $('.check-discount-product').toggleClass('hide').toggleClass("show");
-    }
+    },
+
+    fetchShop() {
+        const properties = {
+            page: 0,
+            per_page: 1000,
+            check_company: true,
+        };
+
+        axios
+            .get(route("api.shop.index", _.merge(properties, {})))
+            .then((response) => {
+                this.listShop = response.data.data;
+        
+            });
+    },
+
+    
   },
   mounted() {
+    this.fetchShop();
     if (this.$route.params.voucherId !== undefined) {
       this.fetchData();
     }
@@ -563,5 +611,8 @@ export default {
 }
 .show {
   display: block;
+}
+.row.check-discount-product.show {
+    margin-bottom: 20px;
 }
 </style>

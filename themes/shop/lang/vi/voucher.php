@@ -20,10 +20,11 @@ return [
         'btn_add_voucher' => 'Tạo mã giảm giá',
         'updated_by' => 'Người cập nhật',
         'type_name' => 'Loại mã',
-        'discount_amount' => 'Số tiền giảm',
+        'discount_amount' => 'Mức giảm',
         'status' => 'Trạng thái',
         'use_condition' => 'Điều kiện sử dụng',
         'description' => 'Chi tiết',
+        'shop_id' => 'Chi nhánh',
     ],
     'list' => [
         'status' => 'Trạng thái',

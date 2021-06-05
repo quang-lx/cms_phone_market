@@ -103,7 +103,7 @@
                     </div>
                   </el-form>
                   <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="onSubmit()"
+                    <el-button type="primary" @click="onSubmit(false)"
                       >CẬP NHẬT</el-button
                     >
                   </span>
@@ -269,7 +269,7 @@ export default {
         });
     },
 
-    onSubmit() {
+    onSubmit(showAlert = true) {
       this.form = new Form(_.merge(this.modelForm, {}));
       this.loading = true;
 
@@ -287,12 +287,14 @@ export default {
         })
         .catch((error) => {
           this.loading = false;
-          this.dialogRank = false;
-          this.fetchData();
-          this.$notify.error({
-            title: this.$t("mon.error.Title"),
-            message: this.getSubmitError(this.form.errors),
-          });
+          this.dialogRank = true;
+          if (showAlert){
+            this.$notify.error({
+              title: this.$t("mon.error.Title"),
+              message: this.getSubmitError(this.form.errors),
+            });
+          }
+          
         });
     },
 

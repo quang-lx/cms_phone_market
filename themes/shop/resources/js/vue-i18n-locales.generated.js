@@ -630,7 +630,7 @@ export default {
                 "id": "ID",
                 "title": "Tên chương trình",
                 "code": "Mã giảm giá",
-                "discount_amount": "Số tiền giảm",
+                "discount_amount": "Mức giảm",
                 "code-help": "Vui lòng chỉ nhập các kí tự chữ cái (A-Z), số (0-9).",
                 "time-active": "Thời gian sử dụng mã",
                 "products": "Danh sách sản phẩm có thể áp dụng mã",
@@ -648,7 +648,8 @@ export default {
                 "type_name": "Loại mã",
                 "status": "Trạng thái",
                 "use_condition": "Điều kiện sử dụng",
-                "description": "Chi tiết"
+                "description": "Chi tiết",
+                "shop_id": "Chi nhánh"
             },
             "list": {
                 "status": "Trạng thái"

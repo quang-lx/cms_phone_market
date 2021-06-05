@@ -3,6 +3,7 @@
 namespace Modules\Shop\Http\Requests\Voucher;
 
 use Illuminate\Foundation\Http\FormRequest;
+use \Illuminate\Validation\Validator;
 
 class CreateVoucherRequest extends FormRequest
 {
@@ -10,7 +11,7 @@ class CreateVoucherRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'code' => 'required|unique:vouchers',
+            'code' => 'required|unique:vouchers|regex:/^[0-9][A-Za-z0-9 ]*$/',
             'discount_amount' => 'required',
             'require_min_amount' => 'required',
             'total' => 'required',
@@ -21,6 +22,25 @@ class CreateVoucherRequest extends FormRequest
             'use_condition' => 'required',
             'description' => 'required',
         ];
+    }
+
+    public function withValidator(Validator $validator)
+    {
+        $start = strtotime($this->actived_at);
+        $end = strtotime($this->expired_at);
+
+        $validator->after(function ($validator) use ($start, $end) {
+            if ($start < time()){
+                $msg = 'Thời gian bắt đầu phải sau ngày hiện tại';
+                $validator->errors()->add('expired_at', $msg);
+            }
+            if ($end < $start){
+                $msg = 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu';
+                $validator->errors()->add('expired_at', $msg);
+            }
+
+        });
+        return $validator;                    
     }
 
     public function translationRules()
@@ -49,6 +69,7 @@ class CreateVoucherRequest extends FormRequest
             'discount_type.required' => 'Loại giảm giá là bắt buộc',
             'use_condition.required' => 'Điều kiện sử dụng là bắt buộc',
             'description.required' => 'Chi tiết là bắt buộc',
+            'code.regex' => 'Vui lòng chỉ nhập các kí tự chữ cái (A-Z), số (0-9)',
 
             
         ];

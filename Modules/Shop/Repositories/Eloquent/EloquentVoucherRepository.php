@@ -17,7 +17,6 @@ class EloquentVoucherRepository extends BaseRepository implements VoucherReposit
     public function create($data)
     {
         $data['company_id'] = Auth::user()->company_id;
-        $data['shop_id'] = Auth::user()->shop_id;
         $model = $this->model->create($data);
         $data['products'] = array_map(function ($product) {
             return $product['id'];
@@ -63,7 +62,26 @@ class EloquentVoucherRepository extends BaseRepository implements VoucherReposit
         }
 
         $companyId = Auth::user()->company_id;
-        $query->where('company_id', $companyId);
+        $shopId = Auth::user()->shop_id;
+        if (!$shopId){
+            //nếu là chủ cửa hàng -> Xem được KM của mình, chi nhánh, admin tạo
+            $query->where(function ($query) {
+                $query->whereNull('shop_id')
+                      ->whereNull('company_id');
+            })->orWhere('company_id', $companyId);
+        } else {
+            //nếu là chi nhánh => xem được KM của cửa hàng, chi nhánh của mình, admin
+            $query->where(function ($query) {
+                $query->whereNull('shop_id')
+                      ->whereNull('company_id');
+            })->orWhere(function ($query) {
+                $query->whereNull('shop_id')
+                      ->where('company_id', $companyId);
+            })->orWhere(function ($query) {
+                $query->where('shop_id', $shopId)
+                      ->where('company_id', $companyId);
+            });
+        }
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
