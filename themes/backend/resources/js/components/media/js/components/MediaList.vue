@@ -92,10 +92,21 @@
                                         <el-table-column label="" width="150">
                                             <template slot-scope="scope">
                                                 <img :src="scope.row.small_thumb" alt="" v-if="scope.row.is_image"/>
-                                                <i :class="`fa ${scope.row.fa_icon}`" style="font-size: 38px;"
-                                                   v-if="! scope.row.is_image && ! scope.row.is_folder"></i>
-                                                <i class="fa fa-folder" style="font-size: 38px;"
-                                                   v-if="scope.row.is_folder"></i>
+                                                <video-player
+                                                  v-if="scope.row.mimetype == 'video/mp4' || scope.row.mimetype == 'video/quicktime' || scope.row.mimetype == 'video/x-matroska'"
+                                                  class="video-player-box"
+                                                  ref="videoPlayer"
+                                                  style="background:gray"
+
+                                                  :playsinline="true"
+                                                  :options="{
+                                                      height: 120,
+                                                       sources: [{
+                                                    type: scope.row.minetype,
+                                                    src: scope.row.full_url
+                                                    }],
+                                                      }"
+                                                ></video-player>
                                             </template>
                                         </el-table-column>
 
@@ -223,6 +234,11 @@
   import VueCropper from 'vue-cropperjs';
   import 'cropperjs/dist/cropper.css';
 
+
+  import 'video.js/dist/video-js.css'
+
+  import { videoPlayer } from 'vue-video-player'
+
   export default {
     components: {
       'new-folder': NewFolder,
@@ -230,7 +246,8 @@
       'rename-folder': RenameFolder,
       'move-dialog': MoveMediaDialog,
       vueDropzone: vue2Dropzone,
-      VueCropper
+      VueCropper,
+        videoPlayer
     },
     props: {
       singleModal: {type: Boolean},
