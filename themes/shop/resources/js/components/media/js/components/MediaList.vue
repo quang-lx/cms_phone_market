@@ -290,7 +290,8 @@
           dictDefaultMessage: 'Kéo thả file hoặc Click để tải file lên (tỷ lệ ảnh 375:140)',
           init: function () {
             this.on("error", function (file, response) {
-
+console.log(response)
+console.log(response.errors.file[0])
               $('.dz-error-message').html(response.errors.file[0]);
 
             });
