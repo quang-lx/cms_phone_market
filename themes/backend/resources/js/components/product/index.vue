@@ -36,7 +36,7 @@
                         <div class="row pull-right search-block">
                             <div class="col-sm-3">
 
-                                <el-select v-model="filter.brand_id" placeholder="Lọc theo thương hiệu"
+                                <el-select v-model="filter.brand_id" placeholder="Lọc theo thương hiệu" filterable
                                            @change="onSearchChange()" clearable>
                                     <el-option
                                             v-for="item in brandArr"
@@ -62,7 +62,7 @@
 
                             <div class="col-sm-3">
 
-                                <el-select v-model="filter.company_id" placeholder="Lọc theo cửa hàng"
+                                <el-select v-model="filter.company_id" placeholder="Lọc theo cửa hàng" filterable
                                            @change="onSearchChange()" clearable>
                                     <el-option
                                             v-for="item in companyArr"
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <el-select v-model="filter.category_id" placeholder="Lọc theo danh mục"
+                                <el-select v-model="filter.category_id" placeholder="Lọc theo danh mục" filterable
                                            @change="onSearchChange()" clearable>
                                     <el-option
                                             v-for="item in categoryArr"
@@ -147,7 +147,7 @@
 
                                         <el-table-column prop="" :label="$t('product.label.price')" sortable="custom">
                                             <template slot-scope="scope">
-                                                {{ Intl.NumberFormat().format(scope.row.price)}}
+                                                {{ Intl.NumberFormat().format(scope.row.price)}}đ
                                             </template>
                                         </el-table-column>
 
@@ -241,6 +241,13 @@
 
                 ],
 
+                properties: {
+                    page: 0,
+                    per_page: 1000,
+                    order_by:'name',
+                    order:'ascending'
+                }
+
             };
         },
         methods: {
@@ -269,13 +276,8 @@
                     });
             },
             fetchBrand() {
-                const properties = {
-                page: 0,
-                per_page: 1000,
 
-                };
-
-                axios.get(route('api.brand.index', _.merge(properties, {})))
+                axios.get(route('api.brand.index', _.merge(this.properties, {})))
                 .then((response) => {
 
                     this.brandArr = response.data.data;
@@ -283,13 +285,8 @@
                 });
             },
             fetchCategory() {
-                const properties = {
-                page: 0,
-                per_page: 1000,
 
-                };
-
-                axios.get(route('api.pcategory.index', _.merge(properties, {})))
+                axios.get(route('api.pcategory.index', _.merge(this.properties, {})))
                 .then((response) => {
 
                     this.categoryArr = response.data.data;
@@ -298,13 +295,8 @@
             },
 
             fetchCompany() {
-                const properties = {
-                page: 0,
-                per_page: 1000,
 
-                };
-
-                axios.get(route('api.company.index', _.merge(properties, {})))
+                axios.get(route('api.company.index', _.merge(this.properties, {})))
                 .then((response) => {
 
                     this.companyArr = response.data.data;
