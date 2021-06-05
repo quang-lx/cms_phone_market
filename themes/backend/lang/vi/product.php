@@ -29,6 +29,10 @@ return [
         'company_id' => 'Cửa hàng',
         'image' => 'Ảnh',
         'attribute extend' => 'Thuộc tính mở rộng',
+        'warranty_time' => 'Thời gian bảo hành',
+        'packing_size' => 'Kích thước đóng gói ',
+        'fix_time' => 'Thời gian sửa chữa (ngày)',
+
     ],
     'list' => [
         'status' => 'Trạng thái',

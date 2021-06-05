@@ -141,6 +141,17 @@ class Product extends Model {
 		return $p_state;
 	}
 
+	public function getAmountNameAttribute($value) {
+		$amount_name = '';
+		if ($this->amount>0) {
+			$amount_name = 'Có';
+		}else{
+			$amount_name = 'Không';
+		}
+		
+		return $amount_name;
+	}
+
 	public function getThumbnailAttribute() {
 		return $this->filesByZone('product_collection')->first();
 	}

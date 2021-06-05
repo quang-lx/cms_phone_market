@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modelForm&&modelForm.id">
+  <div v-if="modelForm && modelForm.id">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -15,7 +15,8 @@
                 Sản phẩm {{ modelForm.name }}
               </el-breadcrumb-item>
             </el-breadcrumb>
-          </div>company
+          </div>
+          company
         </div>
       </div>
     </div>
@@ -38,115 +39,174 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row">
-                        <div class="col-md-3">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <div>
-                                {{ $t("product.label.name") }}:
-                                {{ modelForm.name }}
-                              </div>
-                              <div>
-                                {{ $t("product.label.sku") }}:
-                                {{ modelForm.sku }}
-                              </div>
-                              <div>
-                                {{ $t("product.label.category_id") }}:
-                                 <span
-                                    v-for="(item, index) in modelForm.category_name"
-                                    :key="index"
-                                    >
-                                    <span v-if="modelForm.category_name.length-1 == index"> {{item}}</span>
-                                    <span v-else> {{item}},</span>
-
-                                  </span>
-                              </div>
-                              <div>
-                                {{ $t("product.label.brand_id") }}:
-                                 {{ modelForm.brand_name }}
-                              </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div>
+                              {{ $t("product.label.name") }}:
+                              {{ modelForm.name }}
+                            </div>
+                            <div>
+                              {{ $t("product.label.sku") }}:
+                              {{ modelForm.sku }}
+                            </div>
+                            <div>
+                              {{ $t("product.label.category_id") }}:
+                              <span
+                                v-for="(item, index) in modelForm.category_name"
+                                :key="index"
+                              >
+                                <span
+                                  v-if="
+                                    modelForm.category_name.length - 1 == index
+                                  "
+                                >
+                                  {{ item }}</span
+                                >
+                                <span v-else> {{ item }},</span>
+                              </span>
+                            </div>
+                            <div>
+                              {{ $t("product.label.brand_id") }}:
+                              {{ modelForm.brand_name }}
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-3" v-if="modelForm.company">
-                          <div>
-                            {{ $t("product.label.company_id") }}:
-                            {{ modelForm.company.name }}
-                          </div>
-                          <div>
-                            {{ modelForm.company.email }}
-                          </div>
-                             <div>
-                            {{ modelForm.company.phone }}
-                          </div>
-                             <div>
-                            {{ modelForm.company.address }}
-                          </div>
+                      </div>
+                      <div class="col-md-3" v-if="modelForm.company">
+                        <div>
+                          {{ $t("product.label.company_id") }}:
+                          {{ modelForm.company.name }}
                         </div>
-                        <div class="col-md-3">
-                          <div>
-                            {{ $t("product.label.p_state") }}:
-                            {{ modelForm.p_state_name }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.price") }}
-                            :
-                            {{ modelForm.price }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.amount") }}
-                            :
-                            {{ modelForm.amount }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.status") }}
-                            :
-                            <span :style="{ color: modelForm.status_color }">{{
-                          modelForm.status_name
-                        }}</span>
-                          </div>
+                        <div>
+                          {{ modelForm.company.email }}
                         </div>
-                        <!-- <div class="col-md-3">
-                          <div>
-                            {{ $t("product.label.p_state") }}:
-                            {{ modelForm.p_state }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.price") }}
-                            :
-                            {{ modelForm.price }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.amount") }}
-                            :
-                            {{ modelForm.amount }}
-                          </div>
-                          <div>
-                            {{ $t("product.label.p_state") }}
-                            :
-                            {{ modelForm.p_state }}
-                          </div>
-                        </div> -->
-                        <div class="col-md-12 mt-5">
-                          Ảnh/Video
-                              <div>
-                                <span
-                                    v-for="(item, index) in modelForm.files"
-                                    :key="index"
-                                    >
-                                    <img :src="item.path_string" width="100" height="100" style="object-ielseit:contain"/>
-                                </span>
-                             </div>
+                        <div>
+                          {{ modelForm.company.phone }}
                         </div>
-                        <div class="col-md-12">
-                            {{ $t("product.label.description") }}:
-                            <div v-html="modelForm.description"></div>
+                        <div>
+                          {{ modelForm.company.address }}
                         </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div>
+                          {{ $t("product.label.p_state") }}:
+                          {{ modelForm.p_state_name }}
+                        </div>
+                        <div>
+                          {{ $t("product.label.price") }}
+                          :
+                          {{ Intl.NumberFormat().format(modelForm.price) }}đ
+                        </div>
+                        <div>
+                          {{ $t("product.label.amount") }}
+                          :
+                          {{ Intl.NumberFormat().format(modelForm.amount) }}
+                        </div>
+                        <div>
+                          {{ $t("product.label.status") }}
+                          :
+                          {{ modelForm.amount_name }}
+                        </div>
+                        <div>
+                          {{ $t("product.label.warranty_time") }}
+                          :
+                          {{ modelForm.warranty_time }}
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div>
+                          {{ $t("product.label.p_weight") }}:
+                          {{ modelForm.p_weight }}
+                        </div>
+                        <div>
+                          {{ $t("product.label.packing_size") }}
+                          :
+                          {{ modelForm.s_height }} x {{ modelForm.s_width }} x
+                          {{ modelForm.s_long }}
+                        </div>
+                      </div>
+                      <div class="col-md-6 mt-5">
+                        Thông tin chi tiết
+                        <el-table
+                          :data="modelForm.pinformations"
+                          stripe
+                          style="width: 100%"
+                          v-loading.body="tableIsLoading"
+                        >
+                          <el-table-column prop="title"> </el-table-column>
+                          <el-table-column prop="value"> </el-table-column>
+                        </el-table>
+                      </div>
+
+                      <div class="col-md-6 mt-5">
+                        Thuộc tính mở rộng
+                        <el-table
+                          :data="modelForm.attribute_selected.values"
+                          stripe
+                          style="width: 100%"
+                          v-loading.body="tableIsLoading"
+                        >
+                          <el-table-column
+                            prop="name"
+                            :label="modelForm.attribute_selected.name"
+                          >
+                          </el-table-column>
+                          <el-table-column prop="" label="Giá">
+                            <template slot-scope="scope">
+                              {{
+                                Intl.NumberFormat().format(
+                                  scope.row.sale_price
+                                )
+                              }}đ
+                            </template>
+                          </el-table-column>
+                        </el-table>
+                      </div>
+                      <div class="col-md-12 mt-5" v-if="modelForm.type==2">
+                        {{ $t("product.label.fix_time") }}:
+                        <div v-html="modelForm.fix_time"></div>
+                        <div class="mt-3"> {{ $t("product.label.problem_id") }} :</div>
+                        <div >
+                          <span
+                            v-for="(item, index) in modelForm.problem_id"
+                            :key="index"
+                          >
+                            <span
+                              v-if="modelForm.problem_id.length - 1 == index"
+                            >
+                              {{ item.title }}</span
+                            >
+                            <span v-else> {{ item.title }},</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mt-5">
+                        Ảnh/Video
+                        <div>
+                          <span
+                            v-for="(item, index) in modelForm.files"
+                            :key="index"
+                          >
+                            <img
+                              :src="item.path_string"
+                              width="100"
+                              height="100"
+                              style="object-ielseit: contain"
+                            />
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        {{ $t("product.label.description") }}:
+                        <div v-html="modelForm.description"></div>
                       </div>
                     </div>
                   </div>
+                </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer d-flex justify-content-end">
@@ -166,32 +226,29 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
-import MultipleMedia from '../media/js/components/MultipleMedia';
-import MultipleFileSelector from '../../mixins/MultipleFileSelector.js';
+import MultipleMedia from "../media/js/components/MultipleMedia";
+import MultipleFileSelector from "../../mixins/MultipleFileSelector.js";
 export default {
   props: {
     locales: { default: null },
     pageTitle: { default: null, String },
   },
-    mixins: [SingleFileSelector, MultipleFileSelector],
-    components: {
-      MultipleMedia
-    },
+  mixins: [SingleFileSelector, MultipleFileSelector],
+  components: {
+    MultipleMedia,
+  },
   data() {
     return {
       formLabelWidth: "120px",
       form: new Form(),
       loading: false,
       list_product: [],
-      modelForm: {
-
-      },
+      modelForm: {},
       dialogRank: false,
       message: "",
     };
   },
   methods: {
-
     fetchData() {
       let routeUri = "";
       this.loading = true;

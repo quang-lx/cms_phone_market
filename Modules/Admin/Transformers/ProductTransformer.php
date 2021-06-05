@@ -42,9 +42,14 @@ class ProductTransformer extends JsonResource
             'thumbnail' => $this->thumbnail,
             'files' => $this->files,
 
-            'problem_id' => $this->problems->pluck('id'),
+            'problem_id' => $this->problems,
             'attribute_id' => $attribute,
-//            'attribute_selected' => $attribute? $this->getAttributeValues($this->attributes->first(), $this->productAttributeValues): null,
+            'warranty_time' => $this->warranty_time,
+            'amount_name' => $this->amount_name,
+            'pinformations' => $this->getInformations($this->productInformation),
+            'fix_time' => $this->fix_time,
+            'type' => $this->type,
+           'attribute_selected' => $attribute? $this->getAttributeValues($this->attributes->first(), $this->productAttributeValues): null,
            'value' => $this->value, //trả về thêm value dùng cho Autocomplete search tạo mới voucher
              'urls' => [
                 'delete_url' => route('api.product.destroy', $this->id),
@@ -78,6 +83,21 @@ class ProductTransformer extends JsonResource
 		$attibute->values = $newValues;
 		return $attibute;
 	}
+
+    public function getInformations($asm) {
+		$newValues = [];
+		foreach ($asm as $value) {
+			$newValues[] = [
+				'id' => $value->information_id,
+				'value' => $value->value,
+				'title' => $value->pinformation->title,
+			];
+
+
+		}
+		 return $newValues;
+	}
+
 
 
 }
