@@ -6,8 +6,8 @@ return [
     | Specify all the allowed file extensions a user can upload on the server
     |--------------------------------------------------------------------------
     */
-    'allowed-types' => '.jpg,.png,.pdf,.jpeg,.doc,.docx,.ppt,.pptx,.rar,.zip,.mp4,.mov',
-    'allowed-mimetypes' => 'image/jpeg,image/png,image/jpg,image/gif,video/mp4,video/quicktime,video/x-matroska',
+    'allowed-types' => '.jpg,.png,.pdf,.jpeg,.doc,.docx,.ppt,.pptx,.rar,.zip,.mp4',
+    'allowed-mimetypes' => 'image/jpeg,image/png,image/jpg,image/gif,video/mp4,video/x-matroska',
 	'allowed-video-mimetypes' => [
 		'video/mp4',
 		'video/quicktime',
