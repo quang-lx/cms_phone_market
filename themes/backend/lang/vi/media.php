@@ -23,8 +23,8 @@ return [
     'messages' => [
         'selected items deleted' => 'Tệp vừa được xóa',
     ],
-    'insert' => 'Thêm ảnh',
-    'remove_media' => 'Xóa ảnh',
+    'insert' => 'Thêm',
+    'remove_media' => 'Xóa',
     'Browse' => 'Chọn file'
 
 

@@ -6,14 +6,23 @@
                 <div style="display:flex">
                     <div class="row">
                         <div v-for="media in this.selectedMedia" :key="media.id" class="file-in-multiple col-md-3" style="display: flex">
-                            <figure   v-if="media.mimetype == 'video/mp4' || media.mimetype == 'video/quicktime'" style="display: flex; max-height:200px">
-                                <vue-player :src="media.full_url"
-                                            style="background:gray"
-                                            v-if="media.mimetype == 'video/mp4' || media.mimetype == 'video/quicktime'"
-                                            poster="http://103.130.214.132:8018/themes/backend/images/avatar.jpg"
-                                            playsinline
-                                            preview-on-mouse
-                                ></vue-player>
+                            <figure
+                              v-if="media.mimetype == 'video/mp4' || media.mimetype == 'video/quicktime' || media.mimetype == 'video/x-matroska'"
+                              style="display: flex; max-height:200px">
+                                <video-player
+                                  class="video-player-box"
+                                  ref="videoPlayer"
+                                  style="background:gray"
+
+                                  :playsinline="true"
+                                  :options="{
+                                  height: 120,
+                                    sources: [{
+                                    type: media.minetype,
+                                    src: media.full_url
+                                }],
+                                  }"
+                                ></video-player>
                                 <span class="el-icon-error remove-media" @click="unSelectMedia(media.id)"></span>
                             </figure>
                             <figure  v-else>
@@ -54,7 +63,10 @@
     import draggable from 'vuedraggable'
 
 
-    import vuePlayer  from  '@algoz098/vue-player'
+    import 'video.js/dist/video-js.css'
+
+    import { videoPlayer } from 'vue-video-player'
+
 
     export default {
         mixins: [StringHelpers],
@@ -67,7 +79,7 @@
         components: {
             'upload-zone': UploadZone,
             'media-list': MediaList,
-            vuePlayer,
+            videoPlayer,
             draggable,
         },
         watch: {
