@@ -43,7 +43,7 @@ class VtProductController extends ApiController
 
     public function store(CreateVtProductRequest $request)
     {
-    	$data = $request->get();
+    	$data = $request->all();
 		$user = Auth::user();
 
 		$data['company_id'] = $user->company_id;
