@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Requests\Voucher;
 
 use Illuminate\Foundation\Http\FormRequest;
+use \Illuminate\Validation\Validator;
 
 class UpdateVoucherRequest extends FormRequest
 {
@@ -22,6 +23,25 @@ class UpdateVoucherRequest extends FormRequest
             'use_condition' => 'required',
             'description' => 'required',
         ];
+    }
+
+    public function withValidator(Validator $validator)
+    {
+        $start = strtotime($this->actived_at);
+        $end = strtotime($this->expired_at);
+
+        $validator->after(function ($validator) use ($start, $end) {
+            if ($start < time()){
+                $msg = 'Thời gian bắt đầu phải sau ngày hiện tại';
+                $validator->errors()->add('expired_at', $msg);
+            }
+            if ($end < $start){
+                $msg = 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu';
+                $validator->errors()->add('expired_at', $msg);
+            }
+
+        });
+        return $validator;                    
     }
 
     public function translationRules()

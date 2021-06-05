@@ -24,7 +24,7 @@ class UpdateAccountRequest extends FormRequest
         $validator->after(function ($validator) use ($result, $point) {
             if ($point > $result->max_point || $point < $result->point){
                 $msg = sprintf ('Hạng %s có khoảng điểm %s - %s', $result->name, $result->point, $result->max_point);
-                $validator->errors()->add('Point', $msg);
+                $validator->errors()->add('rank_point', $msg);
             }
 
         });
