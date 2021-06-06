@@ -39,7 +39,7 @@
                   <div class="row mb-20">
                     <div class="col-md-12">
                       <el-form-item label="Loại mã">
-                        <el-radio-group v-model="modelForm.type">
+                        <el-radio-group v-model="modelForm.type" :disabled="!modelForm.isEdit">
                           <el-radio
                             v-for="item in list_type"
                             :key="item.value"
@@ -61,7 +61,7 @@
                           'el-form-item is-error': form.errors.has('title'),
                         }"
                       >
-                        <el-input v-model="modelForm.title"></el-input>
+                        <el-input v-model="modelForm.title" :disabled="!modelForm.isEdit"></el-input>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('title')"
@@ -77,7 +77,7 @@
                           'el-form-item is-error': form.errors.has('code'),
                         }"
                       >
-                        <el-input v-model="modelForm.code"></el-input>
+                        <el-input v-model="modelForm.code" :disabled="!modelForm.isEdit"></el-input>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('code')"
@@ -98,7 +98,7 @@
                           'el-form-item is-error': form.errors.has('shop_id'),
                         }"
                       >
-                        <el-select v-model="modelForm.shop_id" placeholder="Chọn chi nhánh">
+                        <el-select v-model="modelForm.shop_id" placeholder="Chọn chi nhánh" :disabled="!modelForm.isEdit">
                             <el-option
                                     v-for="item in listShop"
                                     :key="item.id"
@@ -125,6 +125,7 @@
                             v-model="modelForm.actived_at"
                             style="width: 100%"
                             :class="{'el-form-item is-error': form.errors.has('code'),}"
+                            :disabled="!modelForm.isEdit"
                           ></el-date-picker>
                         </el-col>
                         <el-col class="line text-center" :span="2">-</el-col>
@@ -136,6 +137,7 @@
                             v-model="modelForm.expired_at"
                             style="width: 100%"
                             :class="{'el-form-item is-error': form.errors.has('code'),}"
+                            :disabled="!modelForm.isEdit"
                           ></el-date-picker>
                         </el-col>
                         <div
@@ -167,6 +169,7 @@
                           placeholder="Tìm sản phẩm"
                           @select="handleSelect"
                           clearable
+                          :disabled="!modelForm.isEdit"
                         ></el-autocomplete>
                         <div
                           class="el-form-item__error"
@@ -184,7 +187,7 @@
                   <div class="col-md-10">
                     <div class="row mb-20">
                       <el-form-item label="Loại giảm giá">
-                        <el-radio-group v-model="modelForm.discount_type">
+                        <el-radio-group v-model="modelForm.discount_type" :disabled="!modelForm.isEdit">
                           <el-radio
                             v-for="item in list_discount_type"
                             :key="item.value"
@@ -210,7 +213,7 @@
                         <el-input-number 
                               v-model="modelForm.discount_amount" :min="0"
                               :max="100000000"
-                              placeholder="Mức giảm"></el-input-number>
+                              placeholder="Mức giảm" :disabled="!modelForm.isEdit"></el-input-number>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('discount_amount')"
@@ -232,7 +235,7 @@
                         <el-input-number 
                               v-model="modelForm.require_min_amount" :min="0"
                               :max="100000000"
-                              placeholder="Giá trị đơn hàng tối thiểu áp dụng"></el-input-number>
+                              placeholder="Giá trị đơn hàng tối thiểu áp dụng" :disabled="!modelForm.isEdit"></el-input-number>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('require_min_amount')"
@@ -252,7 +255,7 @@
                         <el-input-number 
                               v-model="modelForm.total" :min="0"
                               :max="100000000"
-                              placeholder="Tổng số mã"></el-input-number>
+                              placeholder="Tổng số mã" :disabled="!modelForm.isEdit"></el-input-number>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('total')"
@@ -265,7 +268,8 @@
                             @singleFileSelected="selectSingleFile($event, 'modelForm')"
                             label="Chọn ảnh"
                             entity="Modules\Mon\Entities\Voucher"
-                            :entity-id="$route.params.voucherId"></single-media>
+                            :entity-id="$route.params.voucherId"
+                            :disabled="!modelForm.isEdit"></single-media>
                     </div>
                   
                   </div>
@@ -328,7 +332,7 @@
 
                         
 
-                          <el-table-column prop="actions" width="130">
+                          <el-table-column prop="actions" width="130" v-if="modelForm.isEdit">
                               <template slot-scope="scope">
                                 <button type="button" class="el-button el-button--danger el-button--mini" @click="deleteProductVoucher(scope.row)">
                                   <span><i class="fas fa-trash"></i></span>
@@ -349,7 +353,7 @@
                                   <label class="el-form-item__label">{{$t('voucher.label.use_condition')}}</label>
                               </div>
                               <tinymce v-model="modelForm.use_condition"
-                                        :height="200"></tinymce>
+                                        :height="200" :readonly="!modelForm.isEdit"></tinymce>
                               <div class="el-form-item__error"
                                     v-if="form.errors.has('use_condition')"
                                     v-text="form.errors.first('use_condition')"></div>
@@ -362,8 +366,8 @@
                               <div slot="label">
                                   <label class="el-form-item__label">{{$t('voucher.label.description')}}</label>
                               </div>
-                              <tinymce v-model="modelForm.description"
-                                        :height="300"></tinymce>
+                              <tinymce v-model="modelForm.description"  
+                                        :height="300" :readonly="!modelForm.isEdit"></tinymce>
                               <div class="el-form-item__error"
                                     v-if="form.errors.has('description')"
                                     v-text="form.errors.first('description')"></div>
@@ -380,7 +384,7 @@
               <div class="card-footer d-flex justify-content-end">
                 <el-button
                   type="primary"
-                  @click="onSubmit()"
+                  @click="modelForm.isEdit ? onSubmit() : alertNotify()"
                   size="small"
                   :loading="loading"
                   class="btn btn-flat"
@@ -432,6 +436,7 @@ export default {
         use_condition: "",
         description: "",
         shop_id: "",
+        isEdit: "",
       },
       locales: window.MonCMS.locales,
       list_discount_type: [
@@ -461,6 +466,12 @@ export default {
     };
   },
   methods: {
+    alertNotify(){
+      this.$notify.error({
+        title: this.$t("mon.error.Title"),
+        message: 'Chương trình đang diễn ra không có quyền sửa',
+      });
+    },
     onSubmit() {
       this.form = new Form(_.merge(this.modelForm, {}));
       this.loading = true;
@@ -587,6 +598,7 @@ export default {
     this.fetchShop();
     if (this.$route.params.voucherId !== undefined) {
       this.fetchData();
+      
     }
   },
   computed: {},

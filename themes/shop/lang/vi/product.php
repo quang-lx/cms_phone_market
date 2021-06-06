@@ -32,6 +32,7 @@ return [
         'fix_time' => 'Thời gian sửa chữa (ngày)',
         'warranty_time' => 'Bảo hành (tháng)',
         'attribute extend' => 'Thuộc tính mở rộng',
+        'shop_id' => 'Chi nhánh',
     ],
     'list' => [
         'status' => 'Trạng thái',

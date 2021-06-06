@@ -21,7 +21,7 @@
                             <div class="col-sm-9">
                                 <div class="row pull-right">
 
-                                    <div class="col-2">
+                                    <div class="col-2" v-if="!this.currentShop">
 
                                         <el-select v-model="filter.shop_id" placeholder="Chi nhánh"
                                                    @change="onSearchChange()" clearable>
@@ -45,12 +45,13 @@
                                             </el-option>
                                         </el-select>
                                     </div>
-                                    <div class="col-4">
+                                    <div :class="!this.currentShop ? 'col-4' : 'col-5'">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tên đăng nhập/SĐT/Email"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
+
                                     <div class="col-3">
                                         <router-link :to="{name: 'shop.user.create'}">
                                             <el-button type="primary" class="btn btn-flat">
@@ -191,7 +192,7 @@
                     status: ''
                 },
                 listShop: [],
-                isAdmin: false
+                currentShop : window.MonCMS.current_user.shop_id,
 
             };
         },

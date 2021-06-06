@@ -85,7 +85,7 @@
                                         <el-table-column prop="discount_amount" :label="$t('voucher.label.discount_amount')"
                                             sortable="custom" width="140" >
                                              <template slot-scope="scope">
-                                                <span>{{Intl.NumberFormat().format(scope.row.discount_amount)}}<span v-if="scope.row.type == 1">đ</span><span v-else>%</span>
+                                                <span>{{Intl.NumberFormat().format(scope.row.discount_amount)}}<span v-if="scope.row.discount_type == 1">đ</span><span v-else>%</span>
                                                 </span>
                                             </template>
                                         </el-table-column>

@@ -68,7 +68,9 @@ class ProductController extends ApiController
     {
         $params = array();
         $params['company_id'] = Auth::user()->company_id;
-        $params['shop_id'] = Auth::user()->shop_id;
+        if (Auth::user()->shop_id){
+            $params['shop_id'] = Auth::user()->shop_id;
+        }
 
         $this->productRepository->create(array_merge($request->all(), $params));
 
@@ -88,6 +90,9 @@ class ProductController extends ApiController
     {
         $params = array();
         $params['company_id'] = Auth::user()->company_id;
+        if (Auth::user()->shop_id){
+            $params['shop_id'] = Auth::user()->shop_id;
+        }
 
         $this->productRepository->update($product, array_merge($request->all(), $params));
 

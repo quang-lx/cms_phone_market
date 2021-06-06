@@ -48,6 +48,12 @@ class VoucherTransformer extends JsonResource
             $data['products'][$key] = new ProductTransformer($product);
         }
 
+        if (strtotime($data['actived_at']) > time()){
+            $data['isEdit'] = false;
+        } else {
+            $data['isEdit'] = true;
+        }
+
 
         return $data;
     }
