@@ -13,6 +13,8 @@ use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\OrderRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Mon\Entities\Address;
+use Modules\Mon\Entities\Cart;
+use Modules\Mon\Entities\CartProduct;
 use Modules\Mon\Entities\District;
 use Modules\Mon\Entities\OrderProduct;
 use Modules\Mon\Entities\Orders;
@@ -448,6 +450,8 @@ class EloquentOrderRepository implements OrderRepository
     {
         $orders = $request->get('orders');
         $paymentMethodId = $request->get('payment_method_id');
+        $cart = Cart::query()->where('user_id', $user->id)->first();
+
         DB::beginTransaction();
         try {
             $payAmount = 0;
@@ -527,12 +531,22 @@ class EloquentOrderRepository implements OrderRepository
                         if ($productAttributeValue->amount < $quantity) {
                             return [trans('api::messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
                         }
+                        $productAttributeValue->amount = $productAttributeValue->amount - $quantity;
+                        $productAttributeValue->save();
                         $orderProductTmp['attribute'] = $productAttributeValue;
                     } else {
                         if ($product->amount < $quantity) {
                             return [trans('api::messages.order.product out of stock', ['name' => $product->name]), ErrorCode::ERR422];
                         }
+						$product->amount = $product->amount - $quantity;
+                        $product->save();
                     }
+
+                    if ($cart) {
+						CartProduct::query()->where('cart_id', $cart->id)
+							->where('product_id', $product->id)->delete();
+					}
+
                     $orderProducts[]= $orderProductTmp;
 
                 }
