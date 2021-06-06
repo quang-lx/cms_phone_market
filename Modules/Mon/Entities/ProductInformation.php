@@ -11,4 +11,8 @@ class ProductInformation extends Model
 
     protected $table = 'production_information';
     protected $fillable = ['information_id','product_id', 'value'];
+
+    public function pinformation() {
+		return $this->belongsTo(PInformation::class, 'information_id');
+	}
 }
