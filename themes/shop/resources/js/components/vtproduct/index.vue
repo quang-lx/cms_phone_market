@@ -19,6 +19,7 @@
                 <div class="row">
                   <div class="col-sm-8">
                     <el-input
+                    placeholder="Tên linh kiện/Danh mục"
                       prefix-icon="el-icon-search"
                       @keyup.native="performSearch"
                       v-model="searchQuery"

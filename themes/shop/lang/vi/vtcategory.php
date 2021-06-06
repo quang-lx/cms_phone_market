@@ -3,7 +3,7 @@ return [
     'label' => [
         'vtcategory' => 'Danh mục vật tư',
         'id' => 'ID',
-        'name' => "Tên",
+        'name' => "Tên danh mục linh kiện",
         'image' => "Ảnh",
         'parent_id' => "Danh mục cha",
         'create_vtcategory' => 'Tạo Danh mục vật tư ',

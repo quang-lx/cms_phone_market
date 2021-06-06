@@ -3,10 +3,10 @@ return [
     'label' => [
         'vtproduct' => 'Linh kiện',
         'id' => 'ID',
-        'name' => "Tên",
-        'price' => 'Giá',
+        'name' => "Tên linh kiện",
+        'price' => 'Giá linh kiện/sp',
         'amount' => 'Số lượng',
-        'vt_category_id' => 'Danh mục',
+        'vt_category_id' => 'Danh mục linh kiện',
         'shop_id' => "Cửa hàng",
         'company_id' => 'Công ty',
         'create_vtproduct' => 'Tạo Linh kiện ',
