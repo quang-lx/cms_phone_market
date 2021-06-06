@@ -49,9 +49,9 @@ class VoucherTransformer extends JsonResource
         }
 
         if (strtotime($data['actived_at']) > time()){
-            $data['isEdit'] = false;
-        } else {
             $data['isEdit'] = true;
+        } else {
+            $data['isEdit'] = false;
         }
 
 
