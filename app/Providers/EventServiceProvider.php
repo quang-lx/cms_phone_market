@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\AdminNotiCreated;
+use App\Events\OrderStatusUpdated;
 use App\Events\ShopNotiCreated;
 use App\Events\NeedCreateUserSmsToken;
+use App\Listeners\InsertOrderStatusHistory;
 use App\Listeners\PushNotiWhenAdminNotiCreated;
 use App\Listeners\PushNotiWhenSHopNotiCreated;
 use App\Listeners\SendSmsToUserRegistered;
@@ -33,6 +35,9 @@ class EventServiceProvider extends ServiceProvider
         SHopNotiCreated::class => [
 		    PushNotiWhenShopNotiCreated::class
 	    ],
+		OrderStatusUpdated::class => [
+			InsertOrderStatusHistory::class
+		],
     ];
 
     /**
