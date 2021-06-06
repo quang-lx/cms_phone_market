@@ -436,7 +436,7 @@ export default {
         use_condition: "",
         description: "",
         shop_id: "",
-        isEdit: "",
+        isEdit: true,
       },
       locales: window.MonCMS.locales,
       list_discount_type: [
