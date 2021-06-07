@@ -116,12 +116,12 @@
 
                     <el-table-column prop="actions" width="130">
                       <template slot-scope="scope">
-                        <edit-button
+                        <a
                           :to="{
                             name: 'shop.vtimportexcel.detail',
                             params: { vtimportexcelId: scope.row.id },
                           }"
-                        ></edit-button>
+                        ><i class="el-icon-success"></i></a>
                         <delete-button
                           v-if="scope.row.status == 1"
                           :scope="scope"
