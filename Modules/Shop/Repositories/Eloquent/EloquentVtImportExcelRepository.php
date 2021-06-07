@@ -17,8 +17,13 @@ class EloquentVtImportExcelRepository extends BaseRepository implements VtImport
         }
 
         if ($request->get('search') !== null) {
-            $code = $request->get('search');
-            $query->where('code', 'LIKE', "%{$code}%");
+            $keyword = $request->get('search');
+            $query->where('filepath', 'LIKE', "%{$keyword}%");
+        }
+
+        if ($request->get('shop_id') !== null) {
+            $shop_id = $request->get('shop_id');
+            $query->where('shop_id',$shop_id);
         }
 
 		$user = Auth::user();

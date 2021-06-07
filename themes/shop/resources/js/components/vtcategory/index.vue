@@ -63,7 +63,7 @@
                       sortable="custom"
                     >
                     </el-table-column>
-                    <el-table-column
+                    <!-- <el-table-column
                       prop=""
                       :label="$t('vtcategory.label.image')"
                     >
@@ -76,7 +76,7 @@
                           style="object-fit: contain"
                         />
                       </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column
                       prop="name"
                       :label="$t('vtcategory.label.name')"

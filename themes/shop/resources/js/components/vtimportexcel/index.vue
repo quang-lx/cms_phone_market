@@ -17,13 +17,30 @@
               </div>
               <div class="col-sm-6 text-right">
                 <div class="row">
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
                     <el-input
+                      placeholder="Tên file"
                       prefix-icon="el-icon-search"
                       @keyup.native="performSearch"
                       v-model="searchQuery"
                     >
                     </el-input>
+                  </div>
+                  <div class="col-sm-4" v-if="!this.currentShop">
+                    <el-select
+                      v-model="filter.shop_id"
+                      placeholder="Lọc theo chi nhánh"
+                      @change="onSearchChange()"
+                      clearable
+                    >
+                      <el-option
+                        v-for="item in listShop"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                      >
+                      </el-option>
+                    </el-select>
                   </div>
                   <div class="col-sm-4">
                     <router-link :to="{ name: 'shop.vtimportexcel.create' }">
@@ -73,14 +90,26 @@
                       :label="$t('vtimportexcel.label.number_product')"
                       sortable="custom"
                     >
-                     <template slot-scope="scope">
-                        {{ Intl.NumberFormat().format(scope.row.number_product)}}
+                      <template slot-scope="scope">
+                        {{
+                          Intl.NumberFormat().format(scope.row.number_product)
+                        }}
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      prop=""
+                      :label="$t('vtimportexcel.label.status')"
+                      sortable="custom"
+                    >
+                    <template slot-scope="scope">
+                        <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
                     </template>
                     </el-table-column>
 
                     <el-table-column
-                      prop="status"
-                      :label="$t('vtimportexcel.label.status')"
+                      prop="shop_name"
+                      :label="$t('vtimportexcel.label.shop_id')"
                       sortable="custom"
                     >
                     </el-table-column>
@@ -94,7 +123,7 @@
                           }"
                         ></edit-button>
                         <delete-button
-                          v-if="scope.row.status==1"
+                          v-if="scope.row.status == 1"
                           :scope="scope"
                           :rows="data"
                         ></delete-button>
@@ -134,6 +163,13 @@ export default {
 
       columnsSearch: [],
       listFilterColumn: [],
+      listShop: [],
+      currentShop : window.MonCMS.current_user.shop_id,
+      filter: {
+          shop_id:'',
+          locale: window.MonCMS.currentLocale || 'en'
+      },
+
     };
   },
   methods: {
@@ -144,11 +180,16 @@ export default {
         order_by: this.order_meta.order_by,
         order: this.order_meta.order,
         search: this.searchQuery,
+        shop_id:this.filter.shop_id,
+
       };
 
       axios
         .get(
-          route("apishop.vtimportexcel.index", _.merge(properties, customProperties))
+          route(
+            "apishop.vtimportexcel.index",
+            _.merge(properties, customProperties)
+          )
         )
         .then((response) => {
           this.tableIsLoading = false;
@@ -160,9 +201,29 @@ export default {
           this.order_meta.order = properties.order;
         });
     },
+
+    fetchShop() {
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        check_company: true,
+      };
+
+      axios
+        .get(route("api.shop.index", _.merge(properties, {})))
+        .then((response) => {
+          this.listShop = response.data.data;
+        });
+    },
+
+    onSearchChange() {
+        this.meta.current_page = 0;
+        this.queryServer({})
+    },
   },
   mounted() {
     this.fetchData();
+    this.fetchShop();
   },
 };
 </script>

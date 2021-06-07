@@ -666,7 +666,7 @@ export default {
             "label": {
                 "vtcategory": "Danh mục vật tư",
                 "id": "ID",
-                "name": "Tên",
+                "name": "Tên danh mục linh kiện",
                 "image": "Ảnh",
                 "parent_id": "Danh mục cha",
                 "create_vtcategory": "Tạo Danh mục vật tư ",
@@ -683,10 +683,11 @@ export default {
             "label": {
                 "vtimportexcel": "Quản lý import vật tư",
                 "id": "ID",
-                "filename": "Đường dẫn",
+                "filename": "Tên file",
                 "number_product": "Số lượng sản phẩm",
                 "status": "Trạng thái",
                 "amount": "Số lượng",
+                "shop_id": "Tên chi nhánh",
                 "create_vtimportexcel": "Import Vật tư ",
                 "create_title": "Import Vật tư",
                 "detail_title": "Chi tiết import"
@@ -708,10 +709,10 @@ export default {
             "label": {
                 "vtproduct": "Linh kiện",
                 "id": "ID",
-                "name": "Tên",
-                "price": "Giá",
+                "name": "Tên linh kiện",
+                "price": "Giá linh kiện/sp",
                 "amount": "Số lượng",
-                "vt_category_id": "Danh mục",
+                "vt_category_id": "Danh mục linh kiện",
                 "shop_id": "Cửa hàng",
                 "company_id": "Công ty",
                 "create_vtproduct": "Tạo Linh kiện ",

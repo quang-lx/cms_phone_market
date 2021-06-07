@@ -109,6 +109,7 @@
 {!! \Modules\Mon\Support\Facades\Theme::js('vendor/tinymce/tinymce4.7.5/tinymce.min.js') !!}
 
 {!! \Modules\Mon\Support\Facades\Theme::js('js/app.js')  !!}
+<script src="https://cdn.jsdelivr.net/npm/cleave.js@1.5.3/dist/cleave.min.js"></script>
 @section('scripts')
 @show
 @stack('js-stack')

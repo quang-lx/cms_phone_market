@@ -22,8 +22,9 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
             $keyword = $request->get('search');
             $query->where(function ($q) use ($keyword) {
                 $q->orWhere('name', 'LIKE', "%{$keyword}%");
-                $q->orWhere('code', 'LIKE', "%{$keyword}%");
-                $q->orWhere('id',"$keyword");
+                $q->orWhereHas('VtCategory', function ($c) use ($keyword) {
+                    $c->where('name', 'LIKE', "%{$keyword}%");
+                });
             });
         }
 

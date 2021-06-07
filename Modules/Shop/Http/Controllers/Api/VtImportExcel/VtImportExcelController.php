@@ -18,6 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 class VtImportExcelController extends ApiController
 {
     /**
@@ -53,7 +54,7 @@ class VtImportExcelController extends ApiController
                 $path = Storage::putFileAs('public/file-excel',$file,$file->getClientOriginalName());
                 $user = Auth::user();
                 $dataImportExcel = [
-                    'filepath' => $path,
+                    'filepath' => $file->getClientOriginalName().' '.Carbon::now()->format('h:i:s d-m-Y'),
                     'number_product' => 0,
                     'status' => 1,
                     'company_id' => $user->company_id,
@@ -69,7 +70,7 @@ class VtImportExcelController extends ApiController
         	Log::info($e->getMessage());
             return response()->json([
                 'errors' => true,
-                'message' => 'Có lỗi xảy ra trong quá trình import',
+                'message' => $e->getMessage(),
             ],500);
         }
 

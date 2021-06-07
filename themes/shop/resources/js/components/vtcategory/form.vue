@@ -94,7 +94,7 @@
                             ></div>
                           </el-form-item>
                         </div>
-                        <div class="col-md-10">
+                        <!-- <div class="col-md-10">
                           <single-media
                             zone="thumbnail"
                             @singleFileSelected="
@@ -112,7 +112,7 @@
                               form.errors.first('medias_single.thumbnail')
                             "
                           ></div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>

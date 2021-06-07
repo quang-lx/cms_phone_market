@@ -33,7 +33,7 @@ class ProductTransformer extends JsonResource
             'company_id' => optional($this->company_id),
             'company' => $this->company,
             'created_at' => $this->created_at->format('d-m-Y'),
-            'updated_at' => $this->updated_at->format('d-m-Y'),
+            'updated_at' => $this->updated_at->format('h:i d-m-Y'),
             'amount' => $this->amount,
             'price' => $this->price,
             'sale_price' => $this->sale_price,
