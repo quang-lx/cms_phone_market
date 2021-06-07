@@ -141,6 +141,7 @@ export default {
           this.$router.push({ name: "shop.vtimportexcel.index" });
         })
         .catch((err) => {
+          this.modelForm.file =''
           this.loading = false;
           if (err.response.status == 500) {
             this.$notify.error({
@@ -148,6 +149,7 @@ export default {
               message: err.response.data.message,
             });
           } else {
+            
             this.$notify.error({
               title: this.$t("mon.error.Title"),
               message: err.response.data.errors.file[0],
