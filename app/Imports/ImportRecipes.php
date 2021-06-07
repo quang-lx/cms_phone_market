@@ -27,7 +27,7 @@ class ImportRecipes implements ToModel, WithHeadingRow
    public function model(array $row)
    {
       if(empty($row['ten_vat_tu'])||empty($row['so_luong'])){
-         return;
+         return abort(500, 'Lỗi format file không đúng chuẩn');
       }
       $this->rows+=1;
       $company_id = Auth::user()->company_id;

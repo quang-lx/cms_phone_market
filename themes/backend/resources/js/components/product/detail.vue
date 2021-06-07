@@ -142,7 +142,7 @@
                         </el-table>
                       </div>
 
-                      <div class="col-md-6 mt-5">
+                      <div class="col-md-6 mt-5"  v-if="modelForm.attribute_selected !=null">
                         Thuộc tính mở rộng
                         <el-table
                           :data="modelForm.attribute_selected.values"
