@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\OrderStatusUpdated;
+use App\Events\UserUpdateOrderStatus;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\Mon\Entities\ShopOrderNotification;
 
@@ -15,7 +15,7 @@ class InsertShopOrderNotification implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle(OrderStatusUpdated $event)
+    public function handle(UserUpdateOrderStatus $event)
     {
 		ShopOrderNotification::create($event->data);
     }

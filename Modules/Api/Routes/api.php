@@ -310,6 +310,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@getSystemDiscountAmount',
             'as' => 'apife.order.getSystemDiscountAmount',
         ]);
+		Route::post('/{order}/update-status', [
+			'uses' => 'OrderController@updateStatus',
+			'as' => 'apife.order.updateStatus',
+		]);
     });
 	Route::prefix('cart')->group(function ($router) {
 		Route::post('/update', [

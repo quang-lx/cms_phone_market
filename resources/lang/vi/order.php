@@ -25,6 +25,7 @@ return [
         'sending' => 'Chờ giao hàng',
         'done' => 'Thành công',
         'cancel' => 'Đã hủy',
-    ]
+    ],
+
 
 ];

@@ -138,13 +138,12 @@
                 }
             }
         },
-        "/order/place-order": {
+        "/order/{order}/update-status": {
             "post": {
                 "tags": [
                     "order"
                 ],
-                "summary": "dat hang",
-                "description": "dat hang",
+                "summary": "cap nhat trang thai don hang",
                 "produces": [
                     "application/json",
                     "application/xml"
@@ -160,15 +159,12 @@
                 ],
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "orders",
-                        "description": "Danh sach order",
+                        "in": "path",
+                        "name": "order",
+                        "description": "order id",
                         "required": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/definitions/OrderData"
+                        "type": "integer"
 
-                        }
                     }
 
                 ],
@@ -187,11 +183,8 @@
                                 "data": {
                                     "type": "object",
                                     "properties": {
-                                        "token": {
-                                            "type": "string"
-                                        },
-                                        "user": {
-                                            "$ref": "#/definitions/User"
+                                        "id": {
+                                            "type": "integer"
                                         }
                                     }
                                 }

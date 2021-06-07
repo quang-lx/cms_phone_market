@@ -6,7 +6,9 @@ use App\Events\AdminNotiCreated;
 use App\Events\OrderStatusUpdated;
 use App\Events\ShopNotiCreated;
 use App\Events\NeedCreateUserSmsToken;
+use App\Events\UserUpdateOrderStatus;
 use App\Listeners\InsertOrderStatusHistory;
+use App\Listeners\InsertShopOrderNotification;
 use App\Listeners\PushNotiWhenAdminNotiCreated;
 use App\Listeners\PushNotiWhenSHopNotiCreated;
 use App\Listeners\SendSmsToUserRegistered;
@@ -37,6 +39,9 @@ class EventServiceProvider extends ServiceProvider
 	    ],
 		OrderStatusUpdated::class => [
 			InsertOrderStatusHistory::class
+		],
+		UserUpdateOrderStatus::class => [
+			InsertShopOrderNotification::class
 		],
     ];
 

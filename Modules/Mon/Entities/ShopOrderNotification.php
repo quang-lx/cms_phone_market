@@ -13,6 +13,8 @@ class ShopOrderNotification extends Model
         'title',
         'content',
         'shop_id',
+		'order_status',
+		'order_type'
     ];
 
 
