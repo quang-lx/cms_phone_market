@@ -165,6 +165,14 @@
                         "required": true,
                         "type": "integer"
 
+                    },
+                    {
+                        "in": "formData",
+                        "name": "new_status",
+                        "description": "new_status",
+                        "required": true,
+                        "type": "integer"
+
                     }
 
                 ],
