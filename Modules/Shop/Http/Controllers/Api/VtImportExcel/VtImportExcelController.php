@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Modules\Mon\Entities\VtImportExcel;
+use Modules\Mon\Entities\VtImportProduct;
 use Modules\Shop\Http\Requests\VtImportExcel\CreateVtImportExcelRequest;
 use Modules\Shop\Transformers\VtImportExcelTransformer;
 use Modules\Shop\Http\Requests\VtImportExcel\UpdateVtImportExcelRequest;
@@ -64,6 +65,7 @@ class VtImportExcelController extends ApiController
                 $importExcel = $this->vtimportexcelRepository->create($dataImportExcel);
                 $import = new ImportRecipes($importExcel->id);
                 Excel::import($import, request()->file('file'));
+                VtImportProduct::insert($import->getDataImport());
                 $this->vtimportexcelRepository->update($importExcel, ['number_product' => $import->getRowCount()]);
             });
         } catch (\Exception $e) {

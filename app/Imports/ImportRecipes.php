@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use Faker\Core\Number;
 use Modules\Mon\Entities\VtImportProduct;
 use Modules\Mon\Entities\VtProduct;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -18,6 +19,7 @@ class ImportRecipes implements ToModel, WithHeadingRow
     * @return \Illuminate\Database\Eloquent\Model|null
     */
    protected $idExcelImport;
+   protected $result = [];
 
    public function __construct($idExcelImport)
    {
@@ -26,24 +28,32 @@ class ImportRecipes implements ToModel, WithHeadingRow
 
    public function model(array $row)
    {
-      if(empty($row['ten_vat_tu'])||empty($row['so_luong'])){
+      $this->rows+=1;
+      $titel = array_keys($row);
+      if ($titel[0] != 'stt' || $titel[1] != 'ten_vat_tu' || $titel[2] != 'so_luong') {
          return abort(500, 'Lỗi format file không đúng chuẩn');
       }
-      $this->rows+=1;
-      $company_id = Auth::user()->company_id;
-      $exist_vt = VtProduct::find($row['ma_vat_tu']);
-      $exist_company = isset($exist_vt) ? $exist_vt->company_id : $company_id;
+
+      if(empty($row['ten_vat_tu'])||empty($row['so_luong'])){
+         return abort(500, 'Nhập thiếu thông tin dòng '.((int)$this->rows + 1));
+      }
+      if ($row['so_luong'] < 0 || !is_numeric($row['so_luong'])) {
+         return abort(500, 'Số lượng không hợp lệ '.((int)$this->rows + 1));
+      }
       
+      $company_id = Auth::user()->company_id;
+      $exist_vt = VtProduct::whereRaw('LOWER(`name`) = ? ',[trim(strtolower($row['ten_vat_tu']))])->first();
+      $exist_company = isset($exist_vt) ? $exist_vt->company_id : 0;
+      if($exist_company != $company_id){
+         return abort(500, 'Vật tư chưa tồn tại trong hệ thống lỗi dòng '.((int)$this->rows + 1));
+      }
       $data = [
          'vt_import_excel_id' => $this->idExcelImport,
-         'vt_product_id' => $row['ma_vat_tu'],
+         'vt_product_id' => $exist_vt->id,
          'vt_product_name' => $row['ten_vat_tu'],
          'amount' => $row['so_luong'],
       ];
-      if($exist_company != $company_id){
-         $data['note']='Mã vật tư đã tồn tại';
-      }
-      return  VtImportProduct::create($data);
+      array_push($this->result,$data);
    }
 
    // public function collection(Collection $rows)
@@ -57,6 +67,11 @@ class ImportRecipes implements ToModel, WithHeadingRow
    //       ]);
    //    }
    // }
+
+   public function getDataImport(): array
+   {
+      return $this->result;
+   }
 
    public function getRowCount(): int
    {

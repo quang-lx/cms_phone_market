@@ -104,13 +104,6 @@
                               sortable="custom"
                             >
                             </el-table-column>
-
-                            <el-table-column
-                              prop="note"
-                               :label="$t('vtimportproduct.label.note')"
-                              sortable="custom"
-                            >
-                            </el-table-column>
                           </el-table>
                         </div>
                       </div>
