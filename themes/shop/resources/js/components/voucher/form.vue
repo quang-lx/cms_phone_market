@@ -210,10 +210,13 @@
                           ),
                         }"
                       >
-                        <el-input-number 
+                        <!-- <el-input-number 
                               v-model="modelForm.discount_amount" :min="0"
                               :max="100000000"
-                              placeholder="Mức giảm" :disabled="!modelForm.isEdit"></el-input-number>
+                              placeholder="Mức giảm" :disabled="!modelForm.isEdit"></el-input-number> -->
+    <cleave v-model="modelForm.discount_amount" :options="options" class="form-control" name="discount_amount"></cleave>
+
+
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('discount_amount')"
@@ -408,11 +411,12 @@ import axios from "axios";
 import Form from "form-backend-validation";
 import SingleFileSelector from '../../mixins/SingleFileSelector.js';
 import Tinymce from "../utils/Tinymce";
+import Cleave from 'vue-cleave-component';
 
 export default {
   mixins: [SingleFileSelector],
   components: {
-    Tinymce
+    Tinymce, Cleave
   },
   props: {
     pageTitle: { default: null, String },
@@ -463,6 +467,15 @@ export default {
 
       productSearchResult: [],
       listShop: [],
+      options: {
+        prefix: '',
+        numeral: true,
+        numeralPositiveOnly: true,
+        noImmediatePrefix: true,
+        rawValueTrimPrefix: true,
+        numeralIntegerScale: 12,
+        numeralDecimalScale: 0
+      }
     };
   },
   methods: {
