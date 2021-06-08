@@ -118,6 +118,28 @@ class OrdersController extends ApiController
         return $this->ordersRepository->updateGuarantee($orders, $request->all());
     }
 
+    public function updateBuySell(Orders $orders, Request $request)
+    {
+        $data = [
+            'title' => trans('order.notifications.ban_hang.title'),
+            'content' => trans('order.notifications.ban_hang.content confirm', ['order_code' => $orders->id]),
+            'fcm_token' => $orders->user->fcm_token,
+            'type' => trans('order.notifications.ban_hang.type', ['order_status' => $orders->status]),
+        ];
+        
+        event(new ShopNotiCreated($data));
+
+        event(new OrderStatusUpdated([
+            'order_id' => $orders->id,
+            'title' => $orders->getStatusNameAttribute(Orders::STATUS_ORDER_WARRANTING),
+            'old_status' => Orders::STATUS_ORDER_CREATED,
+            'new_status' => Orders::STATUS_ORDER_WARRANTING,
+            'user_id' => '',
+            'shop_id' => Auth::user()->shop_id
+          ]));
+        return $this->ordersRepository->updateBuySell($orders, $request->all());
+    }
+
     public function destroy(Orders $orders)
     {
         $this->ordersRepository->destroy($orders);
