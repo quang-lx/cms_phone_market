@@ -11,7 +11,7 @@
                     <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
                   </el-breadcrumb-item>
                   <el-breadcrumb-item
-                    >{{ $t("orders.label.guarantee") }}
+                    >{{ $t("orders.label.buysell") }}
                   </el-breadcrumb-item>
                 </el-breadcrumb>
               </div>

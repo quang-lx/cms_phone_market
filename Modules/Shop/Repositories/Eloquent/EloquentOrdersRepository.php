@@ -195,4 +195,27 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
        
         
     }
+
+    public function updateBuySell($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_MUA_HANG) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_CONFIRMED
+            ];
+            $model->update($data_update);
+    
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+        
+       
+        
+    }
 }
