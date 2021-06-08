@@ -210,12 +210,7 @@
                           ),
                         }"
                       >
-                        <!-- <el-input-number 
-                              v-model="modelForm.discount_amount" :min="0"
-                              :max="100000000"
-                              placeholder="Mức giảm" :disabled="!modelForm.isEdit"></el-input-number> -->
-    <cleave v-model="modelForm.discount_amount" :options="options" class="form-control" name="discount_amount"></cleave>
-
+                          <cleave v-model="modelForm.discount_amount" :options="options" class="form-control" name="discount_amount"></cleave>
 
                         <div
                           class="el-form-item__error"
@@ -235,10 +230,7 @@
                         }"
                       >
 
-                        <el-input-number 
-                              v-model="modelForm.require_min_amount" :min="0"
-                              :max="100000000"
-                              placeholder="Giá trị đơn hàng tối thiểu áp dụng" :disabled="!modelForm.isEdit"></el-input-number>
+                          <cleave v-model="modelForm.require_min_amount" :options="options" class="form-control" name="require_min_amount"></cleave>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('require_min_amount')"
@@ -255,10 +247,7 @@
                         }"
                       >
 
-                        <el-input-number 
-                              v-model="modelForm.total" :min="0"
-                              :max="100000000"
-                              placeholder="Tổng số mã" :disabled="!modelForm.isEdit"></el-input-number>
+                          <cleave v-model="modelForm.total" :options="options" class="form-control" name="total"></cleave>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('total')"

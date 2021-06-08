@@ -204,22 +204,14 @@
                                                             <div class="row">
                                                                 <div class="col-md-2 col-sm-6"> {{itemValue.name}}</div>
                                                                 <div class="col-md-3 col-sm-6">
-                                                                    <el-input-number style="width: 100%"
-                                                                                     v-model="itemValue.price" :min="0"
-                                                                                     :max="100000000"
-                                                                                     placeholder="Giá"></el-input-number>
+                                                                    <cleave v-model="itemValue.price" :options="options" class="form-control" name="price"></cleave>
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
-                                                                    <el-input-number style="width: 100%"
-                                                                                     v-model="itemValue.sale_price"
-                                                                                     :min="0" :max="100"
-                                                                                     placeholder="Giá khuyến mại"></el-input-number>
+                                                                    <cleave v-model="itemValue.sale_price" :options="options" class="form-control" name="sale_price"></cleave>
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
-                                                                    <el-input-number style="width: 100%"
-                                                                                     v-model="itemValue.amount" :min="0"
-                                                                                     :max="100000000"
-                                                                                     placeholder="Số lượng"></el-input-number>
+                                                                  <cleave v-model="itemValue.amount" :options="options" class="form-control" name="amount"></cleave>
+                                                                   
                                                                 </div>
                                                                 <div
                                                                     class="col-md-1 col-sm-6 text-right d-flex justify-content-end align-items-center">
@@ -260,8 +252,7 @@
                                             <el-form-item :label="$t('product.label.warranty_time')"
                                                           :class="{'el-form-item is-error': form.errors.has('warranty_time') }">
 
-                                                <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.warranty_time"></el-input-number>
+                                                <cleave v-model="modelForm.warranty_time" :options="options" class="form-control" name="warranty_time"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('warranty_time')"
                                                      v-text="form.errors.first('warranty_time')"></div>
@@ -271,8 +262,7 @@
                                             <el-form-item :label="$t('product.label.fix_time')"
                                                           :class="{'el-form-item is-error': form.errors.has('fix_time') }">
 
-                                                <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.fix_time"></el-input-number>
+                                                <cleave v-model="modelForm.fix_time" :options="options" class="form-control" name="fix_time"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('fix_time')"
                                                      v-text="form.errors.first('fix_time')"></div>
@@ -386,8 +376,8 @@
                                             <el-form-item :label="$t('product.label.p_weight')"
                                                           :class="{'el-form-item is-error': form.errors.has('p_weight') }">
 
-                                                <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.p_weight"></el-input-number>
+                                                <cleave v-model="modelForm.p_weight" :options="options" class="form-control" name="p_weight"></cleave>
+                                                                 
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('p_weight')"
                                                      v-text="form.errors.first('p_weight')"></div>
@@ -397,8 +387,7 @@
                                             <el-form-item :label="$t('product.label.s_long')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_long') }">
 
-                                                <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.s_long"></el-input-number>
+                                                <cleave v-model="modelForm.s_long" :options="options" class="form-control" name="s_long"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_long')"
                                                      v-text="form.errors.first('s_long')"></div>
@@ -408,8 +397,7 @@
                                             <el-form-item :label="$t('product.label.s_width')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_width') }">
 
-                                                <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.s_width"></el-input-number>
+                                                <cleave v-model="modelForm.s_width" :options="options" class="form-control" name="s_width"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_width')"
                                                      v-text="form.errors.first('s_width')"></div>
@@ -419,8 +407,7 @@
                                             <el-form-item :label="$t('product.label.s_height')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_height') }">
 
-                                                <el-input-number :min="0"
-                                                          :max="100000000" v-model="modelForm.s_height"></el-input-number>
+                                                <cleave v-model="modelForm.s_height" :options="options" class="form-control" name="s_height"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_height')"
                                                      v-text="form.errors.first('s_height')"></div>
@@ -439,10 +426,7 @@
                                         <div class="col-md-12">
                                             <el-form-item :label="$t('product.label.amount')"
                                                           :class="{'el-form-item is-error': form.errors.has('amount') }">
-
-                                                <el-input-number v-model="modelForm.amount" :min="1"
-                                                                 :max="100000"></el-input-number>
-
+                                                <cleave v-model="modelForm.amount" :options="options" class="form-control" name="amount"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('amount')"
                                                      v-text="form.errors.first('amount')"></div>
@@ -451,9 +435,7 @@
                                         <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.price')"
                                                           :class="{'el-form-item is-error': form.errors.has('price') }">
-
-                                                <el-input-number :min="0"
-                                                                 :max="100000000" v-model="modelForm.price"></el-input-number>
+                                                <cleave v-model="modelForm.price" :options="options" class="form-control" name="price"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('price')"
                                                      v-text="form.errors.first('price')"></div>
@@ -462,9 +444,7 @@
                                         <div class="col-md-6">
                                             <el-form-item :label="$t('product.label.sale_price')"
                                                           :class="{'el-form-item is-error': form.errors.has('sale_price') }">
-
-                                                <el-input-number :min="0"
-                                                                 :max="100" v-model="modelForm.sale_price"></el-input-number>
+                                                <cleave v-model="modelForm.sale_price" :options="options" class="form-control" name="sale_price"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('sale_price')"
                                                      v-text="form.errors.first('sale_price')"></div>
@@ -550,18 +530,29 @@
   import SingleFileSelector from '../../mixins/SingleFileSelector.js';
   import MultipleMedia from '../media/js/components/MultipleMedia';
   import MultipleFileSelector from '../../mixins/MultipleFileSelector.js';
+  import Cleave from 'vue-cleave-component';
 
   export default {
     mixins: [SingleFileSelector, MultipleFileSelector],
     components: {
       Tinymce,
-      MultipleMedia
+      MultipleMedia,
+      Cleave
     },
     props: {
       pageTitle: {default: null, String},
     },
     data() {
       return {
+        options: {
+          prefix: '',
+          numeral: true,
+          numeralPositiveOnly: true,
+          noImmediatePrefix: true,
+          rawValueTrimPrefix: true,
+          numeralIntegerScale: 12,
+          numeralDecimalScale: 0
+        },
         defaultProps: {
           children: 'children',
           label: 'label'
