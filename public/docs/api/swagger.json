@@ -1050,6 +1050,14 @@
                     },
                     {
                         "in": "query",
+                        "name": "shop_id",
+                        "description": "Shop id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
                         "name": "from_price",
                         "description": "gia nho nhat",
                         "required": false,
@@ -1146,7 +1154,14 @@
                         "type": "integer",
                         "format": "text"
                     },
-
+                    {
+                        "in": "query",
+                        "name": "shop_id",
+                        "description": "Shop id",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
                     {
                         "in": "query",
                         "name": "from_price",

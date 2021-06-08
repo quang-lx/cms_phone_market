@@ -32,6 +32,10 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
                     $q->where('pcategory.id', $category_id);
                 });
             }
+	        if ($shop_id = $request->get('shop_id')) {
+
+		        $query->where('shop_id', $shop_id);
+	        }
             if ($from_price = $request->get('from_price')) {
                 $query->where('product.price', '>=', $from_price);
             }
@@ -67,6 +71,10 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             $query = Product::query();
 
             // filter
+	        if ($shop_id = $request->get('shop_id')) {
+
+		        $query->where('shop_id', $shop_id);
+	        }
             if ($category_id = $request->get('category_id')) {
 
                 $query->whereHas('pcategories', function ($q) use ($category_id) {
