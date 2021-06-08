@@ -173,10 +173,7 @@
                   </div>
 
                   <div class="col-md-2">
-                    <el-input-number style="width: 100%"
-                            v-model="pinfo.count" :min="1"
-                            :max="100000000"
-                            placeholder="Số lượng"></el-input-number>
+                      <cleave v-model="pinfo.count" :options="options" class="form-control" name="count"></cleave>
                   </div>
                   <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
                     <i
@@ -215,13 +212,26 @@
 <script>
 import axios from "axios";
 import Form from "form-backend-validation";
+import Cleave from 'vue-cleave-component';
 
 export default {
   props: {
     pageTitle: { default: null, String },
   },
+  components: {
+    Cleave
+  },
   data() {
     return {
+      options: {
+        prefix: '',
+        numeral: true,
+        numeralPositiveOnly: true,
+        noImmediatePrefix: true,
+        rawValueTrimPrefix: true,
+        numeralIntegerScale: 12,
+        numeralDecimalScale: 0
+      },
       form: new Form(),
       loading: false,
       modelForm: {

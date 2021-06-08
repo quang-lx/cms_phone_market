@@ -184,9 +184,7 @@
                           ),
                         }"
                       >
-                        <el-input
-                          v-model="modelForm.discount_amount"
-                        ></el-input>
+                        <cleave v-model="modelForm.discount_amount" :options="options" class="form-control" name="discount_amount"></cleave>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('discount_amount')"
@@ -204,9 +202,7 @@
                           ),
                         }"
                       >
-                        <el-input
-                          v-model="modelForm.require_min_amount"
-                        ></el-input>
+                        <cleave v-model="modelForm.require_min_amount" :options="options" class="form-control" name="require_min_amount"></cleave>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('require_min_amount')"
@@ -222,12 +218,7 @@
                           'el-form-item is-error': form.errors.has('total'),
                         }"
                       >
-                        <el-input-number
-                          v-model="modelForm.total"
-                          :min="0"
-                          :max="100000000"
-                          placeholder="Tổng số mã"
-                        ></el-input-number>
+                        <cleave v-model="modelForm.total" :options="options" class="form-control" name="total"></cleave>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('total')"
@@ -436,10 +427,11 @@ import axios from "axios";
 import Form from "form-backend-validation";
 import Tinymce from "../utils/Tinymce";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
+import Cleave from 'vue-cleave-component';
 
 export default {
   components: {
-    Tinymce,
+    Tinymce, Cleave
   },
   props: {
     pageTitle: { default: null, String },
@@ -448,6 +440,15 @@ export default {
 
   data() {
     return {
+      options: {
+        prefix: '',
+        numeral: true,
+        numeralPositiveOnly: true,
+        noImmediatePrefix: true,
+        rawValueTrimPrefix: true,
+        numeralIntegerScale: 12,
+        numeralDecimalScale: 0
+      },
       form: new Form(),
       loading: false,
       modelForm: {
