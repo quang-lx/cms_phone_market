@@ -2,6 +2,7 @@
 
 namespace Modules\Shop\Http\Controllers\Api\Orders;
 
+use App\Events\OrderStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Mon\Entities\Orders;
@@ -14,6 +15,7 @@ use Illuminate\Routing\Controller;
 use Modules\Mon\Http\Controllers\ApiController;
 use Modules\Mon\Auth\Contracts\Authentication;
 use App\Events\ShopNotiCreated;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends ApiController
 {
@@ -79,6 +81,15 @@ class OrdersController extends ApiController
             'type' => trans('order.notifications.sua_chua.type', ['order_status' => $orders->status]),
         ];
         event(new ShopNotiCreated($data));
+
+        event(new OrderStatusUpdated([
+            'order_id' => $orders->id,
+            'title' => $orders->getStatusNameAttribute(Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM),
+            'old_status' => Orders::STATUS_ORDER_CREATED,
+            'new_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM,
+            'user_id' => '',
+            'shop_id' => Auth::user()->shop_id
+          ]));
         return response()->json([
             'errors' => false,
             'message' => trans('ch::orders.message.update success'),
@@ -93,7 +104,17 @@ class OrdersController extends ApiController
             'fcm_token' => $orders->user->fcm_token,
             'type' => trans('order.notifications.bao_hanh.type', ['order_status' => $orders->status]),
         ];
+        
         event(new ShopNotiCreated($data));
+
+        event(new OrderStatusUpdated([
+            'order_id' => $orders->id,
+            'title' => $orders->getStatusNameAttribute(Orders::STATUS_ORDER_WARRANTING),
+            'old_status' => Orders::STATUS_ORDER_CREATED,
+            'new_status' => Orders::STATUS_ORDER_WARRANTING,
+            'user_id' => '',
+            'shop_id' => Auth::user()->shop_id
+          ]));
         return $this->ordersRepository->updateGuarantee($orders, $request->all());
     }
 

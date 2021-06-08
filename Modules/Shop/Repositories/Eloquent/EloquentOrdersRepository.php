@@ -85,7 +85,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update['pay_price'] = $data['price'];
             $data_update['fix_time'] = $data['numberDate'];
             $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
-            $data_update['status'] = 'wait_client';
+            $data_update['status'] = Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM;
         }
 
         $model->update($data_update);
@@ -177,7 +177,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
     {
         if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_BAO_HANH) {
             $data_update =[
-                'status' => 'warranting'
+                'status' => Orders::STATUS_ORDER_WARRANTING
             ];
             $model->update($data_update);
     
