@@ -462,6 +462,11 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.update_guarantee',
         'uses' => 'Orders\OrdersController@updateGuarantee',
     ]);
+
+    Route::post('/{orders}/edit-buysell', [
+        'as' => 'apishop.orders.update_buysell',
+        'uses' => 'Orders\OrdersController@updateBuySell',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
 

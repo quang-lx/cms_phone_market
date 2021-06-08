@@ -7,4 +7,5 @@ use Modules\Mon\Repositories\BaseRepository;
 interface OrdersRepository extends BaseRepository
 {
     public function updateGuarantee($model, $data);
+    public function updateBuySell($model, $data);
 }

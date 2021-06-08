@@ -28,6 +28,7 @@ class OrdersBuySellTransformer extends JsonResource
             'ship_type_id' => $this->ship_type_id,
             'order_type' => $this->order_type,
             'status' => $this->status_name,
+            'status_value' => $this->status,
             'payment_status' => $this->payment_status,
             'total_price' => $this->total_price,
             'discount' => $this->discount,

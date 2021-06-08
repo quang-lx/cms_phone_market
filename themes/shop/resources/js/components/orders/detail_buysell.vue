@@ -112,9 +112,7 @@
             <div class="card">
               <div class="card-header ui-sortable-handle" style="cursor: move">
                 <div class="row">
-                  <h3 class="card-title col-md-8">
-                  Danh sách sản phẩm
-                  </h3>
+                  <h3 class="card-title col-md-8">Danh sách sản phẩm</h3>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -136,7 +134,8 @@
                           sortable="custom"
                         >
                           <template slot-scope="scope">
-                            <img class="mr-2"
+                            <img
+                              class="mr-2"
                               :src="scope.row.thumbnail.path_string"
                               v-if="scope.row.thumbnail"
                               width="100"
@@ -149,7 +148,9 @@
                         <el-table-column prop="" label="Giá" sortable="custom">
                           <template slot-scope="scope">
                             <span>{{
-                              Intl.NumberFormat().format(scope.row.price_product)
+                              Intl.NumberFormat().format(
+                                scope.row.price_product
+                              )
                             }}</span>
                           </template>
                         </el-table-column>
@@ -166,7 +167,11 @@
                           </template>
                         </el-table-column>
 
-                        <el-table-column prop="" label="Tổng tiền" sortable="custom">
+                        <el-table-column
+                          prop=""
+                          label="Tổng tiền"
+                          sortable="custom"
+                        >
                           <template slot-scope="scope">
                             <span>{{
                               Intl.NumberFormat().format(scope.row.price_sale)
@@ -180,31 +185,73 @@
                     <div class="row">
                       <div class="col-md-8"></div>
                       <div class="col-md-4">
-                       <table>
+                        <table>
                           <tbody>
                             <tr>
                               <th scope="row" class="w-75">Tạm tính</th>
-                              <td>{{ Intl.NumberFormat().format(modelForm.total_price)}}</td>
+                              <td>
+                                {{
+                                  Intl.NumberFormat().format(
+                                    modelForm.total_price
+                                  )
+                                }}
+                              </td>
                             </tr>
                             <tr>
                               <th scope="row">Phí vận chuyển</th>
-                              <td>{{ Intl.NumberFormat().format(modelForm.ship_fee)}}</td>
-
+                              <td>
+                                {{
+                                  Intl.NumberFormat().format(modelForm.ship_fee)
+                                }}
+                              </td>
                             </tr>
                             <tr>
                               <th scope="row">Giảm giá</th>
-                              <td>{{ Intl.NumberFormat().format(modelForm.discount)}}</td>
+                              <td>
+                                {{
+                                  Intl.NumberFormat().format(modelForm.discount)
+                                }}
+                              </td>
                             </tr>
                             <tr>
                               <th scope="row">Tổng tiền</th>
-                              <td>{{ Intl.NumberFormat().format(modelForm.pay_price)}}</td>
-
+                              <td>
+                                {{
+                                  Intl.NumberFormat().format(
+                                    modelForm.pay_price
+                                  )
+                                }}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="col-md-12 text-right"
+                    v-if="
+                      modelForm.order_type == 'mua_hang' &&
+                      modelForm.status_value == 'created'
+                    "
+                  >
+                    <el-button type="primary" @click="dialogVisible = true"
+                      >Nhận đơn</el-button
+                    >
+                  </div>
+                  <el-dialog
+                    title="Xác nhận"
+                    :visible.sync="dialogVisible"
+                    width="30%"
+                  >
+                    <span>Xác nhận đơn mua hàng</span>
+                    <span slot="footer" class="dialog-footer">
+                      <el-button @click="dialogVisible = false">Hủy</el-button>
+                      <el-button type="primary" @click="onSubmit"
+                        >Xác nhận</el-button
+                      >
+                    </span>
+                  </el-dialog>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -240,6 +287,8 @@ export default {
       modelForm: {},
       dialogRank: false,
       message: "",
+      dialogVisible: false,
+
     };
   },
   methods: {
@@ -259,6 +308,37 @@ export default {
     showDataModal(key) {
       this.dialogRank = true;
     },
+
+      onSubmit() {
+  
+
+      axios
+        .post(this.getRoute())
+        .then((response) => {
+          this.loading = false;
+          this.$message({
+            type: "success",
+            message: response.data.message,
+          });
+          this.dialogVisible = false;
+          this.$router.push({ name: "shop.ordersbuysell.index" });
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.dialogVisible = false;
+          this.$notify.error({
+            title: 'Lỗi xác nhận',
+            message: error.response.data.message,
+          });
+        });
+    },
+    getRoute() {
+      return route("apishop.orders.update_buysell", {
+        orders: this.$route.params.ordersId,
+      });
+    },
+
+
   },
   mounted() {
     this.fetchData();

@@ -13,6 +13,11 @@ return [
             'content confirm' => 'Đơn bảo hành :order_code đã được xác nhận, vui lòng gửi hàng bảo hành tới cửa hàng.',
             'type' => 'baohanh_:order_status',
             'title' => 'Đơn bảo hành'
+       ],
+       'ban_hang'=>[
+            'content confirm' => 'Đơn hàng :order_code đã được xác nhận, vui lòng chờ người bán giao hàng',
+            'type' => 'banhang_:order_status',
+            'title' => 'Đơn bán hàng'
 
         ]
    ],
