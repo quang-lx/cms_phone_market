@@ -659,7 +659,7 @@ class EloquentOrderRepository implements OrderRepository
         $order->ship_fee = 0;
         $order->total_price = $totalPrice;
         $order->pay_price = $totalPrice - $sysVoucherDiscount - $shopVoucherDiscount;
-
+	    $order->pay_price = $order->pay_price > 0 ? $order->pay_price : 0;
         $order->save();
 
 
