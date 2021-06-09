@@ -303,6 +303,15 @@ class UserSidebarExtender extends AbstractAdminSidebar
 					    $this->auth->hasAccess('shop.ordersguarantee.index')
 				    );
 			    });
+			    $item->item(trans('ch::sidebar.order mua hang'), function (Item $item) {
+
+				    $item->weight(0);
+
+				    $item->route('shop.ordersbuysell.index');
+				    $item->authorize(
+					    $this->auth->hasAccess('shop.ordersbuysell.index')
+				    );
+			    });
 		    });
 
 

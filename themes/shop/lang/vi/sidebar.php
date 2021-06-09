@@ -50,6 +50,7 @@ return [
 	'order' => 'Đơn hàng',
 	'order sua chua' => 'Đơn hàng sửa chữa',
 	'order bao hanh' => 'Đơn hàng bảo hành',
+	'order mua hang' => 'Đơn hàng mua hàng',
 
 
 ];

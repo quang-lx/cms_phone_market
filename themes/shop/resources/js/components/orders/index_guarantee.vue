@@ -93,7 +93,7 @@
                       :label="$t('orders.label.user_name')"
                       sortable="custom"
                     >
-              
+
                     </el-table-column>
 
                      <el-table-column
@@ -104,17 +104,17 @@
                     </el-table-column>
 
                     <el-table-column
-                     
+
                       :label="$t('orders.label.shop_id')"
                       sortable="custom"
                     >
-                     <template slot-scope="scope">
+                     <template slot-scope="scope"  v-if="scope.row.shop">
                           <div> {{ scope.row.shop.name }}</div>
                           <div> {{ scope.row.shop.phone }}</div>
                           <div> {{ scope.row.shop.address }}</div>
                      </template>
                     </el-table-column>
-                    
+
                     <el-table-column
                       prop="created_at"
                       :label="$t('orders.label.created_at')"
@@ -138,7 +138,7 @@
                       sortable="custom"
                     >
                     </el-table-column>
-                    
+
 
                     <el-table-column prop="actions" width="130">
                        <template slot-scope="scope">
