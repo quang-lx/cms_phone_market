@@ -128,7 +128,7 @@
                       sortable="custom"
                     >
                     <template slot-scope="scope">
-                      <span>{{scope.row.pay_price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})}}</span>
+                      <span>{{scope.row.pay_price.toLocaleString('vi-VN', currency)}}</span>
                     </template>
                     </el-table-column>
 

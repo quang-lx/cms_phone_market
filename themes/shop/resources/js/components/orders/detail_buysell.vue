@@ -90,7 +90,7 @@
                         <div></div>
                         <div><h4>Chi phí</h4></div>
                         <div>
-                          {{ modelForm.pay_price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'}) }}
+                          {{ modelForm.pay_price.toLocaleString('vi-VN', currency) }}
                         </div>
                       </div>
 
@@ -149,7 +149,7 @@
                           <template slot-scope="scope">
                             <span>{{
                             
-                                scope.row.price_product.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                scope.row.price_product.toLocaleString('vi-VN', currency)
                               
                             }}</span>
                           </template>
@@ -174,7 +174,7 @@
                         >
                           <template slot-scope="scope">
                             <span>{{
-                              scope.row.price_sale.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                              scope.row.price_sale.toLocaleString('vi-VN', currency)
                             }}</span>
                           </template>
                         </el-table-column>
@@ -192,7 +192,7 @@
                               <td>
                                 {{
                                   
-                                    modelForm.total_price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                    modelForm.total_price.toLocaleString('vi-VN', currency)
                                   
                                 }}
                               </td>
@@ -201,7 +201,7 @@
                               <th scope="row">Phí vận chuyển</th>
                               <td>
                                 {{
-                                  modelForm.ship_fee.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                  modelForm.ship_fee.toLocaleString('vi-VN', currency)
                                 }}
                               </td>
                             </tr>
@@ -209,7 +209,7 @@
                               <th scope="row">Giảm giá</th>
                               <td>
                                 {{
-                                  modelForm.discount.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                  modelForm.discount.toLocaleString('vi-VN', currency)
                                 }}
                               </td>
                             </tr>
@@ -218,7 +218,7 @@
                               <td>
                                 {{
                                   
-                                    modelForm.pay_price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                    modelForm.pay_price.toLocaleString('vi-VN', currency)
                                   
                                 }}
                               </td>

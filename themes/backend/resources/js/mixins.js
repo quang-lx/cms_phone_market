@@ -17,6 +17,8 @@ const mixin = {
             links: {},
             searchQuery: '',
             tableIsLoading: false,
+            currency: {style: 'currency',currency : 'VND'}
+
 
         }
     },

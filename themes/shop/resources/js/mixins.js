@@ -17,7 +17,8 @@ const mixin = {
       links: {},
       searchQuery: '',
       tableIsLoading: false,
-      homeUrl: '/' + window.MonCMS.adminPrefix
+      homeUrl: '/' + window.MonCMS.adminPrefix,
+      currency: {style: 'currency',currency : 'VND'}
 
     }
   },

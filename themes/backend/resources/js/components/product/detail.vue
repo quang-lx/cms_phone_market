@@ -99,12 +99,12 @@
                         <div>
                           {{ $t("product.label.price") }}
                           :
-                          {{ modelForm.price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'}) }}
+                          {{ modelForm.price.toLocaleString('vi-VN', currency) }}
                         </div>
                         <div>
                           {{ $t("product.label.amount") }}
                           :
-                          {{ modelForm.amount.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'}) }}
+                          {{ modelForm.amount.toLocaleString('vi-VN', currency) }}
                         </div>
                         <div>
                           {{ $t("product.label.status") }}
@@ -158,7 +158,7 @@
                           <el-table-column prop="" label="Giá">
                             <template slot-scope="scope">
                               {{
-                                  (scope.row.price*scope.row.sale_price/100).toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                  (scope.row.price*scope.row.sale_price/100).toLocaleString('vi-VN', currency)
                               }}
                             </template>
                           </el-table-column>
