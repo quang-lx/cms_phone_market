@@ -2,6 +2,8 @@
 
 namespace Modules\Api\Repositories\Eloquent;
 
+use App\Events\OrderStatusUpdated;
+use App\Events\UserUpdateOrderStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -197,6 +199,28 @@ class EloquentOrderRepository implements OrderRepository
                 return false;
             }
             $this->syncMedia($requestParams, $orderProduct);
+
+	        // noti cho shop
+	        event(new OrderStatusUpdated([
+		        'order_id' => $order->id,
+		        'title' => $order->getStatusNameAttribute($order->status),
+		        'old_status' => $order->status,
+		        'new_status' => $order->status,
+		        'user_id' => null,
+		        'shop_id' => $order->shop_id
+	        ]));
+
+	        $shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $order->order_type, $order->status), null);
+	        if ($shopNotiArr && is_array($shopNotiArr)) {
+		        event(new UserUpdateOrderStatus([
+			        'order_id' => $order->id,
+			        'title' => $shopNotiArr['title'],
+			        'content' => sprintf($shopNotiArr['content'], $order->id),
+			        'shop_id' => $order->id,
+			        'order_status' => $order->status,
+			        'order_type' => $order->order_type,
+		        ]));
+	        }
         }
 
         return true;
@@ -220,6 +244,28 @@ class EloquentOrderRepository implements OrderRepository
                 return false;
             }
             $this->syncMedia($requestParams, $orderProduct);
+
+            // noti cho shop
+	        event(new OrderStatusUpdated([
+		        'order_id' => $order->id,
+		        'title' => $order->getStatusNameAttribute($order->status),
+		        'old_status' => $order->status,
+		        'new_status' => $order->status,
+		        'user_id' => null,
+		        'shop_id' => $order->shop_id
+	        ]));
+
+	        $shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $order->order_type, $order->status), null);
+	        if ($shopNotiArr && is_array($shopNotiArr)) {
+		        event(new UserUpdateOrderStatus([
+			        'order_id' => $order->id,
+			        'title' => $shopNotiArr['title'],
+			        'content' => sprintf($shopNotiArr['content'], $order->id),
+			        'shop_id' => $order->id,
+			        'order_status' => $order->status,
+			        'order_type' => $order->order_type,
+		        ]));
+	        }
         }
 
         return true;
@@ -266,7 +312,27 @@ class EloquentOrderRepository implements OrderRepository
                 return false;
             }
 
+	        // noti cho shop
+	        event(new OrderStatusUpdated([
+		        'order_id' => $order->id,
+		        'title' => $order->getStatusNameAttribute($order->status),
+		        'old_status' => $order->status,
+		        'new_status' => $order->status,
+		        'user_id' => null,
+		        'shop_id' => $order->shop_id
+	        ]));
 
+	        $shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $order->order_type, $order->status), null);
+	        if ($shopNotiArr && is_array($shopNotiArr)) {
+		        event(new UserUpdateOrderStatus([
+			        'order_id' => $order->id,
+			        'title' => $shopNotiArr['title'],
+			        'content' => sprintf($shopNotiArr['content'], $order->id),
+			        'shop_id' => $order->id,
+			        'order_status' => $order->status,
+			        'order_type' => $order->order_type,
+		        ]));
+	        }
         }
 
         return true;
@@ -465,6 +531,8 @@ class EloquentOrderRepository implements OrderRepository
                 'pay_amount' => 0,
                 'pay_method_name' => $paymentMethod->name,
             ]);
+            // Order to push noti
+	        $orderModelCreated = [];
             foreach ($orders as $order) {
 
                 $orderType = Orders::TYPE_MUA_HANG;
@@ -556,12 +624,40 @@ class EloquentOrderRepository implements OrderRepository
                 if (! ($orderResult instanceof Orders)) {
                     throw new InternalErrorException('Tạo đơn hàng không thành công');
                 }
+                $orderModelCreated[] = $orderResult;
                 $payAmount += $orderResult->pay_price;
 
             }
             $paymentHistory->pay_amount = $payAmount;
             $paymentHistory->save();
+
+            // send noti
+	        foreach ($orderModelCreated as $orderCreated) {
+		        event(new OrderStatusUpdated([
+			        'order_id' => $orderCreated->id,
+			        'title' => $orderCreated->getStatusNameAttribute($orderCreated->status),
+			        'old_status' => $orderCreated->status,
+			        'new_status' => $orderCreated->status,
+			        'user_id' => null,
+			        'shop_id' => $orderCreated->shop_id
+		        ]));
+
+		        $shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $orderCreated->order_type, $orderCreated->status), null);
+		        if ($shopNotiArr && is_array($shopNotiArr)) {
+			        event(new UserUpdateOrderStatus([
+				        'order_id' => $orderCreated->id,
+				        'title' => $shopNotiArr['title'],
+				        'content' => sprintf($shopNotiArr['content'], $orderCreated->id),
+				        'shop_id' => $orderCreated->id,
+				        'order_status' => $orderCreated->status,
+				        'order_type' => $orderCreated->order_type,
+			        ]));
+		        }
+	        }
+
+
             DB::commit();
+
 
         } catch (\Exception $exception) {
             Log::info($exception->getMessage());
