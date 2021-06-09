@@ -2,6 +2,8 @@
 
 namespace Modules\Shop\Repositories\Eloquent;
 
+use App\Events\OrderStatusUpdated;
+use App\Events\ShopNotiCreated;
 use Modules\Shop\Repositories\OrdersRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
@@ -179,8 +181,26 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update =[
                 'status' => Orders::STATUS_ORDER_WARRANTING
             ];
-            $model->update($data_update);
-    
+	        $model = $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => $model->status]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+
+
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CREATED,
+		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
+		        'user_id' => '',
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
             return response()->json([
                 'errors' => false,
                 'message' => trans('ch::orders.message.update success'),
@@ -191,9 +211,9 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'errors' => true,
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
-        
-       
-        
+
+
+
     }
 
     public function updateBuySell($model, $data)
@@ -202,8 +222,26 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update =[
                 'status' => Orders::STATUS_ORDER_CONFIRMED
             ];
-            $model->update($data_update);
-    
+	        $model = $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content confirm', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => $model->status]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CREATED,
+		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
+		        'user_id' => '',
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
             return response()->json([
                 'errors' => false,
                 'message' => trans('ch::orders.message.update success'),
@@ -214,8 +252,8 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'errors' => true,
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
-        
-       
-        
+
+
+
     }
 }

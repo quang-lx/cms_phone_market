@@ -41,7 +41,7 @@ class OrdersController extends ApiController
     {
         return $this->ordersRepository->statistical($request);
     }
-    
+
 
 
     public function all(Request $request)
@@ -73,7 +73,7 @@ class OrdersController extends ApiController
 
     public function update(Orders $orders, UpdateOrdersRequest $request)
     {
-        $this->ordersRepository->update($orders, $request->all());
+	    $orders = $this->ordersRepository->update($orders, $request->all());
         $data = [
             'title' => trans('order.notifications.sua_chua.title'),
             'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $orders->id]),
@@ -84,7 +84,7 @@ class OrdersController extends ApiController
 
         event(new OrderStatusUpdated([
             'order_id' => $orders->id,
-            'title' => $orders->getStatusNameAttribute(Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM),
+            'title' => $orders->status_name,
             'old_status' => Orders::STATUS_ORDER_CREATED,
             'new_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM,
             'user_id' => '',
@@ -98,45 +98,13 @@ class OrdersController extends ApiController
 
     public function updateGuarantee(Orders $orders, Request $request)
     {
-        $data = [
-            'title' => trans('order.notifications.bao_hanh.title'),
-            'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $orders->id]),
-            'fcm_token' => $orders->user->fcm_token,
-            'type' => trans('order.notifications.bao_hanh.type', ['order_status' => $orders->status]),
-        ];
-        
-        event(new ShopNotiCreated($data));
 
-        event(new OrderStatusUpdated([
-            'order_id' => $orders->id,
-            'title' => $orders->getStatusNameAttribute(Orders::STATUS_ORDER_WARRANTING),
-            'old_status' => Orders::STATUS_ORDER_CREATED,
-            'new_status' => Orders::STATUS_ORDER_WARRANTING,
-            'user_id' => '',
-            'shop_id' => Auth::user()->shop_id
-          ]));
         return $this->ordersRepository->updateGuarantee($orders, $request->all());
     }
 
     public function updateBuySell(Orders $orders, Request $request)
     {
-        $data = [
-            'title' => trans('order.notifications.ban_hang.title'),
-            'content' => trans('order.notifications.ban_hang.content confirm', ['order_code' => $orders->id]),
-            'fcm_token' => $orders->user->fcm_token,
-            'type' => trans('order.notifications.ban_hang.type', ['order_status' => $orders->status]),
-        ];
-        
-        event(new ShopNotiCreated($data));
 
-        event(new OrderStatusUpdated([
-            'order_id' => $orders->id,
-            'title' => $orders->getStatusNameAttribute(Orders::STATUS_ORDER_WARRANTING),
-            'old_status' => Orders::STATUS_ORDER_CREATED,
-            'new_status' => Orders::STATUS_ORDER_WARRANTING,
-            'user_id' => '',
-            'shop_id' => Auth::user()->shop_id
-          ]));
         return $this->ordersRepository->updateBuySell($orders, $request->all());
     }
 
