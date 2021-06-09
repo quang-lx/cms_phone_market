@@ -29,8 +29,8 @@ class OrdersTransformer extends JsonResource
             'ship_fee' => $this->ship_fee,
             'pay_price' => $this->pay_price,
             'type_other' => $this->type_other,
-            'product_name' => $this->orderProducts->product->name,
-    
+            'product_name' => $this->orderProducts->product_title,
+
             'ship_address_id' => $this->ship_address_id,
             'ship_province_id' => $this->ship_province_id,
             'ship_province_name' => $this->ship_province_name,
