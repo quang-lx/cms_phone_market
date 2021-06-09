@@ -99,12 +99,12 @@
                         <div>
                           {{ $t("product.label.price") }}
                           :
-                          {{ Intl.NumberFormat().format(modelForm.price) }}đ
+                          {{ modelForm.price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'}) }}
                         </div>
                         <div>
                           {{ $t("product.label.amount") }}
                           :
-                          {{ Intl.NumberFormat().format(modelForm.amount) }}
+                          {{ modelForm.amount.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'}) }}
                         </div>
                         <div>
                           {{ $t("product.label.status") }}
@@ -120,13 +120,13 @@
                       <div class="col-md-3">
                         <div>
                           {{ $t("product.label.p_weight") }}:
-                          {{ modelForm.p_weight }}
+                          {{ modelForm.p_weight }} (gram)
                         </div>
                         <div>
                           {{ $t("product.label.packing_size") }}
                           :
                           {{ modelForm.s_height }} x {{ modelForm.s_width }} x
-                          {{ modelForm.s_long }}
+                          {{ modelForm.s_long }} (cm)
                         </div>
                       </div>
                       <div class="col-md-6 mt-5">
@@ -158,10 +158,8 @@
                           <el-table-column prop="" label="Giá">
                             <template slot-scope="scope">
                               {{
-                                Intl.NumberFormat().format(
-                                  scope.row.sale_price
-                                )
-                              }}đ
+                                  (scope.row.price*scope.row.sale_price/100).toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                              }}
                             </template>
                           </el-table-column>
                         </el-table>

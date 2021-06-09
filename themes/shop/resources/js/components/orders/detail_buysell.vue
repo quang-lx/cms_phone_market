@@ -90,7 +90,7 @@
                         <div></div>
                         <div><h4>Chi phí</h4></div>
                         <div>
-                          {{ Intl.NumberFormat().format(modelForm.pay_price) }}
+                          {{ modelForm.pay_price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'}) }}
                         </div>
                       </div>
 
@@ -148,9 +148,9 @@
                         <el-table-column prop="" label="Giá" sortable="custom">
                           <template slot-scope="scope">
                             <span>{{
-                              Intl.NumberFormat().format(
-                                scope.row.price_product
-                              )
+                            
+                                scope.row.price_product.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                              
                             }}</span>
                           </template>
                         </el-table-column>
@@ -174,7 +174,7 @@
                         >
                           <template slot-scope="scope">
                             <span>{{
-                              Intl.NumberFormat().format(scope.row.price_sale)
+                              scope.row.price_sale.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
                             }}</span>
                           </template>
                         </el-table-column>
@@ -191,9 +191,9 @@
                               <th scope="row" class="w-75">Tạm tính</th>
                               <td>
                                 {{
-                                  Intl.NumberFormat().format(
-                                    modelForm.total_price
-                                  )
+                                  
+                                    modelForm.total_price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                  
                                 }}
                               </td>
                             </tr>
@@ -201,7 +201,7 @@
                               <th scope="row">Phí vận chuyển</th>
                               <td>
                                 {{
-                                  Intl.NumberFormat().format(modelForm.ship_fee)
+                                  modelForm.ship_fee.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
                                 }}
                               </td>
                             </tr>
@@ -209,7 +209,7 @@
                               <th scope="row">Giảm giá</th>
                               <td>
                                 {{
-                                  Intl.NumberFormat().format(modelForm.discount)
+                                  modelForm.discount.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
                                 }}
                               </td>
                             </tr>
@@ -217,9 +217,9 @@
                               <th scope="row">Tổng tiền</th>
                               <td>
                                 {{
-                                  Intl.NumberFormat().format(
-                                    modelForm.pay_price
-                                  )
+                                  
+                                    modelForm.pay_price.toLocaleString('vi-VN', {style: 'currency',currency : 'VND'})
+                                  
                                 }}
                               </td>
                             </tr>
