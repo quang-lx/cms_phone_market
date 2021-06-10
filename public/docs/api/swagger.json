@@ -1042,6 +1042,14 @@
                     },
                     {
                         "in": "query",
+                        "name": "include_shop",
+                        "description": "tra ve shop",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
                         "name": "category_id",
                         "description": "Category id",
                         "required": false,
@@ -1144,6 +1152,14 @@
                         "description": "Search value",
                         "required": true,
                         "type": "string",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shop",
+                        "description": "tra ve shop",
+                        "required": false,
+                        "type": "integer",
                         "format": "text"
                     },
                     {

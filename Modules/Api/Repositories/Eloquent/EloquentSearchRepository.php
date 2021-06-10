@@ -18,9 +18,12 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
         $products = [];
         if ($keyword = $request->get('q')) {
             // search in shop
-            $query = Shop::query();
-            $query->whereRaw("MATCH (name, address) AGAINST (?)", $this->fullTextWildcards($keyword));
-            $shop = $query->active()->first();
+	        if($includeShop = $request->get('include_shop')) {
+		        $query = Shop::query();
+		        $query->whereRaw("MATCH (name, address) AGAINST (?)", $this->fullTextWildcards($keyword));
+		        $shop = $query->active()->first();
+	        }
+
 
             // search in product
 
@@ -57,14 +60,15 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
         if ($keyword = $request->get('q')) {
             $limit = 10;
             // search in shop
-            $query = Shop::query();
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
-            $result = $query->select(['name'])->limit(5)->get()->pluck('name')->toArray();
-            if ($result) {
+	        if($includeShop = $request->get('include_shop')) {
+		        $query = Shop::query();
+		        $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+		        $result = $query->select(['name'])->limit(5)->get()->pluck('name')->toArray();
+	        }
 
+            if ($result) {
                 $limit = $limit - count($result);
             }
-
 
             // search in product
 
