@@ -113,13 +113,13 @@
                     </el-table-column>
 
                     <el-table-column prop="actions" width="130">
-                      <template slot-scope="scope">
-                        <a
+                      <template slot-scope="scope">    
+                        <router-link 
                           :to="{
                             name: 'shop.vtimportexcel.detail',
                             params: { vtimportexcelId: scope.row.id },
                           }"
-                        ><i class="el-icon-success"></i></a>
+                        > <el-button size="mini" type="primary" icon="el-icon-success"></el-button></router-link >
                         <delete-button
                           v-if="scope.row.status == 1"
                           :scope="scope"

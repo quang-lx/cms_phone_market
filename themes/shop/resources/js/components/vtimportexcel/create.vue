@@ -141,7 +141,7 @@ export default {
           this.$router.push({ name: "shop.vtimportexcel.index" });
         })
         .catch((err) => {
-          this.modelForm.file =''
+          this.$refs.file.value=null;
           this.loading = false;
           if (err.response.status == 500) {
             this.$notify.error({

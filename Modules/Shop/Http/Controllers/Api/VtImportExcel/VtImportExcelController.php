@@ -63,8 +63,12 @@ class VtImportExcelController extends ApiController
                 ];
                 
                 $importExcel = $this->vtimportexcelRepository->create($dataImportExcel);
-                $import = new ImportRecipes($importExcel->id);
+                $import = new ImportRecipes($importExcel->id);   
+                
                 Excel::import($import, request()->file('file'));
+                if (empty($import->getDataImport())) {
+                    return abort(500, 'File không có dữ liệu');
+                }
                 VtImportProduct::insert($import->getDataImport());
                 $this->vtimportexcelRepository->update($importExcel, ['number_product' => $import->getRowCount()]);
             });
