@@ -99,12 +99,12 @@
                         <div>
                           {{ $t("product.label.price") }}
                           :
-                          {{ modelForm.price.toLocaleString('vi-VN', currency) }}
+                              <span v-currency="modelForm.price"></span>
                         </div>
                         <div>
                           {{ $t("product.label.amount") }}
                           :
-                          {{ modelForm.amount.toLocaleString('vi-VN', currency) }}
+                          <span v-number="modelForm.amount"></span>
                         </div>
                         <div>
                           {{ $t("product.label.status") }}
@@ -114,7 +114,7 @@
                         <div>
                           {{ $t("product.label.warranty_time") }}
                           :
-                          {{ modelForm.warranty_time }}
+                          {{ modelForm.warranty_time }} (tháng)
                         </div>
                       </div>
                       <div class="col-md-3">
@@ -157,9 +157,7 @@
                           </el-table-column>
                           <el-table-column prop="" label="Giá">
                             <template slot-scope="scope">
-                              {{
-                                  (scope.row.price*scope.row.sale_price/100).toLocaleString('vi-VN', currency)
-                              }}
+                              <span v-currency="scope.row.price_after_discount"></span>
                             </template>
                           </el-table-column>
                         </el-table>
@@ -263,6 +261,10 @@ export default {
     showDataModal(key) {
       this.dialogRank = true;
     },
+    onCancel() {
+          this.$router.push({ name: "admin.product.index" });
+    },
+
   },
   mounted() {
     this.fetchData();

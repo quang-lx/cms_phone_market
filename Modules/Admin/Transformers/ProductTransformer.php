@@ -71,6 +71,7 @@ class ProductTransformer extends JsonResource
 			$value['id']= $value->value_id;
 			if ($attributeValue) {
 				$value['name']= $attributeValue->name;
+				$value['price_after_discount']= $value->price - $value->price*$value->sale_price/100;
 				$newValues[] = $value;
 			}
 

@@ -126,7 +126,7 @@
 
                                         <el-table-column prop="" :label="$t('product.label.amount')" sortable="custom">
                                             <template slot-scope="scope">
-                                                {{scope.row.amount.toLocaleString('vi-VN', currency)}}
+                                                <span v-number="scope.row.amount"></span>
                                             </template>
                                         </el-table-column>
 
@@ -147,7 +147,7 @@
 
                                         <el-table-column prop="" :label="$t('product.label.price')" sortable="custom">
                                             <template slot-scope="scope">
-                                                {{ scope.row.price.toLocaleString('vi-VN', currency)}}
+                                                <span v-currency="scope.row.price"></span>
                                             </template>
                                         </el-table-column>
 
