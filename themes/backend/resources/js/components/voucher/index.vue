@@ -85,7 +85,7 @@
                                         <el-table-column prop="" :label="$t('voucher.label.discount_amount')"
                                             sortable="custom" >
                                              <template slot-scope="scope">
-                                            <span>{{scope.row.discount_amount.toLocaleString('vi-VN', currency)}}</span>
+                                                <span v-currency="scope.row.discount_amount"></span>
                                             </template>
                                         </el-table-column>
 

@@ -91,9 +91,7 @@
                       sortable="custom"
                     >
                       <template slot-scope="scope">
-                        {{
-                          Intl.NumberFormat().format(scope.row.number_product)
-                        }}
+                        <span v-number="scope.row.number_product"></span>
                       </template>
                     </el-table-column>
 

@@ -89,7 +89,8 @@
 
                         <div></div>
                         <div><h4>Chi phí</h4></div>
-                        <div>{{ modelForm.pay_price.toLocaleString('vi-VN', currency) }}</div>
+                        <div>
+                            <span v-currency="modelForm.pay_price"></span>
                       </div>
 
                       <div class="col-md-3">
@@ -109,6 +110,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   </div>
