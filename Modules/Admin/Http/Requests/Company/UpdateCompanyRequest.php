@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Requests\Company;
 
+use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCompanyRequest extends FormRequest
@@ -11,8 +12,8 @@ class UpdateCompanyRequest extends FormRequest
         $company = $this->route()->parameter('company');
         $rules = [
             'name' => 'required',
-            'phone' => 'required',
-            'email' => "required|unique:company,email,{$company->id}|email",
+            'phone' => "required|regex:/^[0-9]+$/|unique:users,phone,{$company->adminUser()->id}",
+            'email' => "required|unique:users,email,{$company->adminUser()->id}|email",
             'address' => 'required',
             'district_id' => 'required',
             'province_id' => 'required',
@@ -37,6 +38,8 @@ class UpdateCompanyRequest extends FormRequest
     {
         return [
             'phone.required' => 'Số điện thoại là bắt buộc',
+            'phone.regex' => 'Số điện thoại chỉ dược nhập là số',
+            'phone.unique' => 'Số điện thoại đã tồn tại trên hệ thống',
             'name.required' => 'Tên cửa hàng là bắt buộc',
             'email.unique' => 'Email đã được sử dụng',
             'email.required' => 'Email là bắt buộc',

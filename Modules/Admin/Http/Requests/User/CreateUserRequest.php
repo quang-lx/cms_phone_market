@@ -32,10 +32,10 @@ class CreateUserRequest extends FormRequest
         ];
 
         if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required','unique:users', new PhoneNumber()];
+            $rules['username'] = ['required','unique:users', 'regex:/^[0-9]+$/'];
         }else {
             $rules['username'] = ['required',"unique:users,username",'regex:/^[\w-]*$/'];
-            $rules['phone'] = ['required',"unique:users,phone", new PhoneNumber()];
+            $rules['phone'] = ['required',"unique:users,phone", 'regex:/^[0-9]+$/'];
 
         }
         return $rules;
@@ -70,6 +70,8 @@ class CreateUserRequest extends FormRequest
 
             'phone.unique' => 'Số điện thoại đã được sử dụng',
             'phone.required' => 'Số điện thoại là bắt buộc',
+            'phone.regex' => 'Số điện thoại chỉ dược nhập là số',
+
 
             'password.required' => 'Mật khẩu là bắt buộc',
             'password_confirmation.required' => 'Xác nhận mật khẩu không được để trống',

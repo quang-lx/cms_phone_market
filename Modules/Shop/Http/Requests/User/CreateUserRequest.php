@@ -18,7 +18,7 @@ class CreateUserRequest extends FormRequest
             'password' => 'required',
             'password_confirmation' => 'same:password',
             'username' => ['required',"unique:users,username",'regex:/^[\w-]*$/'],
-            'phone' => 'required|unique:users,phone'
+            'phone' => "required|unique:users,phone|regex:/^[0-9]+$/",
         ];
         return $rules;
     }
@@ -54,6 +54,7 @@ class CreateUserRequest extends FormRequest
             'password.same' => 'Xác nhận mật khẩu không đúng',
             'phone.unique' => 'Số điện thoại đã được sử dụng',
             'phone.required' => 'Số điện thoại là bắt buộc',
+            'phone.regex' => 'Số điện thoại chỉ dược nhập là số',
         ];
     }
 }
