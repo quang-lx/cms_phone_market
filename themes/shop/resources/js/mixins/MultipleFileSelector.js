@@ -1,12 +1,14 @@
 export default {
     methods: {
         selectMultipleFile(event, model) {
+            console.log(event)
             if (!this[model].medias_multi) {
                 this[model].medias_multi = {};
             }
             if (!this[model].medias_multi[event.zone]) {
                 this[model].medias_multi[event.zone] = { files: [] };
             }
+            console.log(this[model])
             this[model].medias_multi[event.zone].files.push(event.id);
         },
         unselectFile(event, model) {

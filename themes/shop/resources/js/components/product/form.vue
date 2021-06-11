@@ -82,6 +82,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <multiple-media zone="product_collection"
+                                                            v-if ="showMedia"
                                                             label="Ảnh/Video"
                                                             @multipleFileSelected="selectMultipleFile($event, 'modelForm')"
                                                             @fileUnselected="unselectFile($event, 'modelForm')"
@@ -211,7 +212,7 @@
                                                                 </div>
                                                                 <div class="col-md-3 col-sm-6">
                                                                   <cleave v-model="itemValue.amount" :options="options" class="form-control" name="amount"></cleave>
-                                                                   
+
                                                                 </div>
                                                                 <div
                                                                     class="col-md-1 col-sm-6 text-right d-flex justify-content-end align-items-center">
@@ -377,7 +378,7 @@
                                                           :class="{'el-form-item is-error': form.errors.has('p_weight') }">
 
                                                 <cleave v-model="modelForm.p_weight" :options="options" class="form-control" name="p_weight"></cleave>
-                                                                 
+
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('p_weight')"
                                                      v-text="form.errors.first('p_weight')"></div>
@@ -602,6 +603,7 @@
           shop_id: '',
 
         },
+        showMedia: false,
         locales: window.MonCMS.locales,
         brandArr: [],
         category_tree_data: [],
@@ -684,7 +686,7 @@
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
-
+          this.showMedia = true
         });
       },
 
@@ -793,7 +795,7 @@
             .get(route("api.shop.index", _.merge(properties, {})))
             .then((response) => {
                 this.listShop = response.data.data;
-        
+
             });
       },
     },
@@ -803,6 +805,8 @@
       this.fetchBrand();
       if (this.$route.params.productId !== undefined) {
         this.fetchData();
+      } else {
+        this.showMedia = true
       }
       if (!this.currentShop){
         this.fetchShop();

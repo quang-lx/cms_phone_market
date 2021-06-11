@@ -127,9 +127,11 @@
         }))
           .then((response) => {
             this.selectedMedia = response.data.data;
-            _.forEach(this.selectedMedia, (file) => {
-              this.$emit('multipleFileSelected', {id: file.id, zone: this.zone});
-            });
+            const $this = this
+            response.data.data.forEach(file => {
+              this.$emit('multipleFileSelected', _.merge(file, {zone: $this.zone}));
+            })
+
           });
       },
       getFieldLabel() {
