@@ -26,9 +26,9 @@ class UpdateUserRequest extends FormRequest
         ];
 
         if ($userType == User::TYPE_USER) {
-            $rules['username'] = ['required',"unique:users,username,{$user->id}", new PhoneNumber()];
+            $rules['username'] = ['required',"unique:users,username,{$user->id}", 'regex:/^[0-9]+$/'];
         } else {
-            $rules['phone'] = ['required',"unique:users,phone,{$user->id}", new PhoneNumber()];
+            $rules['phone'] = ['required',"unique:users,phone,{$user->id}", 'regex:/^[0-9]+$/'];
         }
         return $rules;
     }
@@ -69,6 +69,8 @@ class UpdateUserRequest extends FormRequest
             'email.email' => 'Email sai định dạng',
             'phone.unique' => 'Số điện thoại đã được sử dụng',
             'phone.required' => 'Số điện thoại là bắt buộc',
+            'phone.regex' => 'Số điện thoại chỉ dược nhập là số',
+
         ];
     }
 }

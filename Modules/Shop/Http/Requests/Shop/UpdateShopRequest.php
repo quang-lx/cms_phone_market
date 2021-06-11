@@ -10,7 +10,8 @@ class UpdateShopRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => "required|unique:users,phone|regex:/^[0-9]+$/",
+            
         ];
     }
 
@@ -28,7 +29,9 @@ class UpdateShopRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được để trống',
-            'phone.required' => 'Số điện thoại không được để trống',
+            'phone.unique' => 'Số điện thoại đã được sử dụng',
+            'phone.required' => 'Số điện thoại là bắt buộc',
+            'phone.regex' => 'Số điện thoại chỉ dược nhập là số',
         ];
     }
 

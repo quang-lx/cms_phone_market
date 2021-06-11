@@ -21,7 +21,7 @@ class UpdateUserRequest extends FormRequest
             'name'=>"required",
             'email' => "required|unique:users,email,{$user->id}|email",
             'password_confirmation' => 'same:password',
-            'phone' => "required|unique:users,phone,{$user->id}"
+            'phone' => "required|unique:users,phone,{$user->id}|regex:/^[0-9]+$/",
 
         ];
         return $rules;
@@ -55,6 +55,7 @@ class UpdateUserRequest extends FormRequest
             'email.email' => 'Email sai định dạng',
             'phone.unique' => 'Số điện thoại đã được sử dụng',
             'phone.required' => 'Số điện thoại là bắt buộc',
+            'phone.regex' => 'Số điện thoại chỉ dược nhập là số',
         ];
     }
 }
