@@ -55,7 +55,7 @@ class VtImportExcelController extends ApiController
                 $path = Storage::putFileAs('public/file-excel',$file,$file->getClientOriginalName());
                 $user = Auth::user();
                 $dataImportExcel = [
-                    'filepath' => $file->getClientOriginalName().' '.Carbon::now()->format('h:i:s d-m-Y'),
+                    'filepath' => Carbon::now()->format('Ymdhis').' '.$file->getClientOriginalName(),
                     'number_product' => 0,
                     'status' => 1,
                     'company_id' => $user->company_id,

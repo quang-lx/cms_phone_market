@@ -7,6 +7,7 @@ use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
 use Modules\Mon\Entities\VtImportExcel;
 use Modules\Mon\Entities\VtProduct;
+use Modules\Mon\Entities\VtShopProduct;
 use Illuminate\Support\Facades\Auth;
 
 class EloquentVtProductRepository extends BaseRepository implements VtProductRepository
@@ -48,12 +49,16 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
 
     public function import($import_excel_id)
     {
-        VtImportExcel::where('id', $import_excel_id)->update(['status' => 2]);;
-        $data_import = VtImportExcel::find($import_excel_id)->vtImportProduct()->select('vt_product_id','amount')->get()->toArray();
-        foreach ($data_import as $key => $value) {
-            $data = VtProduct::find($value['vt_product_id']);
+        VtImportExcel::where('id', $import_excel_id)->update(['status' => 2]);
+        $data_import = VtImportExcel::with('vtImportProduct')->find($import_excel_id)->toArray();
+        foreach ($data_import['vt_import_product'] as $key => $value) {
+            $data = VtShopProduct::firstOrNew(
+                [
+                    'vt_product_id'=>$value['vt_product_id'],
+                    'shop_id'=>$data_import['shop_id'],
+                    'company_id'=>$data_import['company_id'],          
+                ]);
             $data->amount = ($data->amount + $value['amount']);
-            $data->shop_id = Auth::user()->shop_id;
             $data->save();
         }
        
