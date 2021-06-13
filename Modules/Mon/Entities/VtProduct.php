@@ -14,7 +14,6 @@ class VtProduct extends Model
         'id',
         'name',
         'price',
-        'amount',
         'vt_category_id',
         'shop_id',
         'company_id'
