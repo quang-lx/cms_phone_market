@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row ">
-                            <div class="col-sm-3 d-flex align-items-center">
+                            <div :class="!this.currentShop ? 'col-sm-4' : 'col-sm-5'">
                                 <el-breadcrumb separator="/">
                                     <el-breadcrumb-item>
                                         <a href="/shop-admin">{{ $t('mon.breadcrumb.home') }}</a>
@@ -18,12 +18,12 @@
                                 </el-breadcrumb>
 
                             </div>
-                            <div class="col-sm-9">
+                            <div :class="!this.currentShop ? 'col-sm-8' : 'col-sm-7'">
                                 <div class="row pull-right col-sm-12">
 
-                                    <div class="col-3 offset-sm-2">
+                                    <div class="col-3" v-if="!this.currentShop">
 
-                                        <el-select v-model="filter.shop_id" placeholder="Lọc theo chi nhánh"
+                                        <el-select v-model="filter.to_shop_id" placeholder="Lọc theo chi nhánh"
                                                    @change="onSearchChange()" clearable>
                                             <el-option
                                                     v-for="item in shopArr"
@@ -33,15 +33,27 @@
                                             </el-option>
                                         </el-select>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-3">
+
+                                        <el-select v-model="filter.type" placeholder="Lọc theo loại đơn"
+                                                   @change="onSearchChange()" clearable>
+                                            <el-option
+                                                    v-for="item in listType"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+                                    <div :class="!this.currentShop ? 'col-3' : 'col-6'">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tên đơn hàng"
                                                   v-model="searchQuery">
                                         </el-input>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-3">
                                         <router-link :to="{name: 'shop.transfer.create'}">
-                                            <el-button type="primary" class="btn btn-flat">
+                                            <el-button type="primary" class="btn btn-flat" style="width:100%">
                                                 {{ $t('transfer.label.create_new') }}
                                             </el-button>
                                         </router-link>
@@ -78,12 +90,16 @@
                                             @sort-change="handleSortChange">
                                         <el-table-column prop="id" :label="$t('transfer.label.id')" width="75"
                                                          sortable="custom">
-
                                         </el-table-column>
                                         <el-table-column prop="title" :label="$t('transfer.label.title')"
                                                          sortable="custom"/>
-                                        <el-table-column prop="received_at" :label="$t('transfer.label.received_at')"
-                                                         sortable="custom"/>
+                                        <el-table-column prop="type" :label="$t('transfer.label.type')"
+                                                         sortable="custom">
+                                            <template slot-scope="scope">
+                                                <span :style="{'color': scope.row.type_color}">{{scope.row.type_name}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        
                                         <el-table-column prop="shop_name" :label="$t('transfer.label.shop_name')"
                                                          sortable="address">
                                             <template slot-scope="scope">
@@ -98,8 +114,17 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="updated_at" :label="$t('transfer.label.updated_at')" sortable="custom">
+                                        <el-table-column prop="received_at" :label="$t('transfer.label.received_at')"
+                                                         sortable="custom" width="200">
+                                            <template slot-scope="scope">
+                                                <span>{{ scope.row.received_at_format }}</span>
+                                            </template>
+                                        </el-table-column>
 
+                                        <el-table-column prop="updated_at" :label="$t('transfer.label.updated_at')" sortable="custom">
+                                            <template slot-scope="scope">
+                                                <span>{{ scope.row.updated_at_format }}</span>
+                                            </template>
                                         </el-table-column>
 
 
@@ -148,10 +173,22 @@
                 columnsSearch: [],
                 listFilterColumn: [],
                 filter: {
-                    shop_id: '',
+                    to_shop_id: '',
                     searchQuery: '',
+                    type: '',
                 },
                 shopArr: [],
+                listType: [
+                    {
+                        value: 1,
+                        label: 'Xuất kho'
+                    },
+                    {
+                        value: 2,
+                        label: 'Chuyển kho'
+                    }
+                ],
+                currentShop : window.MonCMS.current_user.shop_id,
 
             };
         },
@@ -164,7 +201,8 @@
                     order_by: this.order_meta.order_by,
                     order: this.order_meta.order,
                     search: this.searchQuery,
-                    shop_id: this.filter.shop_id
+                    to_shop_id: this.filter.to_shop_id,
+                    type: this.filter.type,
                 };
 
                 axios.get(route('apishop.transfer.index', _.merge(properties, customProperties)))

@@ -28,6 +28,11 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
             });
         }
 
+        if ($request->get('catId') !== null) {
+            $catId = $request->get('catId');
+            $query->where('vt_category_id', $catId);
+        }
+
         $user = Auth::user();
 		$query->where('company_id', $user->company_id);
 		if($user->shop_id) {

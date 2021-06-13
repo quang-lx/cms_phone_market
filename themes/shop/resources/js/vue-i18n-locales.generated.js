@@ -532,13 +532,14 @@ export default {
             "vat tu": "Vật tư",
             "vtcategory": "Danh mục",
             "vtproduct": "Vật tư",
-            "transfer management": "Quản lý chuyển kho",
+            "transfer management": "Xuất/chuyển kho",
             "storage product": "Nhập kho",
             "vtimportexcel": "Nhập linh kiện",
             "ship type": "Hình thức vận chuyển",
             "order": "Đơn hàng",
             "order sua chua": "Đơn hàng sửa chữa",
-            "order bao hanh": "Đơn hàng bảo hành"
+            "order bao hanh": "Đơn hàng bảo hành",
+            "order mua hang": "Đơn hàng mua hàng"
         },
         "storageproduct": {
             "label": {
@@ -566,7 +567,7 @@ export default {
         },
         "transfer": {
             "label": {
-                "manager": "Quản lý chuyển kho",
+                "manager": "Xuất/chuyển kho",
                 "created_at": "Ngày tạo",
                 "updated_at": "Ngày cập nhật",
                 "title": "Tên đơn",
@@ -575,10 +576,11 @@ export default {
                 "create_transfer": "Thêm mới",
                 "status": "Trạng thái",
                 "id": "ID",
-                "received_at": "Thời gian chuyển",
-                "shop_id": "Kho nhận",
+                "received_at": "Thời gian xuất/chuyển",
+                "to_shop_id": "Kho nhận",
                 "shop_name": "Kho nhận",
-                "products": "Danh sách vật tư"
+                "products": "Danh sách vật tư",
+                "type": "Loại đơn"
             },
             "message": {
                 "create success": "Thêm mới bản ghi thành công.",

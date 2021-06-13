@@ -69,16 +69,36 @@
 
                         <div class="col-md-12">
                           <el-form-item
-                            :label="$t('transfer.label.shop_id')"
+                            :label="$t('transfer.label.type')"
                             :class="{
                               'el-form-item is-error': form.errors.has(
-                                'shop_id'
+                                'type'
+                              ),
+                            }"
+                          >
+                            <el-radio-group v-model="modelForm.type">
+                              <el-radio
+                                v-for="item in listType"
+                                :key="item.value"
+                                :value="item.value"
+                                :label="item.value"
+                                >{{ item.label }}</el-radio>
+                            </el-radio-group>
+                          </el-form-item>
+                        </div>
+
+                        <div class="col-md-12" :class="modelForm.type == 2 ? 'show' : 'hide'">
+                          <el-form-item
+                            :label="$t('transfer.label.to_shop_id')"
+                            :class="{
+                              'el-form-item is-error': form.errors.has(
+                                'to_shop_id'
                               ),
                             }"
                           >
                             <el-select
-                              v-model="modelForm.shop_id"
-                              :placeholder="$t('transfer.label.shop_id')"
+                              v-model="modelForm.to_shop_id"
+                              :placeholder="$t('transfer.label.to_shop_id')"
                               filterable
                               style="width: 100% !important"
                             >
@@ -92,13 +112,15 @@
                             </el-select>
                             <div
                               class="el-form-item__error"
-                              v-if="form.errors.has('shop_id')"
-                              v-text="form.errors.first('shop_id')"
+                              v-if="form.errors.has('to_shop_id')"
+                              v-text="form.errors.first('to_shop_id')"
                             ></div>
                           </el-form-item>
                         </div>
 
-                        <div class="col-md-12">
+            
+
+                        <!-- <div class="col-md-12">
                           <el-form-item
                             :label="$t('transfer.label.products')"
                             :class="{
@@ -123,7 +145,7 @@
                             ></div>
                           
                           </el-form-item>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                     <div class="col-md-6" style="padding-top: 10px">
@@ -140,6 +162,7 @@
                             <el-date-picker
                               v-model="modelForm.received_at"
                               value-format="yyyy-MM-dd HH:mm:ss"
+                              format="HH:mm dd/MM/yyyy"
                               type="datetime"
                               placeholder="Thời gian chuyển"
                             >
@@ -161,19 +184,53 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Thông tin chi tiết vật tư</h3>
+                <div class="card-tools">
+                    <el-button size="mini" type="warning"  icon="el-icon-plus" @click="addMoreInfo">Thêm</el-button>
+                </div>
               </div>
               <div class="card-body">
                 <div
                   class="row mt-2"
-                  v-for="(pinfo, key) in modelForm.products"
+                  v-for="(pinfo, key) in modelForm.vtProducts"
                   :key="key"
                 >
                   <div class="col-md-3">
-                    <el-input v-model="pinfo.name"></el-input>
+                      <el-select
+                          v-model="pinfo.catId"
+                          filterable
+                          @change="changeVtCategory(key)"
+                          placeholder="Chọn danh mục">
+                          <el-option
+                                label="Chọn danh mục"
+                                value=""
+                              >
+                          </el-option>
+                          <el-option
+                            v-for="item in list_vtcategory"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id"
+                          >
+                          </el-option>
+                      </el-select>
+                  </div>
+                  <div class="col-md-3">
+                    <el-select
+                        v-model="pinfo.id"
+                        filterable
+                        placeholder="Chọn vật tư">
+                        <el-option
+                          v-for="item in pinfo.listVtProduct"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item.id"
+                        >
+                        </el-option>
+                    </el-select>
                   </div>
 
                   <div class="col-md-2">
-                      <cleave v-model="pinfo.count" :options="options" class="form-control" name="count"></cleave>
+                      <cleave v-model="pinfo.count" :options="options" class="form-control" name="count" placeholder="Số lượng"></cleave>
                   </div>
                   <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
                     <i
@@ -182,7 +239,15 @@
                       @click="removeInfo(key)"
                     ></i>
                   </div>
+
+                  
                 </div>
+                <div
+                    class="el-form-item__error row"
+                    v-if="form.errors.has('vtproduct')"
+                    v-text="form.errors.first('vtproduct')"
+                    style="position: inherit !important; margin-left:0px !important"
+                  ></div>
 
               </div>
 
@@ -234,17 +299,30 @@ export default {
       },
       form: new Form(),
       loading: false,
+      list_vtcategory: [],
       modelForm: {
         title: "",
         status: 1,
         received_at: new Date("Y-m-d H:i:s"),
-        shop_id: "",
+        to_shop_id: "",
         product_key: "",
-        products: [],
+        vtProducts: [],
+        type: 1,
       },
       shopArr: [],
       locales: window.MonCMS.locales,
       productSearchResult: [],
+      listType: [
+        {
+          value: 1,
+          label: "Xuất kho",
+        },
+        {
+          value: 2,
+          label: "Chuyển kho",
+        },
+      ],
+      currentShop : window.MonCMS.current_user.shop_id,
     };
   },
   methods: {
@@ -321,36 +399,59 @@ export default {
     },
 
     onSearchProduct(queryString, cb) {
-      this.fetchProduct(queryString);
+      this.fetchVtProduct(queryString);
       cb(this.productSearchResult);
     },
-
-    fetchProduct(queryString) {
-      const properties = {
-        page: 0,
-        per_page: 1000,
-        search: queryString,
-        source: "voucher",
-      };
-
-      axios
-        .get(route("apishop.product.index", _.merge(properties, {})))
-        .then((response) => {
-          this.productSearchResult = response.data.data;
-        });
-    },
-
     handleSelect(item) {
       //add thêm vào biến products lưu danh sách các product đc giảm giá
       this.modelForm.products.push(item);
     },
     removeInfo(key) {
-      this.modelForm.products.splice(key,1);
+      this.modelForm.vtProducts.splice(key,1);
+    },
+    fetchVtCategory() {
+      let routeUri = "";
+      this.loading = true;
+      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000});
+      axios.get(routeUri).then((response) => {
+        this.loading = false;
+        this.list_vtcategory = response.data.data;
+      });
+    },
+    addMoreInfo() {
+      this.modelForm.vtProducts.push({
+        catId: '',
+        id: '',
+        count: '',
+        listVtProduct: [],
+      })
+    },
+    changeVtCategory(key){
+      //load danh sach vật tư của category mới chọn
+      let vtCatId = this.modelForm.vtProducts[key].catId;
+      this.fetchVtProduct(vtCatId, key);
+    },
+    fetchVtProduct(vtCatId, key) {
+      this.loading = true;
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        catId: vtCatId
+      };
+
+      axios
+        .get(route("apishop.vtproduct.index", _.merge(properties, {})))
+        .then((response) => {
+          this.loading = false;
+          this.modelForm.vtProducts[key].listVtProduct = response.data.data;
+          return response.data.data;
+        });
     },
   },
 
   mounted() {
     this.fetchShop();
+    this.fetchVtCategory();
     if (this.$route.params.transferId !== undefined) {
       this.fetchData();
     }
@@ -366,5 +467,11 @@ export default {
 .el-date-editor.el-input,
 .el-date-editor.el-input__inner {
   width: 100%;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
 }
 </style>
