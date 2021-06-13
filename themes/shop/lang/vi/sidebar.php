@@ -43,7 +43,7 @@ return [
 	'vat tu' => 'Vật tư',
 	'vtcategory' => 'Danh mục',
 	'vtproduct' => 'Vật tư',
-    'transfer management' => 'Quản lý chuyển kho',
+    'transfer management' => 'Xuất/chuyển kho',
     'storage product' => 'Nhập kho',
 	'vtimportexcel' => 'Nhập linh kiện',
 	'ship type' => 'Hình thức vận chuyển',

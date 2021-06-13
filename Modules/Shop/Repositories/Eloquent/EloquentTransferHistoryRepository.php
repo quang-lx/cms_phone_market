@@ -14,13 +14,19 @@ class EloquentTransferHistoryRepository extends BaseRepository implements Transf
     public function create($data)
 	{
         $data['company_id'] = Auth::user()->company_id;
+        $data['shop_id'] = Auth::user()->shop_id;
 		$model = $this->model->create($data);
-        if (isset($data['products']) && is_array($data['products'])) {
-            foreach ($data['products'] as $product) {
-                $productArr[$product['id']] = ['amount' => $product['count']];  
+        if (isset($data['vtProducts']) && is_array($data['vtProducts'])) {
+            foreach ($data['vtProducts'] as $product) {
+                if (!empty($productArr[$product['id']])){
+                    $productArr[$product['id']]['amount'] += $product['count'];
+                } else {
+                    $productArr[$product['id']]['amount'] = $product['count'];  
+                }
+                
             }
             
-            $model->products()->sync($productArr, false);
+            $model->vtProducts()->sync($productArr, false);
         }
 
 		return $model;
@@ -30,14 +36,19 @@ class EloquentTransferHistoryRepository extends BaseRepository implements Transf
 	{
 		$model->update($data);
         $data['company_id'] = Auth::user()->company_id;
+        $data['shop_id'] = Auth::user()->shop_id;
         event(new TransferWasUpdated($model, $data));
-        if (isset($data['products']) && is_array($data['products'])) {
-            foreach ($data['products'] as $product) {
-                $productArr[$product['id']] = ['amount' => $product['count']];  
+        if (isset($data['vtProducts']) && is_array($data['vtProducts'])) {
+            foreach ($data['vtProducts'] as $product) {
+                if (!empty($productArr[$product['id']])){
+                    $productArr[$product['id']]['amount'] += $product['count'];
+                } else {
+                    $productArr[$product['id']]['amount'] = $product['count'];  
+                }
             }
-            $model->products()->detach();
+            $model->vtProducts()->detach();
             
-            $model->products()->sync($productArr, false);
+            $model->vtProducts()->sync($productArr, false);
         }
 
 		return $model;
@@ -55,11 +66,26 @@ class EloquentTransferHistoryRepository extends BaseRepository implements Transf
         }
 
 		$companyId = Auth::user()->company_id;
+        $shopId = Auth::user()->shop_id;
 		$query->where('company_id', $companyId);
 
-        if ($request->get('shop_id') !== null) {
-            $shopId = $request->get('shop_id');
+        if ($shopId) {
             $query->where('shop_id', $shopId);
+        } else {
+            if ($request->get('shop_id') !== null) {
+                $shopId = $request->get('shop_id');
+                $query->where('shop_id', $shopId);
+            }
+        }
+        
+        if ($request->get('to_shop_id') !== null) {
+            $toShopId = $request->get('to_shop_id');
+            $query->where('to_shop_id', $toShopId);
+        }
+
+        if ($request->get('type') !== null) {
+            $type = $request->get('type');
+            $query->where('type', $type);
         }
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
