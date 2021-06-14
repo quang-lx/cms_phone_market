@@ -87,6 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     const STATUS_ACTIVE = 1;
     const STATUS_LOCK = 2;
+    const STATUS_INACTIVE = 0;
 
     const ROLE_SHOP_ADMIN = 'shop_admin';
 
