@@ -134,7 +134,7 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 
 					if (!$pinformation) {
 						$pinformation = PInformation::create([
-							'title' => $item['id'],
+							'title' => $item['value'],
 							'company_id' => $user->company_id,
 							'shop_id' => $user->shop_id,
 						]);
@@ -263,7 +263,7 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
         }
 
         usort($result, function (array $a, array $b) {
-            return $a['totalRevenue'] < $b['totalRevenue'];   
+            return $a['totalRevenue'] < $b['totalRevenue'];
         });
         return $result;
     }
@@ -318,12 +318,12 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 						'totalRevenue' => $revenueCategory,
 					);
 				}
-                
+
             }
-            
+
         }
         usort($categoryWithRevenue, function (array $a, array $b) {
-            return $a['totalRevenue'] < $b['totalRevenue'];   
+            return $a['totalRevenue'] < $b['totalRevenue'];
         });
 
         //lấy thêm tên chuyên mục, map kết quả trả về view
@@ -332,7 +332,7 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
             $item = array();
             $item['key'] = $key;
             $index = $key < 10 ? '0'.$key : $key;
-            $item['value'] = sprintf('%s. %s - %sđ', $index, $detailCategory->title, 
+            $item['value'] = sprintf('%s. %s - %sđ', $index, $detailCategory->title,
                     number_format($category['totalRevenue'],0,",","."));
             $result['topCategory'][] = $item;
         }
@@ -348,7 +348,7 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
                     $revenue += $product['totalRevenue'];
                 }
             }
-            
+
         }
         return $revenue;
     }
