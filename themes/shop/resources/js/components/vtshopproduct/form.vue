@@ -8,8 +8,8 @@
               <el-breadcrumb-item>
                 <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'shop.vtproduct.index' }"
-                >{{ $t("vtproduct.label.vtproduct") }}
+              <el-breadcrumb-item :to="{ name: 'shop.vtshopproduct.index' }"
+                >{{ $t("vtshopproduct.label.vtshopproduct") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
             </el-breadcrumb>
@@ -46,79 +46,36 @@
                       <div class="row">
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('vtproduct.label.name')"
+                            :label="$t('vtshopproduct.label.vt_product_id')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('name'),
+                              'el-form-item is-error': form.errors.has('vt_product_id'),
                             }"
                           >
-                            <el-input v-model="modelForm.name"></el-input>
+                            <el-input v-model="modelForm.vt_product_name"></el-input>
                             <div
                               class="el-form-item__error"
-                              v-if="form.errors.has('name')"
-                              v-text="form.errors.first('name')"
+                              v-if="form.errors.has('vt_product_id')"
+                              v-text="form.errors.first('vt_product_id')"
                             ></div>
                           </el-form-item>
                         </div>
+
                         <div class="col-md-10">
                           <el-form-item
-                            :label="$t('vtproduct.label.price')"
+                            :label="$t('vtshopproduct.label.amount')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('price'),
+                              'el-form-item is-error': form.errors.has('amount'),
                             }"
                           >
-                            <el-input v-model="modelForm.price"></el-input>
+                            <el-input v-model="modelForm.amount"></el-input>
                             <div
                               class="el-form-item__error"
-                              v-if="form.errors.has('price')"
-                              v-text="form.errors.first('price')"
+                              v-if="form.errors.has('amount')"
+                              v-text="form.errors.first('amount')"
                             ></div>
                           </el-form-item>
                         </div>
-                        <div class="col-md-10">
-                          <el-form-item
-                            :label="$t('vtproduct.label.vt_category_id')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has(
-                                'vt_category_id'
-                              ),
-                            }"
-                          >
-                            <el-select
-                              v-model="modelForm.vt_category_id"
-                              placeholder="Chọn danh mục"
-                            >
-                              <el-option
-                                label="Chọn"
-                                value=""
-                              >
-                              
-                              </el-option>
-                              <template v-for="item in list_vtcategory">
-                                <el-option
-                                  v-if="item.parent_id"
-                                  :key="item.id"                              
-                                  :label="item.name"
-                                  :value="item.id"
-                                  class="pl-5"
-                                >
-                                </el-option>
-                                <el-option
-                                  v-else
-                                  :key="item.id"                              
-                                  :label="item.name"
-                                  :value="item.id"
-                                >
-                                </el-option>
-                              </template>
-                              
-                            </el-select>
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('vt_category_id')"
-                              v-text="form.errors.first('vt_category_id')"
-                            ></div>
-                          </el-form-item>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -150,22 +107,22 @@
 <script>
 import axios from "axios";
 import Form from "form-backend-validation";
+import SingleFileSelector from "../../mixins/SingleFileSelector.js";
 
 export default {
   props: {
     locales: { default: null },
     pageTitle: { default: null, String },
   },
+  mixins: [SingleFileSelector],
   data() {
     return {
       form: new Form(),
       loading: false,
-      list_vtcategory: [],
+      list_vtshopproduct: [],
       modelForm: {
-        name: "",
-        price: "",
+        vt_product_name: "",
         amount: "",
-        vt_cateogry_id: "",
       },
     };
   },
@@ -182,14 +139,23 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "shop.vtproduct.index" });
+          this.$router.push({ name: "shop.vtshopproduct.index" });
         })
         .catch((error) => {
           this.loading = false;
-          this.$notify.error({
+          // console.log(error.response.status)
+          if (error.response.status == 422) {
+            this.$notify.error({
             title: this.$t("mon.error.Title"),
             message: this.getSubmitError(this.form.errors),
           });
+          }else{
+            this.$notify.error({
+            title: this.$t("mon.error.Title"),
+            message: error.response.data.message,
+          });
+          }
+          
         });
     },
 
@@ -200,17 +166,17 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "shop.vtproduct.index" });
+          this.$router.push({ name: "shop.vtshopproduct.index" });
         })
         .catch(() => {});
     },
 
     fetchData() {
       let routeUri = "";
-      if (this.$route.params.vtproductId !== undefined) {
+      if (this.$route.params.vtshopproductId !== undefined) {
         this.loading = true;
-        routeUri = route("apishop.vtproduct.find", {
-          vtproduct: this.$route.params.vtproductId,
+        routeUri = route("apishop.vtshopproduct.find", {
+          vtshopproduct: this.$route.params.vtshopproductId,
         });
         axios.get(routeUri).then((response) => {
           this.loading = false;
@@ -222,28 +188,17 @@ export default {
       }
     },
 
-    fetchVtCategory() {
-      let routeUri = "";
-      this.loading = true;
-      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000});
-      axios.get(routeUri).then((response) => {
-        this.loading = false;
-        this.list_vtcategory = response.data.data;
-      });
-    },
-
     getRoute() {
-      if (this.$route.params.vtproductId !== undefined) {
-        return route("apishop.vtproduct.update", {
-          vtproduct: this.$route.params.vtproductId,
+      if (this.$route.params.vtshopproductId !== undefined) {
+        return route("apishop.vtshopproduct.update", {
+          vtshopproduct: this.$route.params.vtshopproductId,
         });
       }
-      return route("apishop.vtproduct.store");
+      return route("apishop.vtshopproduct.store");
     },
   },
   mounted() {
     this.fetchData();
-    this.fetchVtCategory();
   },
   computed: {},
 };

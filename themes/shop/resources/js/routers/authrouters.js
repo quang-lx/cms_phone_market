@@ -54,6 +54,8 @@ import OrderBuySellList from './../components/orders/index_buysell';
 import OrderBuySellDetail from './../components/orders/detail_buysell';
 import OrderGuaranteeDetail  from './../components/orders/detail_guarantee';
 
+import VtShopProductForm from './../components/vtshopproduct/form';
+import VtShopProductList from './../components/vtshopproduct/index';
 
 import ShopCategoryList from './../components/shopcategory/index';
 
@@ -419,6 +421,29 @@ export default [
         path: '/shop-admin/shopcategory',
         name: 'shop.shopcategory.index',
         component: ShopCategoryList,
+    },
+
+    // vt-shop-product
+    {
+        path: '/shop-admin/vtshopproduct',
+        name: 'shop.vtshopproduct.index',
+        component: VtShopProductList,
+    },
+    {
+        path: '/shop-admin/vtshopproduct/create',
+        name: 'shop.vtshopproduct.create',
+        component: VtShopProductForm,
+        props: {
+            pageTitle: 'vtshopproduct.label.create_title',
+        },
+    },
+	{
+        path: '/shop-admin/vtshopproduct/:vtshopproductId/edit',
+        name: 'shop.vtshopproduct.edit',
+        component: VtShopProductForm,
+        props: {
+            pageTitle: 'vtshopproduct.label.update_title',
+        },
     },
 
 ];

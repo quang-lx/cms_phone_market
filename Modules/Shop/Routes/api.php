@@ -499,7 +499,32 @@ Route::middleware('auth:api')->prefix('/dashboard')->group(function (){
 });
 
 
+Route::middleware('auth:api')->prefix('/vtshopproducts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.vtshopproduct.index',
+        'uses' => 'VtShopProduct\VtShopProductController@index',
+    ]);
+    Route::post('/{vtshopproduct}/edit', [
+            'as' => 'apishop.vtshopproduct.update',
+            'uses' => 'VtShopProduct\VtShopProductController@update',
+        ]);
+   Route::get('/{vtshopproduct}', [
+              'as' => 'apishop.vtshopproduct.find',
+              'uses' => 'VtShopProduct\VtShopProductController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'apishop.vtshopproduct.store',
+        'uses' => 'VtShopProduct\VtShopProductController@store',
+    ]);
+
+    Route::delete('/{vtshopproduct}', [
+        'as' => 'apishop.vtshopproduct.destroy',
+        'uses' => 'VtShopProduct\VtShopProductController@destroy',
+    ]);
+});
 // append
+
 
 
 
