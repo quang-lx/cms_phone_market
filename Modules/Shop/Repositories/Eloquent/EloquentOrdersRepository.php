@@ -88,6 +88,25 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update['fix_time'] = $data['numberDate'];
             $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
             $data_update['status'] = Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM;
+
+			$data = [
+				'title' => trans('order.notifications.sua_chua.title'),
+				'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+				'fcm_token' => $model->user->fcm_token,
+				'type' => trans('order.notifications.sua_chua.type', ['order_status' => $model->status]),
+			];
+
+			event(new ShopNotiCreated($data));
+
+
+			event(new OrderStatusUpdated([
+				'order_id' => $model->id,
+				'title' => $model->status_name,
+				'old_status' => Orders::STATUS_ORDER_CREATED,
+				'new_status' => Orders::STATUS_ORDER_WARRANTING,
+				'user_id' => '',
+				'shop_id' => Auth::user()->shop_id
+			]));
         }
 
         $model->update($data_update);
