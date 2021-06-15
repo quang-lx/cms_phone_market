@@ -38,13 +38,16 @@ class TransferHistory extends Model
     {
         return $this->belongsTo(Company::class, 'company_id');
     }
-
+	public function fromShop()
+	{
+		return $this->belongsTo(Shop::class, 'shop_id');
+	}
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'to_shop_id');
     }
     public function getFromShopName() {
-    	if ($this->shop) return $this->shop->name;
+    	if ($this->fromShop) return $this->fromShop->name;
     	return optional($this->company)->name;
     }
 
