@@ -45,6 +45,7 @@ return [
 	'vtproduct' => 'Vật tư',
     'transfer management' => 'Xuất/chuyển kho',
     'storage product' => 'Nhập kho',
+	'vtshopproduct' => 'Nhập lẻ linh kiện',
 	'vtimportexcel' => 'Nhập linh kiện',
 	'ship type' => 'Hình thức vận chuyển',
 	'order' => 'Đơn hàng',
