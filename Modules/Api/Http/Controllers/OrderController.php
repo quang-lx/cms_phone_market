@@ -252,6 +252,7 @@ class OrderController extends ApiController
 			]));
 
 			$shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $order->order_type, $order->status), null);
+
 			if ($shopNotiArr && is_array($shopNotiArr)) {
 				event(new UserUpdateOrderStatus([
 					'order_id' => $order->id,

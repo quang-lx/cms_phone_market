@@ -43,6 +43,10 @@ class TransferHistory extends Model
     {
         return $this->belongsTo(Shop::class, 'to_shop_id');
     }
+    public function getFromShopName() {
+    	if ($this->shop) return $this->shop->name;
+    	return optional($this->company)->name;
+    }
 
     public function vtProducts()
     {

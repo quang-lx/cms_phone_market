@@ -2,8 +2,11 @@
 
 namespace Modules\Shop\Http\Controllers\Api\TransferHistory;
 
+use App\Events\OrderStatusUpdated;
+use App\Events\VtTransferHistoryCreated;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Modules\Mon\Entities\TransferHistory;
 use Modules\Shop\Http\Requests\TransferHistory\CreateTransferHistoryRequest;
 use Modules\Shop\Transformers\TransferHistoryTransformer;
@@ -42,7 +45,17 @@ class TransferHistoryController extends ApiController
 
     public function store(CreateTransferHistoryRequest $request)
     {
-        $this->transferhistoryRepository->create($request->all());
+        $model = $this->transferhistoryRepository->create($request->all());
+	    $shopNotiArr = config('shopnoti.shop_notifications.vt_transfer_history', null);
+		if ($request->get('to_shop_id') && $request->get('type') == 2) {
+			event(new VtTransferHistoryCreated([
+				'order_id' => null,
+				'title' => $shopNotiArr['title'],
+				'content' => sprintf($shopNotiArr['content'], $model->getFromShopName()),
+				'user_id' => Auth::user()->id,
+				'shop_id' => $request->get('to_shop_id')
+			]));
+		}
 
         return response()->json([
             'errors' => false,
