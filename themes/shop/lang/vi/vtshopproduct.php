@@ -4,7 +4,7 @@ return [
         'vtshopproduct' => 'Thêm linh kiện đơn lẻ',
         'id' => 'ID',
         'vt_product_id' => "Tên linh kiện",
-        'shop_id' => "Cửa hàng",
+        'shop_id' => "Chi nhánh",
         'amount' => 'Số lượng',
         'company_id' => 'Công ty',
         'created_by' => 'Người tạo',

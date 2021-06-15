@@ -48,14 +48,21 @@
                           <el-form-item
                             :label="$t('vtshopproduct.label.vt_product_id')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('vt_product_name'),
+                              'el-form-item is-error': form.errors.has('vt_product_id'),
                             }"
                           >
-                            <el-input v-model="modelForm.vt_product_name"></el-input>
+                          <el-select v-model="modelForm.vt_product_id" filterable placeholder="Select">
+                            <el-option
+                              v-for="item in vtProduct"
+                              :key="item.id"
+                              :label="item.name"
+                              :value="item.id">
+                            </el-option>
+                          </el-select>
                             <div
                               class="el-form-item__error"
-                              v-if="form.errors.has('vt_product_name')"
-                              v-text="form.errors.first('vt_product_name')"
+                              v-if="form.errors.has('vt_product_id')"
+                              v-text="form.errors.first('vt_product_id')"
                             ></div>
                           </el-form-item>
                         </div>
@@ -67,7 +74,8 @@
                               'el-form-item is-error': form.errors.has('amount'),
                             }"
                           >
-                            <el-input v-model="modelForm.amount"></el-input>
+                            <cleave v-model="modelForm.amount" :options="options" class="form-control" name="amount"></cleave>
+
                             <div
                               class="el-form-item__error"
                               v-if="form.errors.has('amount')"
@@ -108,8 +116,12 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
+import Cleave from 'vue-cleave-component';
 
 export default {
+  components: {
+      Cleave
+  },
   props: {
     locales: { default: null },
     pageTitle: { default: null, String },
@@ -119,11 +131,21 @@ export default {
     return {
       form: new Form(),
       loading: false,
-      list_vtshopproduct: [],
       modelForm: {
-        vt_product_name: "",
+        vt_product_id: "",
         amount: "",
       },
+      
+      options: {
+          prefix: '',
+          numeral: true,
+          numeralPositiveOnly: true,
+          noImmediatePrefix: true,
+          rawValueTrimPrefix: true,
+          numeralIntegerScale: 12,
+          numeralDecimalScale: 0
+      },
+      vtProduct:[]
     };
   },
   methods: {
@@ -155,19 +177,24 @@ export default {
         })
         .catch((error) => {
           this.loading = false;
-          // console.log(error.response.status)
-          if (error.response.status == 422) {
             this.$notify.error({
             title: this.$t("mon.error.Title"),
             message: this.getSubmitError(this.form.errors),
           });
-          }else{
-            this.$notify.error({
-            title: this.$t("mon.error.Title"),
-            message: error.response.data.message,
-          });
-          }
           
+        });
+    },
+
+    fetchVtProduct(){
+        const properties = {
+          page: 0,
+          per_page: 1000,
+          vt_shop_proudct: 1
+        };
+        axios.get(route('apishop.vtproduct.index', _.merge(properties, {})))
+        .then((response) => {
+          this.vtProduct = response.data.data;
+
         });
     },
 
@@ -211,6 +238,7 @@ export default {
   },
   mounted() {
     this.fetchData();
+    this.fetchVtProduct()
   },
   computed: {},
 };

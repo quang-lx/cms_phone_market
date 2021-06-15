@@ -15,12 +15,6 @@ class EloquentVtShopProductRepository extends BaseRepository implements VtShopPr
     {
         $company_id = Auth::user()->company_id;
         $shop_id = Auth::user()->shop_id;
-        $exist_vt = VtProduct::whereRaw('LOWER(`name`) = ? ',[trim(strtolower($data['vt_product_name']))])->first();
-        $exist_company = isset($exist_vt) ? $exist_vt->company_id : 0;
-        if($exist_company != $company_id){
-            return abort(500, 'Vật tư chưa tồn tại trong hệ thống');
-        }
-        $data['vt_product_id'] = $exist_vt->id;
         $vtshopproduct = VtShopProduct::firstOrNew(
             [
                 'vt_product_id'=>$data['vt_product_id'],
@@ -46,13 +40,16 @@ class EloquentVtShopProductRepository extends BaseRepository implements VtShopPr
                 });
             });
         }
+        if ($request->get('shop_id') !== null) {
+            $shop_id = $request->get('shop_id');
+            $query->where('shop_id',$shop_id);
+        }
 
         $user = Auth::user();
 		$query->where('company_id', $user->company_id);
-		if($user->shop_id) {
-			$query->where('shop_id', $user->shop_id);
-		}
-
+        if($user->shop_id) {
+            $query->where('shop_id', $user->shop_id);
+        }
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';

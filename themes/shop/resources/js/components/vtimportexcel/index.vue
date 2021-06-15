@@ -16,7 +16,7 @@
                 </el-breadcrumb>
               </div>
               <div class="col-sm-6 text-right">
-                <div class="row">
+                <div class="row justify-content-end">
                   <div class="col-sm-4">
                     <el-input
                       placeholder="Tên file"

@@ -42,7 +42,7 @@ class ImportRecipes implements ToModel, WithHeadingRow
       }
       
       $company_id = Auth::user()->company_id;
-      $exist_vt = VtProduct::whereRaw('LOWER(`name`) = ? ',[trim(strtolower($row['ten_vat_tu']))])->whereNotNull('deleted_at') ->first();
+      $exist_vt = VtProduct::whereRaw('LOWER(`name`) = ? ',[trim(strtolower($row['ten_vat_tu']))])->first();
       $exist_company = isset($exist_vt) ? $exist_vt->company_id : 0;
       if($exist_company != $company_id){
          return abort(500, 'Vật tư chưa tồn tại trong hệ thống lỗi dòng '.((int)$this->rows + 1));
