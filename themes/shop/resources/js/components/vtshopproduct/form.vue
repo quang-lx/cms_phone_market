@@ -48,14 +48,14 @@
                           <el-form-item
                             :label="$t('vtshopproduct.label.vt_product_id')"
                             :class="{
-                              'el-form-item is-error': form.errors.has('vt_product_id'),
+                              'el-form-item is-error': form.errors.has('vt_product_name'),
                             }"
                           >
                             <el-input v-model="modelForm.vt_product_name"></el-input>
                             <div
                               class="el-form-item__error"
-                              v-if="form.errors.has('vt_product_id')"
-                              v-text="form.errors.first('vt_product_id')"
+                              v-if="form.errors.has('vt_product_name')"
+                              v-text="form.errors.first('vt_product_name')"
                             ></div>
                           </el-form-item>
                         </div>
@@ -128,7 +128,19 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.form = new Form(_.merge(this.modelForm, {}));
+     this.$confirm(this.$t("vtshopproduct.label.alert_import"), {
+        confirmButtonText: this.$t("mon.cancel.Yes"),
+        cancelButtonText: this.$t("mon.cancel.No"),
+        type: "warning",
+      })
+        .then(() => {
+          this.saveData();
+        })
+        .catch(() => {});
+    },
+
+    saveData(){
+       this.form = new Form(_.merge(this.modelForm, {}));
       this.loading = true;
 
       this.form

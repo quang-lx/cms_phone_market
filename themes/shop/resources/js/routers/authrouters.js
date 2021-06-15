@@ -437,13 +437,5 @@ export default [
             pageTitle: 'vtshopproduct.label.create_title',
         },
     },
-	{
-        path: '/shop-admin/vtshopproduct/:vtshopproductId/edit',
-        name: 'shop.vtshopproduct.edit',
-        component: VtShopProductForm,
-        props: {
-            pageTitle: 'vtshopproduct.label.update_title',
-        },
-    },
 
 ];

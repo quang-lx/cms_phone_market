@@ -1,16 +1,19 @@
 <?php
 return [
     'label' => [
-        'vtshopproduct' => 'Linh kiện',
+        'vtshopproduct' => 'Thêm linh kiện đơn lẻ',
         'id' => 'ID',
         'vt_product_id' => "Tên linh kiện",
         'shop_id' => "Cửa hàng",
         'amount' => 'Số lượng',
         'company_id' => 'Công ty',
         'created_by' => 'Người tạo',
-        'create_vtshopproduct' => 'Tạo Linh kiện ',
-        'create_title' => 'Tạo Linh Kiện',
+        'create_vtshopproduct' => 'Nhập Linh kiện ',
+        'create_title' => 'Nhập Linh Kiện',
         'update_title' => 'Cập nhật Linh Kiện',
+        'alert_import' => 'Bạn có chắc chắn nhập linh kiện vào kho?',
+        'created_at' => 'Ngày tạo',
+
     ],
 
 

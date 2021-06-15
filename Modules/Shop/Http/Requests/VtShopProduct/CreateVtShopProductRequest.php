@@ -28,7 +28,7 @@ class CreateVtShopProductRequest extends FormRequest
     {
         return [
             'vt_product_name.required' => 'Tên linh kiện là bắt buộc',
-            'amount.required' => 'Tên linh kiện là bắt buộc',
+            'amount.required' => 'Số lượng linh kiện là bắt buộc',
             'amount.min' => 'Số lượng không được nhỏ hơn 0',
             'amount.numeric' => 'Số lượng phải là số',
         ];

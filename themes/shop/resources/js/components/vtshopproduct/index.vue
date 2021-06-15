@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col-sm-3 d-flex align-items-center">
+              <div class="col-sm-6 d-flex align-items-center">
                 <el-breadcrumb separator="/">
                   <el-breadcrumb-item>
                     <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
@@ -15,13 +15,14 @@
                   </el-breadcrumb-item>
                 </el-breadcrumb>
               </div>
-              <div class="col-sm-9 text-right">
+              <div class="col-sm-6 text-right">
                 <div class="row">
                   <div class="col-sm-8">
                     <el-input
                       prefix-icon="el-icon-search"
                       @keyup.native="performSearch"
                       v-model="searchQuery"
+                       placeholder="Tên linh kiện"
                     >
                     </el-input>
                   </div>
@@ -79,14 +80,28 @@
                     </el-table-column>
 
                     <el-table-column
+                      prop="shop_name"
+                      :label="$t('vtshopproduct.label.shop_id')"
+                      sortable="custom"
+                    >
+                    </el-table-column>
+
+                    <el-table-column
                       prop="created_by"
                       :label="$t('vtshopproduct.label.created_by')"
                       sortable="custom"
                     >
                     </el-table-column>
+
+                    <el-table-column
+                      prop="created_at"
+                      :label="$t('vtshopproduct.label.created_at')"
+                      sortable="custom"
+                    >
+                    </el-table-column>
                     
 
-                    <el-table-column prop="actions" width="130">
+                    <!-- <el-table-column prop="actions" width="130">
                       <template slot-scope="scope">
                         <edit-button
                           :to="{
@@ -99,7 +114,7 @@
                           :rows="data"
                         ></delete-button>
                       </template>
-                    </el-table-column>
+                    </el-table-column> -->
                   </el-table>
                   <div class="pagination-wrap">
                     <el-pagination

@@ -69,4 +69,10 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
        
     }
 
+    public function destroy($model)
+    {
+        $model->delete();
+        $model->VtShopProduct()->delete();
+    }
+
 }

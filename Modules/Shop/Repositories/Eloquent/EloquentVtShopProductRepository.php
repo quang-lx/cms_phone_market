@@ -2,6 +2,7 @@
 
 namespace Modules\Shop\Repositories\Eloquent;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Mon\Entities\VtProduct;
 use Modules\Mon\Entities\VtShopProduct;
@@ -30,23 +31,39 @@ class EloquentVtShopProductRepository extends BaseRepository implements VtShopPr
         return $vtshopproduct->save();
     }
 
-    public function update($model, $data)
+    public function serverPagingFor(Request $request, $relations = null)
     {
-        $company_id = Auth::user()->company_id;
-        $shop_id = Auth::user()->shop_id;
-        $exist_vt = VtProduct::whereRaw('LOWER(`name`) = ? ',[trim(strtolower($data['vt_product_name']))])->first();
-        $exist_company = isset($exist_vt) ? $exist_vt->company_id : 0;
-        if($exist_company != $company_id){
-            return abort(500, 'Vật tư chưa tồn tại trong hệ thống');
+        $query = $this->newQueryBuilder();
+        if ($relations) {
+            $query = $query->with($relations);
         }
-        $data['vt_product_id'] = $exist_vt->id;
-        $vtshopproduct = VtShopProduct::firstOrNew(
-            [
-                'vt_product_id'=>$data['vt_product_id'],
-                'shop_id'=>$shop_id,
-                'company_id'=>$company_id,          
-            ]);
-        $vtshopproduct->amount = $data['amount'];
-        return $vtshopproduct->save();
+
+        if ($request->get('search') !== null) {
+            $keyword = $request->get('search');
+            $query->where(function ($q) use ($keyword) {
+                $q->orWhereHas('vtProudct', function ($c) use ($keyword) {
+                    $c->where('name', 'LIKE', "%{$keyword}%");
+                });
+            });
+        }
+
+        $user = Auth::user();
+		$query->where('company_id', $user->company_id);
+		if($user->shop_id) {
+			$query->where('shop_id', $user->shop_id);
+		}
+
+
+        if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
+            $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
+
+            $query->orderBy($request->get('order_by'), $order);
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        return $query->paginate($request->get('per_page', 10));
     }
+
+
 }

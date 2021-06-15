@@ -49,7 +49,7 @@
                           {{ $t("vtimportexcel.label.number_product") }}:{{modelForm.number_product}}
                         </div>
                         <div class="col-md-3">
-                          {{ $t("vtimportexcel.label.status") }}:{{modelForm.status}}
+                          {{ $t("vtimportexcel.label.status") }}: <span :style="{'color': modelForm.status_color}">{{modelForm.status_name}}</span>
                         </div>
   
                       </div>
@@ -157,7 +157,20 @@ export default {
     };
   },
   methods: {
+
     onSubmit() {
+     this.$confirm(this.$t("vtshopproduct.label.alert_import"), {
+        confirmButtonText: this.$t("mon.cancel.Yes"),
+        cancelButtonText: this.$t("mon.cancel.No"),
+        type: "warning",
+      })
+        .then(() => {
+          this.saveData();
+        })
+        .catch(() => {});
+    },
+
+    saveData(){
       this.form = new Form({vtimportexcel: this.$route.params.vtimportexcelId})
       this.loading = true;
       this.form
