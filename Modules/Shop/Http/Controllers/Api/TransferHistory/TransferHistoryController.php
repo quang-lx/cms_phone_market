@@ -55,7 +55,8 @@ class TransferHistoryController extends ApiController
 				'noti_type' => ShopOrderNotification::TYPE_VT_TRANSFER,
 				'content' => sprintf($shopNotiArr['content'], $model->getFromShopName()),
 				'user_id' => Auth::user()->id,
-				'shop_id' => $request->get('to_shop_id')
+				'shop_id' => $request->get('to_shop_id'),
+				'vt_transfer_id' => $model->id
 			]));
 		}
 
