@@ -34,4 +34,14 @@ class VtShopProduct extends Model
         return $this->belongsTo(Shop::class, 'shop_id');
     }
 
+    public function vtProudct()
+    {
+        return $this->belongsTo(VtProduct::class, 'vt_product_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
 }

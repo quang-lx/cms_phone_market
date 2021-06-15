@@ -349,7 +349,21 @@ Route::group(['prefix' => '/shopcategory'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/vtshopproduct'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'shop.vtshopproduct.index',
+        'uses' => 'VtShopProduct\VtShopProductController@index',
+        'middleware' => 'permission:shop.vtshopproduct.index'
+    ]);
+    Route::get('create', [
+        'as' => 'shop.vtshopproduct.create',
+        'uses' => 'VtShopProduct\VtShopProductController@create',
+        'middleware' => 'permission:shop.vtshopproduct.create'
+    ]);
+});
 // append
+
 
 
 

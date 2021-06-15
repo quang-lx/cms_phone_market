@@ -499,7 +499,19 @@ Route::middleware('auth:api')->prefix('/dashboard')->group(function (){
 });
 
 
+Route::middleware('auth:api')->prefix('/vtshopproducts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.vtshopproduct.index',
+        'uses' => 'VtShopProduct\VtShopProductController@index',
+    ]);
+    Route::post('/', [
+        'as' => 'apishop.vtshopproduct.store',
+        'uses' => 'VtShopProduct\VtShopProductController@store',
+    ]);
+});
 // append
+
 
 
 

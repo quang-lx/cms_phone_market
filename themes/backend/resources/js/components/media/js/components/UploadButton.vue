@@ -50,7 +50,6 @@
                         this.fileIsUploading = false;
                     })
                     .catch((error) => {
-                        console.log(error.response.data);
                         this.fileIsUploading = false;
                         this.$notify.error({
                             title: 'Error',

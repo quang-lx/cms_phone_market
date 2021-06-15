@@ -22,4 +22,8 @@ class VtProduct extends Model
     public function VtCategory(){
         return $this->belongsTo(VtCategory::class,'vt_category_id');
     }
+
+    public function VtShopProduct(){
+        return $this->belongsTo(VtShopProduct::class,'id','vt_product_id');
+    }
 }
