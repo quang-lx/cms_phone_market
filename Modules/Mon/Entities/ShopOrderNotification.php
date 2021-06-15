@@ -11,6 +11,7 @@ class ShopOrderNotification extends Model
 
     protected $table = 'order_shop_notifications';
     protected $fillable = [
+        'id',
         'order_id',
         'title',
         'content',

@@ -285,7 +285,15 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Shop\Repositories\ShopOrderNotificationRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentShopOrderNotificationRepository(new \Modules\Mon\Entities\ShopOrderNotification());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

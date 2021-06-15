@@ -510,7 +510,15 @@ Route::middleware('auth:api')->prefix('/vtshopproducts')->group(function (){
         'uses' => 'VtShopProduct\VtShopProductController@store',
     ]);
 });
+Route::middleware('auth:api')->prefix('/shopordernotifications')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.shopordernotification.index',
+        'uses' => 'ShopOrderNotification\ShopOrderNotificationController@index',
+    ]);
+});
 // append
+
 
 
 
