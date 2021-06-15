@@ -201,9 +201,9 @@ class UserSidebarExtender extends AbstractAdminSidebar
 
 				    $item->weight(0);
 
-				    $item->route('shop.vtshopproduct.create');
+				    $item->route('shop.vtshopproduct.index');
 				    $item->authorize(
-					    $this->auth->hasAccess('shop.vtshopproduct.create')
+					    $this->auth->hasAccess('shop.vtshopproduct.index')
 				    );
 			    });
 			    $item->item(trans('ch::sidebar.vtimportexcel'), function (Item $item) {

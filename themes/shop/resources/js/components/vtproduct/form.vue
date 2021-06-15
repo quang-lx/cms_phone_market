@@ -66,7 +66,7 @@
                               'el-form-item is-error': form.errors.has('price'),
                             }"
                           >
-                            <el-input v-model="modelForm.price"></el-input>
+                            <cleave v-model="modelForm.price" :options="options" class="form-control" name="price"></cleave>
                             <div
                               class="el-form-item__error"
                               v-if="form.errors.has('price')"
@@ -150,8 +150,12 @@
 <script>
 import axios from "axios";
 import Form from "form-backend-validation";
+import Cleave from 'vue-cleave-component';
 
 export default {
+  components: {
+      Cleave
+    },
   props: {
     locales: { default: null },
     pageTitle: { default: null, String },
@@ -166,6 +170,15 @@ export default {
         price: "",
         amount: "",
         vt_cateogry_id: "",
+      },
+      options: {
+          prefix: '',
+          numeral: true,
+          numeralPositiveOnly: true,
+          noImmediatePrefix: true,
+          rawValueTrimPrefix: true,
+          numeralIntegerScale: 12,
+          numeralDecimalScale: 0
       },
     };
   },

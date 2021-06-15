@@ -36,9 +36,12 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
 
         $user = Auth::user();
 		$query->where('company_id', $user->company_id);
-		if($user->shop_id) {
-			$query->where('shop_id', $user->shop_id);
-		}
+        if ($request->get('vt_shop_proudct') == null) {
+            if($user->shop_id) {
+                $query->where('shop_id', $user->shop_id);
+            }
+        }
+		
 
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
@@ -60,8 +63,9 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
             $data = VtShopProduct::firstOrNew(
                 [
                     'vt_product_id'=>$value['vt_product_id'],
+                    'company_id'=>$data_import['company_id'], 
                     'shop_id'=>$data_import['shop_id'],
-                    'company_id'=>$data_import['company_id'],          
+
                 ]);
             $data->amount = ($data->amount + $value['amount']);
             $data->save();
