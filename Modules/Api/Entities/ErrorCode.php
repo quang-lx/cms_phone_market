@@ -58,6 +58,7 @@ class ErrorCode
     const ERR15_MSG = 'Tài khoản hoặc mật khẩu không chính xác';
     const ERR16_MSG = 'Vui lòng chọn file';
     const ERR17_MSG = 'File không đúng định dạng';
+    const ERR171_MSG = 'File quá dung lượng cho phép';
     const ERR18_MSG = 'Mã OTP hết hạn';
     const ERR19_MSG = 'Vui lòng nhập địa điểm';
     const ERR20_MSG = 'Vui lòng nhập nội dung chi tiết';

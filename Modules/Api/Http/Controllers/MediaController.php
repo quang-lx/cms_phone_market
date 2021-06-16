@@ -55,13 +55,38 @@ class MediaController extends ApiController
         }
 
 //        $extensions = 'mimes:' . str_replace('.', '', config('media.allowed-types'));
-        $mimetypes = 'mimetypes:' . config('media.allowed-mimetypes');
+        $mimetypes = 'mimetypes:' . config('api.allowed-mimetypes');
         $validator = Validator::make($request->all(), [
             'file' => $mimetypes,
         ]);
         if($validator->fails()){
             return $this->respond([], ErrorCode::ERR17_MSG, ErrorCode::ERR17);
         }
+
+        // validate dung luong
+	    $clientMineType = $request->file('file')->getClientMimeType();
+	    $allowedVideoMineType = config('api.allowed-video-mimetypes');
+
+	    if (in_array($clientMineType, $allowedVideoMineType)) {
+		    $rules = [
+			    'file' => [
+				    "file",
+				    "max:". config('api.max-video-size')*1000,
+			    ],
+		    ];
+	    } else {
+		    $rules = [
+			    'file' => [
+
+				    "file",
+				    "max:". config('api.max-image-size')*1000,
+			    ],
+		    ];
+	    }
+	    $validator = Validator::make($request->all(),  $rules);
+	    if($validator->fails()){
+		    return $this->respond([], ErrorCode::ERR171_MSG, ErrorCode::ERR17);
+	    }
 
         $savedFile = $this->fileService->store($request->file('file'), $request->get('parent_id')? : 0);
 
