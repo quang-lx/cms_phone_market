@@ -58,7 +58,7 @@
                               'el-form-item is-error': form.errors.has('title'),
                             }"
                           >
-                            <el-input v-model="modelForm.title"></el-input>
+                            <el-input v-model="modelForm.title" :disabled="!modelForm.isEdit"></el-input>
                             <div
                               class="el-form-item__error"
                               v-if="form.errors.has('title')"
@@ -76,7 +76,7 @@
                               ),
                             }"
                           >
-                            <el-radio-group v-model="modelForm.type">
+                            <el-radio-group v-model="modelForm.type" :disabled="!modelForm.isEdit">
                               <el-radio
                                 v-for="item in listType"
                                 :key="item.value"
@@ -101,6 +101,7 @@
                               :placeholder="$t('transfer.label.to_shop_id')"
                               filterable
                               style="width: 100% !important"
+                              :disabled="!modelForm.isEdit"
                             >
                               <el-option
                                 v-for="item in shopArr"
@@ -118,34 +119,6 @@
                           </el-form-item>
                         </div>
 
-            
-
-                        <!-- <div class="col-md-12">
-                          <el-form-item
-                            :label="$t('transfer.label.products')"
-                            :class="{
-                              'el-form-item is-error': form.errors.has(
-                                'products'
-                              ),
-                            }"
-                          >
-                            <el-autocomplete
-                              prefix-icon="el-icon-search"
-                              v-model="modelForm.product_key"
-                              :fetch-suggestions="onSearchProduct"
-                              placeholder="Tìm sản phẩm"
-                              @select="handleSelect"
-                              clearable
-                            ></el-autocomplete>
-
-                            <div
-                              class="el-form-item__error"
-                              v-if="form.errors.has('products')"
-                              v-text="form.errors.first('products')"
-                            ></div>
-                          
-                          </el-form-item>
-                        </div> -->
                       </div>
                     </div>
                     <div class="col-md-6" style="padding-top: 10px">
@@ -165,6 +138,7 @@
                               format="HH:mm dd/MM/yyyy"
                               type="datetime"
                               placeholder="Thời gian chuyển"
+                              :disabled="!modelForm.isEdit"
                             >
                             </el-date-picker>
                             <div
@@ -199,6 +173,7 @@
                           v-model="pinfo.catId"
                           filterable
                           @change="changeVtCategory(key)"
+                          :disabled="!modelForm.isEdit"
                           placeholder="Chọn danh mục">
                           <el-option
                                 label="Chọn danh mục"
@@ -218,6 +193,7 @@
                     <el-select
                         v-model="pinfo.id"
                         filterable
+                        :disabled="!modelForm.isEdit"
                         placeholder="Chọn vật tư">
                         <el-option
                           v-for="item in pinfo.listVtProduct"
@@ -230,9 +206,10 @@
                   </div>
 
                   <div class="col-md-2">
-                      <cleave v-model="pinfo.count" :options="options" class="form-control" name="count" placeholder="Số lượng"></cleave>
+                      <cleave v-model="pinfo.count" :options="options" class="form-control"
+                         name="count" placeholder="Số lượng" :disabled="!modelForm.isEdit"></cleave>
                   </div>
-                  <div class="col-md-1 text-right d-flex justify-content-end align-items-center">
+                  <div v-if="modelForm.isEdit" class="col-md-1 text-right d-flex justify-content-end align-items-center">
                     <i
                       class="el-icon-circle-close"
                       style="color: red; cursor: pointer"
@@ -251,7 +228,7 @@
 
               </div>
 
-              <div class="card-footer d-flex justify-content-end">
+              <div v-if="modelForm.isEdit" class="card-footer d-flex justify-content-end">
                 <el-button
                   type="primary"
                   @click="onSubmit()"
@@ -308,6 +285,7 @@ export default {
         product_key: "",
         vtProducts: [],
         type: 1,
+        isEdit: true
       },
       shopArr: [],
       locales: window.MonCMS.locales,
@@ -372,6 +350,7 @@ export default {
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
+          this.modelForm.isEdit = false;
         });
     },
 
@@ -389,6 +368,7 @@ export default {
         page: 0,
         per_page: 1000,
         check_company: true,
+        except_current: true
       };
 
       axios

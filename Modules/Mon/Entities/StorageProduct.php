@@ -39,9 +39,9 @@ class StorageProduct extends Model
         return $this->belongsTo(Shop::class, 'shop_id');
     }
 
-    public function products()
+    public function vtProducts()
     {
-        return $this->belongsToMany(Product::class, 'vt_transfer_history_detail','vt_transfer_id','vt_product_id')->withPivot('amount');
+        return $this->belongsToMany(VtProduct::class, 'vt_transfer_history_detail','vt_transfer_id','vt_product_id')->withPivot('amount');
     }
 
     public function getStatusNameAttribute($value)

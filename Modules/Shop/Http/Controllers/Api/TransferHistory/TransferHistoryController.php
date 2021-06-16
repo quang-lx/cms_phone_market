@@ -48,7 +48,7 @@ class TransferHistoryController extends ApiController
     {
         $model = $this->transferhistoryRepository->create($request->all());
 	    $shopNotiArr = config('shopnoti.shop_notifications.vt_transfer_history', null);
-		if ($request->get('to_shop_id') && $request->get('type') == 2) {
+		if ($request->get('to_shop_id') && $request->get('type') == TransferHistory::TYPE_MOVE) {
 			event(new VtTransferHistoryCreated([
 				'order_id' => null,
 				'title' => $shopNotiArr['title'],

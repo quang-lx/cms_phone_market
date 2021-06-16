@@ -10,9 +10,10 @@ return [
         'status' => 'Trạng thái',
         'id' => 'ID',
         'received_at' => 'Thời gian chuyển',
-        'shop_id' => 'Kho nhận',
+        'to_shop_id' => 'Kho nhận',
         'shop_name' => 'Kho nhận',
         'products' => 'Danh sách vật tư',
+        'type' => 'Loại đơn',
     ],
     'button' => [
         'save' => 'Nhập kho'

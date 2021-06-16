@@ -8,9 +8,54 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Shop\Events\Transfer\TransferWasCreated;
 use Modules\Shop\Events\Transfer\TransferWasUpdated;
 use Illuminate\Http\Request;
+use Modules\Mon\Entities\TransferHistory;
+use Modules\Mon\Entities\VtShopProduct;
 
 class EloquentTransferHistoryRepository extends BaseRepository implements TransferHistoryRepository
 {
+    public static function createVtShopProductIfNull($data)
+    {
+        foreach ($data['vtProducts'] as $vtProduct) {
+            VtShopProduct::query()->firstOrCreate([
+                'shop_id' => $data['to_shop_id'], 
+                'vt_product_id' => $vtProduct['id'],
+                'company_id' => $data['company_id'],
+            ]);
+            if ($data['shop_id']){
+                VtShopProduct::query()->firstOrCreate([
+                    'shop_id' => $data['shop_id'], 
+                    'vt_product_id' => $vtProduct['id'],
+                    'company_id' => $data['company_id'],
+                ]);
+            }
+        }
+    }
+
+    public static function updateVtShopProduct($data)
+    {
+        if ($data['type'] == TransferHistory::TYPE_EXPORT){
+            //nếu như xuất từ chi nhánh mới xử lý
+            if ($data['shop_id']){
+                foreach ($data['vtProducts'] as $vtProduct) {
+                    VtShopProduct::query()->where('shop_id', $data['shop_id'])->where('company_id', $data['company_id'])
+                        ->where('vt_product_id', $vtProduct['id'])->decrement('amount', intval($vtProduct['count']));
+                }
+                
+            }
+        } else if ($data['type'] == TransferHistory::TYPE_MOVE){
+            //giảm shop_id, tăng to_shop_id
+            if ($data['shop_id']){
+                //chi nhánh
+                foreach ($data['vtProducts'] as $vtProduct) {
+                    VtShopProduct::query()->where('shop_id', $data['shop_id'])->where('company_id', $data['company_id'])
+                        ->where('vt_product_id', $vtProduct['id'])->decrement('amount', intval($vtProduct['count']));
+                    //push notify cho chủ kho nhận
+                }
+            } 
+
+        }
+    }
+
     public function create($data)
 	{
         $data['company_id'] = Auth::user()->company_id;
@@ -23,10 +68,15 @@ class EloquentTransferHistoryRepository extends BaseRepository implements Transf
                 } else {
                     $productArr[$product['id']]['amount'] = $product['count'];  
                 }
-                
             }
-            
             $model->vtProducts()->sync($productArr, false);
+
+            
+            //check nếu chưa có bản ghi vt_shop_product thì tạo mới
+            self::createVtShopProductIfNull($data);
+
+            //update vt_shop_product
+            self::updateVtShopProduct($data);
         }
 
 		return $model;

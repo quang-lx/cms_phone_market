@@ -130,10 +130,9 @@
 
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
-                                                <edit-button
-                                                        :to="{name: 'shop.transfer.edit', params: {transferId: scope.row.id}}"></edit-button>
-                                                        
-                                                <delete-button :scope="scope" :rows="data" v-if="scope.row.status == 1"></delete-button>
+                                                <el-button type="primary" icon="el-icon-view"
+                                                    @click="gotosite(scope.row.id)">
+                                                </el-button>
                                             </template>
                                         </el-table-column>
                                     </el-table>
@@ -234,6 +233,10 @@
 
                 });
             },
+
+            gotosite(transferId){
+                window.location.href = route('shop.transfer.edit', transferId);
+            }
 
         },
 
