@@ -701,6 +701,7 @@ class EloquentOrderRepository implements OrderRepository
 
             if ($productAttributeValue) {
 
+				Log::info($product);
 				Log::info($productAttributeValue);
                 $productPrice = $productAttributeValue->price;
                 Log::info($productAttributeValue->price_sale);
