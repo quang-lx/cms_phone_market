@@ -105,8 +105,14 @@ class EloquentCartRepository implements CartRepository {
 	}
 
 	protected function addOrUpdateProduct(Cart $cart, Product $product, $productAttributeValue, $quantity, $note) {
-		$cartProduct = CartProduct::query()->where('cart_id', $cart->id)
-			->where('product_id', $product->id)->first();
+		$query = CartProduct::query()->where('cart_id', $cart->id)
+			->where('product_id', $product->id);
+		if ($productAttributeValue) {
+			$query->where('product_attribute_value_id', $productAttributeValue->id);
+		} else {
+			$query->whereNull('product_attribute_value_id');
+		}
+		$cartProduct = $query->first();
 		if ($cartProduct) {
 			$cartProduct->quantity = $quantity;
 			$cartProduct->note = $note;
