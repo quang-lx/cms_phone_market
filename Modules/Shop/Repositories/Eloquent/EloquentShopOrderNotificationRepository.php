@@ -16,16 +16,22 @@ class EloquentShopOrderNotificationRepository extends BaseRepository implements 
             $query = $query->with($relations);
         }
 
-        // $query->where('shop_id', Auth::user()->shop_id);
+        $query->where('shop_id', Auth::user()->shop_id);
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
 
             $query->orderBy($request->get('order_by'), $order);
         } else {
-            $query->orderBy('id', 'asc');
+            $query->orderBy('seen','asc')->orderBy('id','desc');
         }
 
         return $query->paginate(5);
+    }
+
+    public function update($model, $data)
+    {
+        $model->update($data);
+        return $model;
     }
 }

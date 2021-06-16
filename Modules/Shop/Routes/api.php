@@ -516,6 +516,11 @@ Route::middleware('auth:api')->prefix('/shopordernotifications')->group(function
         'as' => 'apishop.shopordernotification.index',
         'uses' => 'ShopOrderNotification\ShopOrderNotificationController@index',
     ]);
+
+    Route::post('/{shopordernotification}/edit', [
+        'as' => 'apishop.shopordernotification.update',
+        'uses' => 'ShopOrderNotification\ShopOrderNotificationController@update',
+    ]);
 });
 // append
 

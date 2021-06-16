@@ -19,7 +19,8 @@ class ShopOrderNotification extends Model
 		'order_status',
 		'noti_type',
 		'vt_transfer_id',
-		'order_type'
+		'order_type',
+        'seen'
     ];
 
 

@@ -1,8 +1,10 @@
 <template>
   <div>
     <a class="nav-link" href="#" @click.prevent="showNotification">
-          <i class="el-icon-bell"></i>
-          <span class="badge badge-danger navbar-badge">{{this.list_notification.length}}</span>
+      <i class="el-icon-bell"></i>
+      <span class="badge badge-danger navbar-badge">{{
+        this.list_notification.length
+      }}</span>
     </a>
     <el-drawer
       title="I am the title"
@@ -10,22 +12,30 @@
       :direction="direction"
       :before-close="handleClose"
     >
-     <div class="">
-          <a class="dropdown-item" href="#" @click.prevent="showBoxChat(item)" v-for="(item, index) in list_notification" v-bind:key = index >
-            <!-- Message Start -->
-            <div class="media">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  {{item.title}}
-                </h3>
-                <p class="text-sm">{{item.content}}</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
+      <div class="">
+        <a
+          class="dropdown-item"
+          href="#"
+          @click.prevent="redirectRoute(item)"
+          v-for="(item, index) in list_notification"
+          v-bind:key="index"
+        >
+          <!-- Message Start -->
+          <div class="media">
+            <div class="media-body">
+              <h3 class="dropdown-item-title">
+                {{ item.title }}
+              </h3>
+              <p class="text-sm">{{ item.content }}</p>
+              <p class="text-sm text-muted">
+                <i class="far fa-clock mr-1"></i> 4 Hours Ago
+              </p>
             </div>
-            <!-- Message End -->
-          </a>
-          <a class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
+          </div>
+          <!-- Message End -->
+        </a>
+        <a class="dropdown-item dropdown-footer">See All Messages</a>
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -34,35 +44,91 @@
 export default {
   data() {
     return {
-        drawer: false,
-        direction: "rtl",
-        list_notification:[],
+      drawer: false,
+      direction: "rtl",
+      list_notification: [],
     };
   },
   methods: {
     handleClose(done) {
-          done();
+      done();
     },
-    showNotification(){
-        this.drawer = true
-        setTimeout(() => {document.getElementsByClassName('v-modal')[0].classList.remove('v-modal')}, 300);
+    showNotification() {
+      this.drawer = true;
+      setTimeout(() => {
+        document
+          .getElementsByClassName("v-modal")[0]
+          .classList.remove("v-modal");
+      }, 300);
     },
-    fetchNotification(){
-        const properties = {
-          page: 0,
-          per_page: 1000,
-          vt_shop_proudct: 1
-        };
-        axios.get(route('apishop.shopordernotification.index', _.merge(properties, {})))
+    fetchNotification() {
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        vt_shop_proudct: 1,
+      };
+      axios
+        .get(
+          route("apishop.shopordernotification.index", _.merge(properties, {}))
+        )
         .then((response) => {
           this.list_notification = response.data.data;
-
         });
     },
 
+    async redirectRoute(data) {
+      await this.updateSeen(data.id)
+        switch (data.noti_type) {
+          case 1:
+            this.redirectRouteDetailOrder(data.order_type,data.order_id)
+            break;
+
+          case 2:
+            this.$router.push({ name: "shop.storageproduct.index" }).catch(()=>{});
+            break;
+
+          default:
+            break;
+        }
+    },
+
+    redirectRouteDetailOrder(type,id) {
+    
+      switch (Number(type)) {
+        case 1: // sửa chữa
+          this.$router.push({ name: "shop.orders.detail",params: {ordersId:id}}).catch(()=>{});
+          break;
+
+        case 2: // bảo hành
+          this.$router.push({ name: "shop.orders.detailguarantee",params: {ordersId:id} }).catch(()=>{});
+          break;
+        
+        case 3: // mua bán
+          this.$router.push({ name: "shop.orders.detailbuysell",params: {ordersId:id} }).catch(()=>{});
+          break;
+
+        default:
+          break;
+      }
+    },
+
+    updateSeen(id) {
+        const data = { seen: 1 };
+        axios.post(route('apishop.shopordernotification.update',{shopordernotification:id}), data)
+        .then((response) => {
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.$notify.error({
+            title: this.$t("mon.error.Title"),
+            message: this.getSubmitError(this.form.errors),
+          });
+        });
+      },
   },
   mounted() {
-    setInterval(this.fetchNotification,5000);
+    this.fetchNotification();
+    setInterval(this.fetchNotification, 5000);
   },
 };
 </script>
