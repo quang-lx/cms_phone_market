@@ -13,10 +13,13 @@ class OrderTransformer extends JsonResource
 
     public function toArray($request)
     {
-
         $data = [
             'id' => $this->id,
             'user_id' => $this->user_id,
+	        'total_price' => $this->total_price,
+	        'pay_price' => $this->pay_price,
+	        'ship_fee' => $this->ship_fee,
+	        'discount' => $this->discount,
             'product' => $this->getOrderProduct($this->order_type, $this->type_other,$this->allOrderProducts)
         ];
 
