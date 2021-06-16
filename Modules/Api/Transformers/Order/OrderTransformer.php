@@ -17,7 +17,7 @@ class OrderTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'products' => $this->getOrderProduct($this->order_type, $this->type_other,$this->allOrderProducts)
+            'product' => $this->getOrderProduct($this->order_type, $this->type_other,$this->allOrderProducts)
         ];
 
 
@@ -25,16 +25,17 @@ class OrderTransformer extends JsonResource
     }
 
     public function getOrderProduct($type, $otherType, $orderProducts) {
+    	$firstProduct = $orderProducts->first();
         switch ($type) {
             case Orders::TYPE_BAO_HANH:
-                return OrderProductBaoHanhTransformer::collection($orderProducts);
+                return new OrderProductBaoHanhTransformer($firstProduct);
             case Orders::TYPE_SUA_CHUA:
                 if ($otherType) {
-                    return OrderProductSuaChuaKhacTransformer::collection($orderProducts);
+                    return new OrderProductSuaChuaKhacTransformer($firstProduct);
                 }
-                return OrderProductSuaChuaTransformer::collection($orderProducts);
+                return new OrderProductSuaChuaTransformer($firstProduct);
             case Orders::TYPE_MUA_HANG:
-                return OrderSellProductTransformer::collection($orderProducts);
+                return new OrderSellProductTransformer($firstProduct);
         }
     }
 
