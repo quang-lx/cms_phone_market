@@ -20,15 +20,14 @@ class OrderTransformer extends JsonResource
 	        'pay_price' => $this->pay_price,
 	        'ship_fee' => $this->ship_fee,
 	        'discount' => $this->discount,
-            'product' => $this->getOrderProduct($this->order_type, $this->type_other,$this->allOrderProducts)
+            'product' => $this->getOrderProduct($this->order_type, $this->type_other,$this->firstOrderProduct)
         ];
 
 
         return $data;
     }
 
-    public function getOrderProduct($type, $otherType, $orderProducts) {
-    	$firstProduct = $orderProducts->first();
+    public function getOrderProduct($type, $otherType, $firstProduct) {
         switch ($type) {
             case Orders::TYPE_BAO_HANH:
                 return new OrderProductBaoHanhTransformer($firstProduct);
