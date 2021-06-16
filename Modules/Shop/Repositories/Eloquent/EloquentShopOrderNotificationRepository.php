@@ -26,7 +26,7 @@ class EloquentShopOrderNotificationRepository extends BaseRepository implements 
             $query->orderBy('seen','asc')->orderBy('id','desc');
         }
 
-        return $query->paginate(5);
+        return $query->paginate($request->get('per_page', 7));
     }
 
     public function update($model, $data)

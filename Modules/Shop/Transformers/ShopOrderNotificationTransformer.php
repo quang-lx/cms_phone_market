@@ -2,7 +2,7 @@
 
 namespace Modules\Shop\Transformers;
 
-
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
@@ -22,6 +22,7 @@ class ShopOrderNotificationTransformer extends JsonResource
             'noti_type' => $this->noti_type,
             'vt_transfer_id' => $this->vt_transfer_id,
             'order_type' => $this->order_type,
+            'updated_at' =>Carbon::parse($this->updated_at)->timestamp
         ];
 
 
