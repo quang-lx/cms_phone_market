@@ -4,6 +4,7 @@ namespace Modules\Shop\Repositories\Eloquent;
 
 use App\Events\OrderStatusUpdated;
 use App\Events\ShopNotiCreated;
+use App\Events\ShopUpdateOrderStatus;
 use Modules\Shop\Repositories\OrdersRepository;
 use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Http\Request;
@@ -94,9 +95,16 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
 				'fcm_token' => $model->user->fcm_token,
 				'type' => trans('order.notifications.sua_chua.type', ['order_status' => $model->status]),
+				'order_id' => $model->id
 			];
 
 			event(new ShopNotiCreated($data));
+			event(new ShopUpdateOrderStatus([
+				'title' => trans('order.notifications.sua_chua.title'),
+				'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+				'user_id' => $model->user->id,
+				'order_id' => $model->id
+			]));
 
 
 			event(new OrderStatusUpdated([
@@ -107,6 +115,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				'user_id' => '',
 				'shop_id' => Auth::user()->shop_id
 			]));
+
         }
 
         $model->update($data_update);
@@ -206,11 +215,17 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'title' => trans('order.notifications.bao_hanh.title'),
 		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
 		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => $model->status]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
-
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
 
 	        event(new OrderStatusUpdated([
 		        'order_id' => $model->id,
@@ -247,11 +262,17 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'title' => trans('order.notifications.ban_hang.title'),
 		        'content' => trans('order.notifications.ban_hang.content confirm', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
 		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => $model->status]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
-
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content confirm', ['order_code' => $model->id]),
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
 	        event(new OrderStatusUpdated([
 		        'order_id' => $model->id,
 		        'title' => $model->status_name,

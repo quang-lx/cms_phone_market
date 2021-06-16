@@ -6,10 +6,12 @@ use App\Events\AdminNotiCreated;
 use App\Events\OrderStatusUpdated;
 use App\Events\ShopNotiCreated;
 use App\Events\NeedCreateUserSmsToken;
+use App\Events\ShopUpdateOrderStatus;
 use App\Events\UserUpdateOrderStatus;
 use App\Events\VtTransferHistoryCreated;
 use App\Listeners\HandleEventVtTransHistoryCreated;
 use App\Listeners\InsertOrderStatusHistory;
+use App\Listeners\InsertOrderUserNotification;
 use App\Listeners\InsertShopOrderNotification;
 use App\Listeners\PushNotiWhenAdminNotiCreated;
 use App\Listeners\PushNotiWhenSHopNotiCreated;
@@ -47,6 +49,9 @@ class EventServiceProvider extends ServiceProvider
 		],
 	    VtTransferHistoryCreated::class => [
 		    HandleEventVtTransHistoryCreated::class
+	    ],
+	    ShopUpdateOrderStatus::class => [
+	    	InsertOrderUserNotification::class
 	    ]
     ];
 

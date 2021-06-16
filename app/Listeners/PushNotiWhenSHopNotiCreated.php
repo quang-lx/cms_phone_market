@@ -37,7 +37,8 @@ class PushNotiWhenSHopNotiCreated implements ShouldQueue
         $notiData = $event->data;
         $notificationData = ['title' => $notiData['title'], 'body' => $notiData['content']];
         $dataInNoti = [
-            'type' => $notiData['type']
+            'type' => $notiData['type'],
+            'order_id' => $notiData['order_id'],
         ];
         $deviceToken = $notiData['fcm_token'];
         $this->notiService->sendNotification($deviceToken, $notificationData, $dataInNoti);
