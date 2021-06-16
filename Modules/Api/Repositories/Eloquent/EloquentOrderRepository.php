@@ -279,8 +279,8 @@ class EloquentOrderRepository implements OrderRepository
         $orderData['company_id'] = $product->company_id;
         $orderData['shop_id'] = $product->shop_id;
         $productPrice = $product->price;
-        if ($product->price_sale) {
-            $productPrice = $productPrice * (100 - $productPrice->price_sale) / 100;
+        if ($product->sale_price) {
+            $productPrice = $productPrice * (100 - $productPrice->sale_price) / 100;
         }
         $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
         $orderProductData['quantity'] = $requestParams['quantity'];
@@ -292,8 +292,8 @@ class EloquentOrderRepository implements OrderRepository
         if ($productAttributeValue) {
 
             $productPrice = $productAttributeValue->price;
-            if ($productAttributeValue->price_sale) {
-                $productPrice = $productPrice * (100 - $productAttributeValue->price_sale) / 100;
+            if ($productAttributeValue->sale_price) {
+                $productPrice = $productPrice * (100 - $productAttributeValue->sale_price) / 100;
             }
             $orderProductData['price'] = $productAttributeValue->price;
 
@@ -494,14 +494,14 @@ class EloquentOrderRepository implements OrderRepository
         } else {
             Log::info($voucher->discount_amount);
             $productPrice = $product->price;
-            if ($product->price_sale) {
-                $productPrice = $productPrice * (100 - $productPrice->price_sale) / 100;
+            if ($product->sale_price) {
+                $productPrice = $productPrice * (100 - $productPrice->sale_price) / 100;
             }
             if ($productAttributeValue) {
 
                 $productPrice = $productAttributeValue->price;
-                if ($productAttributeValue->price_sale) {
-                    $productPrice = $productPrice * (100 - $productAttributeValue->price_sale) / 100;
+                if ($productAttributeValue->sale_price) {
+                    $productPrice = $productPrice * (100 - $productAttributeValue->sale_price) / 100;
                 }
             }
             Log::info($productPrice);
@@ -687,8 +687,8 @@ class EloquentOrderRepository implements OrderRepository
 
 
             $productPrice = $product->price;
-            if ($product->price_sale) {
-                $productPrice = $productPrice * (100 - $productPrice->price_sale) / 100;
+            if ($product->sale_price) {
+                $productPrice = $productPrice * (100 - $productPrice->sale_price) / 100;
             }
 
             $orderProductData['product_title'] = $product->name;
@@ -704,9 +704,9 @@ class EloquentOrderRepository implements OrderRepository
 				Log::info($product);
 				Log::info($productAttributeValue);
                 $productPrice = $productAttributeValue->price;
-                Log::info($productAttributeValue->price_sale);
-                if ($productAttributeValue->price_sale) {
-                    $productPrice = $productPrice * (100 - $productAttributeValue->price_sale) / 100;
+                Log::info($productAttributeValue->sale_price);
+                if ($productAttributeValue->sale_price) {
+                    $productPrice = $productPrice * (100 - $productAttributeValue->sale_price) / 100;
 	                Log::info($productPrice);
                 }
                 $orderProductData['price'] = $productAttributeValue->price;
