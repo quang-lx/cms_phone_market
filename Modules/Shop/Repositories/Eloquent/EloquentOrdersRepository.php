@@ -113,7 +113,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				'title' => $model->status_name,
 				'old_status' => Orders::STATUS_ORDER_CREATED,
 				'new_status' => Orders::STATUS_ORDER_WARRANTING,
-				'user_id' => '',
+				'user_id' => null,
 				'shop_id' => Auth::user()->shop_id
 			]));
 
@@ -234,7 +234,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'title' => $model->status_name,
 		        'old_status' => Orders::STATUS_ORDER_CREATED,
 		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
-		        'user_id' => '',
+		        'user_id' => null,
 		        'shop_id' => Auth::user()->shop_id
 	        ]));
             return response()->json([
@@ -281,7 +281,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'title' => $model->status_name,
 		        'old_status' => Orders::STATUS_ORDER_CREATED,
 		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
-		        'user_id' => '',
+		        'user_id' => null,
 		        'shop_id' => Auth::user()->shop_id
 	        ]));
 
