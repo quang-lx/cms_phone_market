@@ -107,7 +107,7 @@
                            <el-date-picker
                               v-model="modelForm.scheduled_at"
                               type="datetime"
-                              value-format="yyyy-MM-dd hh:mm:ss"
+                              value-format="yyyy-MM-dd HH:mm:ss"
                               placeholder="Chọn thời gian">
                           </el-date-picker>
                             <div
@@ -117,7 +117,7 @@
                             ></div>
                           </el-form-item>
 
-                          
+
                         </div>
                       </div>
                     </div>
