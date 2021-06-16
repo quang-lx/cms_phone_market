@@ -209,7 +209,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update =[
                 'status' => Orders::STATUS_ORDER_WARRANTING
             ];
-	        $model = $model->update($data_update);
+	        $model->update($data_update);
 
 	        $data = [
 		        'title' => trans('order.notifications.bao_hanh.title'),
@@ -256,7 +256,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update =[
                 'status' => Orders::STATUS_ORDER_CONFIRMED
             ];
-	        $model = $model->update($data_update);
+	        $model->update($data_update);
 
 	        $data = [
 		        'title' => trans('order.notifications.ban_hang.title'),
