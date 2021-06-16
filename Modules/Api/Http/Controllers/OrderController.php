@@ -244,6 +244,7 @@ class OrderController extends ApiController
 			$order->save();
 			event(new OrderStatusUpdated([
 				'order_id' => $order->id,
+				'order_type' => $order->order_type,
 				'title' => $order->getStatusNameAttribute($newStatus),
 				'old_status' => $oldStatus,
 				'new_status' => $newStatus,
