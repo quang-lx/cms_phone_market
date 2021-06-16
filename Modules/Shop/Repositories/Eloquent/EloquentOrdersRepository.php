@@ -108,6 +108,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
 
 			event(new OrderStatusUpdated([
+				'order_type' => $model->order_type,
 				'order_id' => $model->id,
 				'title' => $model->status_name,
 				'old_status' => Orders::STATUS_ORDER_CREATED,
@@ -229,6 +230,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
 	        event(new OrderStatusUpdated([
 		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
 		        'title' => $model->status_name,
 		        'old_status' => Orders::STATUS_ORDER_CREATED,
 		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
@@ -275,6 +277,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 	        ]));
 	        event(new OrderStatusUpdated([
 		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
 		        'title' => $model->status_name,
 		        'old_status' => Orders::STATUS_ORDER_CREATED,
 		        'new_status' => Orders::STATUS_ORDER_WARRANTING,

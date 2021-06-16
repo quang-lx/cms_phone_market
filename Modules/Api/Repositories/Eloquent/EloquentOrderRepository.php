@@ -203,6 +203,7 @@ class EloquentOrderRepository implements OrderRepository
 	        // noti cho shop
 	        event(new OrderStatusUpdated([
 		        'order_id' => $order->id,
+		        'order_type' => $order->order_type,
 		        'title' => $order->status_name,
 		        'old_status' => $order->status,
 		        'new_status' => $order->status,
@@ -248,6 +249,7 @@ class EloquentOrderRepository implements OrderRepository
             // noti cho shop
 	        event(new OrderStatusUpdated([
 		        'order_id' => $order->id,
+		        'order_type' => $order->order_type,
 		        'title' => $order->status_name,
 		        'old_status' => $order->status,
 		        'new_status' => $order->status,
@@ -315,6 +317,7 @@ class EloquentOrderRepository implements OrderRepository
 	        // noti cho shop
 	        event(new OrderStatusUpdated([
 		        'order_id' => $order->id,
+		        'order_type' => $order->order_type,
 		        'title' => $order->status_name,
 		        'old_status' => $order->status,
 		        'new_status' => $order->status,
@@ -635,6 +638,7 @@ class EloquentOrderRepository implements OrderRepository
 	        foreach ($orderModelCreated as $orderCreated) {
 		        event(new OrderStatusUpdated([
 			        'order_id' => $orderCreated->id,
+			        'order_type' => $orderCreated->order_type,
 			        'title' => $orderCreated->status_name,
 			        'old_status' => $orderCreated->status,
 			        'new_status' => $orderCreated->status,

@@ -84,6 +84,7 @@ class OrdersController extends ApiController
 
         event(new OrderStatusUpdated([
             'order_id' => $orders->id,
+	        'order_type' => $orders->order_type,
             'title' => $orders->status_name,
             'old_status' => Orders::STATUS_ORDER_CREATED,
             'new_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM,
