@@ -74,6 +74,7 @@ class ErrorCode
     const ERR30_MSG = 'Vui lòng nhập mật khẩu cũ';
     const ERR31_MSG = 'Vui lòng nhập đánh giá';
     const ERR32_MSG = 'Đánh giá không hợp lệ';
+    const ERR33_MSG = 'Đơn hàng không tồn tại';
 
 
 

@@ -302,6 +302,10 @@ Route::middleware(['auth:api'])->group(function ($router) {
             'uses' => 'OrderController@getList',
             'as' => 'apife.order.getList',
         ]);
+	    Route::get('/{id}/detail', [
+		    'uses' => 'OrderController@getDetail',
+		    'as' => 'apife.order.getDetail',
+	    ]);
         Route::post('/check-shop-voucher', [
             'uses' => 'OrderController@getShopDiscountAmount',
             'as' => 'apife.order.getShopDiscountAmount',

@@ -12,6 +12,7 @@ use Modules\Api\Repositories\AddressRepository;
 use Modules\Api\Repositories\AreaRepository;
 use Modules\Api\Repositories\OrderRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
+use Modules\Api\Transformers\Order\OrderFullTransformer;
 use Modules\Api\Transformers\Order\OrderTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Entities\Orders;
@@ -152,7 +153,14 @@ class OrderController extends ApiController
 		$orders = $this->orderRepo->listOrder($request);
 		return $this->respond(OrderTransformer::collection($orders), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
-
+	public function getDetail(Request $request, $id)
+	{
+		$order = $this->orderRepo->getDetail($id);
+		if (!$order || $order->user_id != Auth::user()->id) {
+			return $this->respond(null, ErrorCode::ERR33_MSG, ErrorCode::ERR422);
+		}
+		return $this->respond(new OrderFullTransformer($order), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
 	public function getShopDiscountAmount(Request $request)
 	{
 		$validator = $this->validateCheckVoucher($request);

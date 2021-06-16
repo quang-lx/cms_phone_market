@@ -770,4 +770,7 @@ class EloquentOrderRepository implements OrderRepository
 
     }
 
+	public function getDetail($id) {
+    	return Orders::find($id);
+	}
 }
