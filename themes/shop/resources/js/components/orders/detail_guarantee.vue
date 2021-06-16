@@ -92,6 +92,7 @@
                         <div>
                             <span v-currency="modelForm.pay_price"></span>
                       </div>
+                      </div>
 
                       <div class="col-md-3">
                         <div><h4>Trạng thái</h4></div>
@@ -108,7 +109,7 @@
                           "
                         >
                           <el-button type="primary" @click="dialogVisible = true">Nhận đơn</el-button>
-                        
+
                         </div>
                            <el-dialog title="Xác nhận" :visible.sync="dialogVisible" width="30%">
                               <span>Xác nhận đơn bảo hành</span>
@@ -117,7 +118,7 @@
                                 <el-button type="primary" @click="onSubmit">Xác nhận</el-button>
                               </span>
                            </el-dialog>
-                        
+
                     </div>
                   </div>
                 </div>
@@ -156,7 +157,7 @@ export default {
       modelForm: {},
       message: "",
       dialogVisible: false,
-      
+
     };
   },
   methods: {
@@ -174,7 +175,7 @@ export default {
     },
 
     onSubmit() {
-  
+
 
       axios
         .post(this.getRoute())

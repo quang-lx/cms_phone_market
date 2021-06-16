@@ -92,6 +92,7 @@
                         <div>
                             <span v-currency="modelForm.pay_price"></span>
                       </div>
+                      </div>
 
                       <div class="col-md-3">
                         <div><h4>Trạng thái</h4></div>
@@ -101,7 +102,7 @@
                             <div v-html="modelForm.description"></div>
                         </div> -->
                         <popup-take-orders :data="modelForm"></popup-take-orders>
-                        
+
                     </div>
                   </div>
                 </div>
@@ -141,7 +142,7 @@ export default {
       list_orders: [],
       modelForm: {},
       message: "",
-      
+
     };
   },
   methods: {
