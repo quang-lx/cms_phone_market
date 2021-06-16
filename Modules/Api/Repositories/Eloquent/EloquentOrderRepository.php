@@ -688,7 +688,7 @@ class EloquentOrderRepository implements OrderRepository
 
             $productPrice = $product->price;
             if ($product->sale_price) {
-                $productPrice = $productPrice * (100 - $productPrice->sale_price) / 100;
+                $productPrice = $productPrice * (100 - $product->sale_price) / 100;
             }
 
             $orderProductData['product_title'] = $product->name;
