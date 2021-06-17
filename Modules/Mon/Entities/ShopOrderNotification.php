@@ -11,6 +11,7 @@ class ShopOrderNotification extends Model
 
     protected $table = 'order_shop_notifications';
     protected $fillable = [
+        'id',
         'order_id',
         'title',
         'content',
@@ -18,7 +19,8 @@ class ShopOrderNotification extends Model
 		'order_status',
 		'noti_type',
 		'vt_transfer_id',
-		'order_type'
+		'order_type',
+        'seen'
     ];
 
 

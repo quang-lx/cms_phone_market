@@ -1,5 +1,8 @@
 <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
+        <notification-component></notification-component>
+    </li>
+    <li class="nav-item dropdown">
         <chat-messages></chat-messages>
     </li>
     <li class="nav-item dropdown">

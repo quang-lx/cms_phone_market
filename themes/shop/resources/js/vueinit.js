@@ -19,6 +19,7 @@ import EditComponent from './components/utils/EditComponent';
 import SingleMedia from './components/media/js/components/SingleMedia';
 import MediaManager from './components/media/js/components/MediaManager';
 import ChatMessages from './components/message/chat_messages';
+import NotificationComponent from './components/notification/notification_component';
 import Clipboard from 'v-clipboard'
 
 import VueMobileDetection from 'vue-mobile-detection'
@@ -40,6 +41,7 @@ Vue.component('EditButton',  EditComponent);
 Vue.component('SingleMedia', SingleMedia);
 Vue.component('MediaManager', MediaManager);
 Vue.component('ChatMessages', ChatMessages);
+Vue.component('NotificationComponent', NotificationComponent);
 
 Vue.directive("currency", {
     bind(el, binding, vnode) {

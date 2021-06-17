@@ -362,7 +362,29 @@ Route::group(['prefix' => '/vtshopproduct'], function ( ) {
         'middleware' => 'permission:shop.vtshopproduct.create'
     ]);
 });
+Route::group(['prefix' => '/shopordernotification'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.shopordernotification.index',
+        'uses' => 'ShopOrderNotification\ShopOrderNotificationController@index',
+        'middleware' => 'permission:admin.shopordernotification.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.shopordernotification.create',
+        'uses' => 'ShopOrderNotification\ShopOrderNotificationController@create',
+        'middleware' => 'permission:admin.shopordernotification.create'
+    ]);
+
+    Route::get('{shopordernotification}/edit', [
+        'as' => 'admin.shopordernotification.edit',
+        'uses' => 'ShopOrderNotification\ShopOrderNotificationController@edit',
+        'middleware' => 'permission:admin.shopordernotification.edit'
+    ]);
+
+
+});
 // append
+
 
 
 
