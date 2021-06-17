@@ -116,6 +116,27 @@
                     </el-table-column>
 
                     <el-table-column
+
+                      :label="$t('orders.label.delivery_address')"
+                      sortable="custom"
+                    >
+                     <template slot-scope="scope"  v-if="scope.row.shop">
+                           <div>
+                          {{ scope.row.ship_province_name }}
+                        </div>
+                        <div>
+                          {{ scope.row.ship_district_name }}
+                        </div>
+                        <div>
+                          {{ scope.row.ship_phoenix_name }}
+                        </div>
+                        <div>
+                          {{ scope.row.ship_address }}
+                        </div>
+                     </template>
+                    </el-table-column>
+
+                    <el-table-column
                       prop="created_at"
                       :label="$t('orders.label.created_at')"
                       sortable="custom"
