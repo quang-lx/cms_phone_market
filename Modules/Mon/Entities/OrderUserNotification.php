@@ -15,7 +15,8 @@ class OrderUserNotification extends Model
         'user_id',
 		'order_status',
 		'order_type',
-	    'seen'
+	    'seen',
+	    'noti_type'
     ];
 
 
