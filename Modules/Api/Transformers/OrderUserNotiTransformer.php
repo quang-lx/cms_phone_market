@@ -20,8 +20,9 @@ class OrderUserNotiTransformer extends JsonResource
             'content' => $this->content,
             'order_id' => $this->order_id,
             'seen' => $this->seen,
-	        'product_thumbnail' => ($this->order && $this->order->thumbnail) ? new MediaShortTransformer($this->order->thumbnail): null,
+            'noti_type' => $this->noti_type,
 	        'created_at'=> optional($this->created_at)->format('d/m/Y H:i'),
+	        'product_thumbnail' => ($this->order && $this->order->thumbnail) ? new MediaShortTransformer($this->order->thumbnail): null,
 
         ];
 
