@@ -215,4 +215,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function defaultAddress() {
         return $this->addresses()->where('default', 1)->first();
     }
+    public function connectedAccount() {
+    	return $this->hasMany(ConnectedAccount::class, 'user_id');
+    }
 }

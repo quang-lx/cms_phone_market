@@ -2,23 +2,28 @@
 
 namespace Modules\Api\Http\Controllers;
 
-use App\Events\NeedCreateUserSmsToken;
-use App\Rules\PhoneNumber;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
+use Modules\Api\Repositories\OrderUserNotiRepository;
+use Modules\Api\Transformers\OrderUserNotiTransformer;
 use Modules\Api\Transformers\UserTransformer;
-use Modules\Mon\Entities\SmsToken;
-use Modules\Mon\Entities\User;
+use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Http\Controllers\ApiController;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends ApiController
 {
+
+	/** @var OrderUserNotiRepository */
+	public $orderUserNoti;
+	public function __construct(Authentication $auth, OrderUserNotiRepository $orderUserNoti)
+	{
+		parent::__construct($auth);
+
+		$this->orderUserNoti = $orderUserNoti;
+	}
     public function update(Request $request)
     {
 
@@ -101,5 +106,10 @@ class UserController extends ApiController
 	{
 		$user = $this->auth->user();
 		return $this->respond(new UserTransformer($user),ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
+
+	public function notifications(Request $request) {
+		$notifications = $this->orderUserNoti->getList($request);
+		return $this->respond(OrderUserNotiTransformer::collection($notifications),ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
 }

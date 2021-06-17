@@ -127,6 +127,10 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
         'uses' => 'UserController@profile',
         'as' => 'apife.user.profile',
     ]);
+	Route::get('notifications', [
+		'uses' => 'UserController@notifications',
+		'as' => 'apife.user.notifications',
+	]);
 });
 
 
