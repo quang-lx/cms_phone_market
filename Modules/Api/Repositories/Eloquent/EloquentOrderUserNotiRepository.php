@@ -5,6 +5,7 @@ namespace Modules\Api\Repositories\Eloquent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Modules\Api\Repositories\OrderUserNotiRepository;
 use Modules\Api\Repositories\RatingRepository;
 
@@ -27,7 +28,18 @@ class EloquentOrderUserNotiRepository extends ApiBaseRepository implements Order
         $query = $this->model->query();
         $query->where('user_id', $userId);
         $query->orderByDesc('id');
-        return $query->paginate($request->get('per_page', 10));
+
+        $notifications = $query->paginate($request->get('per_page', 10));
+        $currentItems = $notifications->items();
+        $ids = [];
+        foreach ($currentItems as $item) {
+        	$ids[] = $item->id;
+        }
+        Log::info($ids);
+        $this->model->newQuery()->whereIn('id',$ids)->update([
+        	'seen' => 1
+        ]);
+        return $notifications;
 
     }
 
