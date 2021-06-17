@@ -91,7 +91,7 @@
                       </el-form-item>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if="modelForm.type == 2">
                       <el-form-item
                         :label="$t('voucher.label.shop_id')"
                         :class="{

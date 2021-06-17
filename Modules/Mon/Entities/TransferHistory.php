@@ -25,6 +25,7 @@ class TransferHistory extends Model
         'updated_at',
         'status',
         'type',
+        'note',
     ];
 
     const STATUS_INACTIVE = 0;
@@ -43,6 +44,14 @@ class TransferHistory extends Model
 		return $this->belongsTo(Shop::class, 'shop_id');
 	}
     public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id');
+    }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function toshop()
     {
         return $this->belongsTo(Shop::class, 'to_shop_id');
     }

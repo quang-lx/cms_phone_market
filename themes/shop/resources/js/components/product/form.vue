@@ -377,7 +377,7 @@
                                             <el-form-item :label="$t('product.label.p_weight')"
                                                           :class="{'el-form-item is-error': form.errors.has('p_weight') }">
 
-                                                <cleave v-model="modelForm.p_weight" :options="options" class="form-control" name="p_weight"></cleave>
+                                                <cleave v-model="modelForm.p_weight" :options="options_odd_number" class="form-control" name="p_weight"></cleave>
 
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('p_weight')"
@@ -388,7 +388,7 @@
                                             <el-form-item :label="$t('product.label.s_long')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_long') }">
 
-                                                <cleave v-model="modelForm.s_long" :options="options" class="form-control" name="s_long"></cleave>
+                                                <cleave v-model="modelForm.s_long" :options="options_odd_number" class="form-control" name="s_long"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_long')"
                                                      v-text="form.errors.first('s_long')"></div>
@@ -398,7 +398,7 @@
                                             <el-form-item :label="$t('product.label.s_width')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_width') }">
 
-                                                <cleave v-model="modelForm.s_width" :options="options" class="form-control" name="s_width"></cleave>
+                                                <cleave v-model="modelForm.s_width" :options="options_odd_number" class="form-control" name="s_width"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_width')"
                                                      v-text="form.errors.first('s_width')"></div>
@@ -408,7 +408,7 @@
                                             <el-form-item :label="$t('product.label.s_height')"
                                                           :class="{'el-form-item is-error': form.errors.has('s_height') }">
 
-                                                <cleave v-model="modelForm.s_height" :options="options" class="form-control" name="s_height"></cleave>
+                                                <cleave v-model="modelForm.s_height" :options="options_odd_number" class="form-control" name="s_height"></cleave>
                                                 <div class="el-form-item__error"
                                                      v-if="form.errors.has('s_height')"
                                                      v-text="form.errors.first('s_height')"></div>
@@ -553,6 +553,15 @@
           rawValueTrimPrefix: true,
           numeralIntegerScale: 12,
           numeralDecimalScale: 0
+        },
+        options_odd_number: {
+          prefix: '',
+          numeral: true,
+          numeralPositiveOnly: true,
+          noImmediatePrefix: true,
+          rawValueTrimPrefix: true,
+          numeralIntegerScale: 12,
+          numeralDecimalScale: 2
         },
         defaultProps: {
           children: 'children',

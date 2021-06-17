@@ -151,6 +151,23 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                        <el-form-item :label="$t('transfer.label.note')"
+                                      :class="{'el-form-item is-error': form.errors.has(  'note') }">
+                            <div slot="label">
+                                <label class="el-form-item__label">{{$t('transfer.label.note')}}</label>
+                            </div>
+                            <tinymce v-model="modelForm.note"
+                                      :height="150"></tinymce>
+                            <div class="el-form-item__error"
+                                  v-if="form.errors.has('note')"
+                                  v-text="form.errors.first('note')"></div>
+                        </el-form-item>
+                    </div>
+                  </div>
+
                 </el-form>
               </div>
             </div>
@@ -255,13 +272,14 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import Cleave from 'vue-cleave-component';
+import Tinymce from '../utils/Tinymce';
 
 export default {
   props: {
     pageTitle: { default: null, String },
   },
   components: {
-    Cleave
+    Cleave, Tinymce
   },
   data() {
     return {
@@ -285,7 +303,8 @@ export default {
         product_key: "",
         vtProducts: [],
         type: 1,
-        isEdit: true
+        isEdit: true,
+        note:''
       },
       shopArr: [],
       locales: window.MonCMS.locales,

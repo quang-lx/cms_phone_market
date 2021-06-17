@@ -3,6 +3,7 @@
 namespace Modules\Shop\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreateProductRequest extends FormRequest
 {
@@ -22,7 +23,11 @@ class CreateProductRequest extends FormRequest
             'category_id' => 'required',
             'sale_price' => 'numeric|min:0|max:100',
             'type' => 'required',
+            'warranty_time' => 'required',
         ];
+        if (!Auth::user()->shop_id){
+            $rules['shop_id'] = 'required';
+        }
 
         return $rules;
     }
@@ -39,7 +44,7 @@ class CreateProductRequest extends FormRequest
 
     public function messages()
     {
-        return [
+        $msg = [
             'name.required' => 'Tên sản phẩm là bắt buộc',
             'description.required' => 'Mô tả là bắt buộc',
             'p_weight.numeric' => 'Cân nặng yêu cầu nhập số',
@@ -56,8 +61,13 @@ class CreateProductRequest extends FormRequest
             'sale_price.min' => 'Giá khuyến mãi nhỏ nhất là 0%',
             'sale_price.max' => 'Giá khuyến mãi lớn nhất là 100%',
             'type.required' => 'Loại sản phẩm là bắt buộc',
+            'warranty_time.required' => 'Thời gian bảo hành là bắt buộc',
 
         ];
+        if (!Auth::user()->shop_id){
+            $msg['shop_id.required'] = 'Chi nhánh là bắt buộc';
+        }
+        return $msg;
     }
 
     public function translationMessages()

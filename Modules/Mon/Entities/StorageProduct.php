@@ -16,12 +16,14 @@ class StorageProduct extends Model
         'title',
         'received_at',
         'shop_id',
+        'to_shop_id',
         'company_id',
         'created_by',
         'updated_by',
         'deleted_at',
         'created_at',
         'updated_at',
+        'note',
         'status',
     ];
 
@@ -37,6 +39,11 @@ class StorageProduct extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id');
+    }
+
+    public function toshop()
+    {
+        return $this->belongsTo(Shop::class, 'to_shop_id');
     }
 
     public function vtProducts()
