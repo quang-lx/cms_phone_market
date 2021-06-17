@@ -19,6 +19,7 @@ class OrderUserNotiTransformer extends JsonResource
             'title' => $this->title,
             'content' => $this->content,
             'order_id' => $this->order_id,
+            'seen' => $this->seen,
 	        'created_at'=> optional($this->created_at)->format('d/m/Y H:i'),
 
         ];
