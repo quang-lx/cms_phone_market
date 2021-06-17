@@ -96,6 +96,9 @@ class Orders extends Model
 	{
 		return $this->belongsTo(PaymentHistory::class, 'payment_history_id');
 	}
+	public function getThumbnailAttribute() {
+		return $this->firstOrderProduct->thumbnail;
+	}
 
 	public function user()
 	{
