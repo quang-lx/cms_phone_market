@@ -553,9 +553,10 @@ export default {
                 "status": "Trạng thái",
                 "id": "ID",
                 "received_at": "Thời gian chuyển",
-                "shop_id": "Kho nhận",
+                "to_shop_id": "Kho nhận",
                 "shop_name": "Kho nhận",
-                "products": "Danh sách vật tư"
+                "products": "Danh sách vật tư",
+                "type": "Loại đơn"
             },
             "button": {
                 "save": "Nhập kho"
@@ -573,7 +574,7 @@ export default {
                 "updated_at": "Ngày cập nhật",
                 "title": "Tên đơn",
                 "create_new": "Tạo mới",
-                "update_transfer": "Cập nhật",
+                "update_transfer": "Thông tin",
                 "create_transfer": "Thêm mới",
                 "status": "Trạng thái",
                 "id": "ID",

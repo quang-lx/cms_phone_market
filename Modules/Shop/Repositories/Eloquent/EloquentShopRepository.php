@@ -45,6 +45,11 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
         if ($request->get('check_company')){
             $query->where('company_id', Auth::user()->company_id);
         }
+
+        if ($request->get('except_current')){
+            $query->where('id', '!=', Auth::user()->shop_id);
+        }
+
         if ($request->get('shop_admin') !==null) {
             $query->where(function($c){
                 $c->orWhere('company_id',Auth::user()->company_id);

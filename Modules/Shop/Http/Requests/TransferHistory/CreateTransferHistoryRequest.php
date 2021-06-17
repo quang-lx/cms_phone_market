@@ -5,6 +5,9 @@ namespace Modules\Shop\Http\Requests\TransferHistory;
 use Illuminate\Foundation\Http\FormRequest;
 use \App\Rules\CountProduct;
 use \Illuminate\Validation\Validator;
+use Modules\Mon\Entities\TransferHistory;
+use Modules\Mon\Entities\VtShopProduct;
+use Illuminate\Support\Facades\Auth;
 
 class CreateTransferHistoryRequest extends FormRequest
 {
@@ -21,8 +24,10 @@ class CreateTransferHistoryRequest extends FormRequest
     public function withValidator(Validator $validator)
     {
         $vtProducts = $this->vtProducts;
-        $validator->after(function ($validator) use ($vtProducts) {
-            if (intval($this->type) == 2){
+        $shopId = Auth::user()->shop_id;
+        $companyId = Auth::user()->company_id;
+        $validator->after(function ($validator) use ($vtProducts, $shopId, $companyId) {
+            if (intval($this->type) == TransferHistory::TYPE_MOVE){
                 if (!$this->to_shop_id){
                     $validator->errors()->add('to_shop_id', 'Thông tin kho nhận là bắt buộc');
                 }
@@ -31,6 +36,11 @@ class CreateTransferHistoryRequest extends FormRequest
                 foreach ($vtProducts as $vtProduct){
                     if (!$vtProduct['catId'] || !$vtProduct['id'] || !$vtProduct['count']){
                         $validator->errors()->add('vtproduct', 'Thông tin vật tư không được để trống');
+                    }
+                    $vtShopProduct = VtShopProduct::query()->where('shop_id', $shopId)->where('company_id', $companyId)
+                        ->where('vt_product_id', $vtProduct['id'])->first();
+                    if (!$vtShopProduct || $vtShopProduct->amount < intval($vtProduct['count'])){
+                        $validator->errors()->add('vtproduct', 'Số lượng vật tư còn trong kho không đủ');
                     }
                 }
             }

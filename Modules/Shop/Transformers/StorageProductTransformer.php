@@ -17,6 +17,7 @@ class StorageProductTransformer extends JsonResource
             'title' => $this->title,
             'received_at' => $this->received_at,
             'shop_id' => $this->shop_id,
+            'to_shop_id' => $this->to_shop_id,
             'shop_name' => optional($this->shop)->name,
             'company_id' => $this->company_id,
             'created_by' => $this->created_by,
@@ -27,7 +28,8 @@ class StorageProductTransformer extends JsonResource
             'status' => $this->status,
             'status_name' => $this->status_name,
             'status_color' => $this->status_color,
-            'products' => $this->products,
+            'vtProducts' => $this->vtProducts,
+            'type' => $this->type,
 
 
              'urls' => [
@@ -36,8 +38,15 @@ class StorageProductTransformer extends JsonResource
 
         ];
 
-        foreach ($data['products'] as $key => $product){
-            $data['products'][$key]['count'] = $product->pivot->amount;
+        foreach ($data['vtProducts'] as $key => $product){
+            $data['vtProducts'][$key]['count'] = $product->pivot->amount;
+            $data['vtProducts'][$key]['catId'] = $product->vt_category_id;
+            $listVtProduct = array();
+            $listVtProduct[0] = array(
+                'id' => $data['vtProducts'][$key]->id,
+                'name' => $data['vtProducts'][$key]->name
+            );
+            $data['vtProducts'][$key]['listVtProduct'] = $listVtProduct;
         }
 
 

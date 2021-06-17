@@ -26,10 +26,10 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
         event(new StorageProductWasUpdated($model, $data));
 
         //import vào bảng vt_shop_product
-        foreach ($data['products'] as $product){
+        foreach ($data['vtProducts'] as $product){
             $row = VtShopProduct::query()->where([
                 'vt_product_id' => $product['id'],
-                'shop_id' => $data['shop_id'],
+                'shop_id' => $data['to_shop_id'],
                 'company_id' => $data['company_id'],
             ])->first();
             if ($row) {
@@ -40,7 +40,7 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
             } else {
                 VtShopProduct::create([
                     'vt_product_id' => $product['id'],
-                    'shop_id' => $data['shop_id'],
+                    'shop_id' => $data['to_shop_id'],
                     'company_id' => $data['company_id'],
                     'amount' => $product['count'],
                 ]);
@@ -64,7 +64,7 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
 
 		$companyId = Auth::user()->company_id;
 		$shopId = Auth::user()->shop_id;
-		$query->where('company_id', $companyId)->where('shop_id', $shopId);
+		$query->where('company_id', $companyId)->where('to_shop_id', $shopId);
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
