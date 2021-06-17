@@ -20,12 +20,14 @@ use Modules\Api\Repositories\Eloquent\EloquentCartRepository;
 use Modules\Api\Repositories\Eloquent\EloquentCategoryRepository;
 use Modules\Api\Repositories\Eloquent\EloquentHomeSettingRepository;
 use Modules\Api\Repositories\Eloquent\EloquentOrderRepository;
+use Modules\Api\Repositories\Eloquent\EloquentOrderUserNotiRepository;
 use Modules\Api\Repositories\Eloquent\EloquentProductRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentSearchRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\OrderRepository;
+use Modules\Api\Repositories\OrderUserNotiRepository;
 use Modules\Api\Repositories\PaymentMethodRepository;
 use Modules\Api\Repositories\ProductRepository;
 use Modules\Api\Repositories\RankRepository;
@@ -37,6 +39,7 @@ use Modules\Api\Repositories\VoucherRepository;
 use Modules\Mon\Entities\Address;
 use Modules\Mon\Entities\Cart;
 use Modules\Mon\Entities\Orders;
+use Modules\Mon\Entities\OrderUserNotification;
 use Modules\Mon\Entities\PaymentMethod;
 use Modules\Mon\Entities\Pcategory;
 use Modules\Mon\Entities\Product;
@@ -236,5 +239,11 @@ class ApiServiceProvider extends ServiceProvider
                 return new EloquentCacheVoucherRepository(new Voucher());
             }
         );
+	    $this->app->bind(
+		    OrderUserNotiRepository::class,
+		    function () {
+			    return new EloquentOrderUserNotiRepository(new OrderUserNotification());
+		    }
+	    );
     }
 }
