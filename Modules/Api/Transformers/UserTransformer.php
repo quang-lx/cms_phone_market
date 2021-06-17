@@ -27,6 +27,7 @@ class UserTransformer extends JsonResource
             'total_order' => 10,
 	        'avatar' => $this->avatar? new MediaShortTransformer($this->avatar): null,
             'default_address' => $defaultAddress? new AddressTransformer($defaultAddress): null,
+            'noti_not_seen' => $this->orderNotificationNotSeen->count(),
 			'providers' => $this->connectedAccount? ConnectedAccountTransformer::collection($this->connectedAccount): null
 
         ];

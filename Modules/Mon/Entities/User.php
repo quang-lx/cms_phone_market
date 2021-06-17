@@ -218,4 +218,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function connectedAccount() {
     	return $this->hasMany(ConnectedAccount::class, 'user_id');
     }
+
+    public function orderNotifications() {
+    	return $this->hasMany(OrderUserNotification::class, 'user_id');
+    }
+    public function orderNotificationNotSeen() {
+    	return $this->orderNotifications()->where('seen', 0);
+    }
 }
