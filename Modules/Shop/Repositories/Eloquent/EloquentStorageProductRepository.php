@@ -19,7 +19,7 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
             //neu trang thai != 1 ko xu ly gi
             return $model;
         }
-		unset($data['updated_at']);
+		$data['updated_at'] = now();
         // cập nhật trạng thái phiếu về 2
         $data['status'] = StorageProduct::STATUS_IMPORT;
 		$model->update($data);
