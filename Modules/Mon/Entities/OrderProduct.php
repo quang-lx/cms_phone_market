@@ -31,7 +31,7 @@ class OrderProduct extends Model
         return $this->belongsTo(ProductAttributeValue::class, 'product_attribute_value_id', 'id');
     }
     public function productThumbnail() {
-        return $this->belongsTo(Media::class, 'product_img_id', 'id');
+        return $this->files()->first();
     }
     public function getThumbnailAttribute() {
     	if ($this->product) {
