@@ -7,7 +7,7 @@
       }}</span>
     </a>
     <el-drawer
-      title="I am the title"
+      title="Thông báo"
       :visible.sync="drawer"
       :direction="direction"
       :before-close="handleClose"
@@ -104,7 +104,7 @@ export default {
             break;
 
           case 2:
-            this.$router.push({ name: "shop.storageproduct.edit",params: {storageproductId: data.order_id} }).catch(()=>{});
+            this.$router.push({ name: "shop.storageproduct.edit",params: {storageproductId: data.vt_transfer_id} }).catch(()=>{});
             break;
 
           default:
