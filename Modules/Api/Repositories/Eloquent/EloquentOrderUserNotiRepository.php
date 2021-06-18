@@ -35,7 +35,6 @@ class EloquentOrderUserNotiRepository extends ApiBaseRepository implements Order
         foreach ($currentItems as $item) {
         	$ids[] = $item->id;
         }
-        Log::info($ids);
         $this->model->newQuery()->whereIn('id',$ids)->update([
         	'seen' => 1
         ]);

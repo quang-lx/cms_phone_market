@@ -461,7 +461,6 @@ class EloquentOrderRepository implements OrderRepository
             $productAttributeValue = $product['product_attribute_id'] ?? null;
             $attributeModel = ProductAttributeValue::find($productAttributeValue);
             $voucherAmount = $this->calVoucherAmount($shopId, $voucher, $model, $attributeModel);
-            Log::info($voucherAmount);
             if ($voucherAmount && $voucher->discount_type == Voucher::DISCOUNT_PERCENT) {
                 $voucherTotalAmount += $voucherAmount * $quantity;
             }
@@ -495,7 +494,6 @@ class EloquentOrderRepository implements OrderRepository
         if ($voucher->discount_type == Voucher::DISCOUNT_PRICE) {
             $voucherAmount = $voucher->discount_amount;
         } else {
-            Log::info($voucher->discount_amount);
             $productPrice = $product->price;
             if ($product->sale_price) {
                 $productPrice = $productPrice * (100 - $productPrice->sale_price) / 100;
@@ -507,7 +505,6 @@ class EloquentOrderRepository implements OrderRepository
                     $productPrice = $productPrice * (100 - $productAttributeValue->sale_price) / 100;
                 }
             }
-            Log::info($productPrice);
             $voucherAmount = $voucher->discount_amount * $productPrice / 100;
         }
 
@@ -705,13 +702,9 @@ class EloquentOrderRepository implements OrderRepository
 
             if ($productAttributeValue) {
 
-				Log::info($product);
-				Log::info($productAttributeValue);
                 $productPrice = $productAttributeValue->price;
-                Log::info($productAttributeValue->sale_price);
                 if ($productAttributeValue->sale_price) {
                     $productPrice = $productPrice * (100 - $productAttributeValue->sale_price) / 100;
-	                Log::info($productPrice);
                 }
                 $orderProductData['price'] = $productAttributeValue->price;
 

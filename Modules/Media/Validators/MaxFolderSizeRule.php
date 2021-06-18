@@ -22,8 +22,6 @@ class MaxFolderSizeRule implements Rule
         $folderSize = $this->getDirSize($mediaPath);
 
         preg_match('/([0-9]+)/', $folderSize, $match);
-        Log::info(($match[0] + $value->getSize()));
-        Log::info(config('media.max-total-size'));
 
         return ($match[0] + $value->getSize()) < config('media.max-total-size');
     }

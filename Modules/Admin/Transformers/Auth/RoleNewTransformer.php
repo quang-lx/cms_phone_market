@@ -39,7 +39,6 @@ class RoleNewTransformer extends JsonResource
         $hasPermissions = $this->permissions;
         $allPermissions = Permission::query()->get();
         $result = [];
-        Log::info($hasPermissions);
         foreach ($allPermissions as $permission) {
             if ($hasPermissions->where('id', $permission->id)->count() > 0) {
                 $result[$permission->name] = 1;
