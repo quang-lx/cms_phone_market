@@ -35,7 +35,9 @@ class FcmService implements NotificationService
             $message = CloudMessage::withTarget('token', $deviceToken)
                 ->withNotification($notification) // optional
                 ->withData($data); // optional
-            $this->messaging->send($message);
+            $res = $this->messaging->send($message);
+            Log::info('fcm_noti_res');
+            Log::info($res);
         } catch (\Exception $exception) {
             Log::error('sendNotification: '. $exception->getMessage(), $data);
         }

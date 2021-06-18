@@ -35,7 +35,7 @@
           </div>
           <!-- Message End -->
         </a>
-       
+
       </div>
     </div>
     </el-drawer>
@@ -113,7 +113,7 @@ export default {
     },
 
     redirectRouteDetailOrder(type,id) {
-    
+
       switch (type) {
         case 'sua_chua': // sửa chữa
           this.$router.push({ name: "shop.orders.detail",params: {ordersId:id}}).catch(()=>{});
@@ -122,7 +122,7 @@ export default {
         case 'bao_hanh': // bảo hành
           this.$router.push({ name: "shop.orders.detailguarantee",params: {ordersId:id} }).catch(()=>{});
           break;
-        
+
         case 'mua_hang': // mua bán
           this.$router.push({ name: "shop.orders.detailbuysell",params: {ordersId:id} }).catch(()=>{});
           break;
@@ -153,12 +153,12 @@ export default {
             this.fetchNotificationScoll()
         }
         }
-        
+
     },
     time2TimeAgo(ts) {
 
 
-    var d=new Date(); 
+    var d=new Date();
     var nowTs = Math.floor(d.getTime()/1000); //
     var seconds = nowTs-ts;
 
@@ -184,7 +184,7 @@ export default {
   },
   mounted() {
     this.fetchNotification();
-    setInterval(this.fetchNotification, 5000);
+    setInterval(this.fetchNotification, 5000000);
   },
 };
 </script>
