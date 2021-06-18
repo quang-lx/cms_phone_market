@@ -19,7 +19,7 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
             //neu trang thai != 1 ko xu ly gi
             return $model;
         }
-
+		unset($data['updated_at']);
         // cập nhật trạng thái phiếu về 2
         $data['status'] = StorageProduct::STATUS_IMPORT;
 		$model->update($data);
@@ -35,7 +35,7 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
             if ($row) {
                 $row->update([
                     'amount' => $row->amount + $product['count']
-    
+
                 ]);
             } else {
                 VtShopProduct::create([
@@ -46,8 +46,8 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
                 ]);
             }
         }
-        
-      
+
+
 		return $model;
 	}
 
