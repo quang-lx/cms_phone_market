@@ -20,6 +20,8 @@ class OrderTransformer extends JsonResource
 	        'pay_price' => $this->pay_price,
 	        'ship_fee' => $this->ship_fee,
 	        'discount' => $this->discount,
+	        'order_type' => $this->order_type,
+	        'status' => $this->status,
             'product' => $this->getOrderProduct($this->order_type, $this->type_other,$this->firstOrderProduct)
         ];
 

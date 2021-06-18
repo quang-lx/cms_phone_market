@@ -16,6 +16,8 @@ class OrderFullTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'order_type' => $this->order_type,
+            'status' => $this->status,
 	        'total_price' => $this->total_price,
 	        'pay_price' => $this->pay_price,
 	        'ship_fee' => $this->ship_fee,
