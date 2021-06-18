@@ -74,23 +74,6 @@ class OrdersController extends ApiController
     public function update(Orders $orders, UpdateOrdersRequest $request)
     {
 	    $orders = $this->ordersRepository->update($orders, $request->all());
-        $data = [
-            'title' => trans('order.notifications.sua_chua.title'),
-            'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $orders->id]),
-            'fcm_token' => $orders->user->fcm_token,
-            'type' => trans('order.notifications.sua_chua.type', ['order_status' => $orders->status]),
-        ];
-        event(new ShopNotiCreated($data));
-
-        event(new OrderStatusUpdated([
-            'order_id' => $orders->id,
-	        'order_type' => $orders->order_type,
-            'title' => $orders->status_name,
-            'old_status' => Orders::STATUS_ORDER_CREATED,
-            'new_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM,
-            'user_id' => null,
-            'shop_id' => Auth::user()->shop_id
-          ]));
         return response()->json([
             'errors' => false,
             'message' => trans('ch::orders.message.update success'),
@@ -107,6 +90,15 @@ class OrdersController extends ApiController
     {
 
         return $this->ordersRepository->updateBuySell($orders, $request->all());
+    }
+
+    public function cacelBuySell(Orders $orders, Request $request)
+    {
+	    $orders = $this->ordersRepository->cacelBuySell($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
     }
 
     public function destroy(Orders $orders)

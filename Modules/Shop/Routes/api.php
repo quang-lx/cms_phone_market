@@ -467,6 +467,11 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.update_buysell',
         'uses' => 'Orders\OrdersController@updateBuySell',
     ]);
+
+    Route::post('/{orders}/cancel-buysell', [
+        'as' => 'apishop.orders.cancel_buysell',
+        'uses' => 'Orders\OrdersController@cacelBuySell',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
 

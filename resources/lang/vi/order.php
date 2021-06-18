@@ -16,6 +16,7 @@ return [
        ],
        'ban_hang'=>[
             'content confirm' => 'Đơn hàng :order_code đã được xác nhận, vui lòng chờ người bán giao hàng',
+            'content cancel' => 'Đơn hàng :order_code đã được hủy bởi người bán.',
             'type' => 'banhang_:order_status',
             'title' => 'Đơn bán hàng'
 

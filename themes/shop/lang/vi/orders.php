@@ -13,7 +13,11 @@ return [
         'order_type',
         'status' => 'Trạng thái',
         'detail_title' => 'Chi tiết đơn',
-        'delivery_address' => 'Địa chỉ giao hàng'
+        'delivery_address' => 'Địa chỉ giao hàng',
+        'confirm' => [
+            'cancel' => 'Hủy đơn hàng',
+            'agree' => 'Xác nhận đơn hàng',
+        ]
 
     ],
 
