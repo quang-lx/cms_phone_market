@@ -19,8 +19,10 @@ class TransferHistoryTransformer extends JsonResource
             'shop_id' => $this->shop_id,
             'to_shop_id' => $this->to_shop_id,
             'shop_name' => optional($this->shop)->name,
+            'to_shop_name' => optional($this->toshop)->name,
             'company_id' => $this->company_id,
             'created_by' => $this->created_by,
+            'created_name' => optional($this->creator)->name,
             'updated_by' => $this->updated_by,
             'updated_at_format' => optional($this->updated_at)->format('H:i d/m/Y'),
             'deleted_at' => optional($this->deleted_at)->format('d-m-Y H:i:s'),
@@ -33,6 +35,7 @@ class TransferHistoryTransformer extends JsonResource
             'type_name' => $this->type_name,
             'type_color' => $this->type_color,
             'vtProducts' => $this->vtProducts,
+            'note' => $this->note,
              'urls' => [
                 'delete_url' => route('apishop.transfer.destroy', $this->id),
             ],

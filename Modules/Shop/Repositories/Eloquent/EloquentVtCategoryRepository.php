@@ -35,7 +35,8 @@ class EloquentVtCategoryRepository extends BaseRepository implements VtCategoryR
         
 		$user = Auth::user();
 		$query->where('company_id', $user->company_id);
-		if($user->shop_id) {
+        $notCheckShop = $request->get('not_check_shop');
+		if($user->shop_id & !$notCheckShop) {
 			$query->where('shop_id', $user->shop_id);
 		}
 

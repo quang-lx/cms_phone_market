@@ -92,25 +92,39 @@
                                                          sortable="custom">
                                         </el-table-column>
                                         <el-table-column prop="title" :label="$t('transfer.label.title')"
-                                                         sortable="custom"/>
+                                                         sortable="custom" width="100"/>
                                         <el-table-column prop="type" :label="$t('transfer.label.type')"
-                                                         sortable="custom">
+                                                         sortable="custom" width="100">
                                             <template slot-scope="scope">
                                                 <span :style="{'color': scope.row.type_color}">{{scope.row.type_name}}</span>
                                             </template>
                                         </el-table-column>
                                         
                                         <el-table-column prop="shop_name" :label="$t('transfer.label.shop_name')"
-                                                         sortable="address">
+                                                         sortable="address" width="130">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.shop_name}}</span>
                                             </template>
                                         </el-table-column>
 
+                                        <el-table-column prop="to_shop_name" :label="$t('transfer.label.to_shop_name')"
+                                                         sortable="address" width="120">
+                                            <template slot-scope="scope">
+                                                <span class="dont-break-out">{{scope.row.to_shop_name}}</span>
+                                            </template>
+                                        </el-table-column>
+
                                         <el-table-column prop="status" :label="$t('transfer.label.status')"
-                                                         sortable="custom">
+                                                         sortable="custom" width="120">
                                             <template slot-scope="scope">
                                                 <span :style="{'color': scope.row.status_color}">{{scope.row.status_name}}</span>
+                                            </template>
+                                        </el-table-column>
+
+                                        <el-table-column prop="created_name" :label="$t('transfer.label.created_name')"
+                                                         sortable="address" width="120">
+                                            <template slot-scope="scope">
+                                                <span class="dont-break-out">{{scope.row.created_name}}</span>
                                             </template>
                                         </el-table-column>
 
@@ -121,7 +135,8 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="updated_at" :label="$t('transfer.label.updated_at')" sortable="custom">
+                                        <el-table-column prop="updated_at" :label="$t('transfer.label.updated_at')" 
+                                            sortable="custom" width="150">
                                             <template slot-scope="scope">
                                                 <span>{{ scope.row.updated_at_format }}</span>
                                             </template>

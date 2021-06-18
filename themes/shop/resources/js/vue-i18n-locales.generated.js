@@ -405,7 +405,7 @@ export default {
                 "sku": "SKU",
                 "amount": "Số lượng",
                 "price": "Giá bán",
-                "sale_price": "Giá khuyến mại(%)",
+                "sale_price": "Giá giảm(%)",
                 "category_id": "Danh mục",
                 "problem_id": "Vấn đề sửa chữa",
                 "company_id": "Cửa hàng",
@@ -553,8 +553,10 @@ export default {
                 "status": "Trạng thái",
                 "id": "ID",
                 "received_at": "Thời gian chuyển",
+                "shop_id": "Kho chuyển",
                 "to_shop_id": "Kho nhận",
-                "shop_name": "Kho nhận",
+                "shop_name": "Kho chuyển",
+                "to_shop_name": "Kho nhận",
                 "products": "Danh sách vật tư",
                 "type": "Loại đơn"
             },
@@ -579,10 +581,12 @@ export default {
                 "status": "Trạng thái",
                 "id": "ID",
                 "received_at": "Thời gian xuất/chuyển",
-                "to_shop_id": "Kho nhận",
-                "shop_name": "Kho nhận",
+                "shop_name": "Kho chuyển",
+                "to_shop_name": "Kho nhận",
                 "products": "Danh sách vật tư",
-                "type": "Loại đơn"
+                "type": "Loại đơn",
+                "created_name": "Người tạo",
+                "note": "Ghi chú"
             },
             "message": {
                 "create success": "Thêm mới bản ghi thành công.",

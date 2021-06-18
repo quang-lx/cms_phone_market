@@ -2,8 +2,6 @@
     <div>
         <div class="content-header">
             <div class="container-fluid">
-
-
                 <div class="card">
                     <div class="card-body">
                         <div class="row ">
@@ -14,13 +12,10 @@
                                     </el-breadcrumb-item>
                                     <el-breadcrumb-item>{{ $t('storageproduct.label.manager') }}
                                     </el-breadcrumb-item>
-
                                 </el-breadcrumb>
-
                             </div>
                             <div class="col-sm-9">
                                 <div class="row pull-right col-sm-4 offset-sm-8">
-
                                     <div class="col-12">
                                         <el-input prefix-icon="el-icon-search" @keyup.native="performSearch"
                                                   placeholder="Tên đơn hàng"
@@ -28,28 +23,21 @@
                                         </el-input>
                                     </div>
                                 </div>
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="sc-table">
-
                                     <el-table
                                             :data="data"
                                             stripe
@@ -63,12 +51,17 @@
                                         </el-table-column>
                                         <el-table-column prop="title" :label="$t('storageproduct.label.title')"
                                                          sortable="custom"/>
-                                        <el-table-column prop="received_at" :label="$t('storageproduct.label.received_at')"
-                                                         sortable="custom"/>
+
                                         <el-table-column prop="shop_name" :label="$t('storageproduct.label.shop_name')"
                                                          sortable="address">
                                             <template slot-scope="scope">
                                                 <span class="dont-break-out">{{scope.row.shop_name}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="to_shop_name" :label="$t('storageproduct.label.to_shop_name')"
+                                                         sortable="address">
+                                            <template slot-scope="scope">
+                                                <span class="dont-break-out">{{scope.row.to_shop_name}}</span>
                                             </template>
                                         </el-table-column>
 
@@ -79,17 +72,21 @@
                                             </template>
                                         </el-table-column>
 
-                                        <el-table-column prop="updated_at" :label="$t('storageproduct.label.updated_at')" sortable="custom">
-
+                                        <el-table-column prop="received_at" :label="$t('storageproduct.label.received_at')"
+                                                         sortable="custom" width="200">
+                                            <template slot-scope="scope">
+                                                <span>{{ scope.row.received_at_format }}</span>
+                                            </template>
                                         </el-table-column>
 
+                                        <el-table-column prop="updated_at" :label="$t('storageproduct.label.updated_at')" sortable="custom">
+                                        </el-table-column>
 
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
 
                                                 <el-button type="primary" icon="el-icon-view"
-                                                    @click="gotosite(scope.row.id)"
-                                                    v-if="scope.row.status == 1">
+                                                    @click="gotosite(scope.row.id)">
                                                 </el-button>
                                                 
                                             </template>

@@ -90,16 +90,16 @@
 
                         <div class="col-md-12">
                           <el-form-item
-                            :label="$t('storageproduct.label.to_shop_id')"
+                            :label="$t('storageproduct.label.shop_id')"
                             :class="{
                               'el-form-item is-error': form.errors.has(
-                                'to_shop_id'
+                                'shop_id'
                               ),
                             }"
                           >
                             <el-select
-                              v-model="modelForm.to_shop_id"
-                              :placeholder="$t('storageproduct.label.to_shop_id')"
+                              v-model="modelForm.shop_id"
+                              :placeholder="$t('storageproduct.label.shop_id')"
                               filterable
                               style="width: 100% !important"
                             >
@@ -148,6 +148,22 @@
                           </el-form-item>
                         </div>
                       </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                        <el-form-item :label="$t('transfer.label.note')"
+                                      :class="{'el-form-item is-error': form.errors.has(  'note') }">
+                            <div slot="label">
+                                <label class="el-form-item__label">{{$t('transfer.label.note')}}</label>
+                            </div>
+                            <tinymce v-model="modelForm.note"
+                                      :height="150"></tinymce>
+                            <div class="el-form-item__error"
+                                  v-if="form.errors.has('note')"
+                                  v-text="form.errors.first('note')"></div>
+                        </el-form-item>
                     </div>
                   </div>
                 </el-form>
@@ -231,7 +247,7 @@
                   size="small"
                   :loading="loading"
                   class="btn btn-flat"
-                  :disabled="modelForm.status != 1"
+                  :disabled="modelForm.status != 1 || is_admin"
                 >
                   {{ $t("storageproduct.button.save") }}
                 </el-button>
@@ -249,13 +265,14 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import Cleave from 'vue-cleave-component';
+import Tinymce from '../utils/Tinymce';
 
 export default {
   props: {
     pageTitle: { default: null, String },
   },
   components: {
-    Cleave
+    Cleave, Tinymce
   },
   data() {
     return {
@@ -276,8 +293,10 @@ export default {
         received_at: new Date("Y-m-d H:i:s"),
         to_shop_id: "",
         product_key: "",
-        products: [],
-        isEdit: false
+        vtProducts: [],
+        type: 1,
+        isEdit: true,
+        note:''
       },
       shopArr: [],
       locales: window.MonCMS.locales,
@@ -293,6 +312,7 @@ export default {
         },
       ],
       list_vtcategory: [],
+      is_admin : window.MonCMS.current_user.is_admin_company
     };
   },
   methods: {
@@ -373,7 +393,7 @@ export default {
     fetchVtCategory() {
       let routeUri = "";
       this.loading = true;
-      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000});
+      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000, not_check_shop: true});
       axios.get(routeUri).then((response) => {
         this.loading = false;
         this.list_vtcategory = response.data.data;
@@ -391,6 +411,28 @@ export default {
         .get(route("api.shop.index", _.merge(properties, {})))
         .then((response) => {
           this.shopArr = response.data.data;
+        });
+    },
+
+    changeVtCategory(key){
+      //load danh sach vật tư của category mới chọn
+      let vtCatId = this.modelForm.vtProducts[key].catId;
+      this.fetchVtProduct(vtCatId, key);
+    },
+    fetchVtProduct(vtCatId, key) {
+      this.loading = true;
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        catId: vtCatId
+      };
+
+      axios
+        .get(route("apishop.vtproduct.index", _.merge(properties, {})))
+        .then((response) => {
+          this.loading = false;
+          this.modelForm.vtProducts[key].listVtProduct = response.data.data;
+          return response.data.data;
         });
     },
   },

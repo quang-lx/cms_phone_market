@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Shop\Events\Voucher\VoucherWasCreated;
 use Modules\Shop\Events\Voucher\VoucherWasUpdated;
 
+
 class EloquentVoucherRepository extends BaseRepository implements VoucherRepository
 {
 
@@ -65,21 +66,25 @@ class EloquentVoucherRepository extends BaseRepository implements VoucherReposit
         $shopId = Auth::user()->shop_id;
         if (!$shopId){
             //nếu là chủ cửa hàng -> Xem được KM của mình, chi nhánh, admin tạo
-            $query->where(function ($query) {
-                $query->whereNull('shop_id')
-                      ->whereNull('company_id');
-            })->orWhere('company_id', $companyId);
+            $query->where(function ($query) use ($companyId){
+                $query->where(function ($query) {
+                    $query->whereNull('shop_id')
+                        ->whereNull('company_id');
+                })->orWhere('company_id', $companyId);
+            });
         } else {
             //nếu là chi nhánh => xem được KM của cửa hàng, chi nhánh của mình, admin
-            $query->where(function ($query) {
-                $query->whereNull('shop_id')
-                      ->whereNull('company_id');
-            })->orWhere(function ($query) use ($companyId) {
-                $query->whereNull('shop_id')
-                      ->where('company_id', $companyId);
-            })->orWhere(function ($query) use ($shopId, $companyId) {
-                $query->where('shop_id', $shopId)
-                      ->where('company_id', $companyId);
+            $query->where(function ($query) use ($companyId, $shopId){
+                $query->where(function ($query) {
+                    $query->whereNull('shop_id')
+                        ->whereNull('company_id');
+                })->orWhere(function ($query) use ($companyId) {
+                    $query->whereNull('shop_id')
+                        ->where('company_id', $companyId);
+                })->orWhere(function ($query) use ($shopId, $companyId) {
+                    $query->where('shop_id', $shopId)
+                        ->where('company_id', $companyId);
+                });
             });
         }
 
