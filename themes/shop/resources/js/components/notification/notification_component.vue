@@ -104,7 +104,7 @@ export default {
             break;
 
           case 2:
-            this.$router.push({ name: "shop.storageproduct.index" }).catch(()=>{});
+            this.$router.push({ name: "shop.storageproduct.edit",params: {storageproductId: data.order_id} }).catch(()=>{});
             break;
 
           default:
@@ -114,16 +114,16 @@ export default {
 
     redirectRouteDetailOrder(type,id) {
     
-      switch (Number(type)) {
-        case 1: // sửa chữa
+      switch (type) {
+        case 'sua_chua': // sửa chữa
           this.$router.push({ name: "shop.orders.detail",params: {ordersId:id}}).catch(()=>{});
           break;
 
-        case 2: // bảo hành
+        case 'bao_hanh': // bảo hành
           this.$router.push({ name: "shop.orders.detailguarantee",params: {ordersId:id} }).catch(()=>{});
           break;
         
-        case 3: // mua bán
+        case 'mua_hang': // mua bán
           this.$router.push({ name: "shop.orders.detailbuysell",params: {ordersId:id} }).catch(()=>{});
           break;
 
