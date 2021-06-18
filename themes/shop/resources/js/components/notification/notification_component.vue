@@ -15,7 +15,7 @@
     <div>
       <div class="overflow-auto" data-spy="scroll" v-on:scroll="scrollLoadData" style="height:500px" id="list_notification">
         <a
-          class="dropdown-item"
+          class="dropdown-item" v-bind:class="{ 'bg-noti': item.seen==0 }"
           href="#"
           @click.prevent="redirectRoute(item)"
           v-for="(item, index) in list_notification"
@@ -29,7 +29,7 @@
               </h3>
               <p class="text-sm">{{ item.content }}</p>
               <p class="text-sm text-muted">
-                <i class="far fa-clock mr-1"></i> {{time2TimeAgo(item.updated_at)}}
+                <i class="far fa-clock mr-1"></i> {{time2TimeAgo(item.created_at)}}
               </p>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default {
             break;
 
           case 2:
-            this.$router.push({ name: "shop.storageproduct.index" }).catch(()=>{});
+            this.$router.push({ name: "shop.storageproduct.edit",params: {storageproductId: data.order_id} }).catch(()=>{});
             break;
 
           default:
@@ -114,16 +114,16 @@ export default {
 
     redirectRouteDetailOrder(type,id) {
     
-      switch (Number(type)) {
-        case 1: // sửa chữa
+      switch (type) {
+        case 'sua_chua': // sửa chữa
           this.$router.push({ name: "shop.orders.detail",params: {ordersId:id}}).catch(()=>{});
           break;
 
-        case 2: // bảo hành
+        case 'bao_hanh': // bảo hành
           this.$router.push({ name: "shop.orders.detailguarantee",params: {ordersId:id} }).catch(()=>{});
           break;
         
-        case 3: // mua bán
+        case 'mua_hang': // mua bán
           this.$router.push({ name: "shop.orders.detailbuysell",params: {ordersId:id} }).catch(()=>{});
           break;
 
@@ -190,4 +190,7 @@ export default {
 </script>
 
 <style>
+.bg-noti{
+  background-color: #efeeee;
+}
 </style>

@@ -9,10 +9,11 @@ return [
         'product_name' => 'Sản phẩm',
         'shop_id' => 'Cửa hàng',
         'created_at' => 'Ngày gửi yêu cầu',
-        'pay_price' => 'Chi phí sửa',
+        'pay_price' => 'Tổng tiền',
         'order_type',
         'status' => 'Trạng thái',
         'detail_title' => 'Chi tiết đơn',
+        'delivery_address' => 'Địa chỉ giao hàng'
 
     ],
 
