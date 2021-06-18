@@ -21,8 +21,6 @@ class StorageProduct extends Model
         'created_by',
         'updated_by',
         'deleted_at',
-        'created_at',
-        'updated_at',
         'note',
         'status',
     ];
