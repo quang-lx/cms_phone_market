@@ -20,6 +20,7 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
             return $model;
         }
 		$data['updated_at'] = now();
+        dd($data);
         // cập nhật trạng thái phiếu về 2
         $data['status'] = StorageProduct::STATUS_IMPORT;
 		$model->update($data);
