@@ -90,7 +90,7 @@
                         <div></div>
                         <div><h4>Chi phí</h4></div>
                         <div>
-                             <span v-currency="modelForm.pay_price"></span>
+                          <span v-currency="modelForm.pay_price"></span>
                         </div>
                       </div>
 
@@ -147,7 +147,7 @@
                         </el-table-column>
                         <el-table-column prop="" label="Giá" sortable="custom">
                           <template slot-scope="scope">
-                              <span v-currency="scope.row.price_product"></span>
+                            <span v-currency="scope.row.price_product"></span>
                           </template>
                         </el-table-column>
 
@@ -167,7 +167,7 @@
                           sortable="custom"
                         >
                           <template slot-scope="scope">
-                              <span v-currency="scope.row.price_sale"></span>
+                            <span v-currency="scope.row.price_sale"></span>
                           </template>
                         </el-table-column>
                       </el-table>
@@ -193,9 +193,8 @@
                             </tr>
                             <tr>
                               <th scope="row">Giảm giá</th>
-                                <span v-currency="modelForm.discount"></span>
-                              <td>
-                              </td>
+                              <span v-currency="modelForm.discount"></span>
+                              <td></td>
                             </tr>
                             <tr>
                               <th scope="row">Tổng tiền</th>
@@ -209,29 +208,19 @@
                     </div>
                   </div>
                   <div
-                    class="col-md-12 text-right"
+                    class="col-md-12 mt-4 text-right"
                     v-if="
                       modelForm.order_type == 'mua_hang' &&
                       modelForm.status_value == 'created'
                     "
                   >
-                    <el-button type="primary" @click="dialogVisible = true"
+                    <el-button type="secondary" @click="cancelOrder"
+                      >Hủy đơn hàng</el-button
+                    >
+                    <el-button type="primary" @click="orderConfirmation"
                       >Nhận đơn</el-button
                     >
                   </div>
-                  <el-dialog
-                    title="Xác nhận"
-                    :visible.sync="dialogVisible"
-                    width="30%"
-                  >
-                    <span>Xác nhận đơn mua hàng</span>
-                    <span slot="footer" class="dialog-footer">
-                      <el-button @click="dialogVisible = false">Hủy</el-button>
-                      <el-button type="primary" @click="onSubmit"
-                        >Xác nhận</el-button
-                      >
-                    </span>
-                  </el-dialog>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -268,7 +257,6 @@ export default {
       dialogRank: false,
       message: "",
       dialogVisible: false,
-
     };
   },
   methods: {
@@ -285,13 +273,35 @@ export default {
       });
     },
 
+    cancelOrder() {
+      this.$confirm(this.$t("orders.label.confirm.cancel"), {
+        confirmButtonText: this.$t("mon.cancel.Yes"),
+        cancelButtonText: this.$t("mon.cancel.No"),
+        type: "warning",
+      })
+        .then(() => {
+          this.onCancel();
+        })
+        .catch(() => {});
+    },
+
+    orderConfirmation() {
+      this.$confirm(this.$t("orders.label.confirm.agree"), {
+        confirmButtonText: this.$t("mon.cancel.Yes"),
+        cancelButtonText: this.$t("mon.cancel.No"),
+        type: "warning",
+      })
+        .then(() => {
+          this.onSubmit();
+        })
+        .catch(() => {});
+    },
+
     showDataModal(key) {
       this.dialogRank = true;
     },
 
-      onSubmit() {
-  
-
+    onSubmit() {
       axios
         .post(this.getRoute())
         .then((response) => {
@@ -307,7 +317,33 @@ export default {
           this.loading = false;
           this.dialogVisible = false;
           this.$notify.error({
-            title: 'Lỗi xác nhận',
+            title: "Lỗi xác nhận",
+            message: error.response.data.message,
+          });
+        });
+    },
+
+    onCancel() {
+      axios
+        .post(
+          route("apishop.orders.cancel_buysell", {
+            orders: this.$route.params.ordersId,
+          })
+        )
+        .then((response) => {
+          this.loading = false;
+          this.$message({
+            type: "success",
+            message: response.data.message,
+          });
+          this.dialogVisible = false;
+          this.$router.push({ name: "shop.ordersbuysell.index" });
+        })
+        .catch((error) => {
+          this.loading = false;
+          this.dialogVisible = false;
+          this.$notify.error({
+            title: "Lỗi xác nhận",
             message: error.response.data.message,
           });
         });
@@ -317,8 +353,6 @@ export default {
         orders: this.$route.params.ordersId,
       });
     },
-
-
   },
   mounted() {
     this.fetchData();

@@ -122,6 +122,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
         $model->update($data_update);
     }
+
     public function statistical(Request $request, $relations = null)
     {
         // select count(*) AS so_don,`order_type`,sum(`pay_price`) AS tong_tien, date(`created_at`) from `orders`
@@ -286,6 +287,56 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'title' => $model->status_name,
 		        'old_status' => Orders::STATUS_ORDER_CREATED,
 		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+
+
+
+    }
+
+    public function cacelBuySell($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_MUA_HANG) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_CANCEL
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content cancel', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content cancel', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CREATED,
+		        'new_status' => Orders::STATUS_ORDER_CANCEL,
 		        'user_id' => null,
 		        'shop_id' => Auth::user()->shop_id
 	        ]));
