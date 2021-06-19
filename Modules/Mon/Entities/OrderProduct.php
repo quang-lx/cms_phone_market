@@ -30,7 +30,7 @@ class OrderProduct extends Model
     public function productValue() {
         return $this->belongsTo(ProductAttributeValue::class, 'product_attribute_value_id', 'id');
     }
-    public function productThumbnail() {
+    public function getProductThumbnailAttribute() {
         return $this->files()->first();
     }
     public function getThumbnailAttribute() {
