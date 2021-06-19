@@ -36,13 +36,15 @@ class CreateTransferHistoryRequest extends FormRequest
                 foreach ($vtProducts as $vtProduct){
                     if (!$vtProduct['catId'] || !$vtProduct['id'] || !$vtProduct['count']){
                         $validator->errors()->add('vtproduct', 'Thông tin vật tư không được để trống.');
+                    } else {
+                        $vtShopProduct = VtShopProduct::query()->where('shop_id', $shopId)->where('company_id', $companyId)
+                            ->where('vt_product_id', $vtProduct['id'])->first();
+                        if (!$vtShopProduct || $vtShopProduct->amount < intval($vtProduct['count'])){
+                            $msg = sprintf('Số lượng tồn kho của %s không đủ.', $vtProduct['listVtProduct'][0]['name']);
+                            $validator->errors()->add('vtproduct', $msg);
+                        }
                     }
-                    $vtShopProduct = VtShopProduct::query()->where('shop_id', $shopId)->where('company_id', $companyId)
-                        ->where('vt_product_id', $vtProduct['id'])->first();
-                    if (!$vtShopProduct || $vtShopProduct->amount < intval($vtProduct['count'])){
-                        $msg = sprintf('Số lượng tồn kho của %s không đủ.', $vtProduct['listVtProduct'][0]['name']);
-                        $validator->errors()->add('vtproduct', $msg);
-                    }
+                    
                 }
             }
 

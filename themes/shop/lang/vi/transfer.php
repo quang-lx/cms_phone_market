@@ -13,6 +13,7 @@ return [
         'received_at' => 'Thời gian xuất/chuyển',
         'shop_name' => 'Kho chuyển',
         'to_shop_name' => 'Kho nhận',
+        'to_shop_id' => 'Kho nhận',
         'products' => 'Danh sách vật tư',
         'type' => 'Loại đơn',
         'created_name' => 'Người tạo',

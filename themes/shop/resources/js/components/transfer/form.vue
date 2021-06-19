@@ -159,8 +159,8 @@
                             <div slot="label">
                                 <label class="el-form-item__label">{{$t('transfer.label.note')}}</label>
                             </div>
-                            <tinymce v-model="modelForm.note"
-                                      :height="150"></tinymce>
+                            <el-input v-model="modelForm.note" type="textarea"
+                                    :rows="2"></el-input>
                             <div class="el-form-item__error"
                                   v-if="form.errors.has('note')"
                                   v-text="form.errors.first('note')"></div>
@@ -272,14 +272,13 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import Cleave from 'vue-cleave-component';
-import Tinymce from '../utils/Tinymce';
 
 export default {
   props: {
     pageTitle: { default: null, String },
   },
   components: {
-    Cleave, Tinymce
+    Cleave
   },
   data() {
     return {
