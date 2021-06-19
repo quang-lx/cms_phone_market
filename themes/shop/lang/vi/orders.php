@@ -16,7 +16,21 @@ return [
         'delivery_address' => 'Địa chỉ giao hàng',
         'confirm' => [
             'cancel' => 'Hủy đơn hàng',
-            'agree' => 'Xác nhận đơn hàng',
+            'wait_client' => 'Xác nhận',
+            'confirmed' => 'Nhận sản phẩm',
+            'sending' => 'Chờ giao hàng',
+            'fixing' => 'Sửa chữa xong',
+            'warranting' => 'Chờ bảo hành',
+            'done' => 'Giao hàng thành công',
+        ],
+        'button'=>[
+            'cancel' => 'Hủy đơn hàng',
+            'wait_client' => 'Xác nhận',
+            'confirmed' => 'Nhận sản phẩm',
+            'sending' => 'Chờ giao hàng',
+            'fixing' => 'Sửa chữa xong',
+            'warranting' => 'Chờ bảo hành',
+            'done' => 'Giao hàng thành công',
         ]
 
     ],
