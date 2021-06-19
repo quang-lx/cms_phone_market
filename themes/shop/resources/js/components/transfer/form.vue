@@ -263,7 +263,12 @@
                   >{{ $t("mon.button.cancel") }}
                 </el-button>
 
-                <el-button type="primary" class="btn btn-flat" v-print>Print the entire page</el-button>
+                <el-button 
+                  type="primary" 
+                  class="btn btn-flat"  
+                  v-print="printObj">
+                    Print the entire page
+                </el-button>
               </div>
             </div>
 
@@ -292,6 +297,20 @@ export default {
   },
   data() {
     return {
+      printObj: {
+        url: 'https://www.24h.com.vn/',
+        preview: true,
+        previewTitle: 'Test Title',
+        beforeOpenCallback (vue) {
+          console.log('打开之前')
+        },
+        openCallback (vue) {
+          console.log('执行了打印')
+        },
+        closeCallback (vue) {
+          console.log('关闭了打印工具')
+        }
+      },
       options: {
         prefix: '',
         numeral: true,
