@@ -266,14 +266,13 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import Cleave from 'vue-cleave-component';
-import Tinymce from '../utils/Tinymce';
 
 export default {
   props: {
     pageTitle: { default: null, String },
   },
   components: {
-    Cleave, Tinymce
+    Cleave
   },
   data() {
     return {
