@@ -70,7 +70,7 @@ class TransferHistory extends Model
         $statusName = '';
         switch ($this->status) {
             case self::STATUS_LOCK:
-                $statusName = 'Đã khóa';
+                $statusName = 'Đã nhập kho';
                 break;
             case self::STATUS_NEW:
                 $statusName = 'Mới tạo';

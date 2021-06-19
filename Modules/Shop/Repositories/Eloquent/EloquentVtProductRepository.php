@@ -37,7 +37,8 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
         $user = Auth::user();
 		$query->where('company_id', $user->company_id);
         if ($request->get('vt_shop_proudct') == null) {
-            if($user->shop_id) {
+            $notCheckShop = $request->get('not_check_shop');
+		    if($user->shop_id & !$notCheckShop) {
                 $query->where('shop_id', $user->shop_id);
             }
         }
