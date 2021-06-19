@@ -540,6 +540,7 @@ export default {
         per_page: 1000,
         search: queryString,
         source: 'voucher',
+        shop_id: this.modelForm.shop_id
       
       };
 

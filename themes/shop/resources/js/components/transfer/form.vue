@@ -187,6 +187,7 @@
                 >
                   <div class="col-md-3">
                       <el-select
+                      
                           v-model="pinfo.catId"
                           filterable
                           @change="changeVtCategory(key)"
@@ -202,8 +203,10 @@
                             :key="item.id"
                             :label="item.name"
                             :value="item.id"
+                            :class="item.parent_id ? 'pl-5' : ''"
                           >
                           </el-option>
+
                       </el-select>
                   </div>
                   <div class="col-md-3">

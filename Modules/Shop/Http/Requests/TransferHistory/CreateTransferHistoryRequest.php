@@ -7,6 +7,7 @@ use \App\Rules\CountProduct;
 use \Illuminate\Validation\Validator;
 use Modules\Mon\Entities\TransferHistory;
 use Modules\Mon\Entities\VtShopProduct;
+use Modules\Mon\Entities\VtProduct;
 use Illuminate\Support\Facades\Auth;
 
 class CreateTransferHistoryRequest extends FormRequest
@@ -40,7 +41,8 @@ class CreateTransferHistoryRequest extends FormRequest
                         $vtShopProduct = VtShopProduct::query()->where('shop_id', $shopId)->where('company_id', $companyId)
                             ->where('vt_product_id', $vtProduct['id'])->first();
                         if (!$vtShopProduct || $vtShopProduct->amount < intval($vtProduct['count'])){
-                            $msg = sprintf('Số lượng tồn kho của %s không đủ.', $vtProduct['listVtProduct'][0]['name']);
+                            $vtProductDetail = VtProduct::find($vtProduct['id']);
+                            $msg = sprintf('Số lượng tồn kho của %s không đủ.', $vtProductDetail->name);
                             $validator->errors()->add('vtproduct', $msg);
                         }
                     }

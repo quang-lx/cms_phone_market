@@ -188,7 +188,7 @@
                                                             Giá
                                                         </div>
                                                         <div class="col-md-3 col-sm-6">
-                                                            Giá khuyến mại
+                                                            Chiết khấu (%)
                                                         </div>
                                                         <div class="col-md-3 col-sm-6">
                                                             Số lượng

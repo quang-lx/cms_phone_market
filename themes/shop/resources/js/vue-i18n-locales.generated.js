@@ -410,7 +410,7 @@ export default {
                 "sku": "SKU",
                 "amount": "Số lượng",
                 "price": "Giá bán",
-                "sale_price": "Giá giảm(%)",
+                "sale_price": "Chiết khấu (%)",
                 "category_id": "Danh mục",
                 "problem_id": "Vấn đề sửa chữa",
                 "company_id": "Cửa hàng",
@@ -563,7 +563,8 @@ export default {
                 "shop_name": "Kho chuyển",
                 "to_shop_name": "Kho nhận",
                 "products": "Danh sách vật tư",
-                "type": "Loại đơn"
+                "type": "Loại đơn",
+                "shop_admin": "CỬA HÀNG"
             },
             "button": {
                 "save": "Nhập kho"
@@ -592,7 +593,8 @@ export default {
                 "products": "Danh sách vật tư",
                 "type": "Loại đơn",
                 "created_name": "Người tạo",
-                "note": "Ghi chú"
+                "note": "Ghi chú",
+                "shop_admin": "CỬA HÀNG"
             },
             "message": {
                 "create success": "Thêm mới bản ghi thành công.",
