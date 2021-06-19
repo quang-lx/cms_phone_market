@@ -8943,6 +8943,13 @@
   dependencies:
     "vue" "^2.6.10"
 
+"vue-print-nb@^1.7.4":
+  "integrity" "sha512-Z3wLg8xQN5uW8OXnM77ui/shPfU56T04UO2erLv8qCkud2ZcrV4rUodLBBuxsEGVzRlgOUuiJ0/l370GNTIKKg=="
+  "resolved" "https://registry.npmjs.org/vue-print-nb/-/vue-print-nb-1.7.4.tgz"
+  "version" "1.7.4"
+  dependencies:
+    "vue" "^2.6.11"
+
 "vue-router@^3.1.5":
   "integrity" "sha512-CGAKWN44RqXW06oC+u4mPgHLQQi2t6vLD/JbGRDAXm0YpMv0bgpKuU5bBd7AvMgfTz9kXVRIWKHqRwGEb8xFkA=="
   "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-3.4.9.tgz"
@@ -8996,7 +9003,7 @@
     "videojs-flash" "^2.1.0"
     "videojs-hotkeys" "^0.2.20"
 
-"vue@^2.0.0", "vue@^2.5.16", "vue@^2.6.10", "vue@^2.6.11":
+"vue@^2.5.16", "vue@^2.6.10", "vue@^2.6.11":
   "integrity" "sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz"
   "version" "2.6.12"

@@ -246,10 +246,11 @@
                     style="position: inherit !important; margin-left:0px !important"
                   ></div>
 
-              </div>
+              </div>                
 
-              <div v-if="modelForm.isEdit" class="card-footer d-flex justify-content-end">
+              <div class="card-footer d-flex justify-content-end">
                 <el-button
+                  v-if="modelForm.isEdit"
                   type="primary"
                   @click="onSubmit()"
                   size="small"
@@ -258,9 +259,11 @@
                 >
                   {{ $t("mon.button.save") }}
                 </el-button>
-                <el-button class="btn btn-flat" size="small" @click="onCancel()"
+                <el-button class="btn btn-flat" size="small" @click="onCancel()" v-if="modelForm.isEdit"
                   >{{ $t("mon.button.cancel") }}
                 </el-button>
+
+                <el-button type="primary" class="btn btn-flat" v-print>Print the entire page</el-button>
               </div>
             </div>
 
@@ -275,6 +278,7 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import Cleave from 'vue-cleave-component';
+import print from 'vue-print-nb'
 
 export default {
   props: {
@@ -282,6 +286,9 @@ export default {
   },
   components: {
     Cleave
+  },
+  directives: {
+    print   
   },
   data() {
     return {
