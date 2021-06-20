@@ -80,49 +80,6 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         return $query->paginate($request->get('per_page', 10));
     }
 
-    public function update($model, $data)
-    {
-        $data_update=[];
-        if($data['type']=='sua_chua'){
-            $data_update['total_price'] = $data['price'];
-            $data_update['pay_price'] = $data['price'];
-            $data_update['fix_time'] = $data['numberDate'];
-            $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
-            $data_update['status'] = Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM;
-
-			$data = [
-				'title' => trans('order.notifications.sua_chua.title'),
-				'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
-				'fcm_token' => $model->user->fcm_token,
-				'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM]),
-				'order_id' => $model->id
-			];
-
-			event(new ShopNotiCreated($data));
-			event(new ShopUpdateOrderStatus([
-				'title' => trans('order.notifications.sua_chua.title'),
-				'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
-				'user_id' => $model->user->id,
-				'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM]),
-				'order_id' => $model->id
-			]));
-
-
-			event(new OrderStatusUpdated([
-				'order_type' => $model->order_type,
-				'order_id' => $model->id,
-				'title' => $model->status_name,
-				'old_status' => Orders::STATUS_ORDER_CREATED,
-				'new_status' => Orders::STATUS_ORDER_WARRANTING,
-				'user_id' => null,
-				'shop_id' => Auth::user()->shop_id
-			]));
-
-        }
-
-        $model->update($data_update);
-    }
-
     public function statistical(Request $request, $relations = null)
     {
         // select count(*) AS so_don,`order_type`,sum(`pay_price`) AS tong_tien, date(`created_at`) from `orders`
@@ -206,41 +163,90 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
     }
 
-    public function updateGuarantee($model, $data)
+    //  đơn sửa chữa thông báo
+
+    public function repairCancel($model, $data)
     {
-        if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_BAO_HANH) {
+        if ($model->status != $model::STATUS_ORDER_DONE && $model->order_type == $model::TYPE_SUA_CHUA) {
             $data_update =[
-                'status' => Orders::STATUS_ORDER_WARRANTING
+                'status' => Orders::STATUS_ORDER_CANCEL
             ];
 	        $model->update($data_update);
 
 	        $data = [
-		        'title' => trans('order.notifications.bao_hanh.title'),
-		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content cancel', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
-		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
-		        'title' => trans('order.notifications.bao_hanh.title'),
-		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
-		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content cancel', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
 
 		        'user_id' => $model->user->id,
 		        'order_id' => $model->id
 	        ]));
-
 	        event(new OrderStatusUpdated([
 		        'order_id' => $model->id,
 		        'order_type' => $model->order_type,
 		        'title' => $model->status_name,
 		        'old_status' => Orders::STATUS_ORDER_CREATED,
-		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
+		        'new_status' => Orders::STATUS_ORDER_CANCEL,
 		        'user_id' => null,
 		        'shop_id' => Auth::user()->shop_id
 	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+
+    public function repairConfirmed($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_SUA_CHUA) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_CONFIRMED
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CREATED,
+		        'new_status' => Orders::STATUS_ORDER_CONFIRMED,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
             return response()->json([
                 'errors' => false,
                 'message' => trans('ch::orders.message.update success'),
@@ -252,9 +258,431 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
 
-
-
+        
     }
+    public function repairFixing($model, $data)
+    {
+        // $data_update=[];
+        // if($data['type']=='sua_chua'){
+        //     $data_update['total_price'] = $data['price'];
+        //     $data_update['pay_price'] = $data['price'];
+        //     $data_update['fix_time'] = $data['numberDate'];
+        //     $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
+        //     $data_update['status'] = Orders::STATUS_ORDER_FIXING;
+        //     $model->update($data_update);
+		// 	$data = [
+		// 		'title' => trans('order.notifications.sua_chua.title'),
+		// 		'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+		// 		'fcm_token' => $model->user->fcm_token,
+		// 		'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
+		// 		'order_id' => $model->id
+		// 	];
+
+		// 	event(new ShopNotiCreated($data));
+		// 	event(new ShopUpdateOrderStatus([
+		// 		'title' => trans('order.notifications.sua_chua.title'),
+		// 		'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+		// 		'user_id' => $model->user->id,
+		// 		'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
+		// 		'order_id' => $model->id
+		// 	]));
+
+
+		// 	event(new OrderStatusUpdated([
+		// 		'order_type' => $model->order_type,
+		// 		'order_id' => $model->id,
+		// 		'title' => $model->status_name,
+		// 		'old_status' => Orders::STATUS_ORDER_CONFIRMED,
+		// 		'new_status' => Orders::STATUS_ORDER_FIXING,
+		// 		'user_id' => null,
+		// 		'shop_id' => Auth::user()->shop_id
+		// 	]));
+
+        // }
+        if ($model->status == $model::STATUS_ORDER_CONFIRMED && $model->order_type == $model::TYPE_SUA_CHUA) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_FIXING
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content fixing', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content fixing', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CONFIRMED,
+		        'new_status' => Orders::STATUS_ORDER_FIXING,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+        // $model->update($data_update);
+    }
+
+    public function repairSending($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_FIXING && $model->order_type == $model::TYPE_SUA_CHUA) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_SENDING
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content sending', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content sending', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_FIXING,
+		        'new_status' => Orders::STATUS_ORDER_SENDING,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+
+    public function repairDone($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_SENDING && $model->order_type == $model::TYPE_SUA_CHUA) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_DONE
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content done', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content done', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_FIXING,
+		        'new_status' => Orders::STATUS_ORDER_DONE,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+    
+
+    
+    
+
+    // đơn hàng bảo hành thông báo
+
+    public function guaranteeCancel($model, $data)
+    {
+        if ($model->status != $model::STATUS_ORDER_DONE && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_CANCEL
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content cancel', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content cancel', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CREATED,
+		        'new_status' => Orders::STATUS_ORDER_CANCEL,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+
+    public function guaranteeConfirmed($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_CONFIRMED
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CREATED,
+		        'new_status' => Orders::STATUS_ORDER_CONFIRMED,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+
+        
+    }
+    public function guaranteeWarranting($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_CONFIRMED && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_WARRANTING
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content warranting', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content warranting', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CONFIRMED,
+		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+        // $model->update($data_update);
+    }
+
+    public function guaranteeSending($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_WARRANTING && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_SENDING
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content sending', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content sending', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_FIXING,
+		        'new_status' => Orders::STATUS_ORDER_SENDING,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+
+    public function guaranteeDone($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_SENDING && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_DONE
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_FIXING,
+		        'new_status' => Orders::STATUS_ORDER_DONE,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+
+    // đơn hàng mua bán thông báo
 
     public function updateBuySell($model, $data)
     {
@@ -306,7 +734,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
     }
 
-    public function cacelBuySell($model, $data)
+    public function cancelBuySell($model, $data)
     {
         if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_MUA_HANG) {
             $data_update =[

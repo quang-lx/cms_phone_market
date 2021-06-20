@@ -433,16 +433,43 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.statistical',
         'uses' => 'Orders\OrdersController@statistical',
     ]);
+    
 
-    Route::post('/{orders}/edit', [
-            'as' => 'apishop.orders.update',
-            'uses' => 'Orders\OrdersController@update',
-        ]);
    Route::get('/{orders}', [
-              'as' => 'apishop.orders.find',
-              'uses' => 'Orders\OrdersController@find',
-          ]);
+        'as' => 'apishop.orders.find',
+        'uses' => 'Orders\OrdersController@find',
+    ]);
 
+    // đơn hàng sửa chữa
+
+    
+
+    Route::post('/{orders}/repair-cancel', [
+        'as' => 'apishop.orders.repair_cancel',
+        'uses' => 'Orders\OrdersController@repairCancel',
+    ]);
+
+    Route::post('/{orders}/repair-confirmed', [
+        'as' => 'apishop.orders.repair_confirmed',
+        'uses' => 'Orders\OrdersController@repairConfirmed',
+    ]);
+
+    Route::post('/{orders}/repair-fixing', [
+        'as' => 'apishop.orders.repair_fixing',
+        'uses' => 'Orders\OrdersController@repairFixing',
+    ]);
+
+    Route::post('/{orders}/repair-sending', [
+        'as' => 'apishop.orders.repair_sending',
+        'uses' => 'Orders\OrdersController@repairSending',
+    ]);
+    
+    Route::post('/{orders}/repair-done', [
+        'as' => 'apishop.orders.repair_done',
+        'uses' => 'Orders\OrdersController@repairDone',
+    ]);
+
+    // đơn hàng mua bán
     Route::get('/{orders}/buysell', [
         'as' => 'apishop.orders.findbuysell',
         'uses' => 'Orders\OrdersController@findBuySell',
@@ -458,11 +485,6 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'uses' => 'Orders\OrdersController@destroy',
     ]);
 
-    Route::post('/{orders}/edit-guarantee', [
-        'as' => 'apishop.orders.update_guarantee',
-        'uses' => 'Orders\OrdersController@updateGuarantee',
-    ]);
-
     Route::post('/{orders}/edit-buysell', [
         'as' => 'apishop.orders.update_buysell',
         'uses' => 'Orders\OrdersController@updateBuySell',
@@ -470,7 +492,33 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
 
     Route::post('/{orders}/cancel-buysell', [
         'as' => 'apishop.orders.cancel_buysell',
-        'uses' => 'Orders\OrdersController@cacelBuySell',
+        'uses' => 'Orders\OrdersController@cancelBuySell',
+    ]);
+
+    // đơn hàng bảo hành 
+    Route::post('/{orders}/guarantee-cancel', [
+        'as' => 'apishop.orders.guarantee_cancel',
+        'uses' => 'Orders\OrdersController@guaranteeCancel',
+    ]);
+
+    Route::post('/{orders}/guarantee-confirmed', [
+        'as' => 'apishop.orders.guarantee_confirmed',
+        'uses' => 'Orders\OrdersController@guaranteeConfirmed',
+    ]);
+
+    Route::post('/{orders}/guarantee-warranting', [
+        'as' => 'apishop.orders.guarantee_warranting',
+        'uses' => 'Orders\OrdersController@guaranteeWarranting',
+    ]);
+
+    Route::post('/{orders}/guarantee-sending', [
+        'as' => 'apishop.orders.guarantee_sending',
+        'uses' => 'Orders\OrdersController@guaranteeSending',
+    ]);
+    
+    Route::post('/{orders}/guarantee-done', [
+        'as' => 'apishop.orders.guarantee_done',
+        'uses' => 'Orders\OrdersController@guaranteeDone',
     ]);
 });
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){

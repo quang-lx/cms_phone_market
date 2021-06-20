@@ -96,12 +96,19 @@
 
                       <div class="col-md-3">
                         <div><h4>Trạng thái</h4></div>
+                        <div>
+                          <span>{{modelForm.status}}</span>
+                        </div>
+
                       </div>
                       <!-- <div class="col-md-12 mt-5">
                             {{ $t("orders.label.description") }}:
                             <div v-html="modelForm.description"></div>
                         </div> -->
-                        <popup-take-orders :data="modelForm"></popup-take-orders>
+                      <div class="col-md-12 mt-4 text-right">
+                          <status-repair :data="modelForm"></status-repair>
+                      </div>
+                       
 
                     </div>
                   </div>
@@ -122,7 +129,7 @@ import Form from "form-backend-validation";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
 import MultipleMedia from "../media/js/components/MultipleMedia";
 import MultipleFileSelector from "../../mixins/MultipleFileSelector.js";
-import PopupTakeOrders from "./popup_take_orders";
+import StatusRepair from "./status_repair";
 export default {
   props: {
     locales: { default: null },
@@ -131,7 +138,7 @@ export default {
   mixins: [SingleFileSelector, MultipleFileSelector],
   components: {
     MultipleMedia,
-    PopupTakeOrders
+    StatusRepair
   },
   data() {
     return {
