@@ -167,20 +167,39 @@ class OrdersController extends ApiController
         ]);
     }
     // đơn hàng mua bán
-    public function updateBuySell(Orders $orders, Request $request)
-    {
 
-        return $this->ordersRepository->updateBuySell($orders, $request->all());
-    }
-
-    public function cancelBuySell(Orders $orders, Request $request)
+    public function buysellCancel(Orders $orders, Request $request)
     {
-	    $orders = $this->ordersRepository->cancelBuySell($orders, $request->all());
+	    $orders = $this->ordersRepository->buysellCancel($orders, $request->all());
         return response()->json([
             'errors' => false,
             'message' => trans('ch::orders.message.update success'),
         ]);
     }
+
+    public function buysellConfirmed(Orders $orders, Request $request)
+    {
+
+        $this->ordersRepository->buysellConfirmed($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
+    public function buysellDone(Orders $orders, Request $request)
+    {
+
+        $this->ordersRepository->buysellDone($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
+    
+
+
 
     public function destroy(Orders $orders)
     {

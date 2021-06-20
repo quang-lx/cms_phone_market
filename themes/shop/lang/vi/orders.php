@@ -26,7 +26,7 @@ return [
         'button'=>[
             'cancel' => 'Hủy đơn hàng',
             'wait_client' => 'Xác nhận',
-            'confirmed' => 'Nhận sản phẩm',
+            'confirmed' => 'Đã nhận hàng',
             'sending' => 'Chờ giao hàng',
             'fixing' => 'Sửa chữa xong',
             'warranting' => 'Bảo hành xong',

@@ -27,6 +27,9 @@ class Orders extends Model
 	const PAYMENT_NOT_PAID = 0;
 	const PAYMENT_PAID = 0;
 
+	const ORDER_DONE_WAIT_CLIENT_CONFIRM = 0;
+	const ORDER_DONE = 1;
+
 
 	protected $table = 'orders';
 	protected $fillable = [
@@ -62,6 +65,8 @@ class Orders extends Model
 		'sys_voucher_id',
 		'sys_voucher_code',
 		'sys_discount',
+		'shop_done',
+		'shop_done_at'
 	];
 
 	public function allOrderProducts()

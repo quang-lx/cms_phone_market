@@ -97,7 +97,9 @@
                       <div class="col-md-3">
                         <div><h4>Trạng thái</h4></div>
                         <div>
-                          <span>{{modelForm.status}}</span>
+                          <span>{{modelForm.status}}
+                          </span>
+                            <p v-if="modelForm.shop_done == 1">(Người bán đã xác nhận giao hàng thành công)</p>
                         </div>
 
                       </div>

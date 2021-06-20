@@ -13,9 +13,9 @@ interface OrdersRepository extends BaseRepository
     public function repairSending($model, $data);
     public function repairDone($model, $data);
     //đơn hàng mua bán
-    public function updateBuySell($model, $data);
-    public function cancelBuySell($model, $data);
-
+    public function buysellCancel($model, $data);
+    public function buysellConfirmed($model, $data);
+    public function buysellDone($model, $data);
     // đơn hàng sửa chữa
     public function guaranteeCancel($model, $data);
     public function guaranteeConfirmed($model, $data);
