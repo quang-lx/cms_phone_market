@@ -29,6 +29,9 @@ class StorageProduct extends Model
     const STATUS_NEW = 1;
     const STATUS_IMPORT = 2;
 
+    const TYPE_EXPORT = 1;
+    const TYPE_MOVE = 2;
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');

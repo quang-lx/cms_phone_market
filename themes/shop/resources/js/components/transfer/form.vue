@@ -413,7 +413,7 @@ export default {
     fetchVtCategory() {
       let routeUri = "";
       this.loading = true;
-      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000});
+      routeUri = route("apishop.vtcategory.index", { page: 1, per_page: 1000, not_check_shop: true});
       axios.get(routeUri).then((response) => {
         this.loading = false;
         this.list_vtcategory = response.data.data;
@@ -437,7 +437,8 @@ export default {
       const properties = {
         page: 0,
         per_page: 1000,
-        catId: vtCatId
+        catId: vtCatId,
+        not_check_shop: true
       };
 
       axios
