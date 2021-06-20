@@ -4,6 +4,7 @@
 namespace Modules\Api\Transformers\Order;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Api\Transformers\ShopTransformer;
 use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\Shop;
 
@@ -22,7 +23,8 @@ class OrderTransformer extends JsonResource
 	        'discount' => $this->discount,
 	        'order_type' => $this->order_type,
 	        'status' => $this->status,
-            'product' => $this->getOrderProduct($this->order_type, $this->type_other,$this->firstOrderProduct)
+            'product' => $this->getOrderProduct($this->order_type, $this->type_other,$this->firstOrderProduct),
+            'shop' => new ShopTransformer($this->shop)
         ];
 
 
