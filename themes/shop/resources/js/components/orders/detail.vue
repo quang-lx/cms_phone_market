@@ -96,12 +96,19 @@
 
                       <div class="col-md-3">
                         <div><h4>Trạng thái</h4></div>
+                        <div>
+                          <span>{{modelForm.status}}</span>
+                        </div>
+
                       </div>
                       <!-- <div class="col-md-12 mt-5">
                             {{ $t("orders.label.description") }}:
                             <div v-html="modelForm.description"></div>
                         </div> -->
-                        <popup-take-orders :data="modelForm"></popup-take-orders>
+                      <div class="col-md-12 mt-4 text-right">
+                          <popup-take-orders :data="modelForm"></popup-take-orders>
+                      </div>
+                       
 
                     </div>
                   </div>
