@@ -222,7 +222,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
 	        $data = [
 		        'title' => trans('order.notifications.sua_chua.title'),
-		        'content' => trans('order.notifications.sua_chua.content fixing', ['order_code' => $model->id]),
+		        'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
 		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
@@ -231,7 +231,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
 		        'title' => trans('order.notifications.sua_chua.title'),
-		        'content' => trans('order.notifications.sua_chua.content fixing', ['order_code' => $model->id]),
+		        'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
 		        'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
 
 		        'user_id' => $model->user->id,
@@ -307,7 +307,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
 	        $data = [
 		        'title' => trans('order.notifications.sua_chua.title'),
-		        'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+		        'content' => trans('order.notifications.sua_chua.content fixing', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
 		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
@@ -316,7 +316,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
 		        'title' => trans('order.notifications.sua_chua.title'),
-		        'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
+		        'content' => trans('order.notifications.sua_chua.content fixing', ['order_code' => $model->id]),
 		        'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
 
 		        'user_id' => $model->user->id,
@@ -445,11 +445,58 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
     // đơn hàng bảo hành thông báo
 
-    public function updateGuarantee($model, $data)
+    public function guaranteeCancel($model, $data)
+    {
+        if ($model->status != $model::STATUS_ORDER_DONE && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_CANCEL
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content cancel', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content cancel', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CREATED,
+		        'new_status' => Orders::STATUS_ORDER_CANCEL,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+
+    public function guaranteeConfirmed($model, $data)
     {
         if ($model->status == $model::STATUS_ORDER_CREATED && $model->order_type == $model::TYPE_BAO_HANH) {
             $data_update =[
-                'status' => Orders::STATUS_ORDER_WARRANTING
+                'status' => Orders::STATUS_ORDER_CONFIRMED
             ];
 	        $model->update($data_update);
 
@@ -458,28 +505,28 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
-		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
 		        'title' => trans('order.notifications.bao_hanh.title'),
 		        'content' => trans('order.notifications.bao_hanh.content confirm', ['order_code' => $model->id]),
-		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
 
 		        'user_id' => $model->user->id,
 		        'order_id' => $model->id
 	        ]));
-
 	        event(new OrderStatusUpdated([
 		        'order_id' => $model->id,
 		        'order_type' => $model->order_type,
 		        'title' => $model->status_name,
 		        'old_status' => Orders::STATUS_ORDER_CREATED,
-		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
+		        'new_status' => Orders::STATUS_ORDER_CONFIRMED,
 		        'user_id' => null,
 		        'shop_id' => Auth::user()->shop_id
 	        ]));
+
             return response()->json([
                 'errors' => false,
                 'message' => trans('ch::orders.message.update success'),
@@ -491,8 +538,148 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
 
+        
+    }
+    public function guaranteeWarranting($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_CONFIRMED && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_WARRANTING
+            ];
+	        $model->update($data_update);
 
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content warranting', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+	        ];
 
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content warranting', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_WARRANTING]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_CONFIRMED,
+		        'new_status' => Orders::STATUS_ORDER_WARRANTING,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+        // $model->update($data_update);
+    }
+
+    public function guaranteeSending($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_WARRANTING && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_SENDING
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content sending', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content sending', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_FIXING,
+		        'new_status' => Orders::STATUS_ORDER_SENDING,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
+    }
+
+    public function guaranteeDone($model, $data)
+    {
+        if ($model->status == $model::STATUS_ORDER_SENDING && $model->order_type == $model::TYPE_BAO_HANH) {
+            $data_update =[
+                'status' => Orders::STATUS_ORDER_DONE
+            ];
+	        $model->update($data_update);
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
+		        'fcm_token' => $model->user->fcm_token,
+		        'order_id' => $model->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
+	        event(new ShopUpdateOrderStatus([
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+
+		        'user_id' => $model->user->id,
+		        'order_id' => $model->id
+	        ]));
+	        event(new OrderStatusUpdated([
+		        'order_id' => $model->id,
+		        'order_type' => $model->order_type,
+		        'title' => $model->status_name,
+		        'old_status' => Orders::STATUS_ORDER_FIXING,
+		        'new_status' => Orders::STATUS_ORDER_DONE,
+		        'user_id' => null,
+		        'shop_id' => Auth::user()->shop_id
+	        ]));
+
+            return response()->json([
+                'errors' => false,
+                'message' => trans('ch::orders.message.update success'),
+            ]);
+        }
+
+        return response()->json([
+            'errors' => true,
+            'message' => 'Lỗi trạng thái cập nhật',
+        ],422);
     }
 
     // đơn hàng mua bán thông báo

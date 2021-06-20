@@ -20,7 +20,7 @@ return [
             'confirmed' => 'Nhận sản phẩm',
             'sending' => 'Chờ giao hàng',
             'fixing' => 'Sửa chữa xong',
-            'warranting' => 'Chờ bảo hành',
+            'warranting' => 'Bảo hành xong',
             'done' => 'Giao hàng thành công',
         ],
         'button'=>[
@@ -29,7 +29,7 @@ return [
             'confirmed' => 'Nhận sản phẩm',
             'sending' => 'Chờ giao hàng',
             'fixing' => 'Sửa chữa xong',
-            'warranting' => 'Chờ bảo hành',
+            'warranting' => 'Bảo hành xong',
             'done' => 'Giao hàng thành công',
         ]
 
