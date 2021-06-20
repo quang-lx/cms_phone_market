@@ -19,7 +19,6 @@
             class="col-md-12"
             v-if="
                 data.order_type == 'sua_chua' &&
-                    data.type_other == 1 &&
                     data.status_value == 'confirmed'
             "
         >

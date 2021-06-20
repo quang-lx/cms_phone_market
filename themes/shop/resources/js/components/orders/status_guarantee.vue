@@ -19,7 +19,6 @@
             class="col-md-12"
             v-if="
                 data.order_type == 'bao_hanh' &&
-                    data.type_other == 1 &&
                     data.status_value == 'confirmed'
             "
         >
@@ -108,7 +107,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.orders.index" });
+                    this.$router.push({ name: "shop.ordersguarantee.index" });
                 })
                 .catch(error => {
                     this.loading = false;
@@ -147,7 +146,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.orders.index" });
+                    this.$router.push({ name: "shop.ordersguarantee.index" });
                 })
                 .catch(error => {
                     this.loading = false;
@@ -187,7 +186,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.orders.index" });
+                    this.$router.push({ name: "shop.ordersguarantee.index" });
                 })
                 .catch(error => {
                     this.loading = false;
@@ -225,7 +224,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.orders.index" });
+                    this.$router.push({ name: "shop.ordersguarantee.index" });
                 })
                 .catch(error => {
                     this.loading = false;
@@ -265,7 +264,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.orders.index" });
+                    this.$router.push({ name: "shop.ordersguarantee.index" });
                 })
                 .catch(error => {
                     this.loading = false;
