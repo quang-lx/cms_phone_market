@@ -16,7 +16,8 @@ return [
         'to_shop_name' => 'Kho nhận',
         'products' => 'Danh sách vật tư',
         'type' => 'Loại đơn',
-        'shop_admin' => 'CỬA HÀNG'
+        'shop_admin' => 'CỬA HÀNG',
+        'id' => 'Mã đơn',
     ],
     'button' => [
         'save' => 'Nhập kho'
