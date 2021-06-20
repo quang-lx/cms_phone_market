@@ -71,7 +71,7 @@ class OrdersController extends ApiController
         return new OrdersBuySellTransformer($orders);
     }
 
-    // đơn hàng sửa chữa thông báo
+    // đơn hàng sửa chữa 
 
     public function repairCancel(Orders $orders, Request $request)
     {
@@ -120,10 +120,51 @@ class OrdersController extends ApiController
     }
 
     // đơn hàng bảo hành
-    public function updateGuarantee(Orders $orders, Request $request)
-    {
 
-        return $this->ordersRepository->updateGuarantee($orders, $request->all());
+    public function guaranteeCancel(Orders $orders, Request $request)
+    {
+	    $orders = $this->ordersRepository->guaranteeCancel($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
+
+    public function guaranteeConfirmed(Orders $orders, Request $request)
+    {
+	    $orders = $this->ordersRepository->guaranteeConfirmed($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
+    public function guaranteeWarranting(Orders $orders, Request $request)
+    {
+	    $orders = $this->ordersRepository->guaranteeWarranting($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
+    public function guaranteeSending(Orders $orders, Request $request)
+    {
+	    $orders = $this->ordersRepository->guaranteeSending($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
+    public function guaranteeDone(Orders $orders, Request $request)
+    {
+	    $orders = $this->ordersRepository->guaranteeDone($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
     }
     // đơn hàng mua bán
     public function updateBuySell(Orders $orders, Request $request)

@@ -96,28 +96,17 @@
 
                       <div class="col-md-3">
                         <div><h4>Trạng thái</h4></div>
+                        <div>
+                          <span>{{modelForm.status}}</span>
+                        </div>
                       </div>
                       <!-- <div class="col-md-12 mt-5">
                             {{ $t("orders.label.description") }}:
                             <div v-html="modelForm.description"></div>
                         </div> -->
-                        <div
-                          class="col-md-12 text-right"
-                          v-if="
-                            modelForm.order_type == 'bao_hanh' &&
-                            modelForm.status_value == 'created'
-                          "
-                        >
-                          <el-button type="primary" @click="dialogVisible = true">Nhận đơn</el-button>
-
-                        </div>
-                           <el-dialog title="Xác nhận" :visible.sync="dialogVisible" width="30%">
-                              <span>Xác nhận đơn bảo hành</span>
-                              <span slot="footer" class="dialog-footer">
-                                <el-button @click="dialogVisible = false">Hủy</el-button>
-                                <el-button type="primary" @click="onSubmit">Xác nhận</el-button>
-                              </span>
-                           </el-dialog>
+                       <div class="col-md-12 mt-4 text-right">
+                          <status-guarantee :data="modelForm"></status-guarantee>
+                      </div>
 
                     </div>
                   </div>
@@ -138,6 +127,8 @@ import Form from "form-backend-validation";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
 import MultipleMedia from "../media/js/components/MultipleMedia";
 import MultipleFileSelector from "../../mixins/MultipleFileSelector.js";
+import StatusGuarantee from "./status_guarantee";
+
 export default {
   props: {
     locales: { default: null },
@@ -146,6 +137,7 @@ export default {
   mixins: [SingleFileSelector, MultipleFileSelector],
   components: {
     MultipleMedia,
+    StatusGuarantee
   },
   data() {
     return {
@@ -172,37 +164,6 @@ export default {
         this.modelForm.is_new = false;
       });
     },
-
-    onSubmit() {
-
-
-      axios
-        .post(this.getRoute())
-        .then((response) => {
-          this.loading = false;
-          this.$message({
-            type: "success",
-            message: response.data.message,
-          });
-          this.dialogVisible = false;
-          this.$router.push({ name: "shop.ordersguarantee.index" });
-        })
-        .catch((error) => {
-          this.loading = false;
-          this.dialogVisible = false;
-          this.$notify.error({
-            title: 'Lỗi xác nhận',
-            message: error.response.data.message,
-          });
-        });
-    },
-
-    getRoute() {
-      return route("apishop.orders.update_guarantee", {
-        orders: this.$route.params.ordersId,
-      });
-    },
-
 
   },
   mounted() {
