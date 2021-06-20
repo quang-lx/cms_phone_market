@@ -103,7 +103,7 @@
                                         <el-table-column prop="shop_name" :label="$t('transfer.label.shop_name')"
                                                          sortable="address" width="130">
                                             <template slot-scope="scope">
-                                                <span class="dont-break-out">{{scope.row.shop_name}}</span>
+                                                <span class="dont-break-out">{{scope.row.shop_id ? scope.row.shop_name : $t('transfer.label.shop_admin')}}</span>
                                             </template>
                                         </el-table-column>
 

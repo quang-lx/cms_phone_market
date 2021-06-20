@@ -34,24 +34,29 @@ class EloquentTransferHistoryRepository extends BaseRepository implements Transf
     public static function updateVtShopProduct($data)
     {
         if ($data['type'] == TransferHistory::TYPE_EXPORT){
-            //nếu như xuất từ chi nhánh mới xử lý
-            if ($data['shop_id']){
-                foreach ($data['vtProducts'] as $vtProduct) {
-                    VtShopProduct::query()->where('shop_id', $data['shop_id'])->where('company_id', $data['company_id'])
-                        ->where('vt_product_id', $vtProduct['id'])->decrement('amount', intval($vtProduct['count']));
+            foreach ($data['vtProducts'] as $vtProduct) {
+                $query = VtShopProduct::query();
+                if ($data['shop_id']){
+                    $query->where('shop_id', $data['shop_id']);
+                } else {
+                    $query->whereNull('shop_id');
                 }
-                
+                $query->where('company_id', $data['company_id'])
+                    ->where('vt_product_id', $vtProduct['id'])
+                    ->decrement('amount', intval($vtProduct['count']));
             }
         } else if ($data['type'] == TransferHistory::TYPE_MOVE){
-            //giảm shop_id, tăng to_shop_id
-            if ($data['shop_id']){
-                //chi nhánh
-                foreach ($data['vtProducts'] as $vtProduct) {
-                    VtShopProduct::query()->where('shop_id', $data['shop_id'])->where('company_id', $data['company_id'])
-                        ->where('vt_product_id', $vtProduct['id'])->decrement('amount', intval($vtProduct['count']));
-                    //push notify cho chủ kho nhận
+            foreach ($data['vtProducts'] as $vtProduct) {
+                $query = VtShopProduct::query();
+                if ($data['shop_id']){
+                    $query->where('shop_id', $data['shop_id']);
+                } else {
+                    $query->whereNull('shop_id');
                 }
-            } 
+                $query->where('company_id', $data['company_id'])
+                    ->where('vt_product_id', $vtProduct['id'])->decrement('amount', intval($vtProduct['count']));
+                //push notify cho chủ kho nhận
+            }
 
         }
     }

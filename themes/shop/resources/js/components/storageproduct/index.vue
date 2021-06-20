@@ -55,7 +55,7 @@
                                         <el-table-column prop="shop_name" :label="$t('storageproduct.label.shop_name')"
                                                          sortable="address">
                                             <template slot-scope="scope">
-                                                <span class="dont-break-out">{{scope.row.shop_name}}</span>
+                                                <span class="dont-break-out">{{scope.row.shop_id ? scope.row.shop_name : $t('storageproduct.label.shop_admin')}}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="to_shop_name" :label="$t('storageproduct.label.to_shop_name')"

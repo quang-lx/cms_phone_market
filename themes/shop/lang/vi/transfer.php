@@ -18,6 +18,7 @@ return [
         'type' => 'Loại đơn',
         'created_name' => 'Người tạo',
         'note' => 'Ghi chú',
+        'shop_admin' => 'CỬA HÀNG',
     ],
     'message' => [
         'create success' => 'Thêm mới bản ghi thành công.',
