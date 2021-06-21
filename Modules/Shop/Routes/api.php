@@ -469,7 +469,7 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'uses' => 'Orders\OrdersController@repairDone',
     ]);
 
-    // đơn hàng mua bán
+
     Route::get('/{orders}/buysell', [
         'as' => 'apishop.orders.findbuysell',
         'uses' => 'Orders\OrdersController@findBuySell',
@@ -484,15 +484,20 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.destroy',
         'uses' => 'Orders\OrdersController@destroy',
     ]);
-
-    Route::post('/{orders}/edit-buysell', [
-        'as' => 'apishop.orders.update_buysell',
-        'uses' => 'Orders\OrdersController@updateBuySell',
+    // đơn hàng mua bán
+    Route::post('/{orders}/buysell-confirmed', [
+        'as' => 'apishop.orders.buysell_confirmed',
+        'uses' => 'Orders\OrdersController@buysellConfirmed',
     ]);
 
-    Route::post('/{orders}/cancel-buysell', [
-        'as' => 'apishop.orders.cancel_buysell',
-        'uses' => 'Orders\OrdersController@cancelBuySell',
+    Route::post('/{orders}/buysell-cancel', [
+        'as' => 'apishop.orders.buysell_cancel',
+        'uses' => 'Orders\OrdersController@buysellCancel',
+    ]);
+
+    Route::post('/{orders}/buysell-done', [
+        'as' => 'apishop.orders.buysell_done',
+        'uses' => 'Orders\OrdersController@buysellDone',
     ]);
 
     // đơn hàng bảo hành 
