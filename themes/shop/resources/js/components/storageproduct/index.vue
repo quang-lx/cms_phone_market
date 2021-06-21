@@ -45,7 +45,7 @@
                                             ref="dataTable"
                                             v-loading.body="tableIsLoading"
                                             @sort-change="handleSortChange">
-                                        <el-table-column prop="id" :label="$t('storageproduct.label.id')" width="75"
+                                        <el-table-column prop="id" :label="$t('storageproduct.label.id')" width="90"
                                                          sortable="custom">
 
                                         </el-table-column>
@@ -55,7 +55,7 @@
                                         <el-table-column prop="shop_name" :label="$t('storageproduct.label.shop_name')"
                                                          sortable="address">
                                             <template slot-scope="scope">
-                                                <span class="dont-break-out">{{scope.row.shop_id ? scope.row.shop_name : $t('storageproduct.label.shop_admin')}}</span>
+                                                <span class="dont-break-out">{{scope.row.shop_id ? scope.row.shop_name : scope.row.company_name}}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="to_shop_name" :label="$t('storageproduct.label.to_shop_name')"

@@ -19,6 +19,7 @@ return [
         'created_name' => 'Người tạo',
         'note' => 'Ghi chú',
         'shop_admin' => 'CỬA HÀNG',
+        'id' => 'Mã đơn',
     ],
     'message' => [
         'create success' => 'Thêm mới bản ghi thành công.',

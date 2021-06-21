@@ -51,6 +51,17 @@
                       style="padding-top: 10px; padding-right: 30px"
                     >
                       <div class="row">
+                        <div class="col-md-12" v-if="modelForm.id">
+                          <el-form-item
+                            :label="$t('transfer.label.id')"
+                            :class="{
+                              'el-form-item is-error': form.errors.has('id'),
+                            }"
+                          >
+                            <el-input v-model="modelForm.id" :disabled="!modelForm.isEdit"></el-input>
+                          </el-form-item>
+                        </div>
+
                         <div class="col-md-12">
                           <el-form-item
                             :label="$t('transfer.label.title')"
@@ -246,20 +257,40 @@
                     style="position: inherit !important; margin-left:0px !important"
                   ></div>
 
-              </div>
+              </div> 
 
-              <div v-if="modelForm.isEdit" class="card-footer d-flex justify-content-end">
-                <el-button
-                  type="primary"
-                  @click="onSubmit()"
-                  size="small"
-                  :loading="loading"
-                  class="btn btn-flat"
-                >
-                  {{ $t("mon.button.save") }}
-                </el-button>
-                <el-button class="btn btn-flat" size="small" @click="onCancel()"
+              <el-dialog
+                title="Xác nhận"
+                :visible.sync="dialogVisible"
+                width="30%">
+                <span>Bạn có chắc muốn tạo đơn {{ modelForm.type == 1 ? 'Xuất' : 'Chuyển'}} kho</span>
+                <span slot="footer" class="dialog-footer">
+                  <el-button @click="dialogVisible = false">Hủy bỏ</el-button>
+                  <el-button type="primary" @click="confirmDialog()">Xác nhận</el-button>
+                </span>
+              </el-dialog>               
+
+              <div class="card-footer d-flex justify-content-end">
+                  <el-button
+                    v-if="modelForm.isEdit"
+                    type="primary"
+                    @click="dialogVisible = true"
+                    size="small"
+                    :loading="loading"
+                    class="btn btn-flat"
+                  >
+                    {{ $t("mon.button.save") }}
+                  </el-button>
+                <el-button class="btn btn-flat" size="small" @click="onCancel()" v-if="modelForm.isEdit"
                   >{{ $t("mon.button.cancel") }}
+                </el-button>
+
+                <el-button 
+                  v-if="!modelForm.isEdit"
+                  type="primary" 
+                  class="btn btn-flat"  
+                  v-print>
+                    IN PHIẾU
                 </el-button>
               </div>
             </div>
@@ -275,6 +306,7 @@
 import axios from "axios";
 import Form from "form-backend-validation";
 import Cleave from 'vue-cleave-component';
+import print from 'vue-print-nb'
 
 export default {
   props: {
@@ -283,8 +315,12 @@ export default {
   components: {
     Cleave
   },
+  directives: {
+    print   
+  },
   data() {
     return {
+      dialogVisible: false,
       options: {
         prefix: '',
         numeral: true,
@@ -325,6 +361,10 @@ export default {
     };
   },
   methods: {
+    confirmDialog(){
+      this.dialogVisible = false;
+      this.onSubmit();
+    },
     onSubmit() {
       this.form = new Form(_.merge(this.modelForm, {}));
       this.loading = true;

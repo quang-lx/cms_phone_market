@@ -22,6 +22,7 @@ class StorageProductTransformer extends JsonResource
             'shop_name' => optional($this->shop)->name,
             'to_shop_name' => optional($this->toshop)->name,
             'company_id' => $this->company_id,
+            'company_name' => optional($this->company)->name,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'deleted_at' => optional($this->deleted_at)->format('H:i d/m/Y'),
