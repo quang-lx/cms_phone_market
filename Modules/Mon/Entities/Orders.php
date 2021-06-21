@@ -70,7 +70,9 @@ class Orders extends Model
 		'shop_done',
 		'shop_done_at'
 	];
-
+	public function shipType() {
+		return $this->belongsTo(ShipType::class, 'ship_type_id');
+	}
 	public function allOrderProducts()
 	{
 		return $this->hasMany(OrderProduct::class, 'order_id');

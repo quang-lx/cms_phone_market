@@ -4,6 +4,7 @@
 namespace Modules\Api\Transformers\Order;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Api\Transformers\ShipTypeTransformer;
 use Modules\Api\Transformers\ShopTransformer;
 use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\Shop;
@@ -26,6 +27,8 @@ class OrderFullTransformer extends JsonResource
 	        'ship_address' => $this->ship_address,
 	        'ship_fullname' => $this->ship_fullname,
 	        'ship_phone' => $this->ship_phone,
+	        'ship_type' => new ShipTypeTransformer($this->shipType),
+	        'payment_method' => new PaymentHistoryTransformer($this->paymentHistory),
             'products' => $this->getOrderProduct($this->order_type, $this->type_other,$this->allOrderProducts),
             'shop' => new ShopTransformer($this->shop)
 
