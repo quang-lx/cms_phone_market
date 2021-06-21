@@ -21,7 +21,7 @@ class OrderSellProductTransformer extends JsonResource
             'quantity' => $this->quantity,
             'price' => $this->price,
             'price_sale' => $this->price_sale,
-            'product_thumbnail' => new MediaShortTransformer($this->productThumbnail)
+            'product_thumbnail' => new MediaShortTransformer($this->product->files->first())
         ];
 
 
