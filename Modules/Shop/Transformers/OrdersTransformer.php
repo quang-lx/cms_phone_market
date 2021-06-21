@@ -21,6 +21,7 @@ class OrdersTransformer extends JsonResource
             'shop' => $this->shop,
             'ship_type_id' => $this->ship_type_id,
             'order_type' => $this->order_type,
+            'fix_time' => $this->fix_time,
             'status' => $this->status_name,
             'status_value' => $this->status,
             'payment_status' => $this->payment_status,
@@ -41,6 +42,7 @@ class OrdersTransformer extends JsonResource
             'ship_address' => $this->ship_address,
             'created_at' => $this->created_at->format('d-m-Y'),
             'shop_done' => $this->shop_done,
+            'fix_time_date' => $this->fix_time_date,
 
              'urls' => [
                 'delete_url' => route('apishop.orders.destroy', $this->id),

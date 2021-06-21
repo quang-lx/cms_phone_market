@@ -14,11 +14,12 @@
                 $t("orders.label.button.wait_client")
             }}</el-button>
         </div>
-        <!-- nhận hàng -->
+        <!-- nhận hàng thường -->
         <div
             class="col-md-12"
             v-if="
                 data.order_type == 'sua_chua' &&
+                    data.type_other != 1 &&
                     data.status_value == 'confirmed'
             "
         >
@@ -28,37 +29,52 @@
             <el-button type="primary" @click="confirmed">{{
                 $t("orders.label.button.confirmed")
             }}</el-button>
-            <el-dialog
-                title="Nhận đơn"
-                :visible.sync="dialogVisible"
-                width="30%"
-            >
-                <el-form ref="form" :model="modelUpdae" label-width="120px">
-                    <el-form-item label="Số tiền">
-                        <el-input v-model="modelUpdae.price"></el-input>
-                        <div
-                            class="el-form-item__error"
-                            v-if="form.errors.has('price')"
-                            v-text="form.errors.first('price')"
-                        ></div>
-                    </el-form-item>
-                    <el-form-item label="Số ngày sửa chữa">
-                        <el-input v-model="modelUpdae.numberDate"></el-input>
-                        <div
-                            class="el-form-item__error"
-                            v-if="form.errors.has('numberDate')"
-                            v-text="form.errors.first('numberDate')"
-                        ></div>
-                    </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">Hủy</el-button>
-                    <el-button type="primary" @click="onConfirmed"
-                        >Xác nhận</el-button
-                    >
-                </span>
-            </el-dialog>
         </div>
+
+        <!-- nhận hàng khác -->
+        <div
+            class="col-md-12"
+            v-if="
+                data.order_type == 'sua_chua' &&
+                 data.type_other == 1 && data.fix_time_date ==null &&
+                    data.status_value == 'confirmed'
+            "
+        >
+            <el-button type="secondary" @click="cancelOrder">{{
+                $t("orders.label.button.cancel")
+            }}</el-button>
+            <el-button type="primary" @click="dialogVisible = true">{{
+                $t("orders.label.button.confirmed")
+            }}</el-button>
+        </div>
+        <el-dialog title="Nhận đơn" class="text-left" :visible.sync="dialogVisible" width="30%">
+            <el-form ref="form" :model="modelUpdae" label-width="120px">
+                <el-form-item label="Số tiền">
+                    <cleave v-model="modelUpdae.price" :options="options" class="form-control" name="price"></cleave>
+
+                    <div
+                        class="el-form-item__error"
+                        v-if="form.errors.has('price')"
+                        v-text="form.errors.first('price')"
+                    ></div>
+                </el-form-item>
+                <el-form-item label="Số ngày sửa chữa">
+                    <el-input v-model="modelUpdae.numberDate"></el-input>
+                    <div
+                        class="el-form-item__error"
+                        v-if="form.errors.has('numberDate')"
+                        v-text="form.errors.first('numberDate')"
+                    ></div>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">Hủy</el-button>
+                <el-button type="primary" @click="onConfirmedOther"
+                    >Xác nhận</el-button
+                >
+            </span>
+        </el-dialog>
+
         <!-- chờ sửa chữa -->
         <div
             class="col-md-12"
@@ -74,10 +90,12 @@
             }}</el-button>
         </div>
         <!-- chờ giao hàng -->
-         <div
+        <div
             class="col-md-12"
             v-if="
-                data.order_type == 'sua_chua'  && data.shop_done == 0 && data.status_value == 'sending'
+                data.order_type == 'sua_chua' &&
+                    data.shop_done == 0 &&
+                    data.status_value == 'sending'
             "
         >
             <el-button type="secondary" @click="cancelOrder">{{
@@ -92,7 +110,12 @@
 
 <script>
 import Form from "form-backend-validation";
+import Cleave from 'vue-cleave-component';
+
 export default {
+    components: {
+      Cleave
+    },
     props: {
         data: { default: null }
     },
@@ -106,7 +129,16 @@ export default {
                 numberDate: "",
                 type: "sua_chua"
             },
-            message: ""
+            message: "",
+            options: {
+                prefix: '',
+                numeral: true,
+                numeralPositiveOnly: true,
+                noImmediatePrefix: true,
+                rawValueTrimPrefix: true,
+                numeralIntegerScale: 12,
+                numeralDecimalScale: 0
+            },
         };
     },
     methods: {
@@ -228,30 +260,30 @@ export default {
                 });
         },
 
-        //2. khác
-        // onConfirmed() {
-        //     this.form = new Form(_.merge(this.modelUpdae, {}));
-        //     this.loading = true;
+        // 2. khác
+        onConfirmedOther() {
+            this.form = new Form(_.merge(this.modelUpdae, {}));
+            this.loading = true;
 
-        //     this.form
-        //         .post(this.getRoute())
-        //         .then(response => {
-        //             this.loading = false;
-        //             this.$message({
-        //                 type: "success",
-        //                 message: response.message
-        //             });
-        //             this.dialogVisible = false;
-        //             this.$router.push({ name: "shop.orders.index" });
-        //         })
-        //         .catch(error => {
-        //             this.loading = false;
-        //             this.$notify.error({
-        //                 title: this.$t("mon.error.Title"),
-        //                 message: this.getSubmitError(this.form.errors)
-        //             });
-        //         });
-        // },
+            this.form
+                .post(this.getRoute())
+                .then(response => {
+                    this.loading = false;
+                    this.$message({
+                        type: "success",
+                        message: response.message
+                    });
+                    this.dialogVisible = false;
+                    this.$router.push({ name: "shop.orders.index" });
+                })
+                .catch(error => {
+                    this.loading = false;
+                    this.$notify.error({
+                        title: this.$t("mon.error.Title"),
+                        message: this.getSubmitError(this.form.errors)
+                    });
+                });
+        },
 
         //chờ sửa chữa
         sending() {
@@ -333,7 +365,7 @@ export default {
         },
 
         getRoute() {
-            return route("apishop.orders.repair_fixing", {
+            return route("apishop.orders.repair_fixing_other", {
                 orders: this.$route.params.ordersId
             });
         }

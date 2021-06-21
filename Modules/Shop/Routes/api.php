@@ -459,6 +459,11 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'uses' => 'Orders\OrdersController@repairFixing',
     ]);
 
+    Route::post('/{orders}/repair-fixing-other', [
+        'as' => 'apishop.orders.repair_fixing_other',
+        'uses' => 'Orders\OrdersController@repairFixingOther',
+    ]);
+
     Route::post('/{orders}/repair-sending', [
         'as' => 'apishop.orders.repair_sending',
         'uses' => 'Orders\OrdersController@repairSending',
