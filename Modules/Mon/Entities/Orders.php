@@ -55,6 +55,8 @@ class Orders extends Model
 		'ship_phoenix_id',
 		'ship_phoenix_name',
 		'ship_address',
+		'ship_fullname',
+		'ship_phone',
 		'created_at',
 		'fix_time',
 		'fix_time_date',

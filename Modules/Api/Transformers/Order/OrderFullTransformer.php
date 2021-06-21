@@ -23,6 +23,9 @@ class OrderFullTransformer extends JsonResource
 	        'pay_price' => $this->pay_price,
 	        'ship_fee' => $this->ship_fee,
 	        'discount' => $this->discount,
+	        'ship_address' => $this->ship_address,
+	        'ship_fullname' => $this->ship_fullname,
+	        'ship_phone' => $this->ship_phone,
             'products' => $this->getOrderProduct($this->order_type, $this->type_other,$this->allOrderProducts),
             'shop' => new ShopTransformer($this->shop)
 
