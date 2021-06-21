@@ -302,7 +302,7 @@ class EloquentOrderRepository implements OrderRepository
         $orderData['shop_id'] = $product->shop_id;
         $productPrice = $product->price;
         if ($product->sale_price) {
-            $productPrice = $productPrice * (100 - $productPrice->sale_price) / 100;
+            $productPrice = $productPrice * (100 - $product->sale_price) / 100;
         }
         $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
         $orderProductData['quantity'] = $requestParams['quantity'];
@@ -529,7 +529,7 @@ class EloquentOrderRepository implements OrderRepository
         } else {
             $productPrice = $product->price;
             if ($product->sale_price) {
-                $productPrice = $productPrice * (100 - $productPrice->sale_price) / 100;
+                $productPrice = $productPrice * (100 - $product->sale_price) / 100;
             }
             if ($productAttributeValue) {
 
