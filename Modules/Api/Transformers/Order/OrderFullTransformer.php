@@ -29,6 +29,7 @@ class OrderFullTransformer extends JsonResource
 	        'ship_phone' => $this->ship_phone,
 	        'ship_type' => new ShipTypeTransformer($this->shipType),
 	        'payment_method' => $this->paymentHistory? new PaymentHistoryTransformer($this->paymentHistory): null,
+	        'status_histories' => $this->orderStatusHistory ? OrderStatusHistoryTransformer::collection($this->orderStatusHistory) : null,
             'products' => $this->getOrderProduct($this->order_type, $this->type_other,$this->allOrderProducts),
             'shop' => new ShopTransformer($this->shop)
 

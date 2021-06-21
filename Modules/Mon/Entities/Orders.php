@@ -70,6 +70,9 @@ class Orders extends Model
 		'shop_done',
 		'shop_done_at'
 	];
+	public function orderStatusHistory() {
+		return $this->hasMany(OrderStatusHistory::class, 'order_id');
+	}
 	public function shipType() {
 		return $this->belongsTo(ShipType::class, 'ship_type_id');
 	}
