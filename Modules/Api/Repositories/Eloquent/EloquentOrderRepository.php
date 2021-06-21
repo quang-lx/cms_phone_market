@@ -3,6 +3,7 @@
 namespace Modules\Api\Repositories\Eloquent;
 
 use App\Events\OrderStatusUpdated;
+use App\Events\ShopNotiCreated;
 use App\Events\UserUpdateOrderStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -222,6 +223,16 @@ class EloquentOrderRepository implements OrderRepository
 			        'order_type' => $order->order_type,
 		        ]));
 	        }
+
+	        $data = [
+		        'title' => trans('order.notifications.bao_hanh.title'),
+		        'content' => trans('order.notifications.bao_hanh.content created', ['order_code' => $order->id]),
+		        'fcm_token' => $user->fcm_token,
+		        'order_id' => $order->id,
+		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_CREATED]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
         }
 
         return true;
@@ -268,6 +279,15 @@ class EloquentOrderRepository implements OrderRepository
 			        'order_type' => $order->order_type,
 		        ]));
 	        }
+	        $data = [
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content created', ['order_code' => $order->id]),
+		        'fcm_token' => $user->fcm_token,
+		        'order_id' => $order->id,
+		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CREATED]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
         }
 
         return true;
@@ -336,6 +356,17 @@ class EloquentOrderRepository implements OrderRepository
 			        'order_type' => $order->order_type,
 		        ]));
 	        }
+
+
+	        $data = [
+		        'title' => trans('order.notifications.sua_chua.title'),
+		        'content' => trans('order.notifications.sua_chua.content created', ['order_code' => $order->id]),
+		        'fcm_token' => $user->fcm_token,
+		        'order_id' => $order->id,
+		        'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CREATED]),
+	        ];
+
+	        event(new ShopNotiCreated($data));
         }
 
         return true;
@@ -656,6 +687,16 @@ class EloquentOrderRepository implements OrderRepository
 				        'order_type' => $orderCreated->order_type,
 			        ]));
 		        }
+
+		        $data = [
+			        'title' => trans('order.notifications.ban_hang.title'),
+			        'content' => trans('order.notifications.ban_hang.content created', ['order_code' => $order->id]),
+			        'fcm_token' => $user->fcm_token,
+			        'order_id' => $order->id,
+			        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_CREATED]),
+		        ];
+
+		        event(new ShopNotiCreated($data));
 	        }
 
 
