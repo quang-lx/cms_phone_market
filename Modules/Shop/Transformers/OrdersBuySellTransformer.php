@@ -45,6 +45,7 @@ class OrdersBuySellTransformer extends JsonResource
             'ship_phoenix_name' => $this->ship_phoenix_name,
             'ship_address' => $this->ship_address,
             'created_at' => $this->created_at->format('d-m-Y'),
+            'shop_done' => $this->shop_done,
 
              'urls' => [
                 'delete_url' => route('apishop.orders.destroy', $this->id),

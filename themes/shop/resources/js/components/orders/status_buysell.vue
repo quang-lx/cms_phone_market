@@ -4,7 +4,7 @@
         <div
             class="col-md-12"
             v-if="
-                data.order_type == 'bao_hanh' && data.status_value == 'created'
+                data.order_type == 'mua_hang' && data.status_value == 'created'
             "
         >
             <el-button type="secondary" @click="cancelOrder">{{
@@ -14,40 +14,11 @@
                 $t("orders.label.button.wait_client")
             }}</el-button>
         </div>
-        <!-- nhận hàng -->
-        <div
-            class="col-md-12"
-            v-if="
-                data.order_type == 'bao_hanh' &&
-                    data.status_value == 'confirmed'
-            "
-        >
-            <el-button type="secondary" @click="cancelOrder">{{
-                $t("orders.label.button.cancel")
-            }}</el-button>
-            <el-button type="primary" @click="confirmed">{{
-                $t("orders.label.button.confirmed")
-            }}</el-button>
-        </div>
-        <!-- chờ bảo hành -->
-        <div
-            class="col-md-12"
-            v-if="
-                data.order_type == 'bao_hanh' && data.status_value == 'warranting'
-            "
-        >
-            <el-button type="secondary" @click="cancelOrder">{{
-                $t("orders.label.button.cancel")
-            }}</el-button>
-            <el-button type="primary" @click="warranting">{{
-                $t("orders.label.button.warranting")
-            }}</el-button>
-        </div>
         <!-- chờ giao hàng -->
          <div
             class="col-md-12"
             v-if="
-                data.order_type == 'bao_hanh' && data.shop_done == 0 && data.status_value == 'sending'
+                data.order_type == 'mua_hang' && data.shop_done == 0 && data.status_value == 'sending'
             "
         >
             <el-button type="secondary" @click="cancelOrder">{{
@@ -74,7 +45,7 @@ export default {
             modelUpdae: {
                 price: "",
                 numberDate: "",
-                type: "bao_hanh"
+                type: "mua_ban"
             },
             message: ""
         };
@@ -94,9 +65,10 @@ export default {
         },
 
         onCancel() {
+            console.log(1);
             axios
                 .post(
-                    route("apishop.orders.guarantee_cancel", {
+                    route("apishop.orders.buysell_cancel", {
                         orders: this.$route.params.ordersId
                     })
                 )
@@ -107,7 +79,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.ordersguarantee.index" });
+                    this.$router.push({ name: "shop.ordersbuysell.index" });
                 })
                 .catch(error => {
                     this.loading = false;
@@ -119,7 +91,7 @@ export default {
                 });
         },
 
-        // xác nhận đơn hàng
+        //xác nhận đơn hàng
         waitClient() {
             this.$confirm(this.$t("orders.label.confirm.wait_client"), {
                 confirmButtonText: this.$t("mon.cancel.Yes"),
@@ -135,7 +107,7 @@ export default {
         onWaitClient() {
             axios
                 .post(
-                    route("apishop.orders.guarantee_confirmed", {
+                    route("apishop.orders.buysell_confirmed", {
                         orders: this.$route.params.ordersId
                     })
                 )
@@ -146,85 +118,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.ordersguarantee.index" });
-                })
-                .catch(error => {
-                    this.loading = false;
-                    this.dialogVisible = false;
-                    this.$notify.error({
-                        title: "Lỗi xác nhận",
-                        message: error.response.data.message
-                    });
-                });
-        },
-
-        // nhận đơn hàng
-        // 1. thuong
-        confirmed() {
-            this.$confirm(this.$t("orders.label.confirm.confirmed"), {
-                confirmButtonText: this.$t("mon.cancel.Yes"),
-                cancelButtonText: this.$t("mon.cancel.No"),
-                type: "warning"
-            })
-                .then(() => {
-                    this.onConfirmed();
-                })
-                .catch(() => {});
-        },
-
-        onConfirmed() {
-            axios
-                .post(
-                    route("apishop.orders.guarantee_warranting", {
-                        orders: this.$route.params.ordersId
-                    })
-                )
-                .then(response => {
-                    this.loading = false;
-                    this.$message({
-                        type: "success",
-                        message: response.data.message
-                    });
-                    this.dialogVisible = false;
-                    this.$router.push({ name: "shop.ordersguarantee.index" });
-                })
-                .catch(error => {
-                    this.loading = false;
-                    this.dialogVisible = false;
-                    this.$notify.error({
-                        title: "Lỗi xác nhận",
-                        message: error.response.data.message
-                    });
-                });
-        },
-        //chờ bảo hành
-        warranting() {
-            this.$confirm(this.$t("orders.label.confirm.warranting"), {
-                confirmButtonText: this.$t("mon.cancel.Yes"),
-                cancelButtonText: this.$t("mon.cancel.No"),
-                type: "warning"
-            })
-                .then(() => {
-                    this.onWarranting();
-                })
-                .catch(() => {});
-        },
-
-        onWarranting() {
-            axios
-                .post(
-                    route("apishop.orders.guarantee_sending", {
-                        orders: this.$route.params.ordersId
-                    })
-                )
-                .then(response => {
-                    this.loading = false;
-                    this.$message({
-                        type: "success",
-                        message: response.data.message
-                    });
-                    this.dialogVisible = false;
-                    this.$router.push({ name: "shop.ordersguarantee.index" });
+                    this.$router.push({ name: "shop.ordersbuysell.index" });
                 })
                 .catch(error => {
                     this.loading = false;
@@ -253,7 +147,7 @@ export default {
         onDone() {
             axios
                 .post(
-                    route("apishop.orders.guarantee_done", {
+                    route("apishop.orders.buysell_done", {
                         orders: this.$route.params.ordersId
                     })
                 )
@@ -264,7 +158,7 @@ export default {
                         message: response.data.message
                     });
                     this.dialogVisible = false;
-                    this.$router.push({ name: "shop.ordersguarantee.index" });
+                    this.$router.push({ name: "shop.ordersbuysell.index" });
                 })
                 .catch(error => {
                     this.loading = false;

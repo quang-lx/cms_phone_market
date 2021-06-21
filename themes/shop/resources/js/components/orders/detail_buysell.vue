@@ -96,6 +96,11 @@
 
                       <div class="col-md-3">
                         <div><h4>Trạng thái</h4></div>
+                         <div>
+                          <span>{{modelForm.status}}</span>
+                            <p v-if="modelForm.shop_done == 1">(Người bán đã xác nhận giao hàng thành công)</p>
+
+                        </div>
                       </div>
                       <!-- <div class="col-md-12 mt-5">
                             {{ $t("orders.label.description") }}:
@@ -207,20 +212,9 @@
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="col-md-12 mt-4 text-right"
-                    v-if="
-                      modelForm.order_type == 'mua_hang' &&
-                      modelForm.status_value == 'created'
-                    "
-                  >
-                    <el-button type="secondary" @click="cancelOrder"
-                      >Hủy đơn hàng</el-button
-                    >
-                    <el-button type="primary" @click="orderConfirmation"
-                      >Nhận đơn</el-button
-                    >
-                  </div>
+                 <div class="col-md-12 mt-4 text-right">
+                          <status-buysell :data="modelForm"></status-buysell>
+                      </div>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -238,6 +232,8 @@ import Form from "form-backend-validation";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
 import MultipleMedia from "../media/js/components/MultipleMedia";
 import MultipleFileSelector from "../../mixins/MultipleFileSelector.js";
+import StatusBuysell from "./status_buysell";
+
 export default {
   props: {
     locales: { default: null },
@@ -246,6 +242,7 @@ export default {
   mixins: [SingleFileSelector, MultipleFileSelector],
   components: {
     MultipleMedia,
+    StatusBuysell
   },
   data() {
     return {
@@ -270,87 +267,6 @@ export default {
         this.loading = false;
         this.modelForm = response.data.data;
         this.modelForm.is_new = false;
-      });
-    },
-
-    cancelOrder() {
-      this.$confirm(this.$t("orders.label.confirm.cancel"), {
-        confirmButtonText: this.$t("mon.cancel.Yes"),
-        cancelButtonText: this.$t("mon.cancel.No"),
-        type: "warning",
-      })
-        .then(() => {
-          this.onCancel();
-        })
-        .catch(() => {});
-    },
-
-    orderConfirmation() {
-      this.$confirm(this.$t("orders.label.confirm.agree"), {
-        confirmButtonText: this.$t("mon.cancel.Yes"),
-        cancelButtonText: this.$t("mon.cancel.No"),
-        type: "warning",
-      })
-        .then(() => {
-          this.onSubmit();
-        })
-        .catch(() => {});
-    },
-
-    showDataModal(key) {
-      this.dialogRank = true;
-    },
-
-    onSubmit() {
-      axios
-        .post(this.getRoute())
-        .then((response) => {
-          this.loading = false;
-          this.$message({
-            type: "success",
-            message: response.data.message,
-          });
-          this.dialogVisible = false;
-          this.$router.push({ name: "shop.ordersbuysell.index" });
-        })
-        .catch((error) => {
-          this.loading = false;
-          this.dialogVisible = false;
-          this.$notify.error({
-            title: "Lỗi xác nhận",
-            message: error.response.data.message,
-          });
-        });
-    },
-
-    onCancel() {
-      axios
-        .post(
-          route("apishop.orders.cancel_buysell", {
-            orders: this.$route.params.ordersId,
-          })
-        )
-        .then((response) => {
-          this.loading = false;
-          this.$message({
-            type: "success",
-            message: response.data.message,
-          });
-          this.dialogVisible = false;
-          this.$router.push({ name: "shop.ordersbuysell.index" });
-        })
-        .catch((error) => {
-          this.loading = false;
-          this.dialogVisible = false;
-          this.$notify.error({
-            title: "Lỗi xác nhận",
-            message: error.response.data.message,
-          });
-        });
-    },
-    getRoute() {
-      return route("apishop.orders.update_buysell", {
-        orders: this.$route.params.ordersId,
       });
     },
   },

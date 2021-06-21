@@ -77,7 +77,7 @@
          <div
             class="col-md-12"
             v-if="
-                data.order_type == 'sua_chua' && data.status_value == 'sending'
+                data.order_type == 'sua_chua'  && data.shop_done == 0 && data.status_value == 'sending'
             "
         >
             <el-button type="secondary" @click="cancelOrder">{{
