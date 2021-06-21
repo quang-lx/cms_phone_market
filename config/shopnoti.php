@@ -23,7 +23,7 @@ return [
 		'bao_hanh'=>[
 			'created' =>  [
 				'title' => 'Khách hàng đặt đơn bảo hành thành công',
-				'content' => 'Có đơn bảo hành mới %s đặt, vui lòng xác nhận đơn hàng.',
+				'content' => 'Có đơn bảo hành mới %s, vui lòng xác nhận đơn hàng.',
 			],
 
 			'done' => [
@@ -38,7 +38,7 @@ return [
 		'mua_hang' => [
 			'created' => [
 				'title' => 'Khách hàng đặt đơn thành công',
-				'content' => 'Có đơn hàng mới %s đặt, vui lòng xác nhận đơn hàng.',
+				'content' => 'Có đơn hàng mới %s, vui lòng xác nhận đơn hàng.',
 			],
 
 			'done' => [
