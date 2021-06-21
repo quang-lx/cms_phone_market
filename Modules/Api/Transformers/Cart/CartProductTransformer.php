@@ -14,7 +14,7 @@ class CartProductTransformer extends JsonResource
     {
         $data = [
 
-            'quantity' => $this->quantity,
+            'quantity' => $this->product->count(),
             'note' => $this->note,
              'product' => new ProductTransformer($this->product),
              'product_attribute' => $this->productValue,
