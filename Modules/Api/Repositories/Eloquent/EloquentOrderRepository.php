@@ -217,7 +217,7 @@ class EloquentOrderRepository implements OrderRepository
 		        event(new UserUpdateOrderStatus([
 			        'order_id' => $order->id,
 			        'title' => $shopNotiArr['title'],
-			        'content' => sprintf($shopNotiArr['content'], $order->id),
+			        'content' => sprintf($shopNotiArr['content'], $orderProductData['product_title']),
 			        'shop_id' => $order->shop_id,
 			        'order_status' => $order->status,
 			        'order_type' => $order->order_type,
@@ -273,7 +273,7 @@ class EloquentOrderRepository implements OrderRepository
 		        event(new UserUpdateOrderStatus([
 			        'order_id' => $order->id,
 			        'title' => $shopNotiArr['title'],
-			        'content' => sprintf($shopNotiArr['content'], $order->id),
+			        'content' => sprintf($shopNotiArr['content'], $orderProductData['product_title']),
 			        'shop_id' => $order->shop_id,
 			        'order_status' => $order->status,
 			        'order_type' => $order->order_type,
@@ -350,7 +350,7 @@ class EloquentOrderRepository implements OrderRepository
 		        event(new UserUpdateOrderStatus([
 			        'order_id' => $order->id,
 			        'title' => $shopNotiArr['title'],
-			        'content' => sprintf($shopNotiArr['content'], $order->id),
+			        'content' => sprintf($shopNotiArr['content'], $orderProductData['product_title']),
 			        'shop_id' => $order->shop_id,
 			        'order_status' => $order->status,
 			        'order_type' => $order->order_type,
@@ -678,10 +678,11 @@ class EloquentOrderRepository implements OrderRepository
 
 		        $shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $orderCreated->order_type, $orderCreated->status), null);
 		        if ($shopNotiArr && is_array($shopNotiArr)) {
+		        	$orderProducts = $orderCreated->allOrderProducts->pluck('product_title');
 			        event(new UserUpdateOrderStatus([
 				        'order_id' => $orderCreated->id,
 				        'title' => $shopNotiArr['title'],
-				        'content' => sprintf($shopNotiArr['content'], $orderCreated->id),
+				        'content' => sprintf($shopNotiArr['content'], implode(', ', $orderProducts)),
 				        'shop_id' => $orderCreated->shop_id,
 				        'order_status' => $orderCreated->status,
 				        'order_type' => $orderCreated->order_type,
