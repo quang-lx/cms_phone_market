@@ -101,6 +101,15 @@ class OrdersController extends ApiController
         ]);
     }
 
+    public function repairFixingOther(Orders $orders, UpdateOrdersRequest $request)
+    {
+	    $orders = $this->ordersRepository->repairFixingOther($orders, $request->all());
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
+
     public function repairSending(Orders $orders, Request $request)
     {
 	    $orders = $this->ordersRepository->repairSending($orders, $request->all());
