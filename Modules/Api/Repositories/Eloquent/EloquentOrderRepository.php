@@ -682,7 +682,7 @@ class EloquentOrderRepository implements OrderRepository
 				        'order_id' => $orderCreated->id,
 				        'title' => $shopNotiArr['title'],
 				        'content' => sprintf($shopNotiArr['content'], $orderCreated->id),
-				        'shop_id' => $orderCreated->id,
+				        'shop_id' => $orderCreated->shop_id,
 				        'order_status' => $orderCreated->status,
 				        'order_type' => $orderCreated->order_type,
 			        ]));
