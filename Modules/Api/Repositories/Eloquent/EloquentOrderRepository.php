@@ -678,7 +678,8 @@ class EloquentOrderRepository implements OrderRepository
 
 		        $shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $orderCreated->order_type, $orderCreated->status), null);
 		        if ($shopNotiArr && is_array($shopNotiArr)) {
-		        	$orderProducts = $orderCreated->allOrderProducts->pluck('product_title');
+		        	$orderProducts = $orderCreated->allOrderProducts->pluck('product_title')->toArray();
+		        	Log::info($orderProducts);
 			        event(new UserUpdateOrderStatus([
 				        'order_id' => $orderCreated->id,
 				        'title' => $shopNotiArr['title'],
