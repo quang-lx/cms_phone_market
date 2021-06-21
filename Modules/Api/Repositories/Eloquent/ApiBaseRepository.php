@@ -26,7 +26,7 @@ class ApiBaseRepository
 			 * because smaller ones are not indexed by mysql
 			 */
 			if (strlen($word) >= 1) {
-				$words[$key] = $word;
+				$words[$key] = $word.'*';
 			}
 		}
 

@@ -47,7 +47,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
         }
 
         if ($keyword = $request->get('q')) {
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
         }
         return $query->active()->paginate($request->get('per_page', 10));
 
@@ -63,7 +63,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 
 
         if ($keyword = $request->get('q')) {
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
         }
         return $query->active()->paginate($request->get('per_page', 10));
 
@@ -101,7 +101,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
         }
 
         if ($keyword = $request->get('q')) {
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
         }
         return $query->active()->paginate($request->get('per_page', 10));
 
@@ -161,7 +161,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
         $query->where('shop_id', $shop_id);
 
         if ($keyword = $request->get('q')) {
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
         }
         return $query->active()->paginate($request->get('per_page', 10));
 
@@ -175,7 +175,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 
 
         if ($keyword = $request->get('q')) {
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
         }
         return $query->active()->paginate($request->get('per_page', 10));
 
@@ -188,7 +188,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 
 
         if ($keyword = $request->get('q')) {
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
         }
         return $query->active()->paginate($request->get('per_page', 10));
 

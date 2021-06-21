@@ -45,7 +45,7 @@ class EloquentApiShopRepository extends ApiBaseRepository implements ApiShopRepo
 
         $query = Shop::query();
         if ($keyword = $request->get('q')) {
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
         }
         $result = $query->paginate($request->get('per_page', 10));
         return $result;
@@ -62,12 +62,12 @@ class EloquentApiShopRepository extends ApiBaseRepository implements ApiShopRepo
             $limit = 6;
             // search in shop
             $query = Shop::query();
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
             $result = $query->select(['name'])->limit($limit)->get()->pluck('name')->toArray();
 
         }
         return $result;
     }
 
-    
+
 }

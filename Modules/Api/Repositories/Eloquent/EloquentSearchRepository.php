@@ -20,7 +20,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             // search in shop
 	        if($includeShop = $request->get('include_shop')) {
 		        $query = Shop::query();
-		        $query->whereRaw("MATCH (name, address) AGAINST (?)", $this->fullTextWildcards($keyword));
+		        $query->whereRaw("MATCH (name, address) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
 		        $shop = $query->active()->first();
 	        }
 
@@ -45,7 +45,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             if ($to_price = $request->get('to_price')) {
                 $query->where('product.price', '<=', $to_price);
             }
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
             $products = $query->active()->paginate($request->get('per_page', 10));
 
 
@@ -62,7 +62,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             // search in shop
 	        if($includeShop = $request->get('include_shop')) {
 		        $query = Shop::query();
-		        $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+		        $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
 		        $result = $query->select(['name'])->limit(5)->get()->pluck('name')->toArray();
 	        }
 
@@ -92,7 +92,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
                 $query->where('product.price', '<=', $to_price);
             }
 
-            $query->whereRaw("MATCH (name) AGAINST (?)", $this->fullTextWildcards($keyword));
+            $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));
             $products = $query->select(['name'])->limit($limit)->get()->pluck('name')->toArray();
             $result = array_merge($result, $products);
 
