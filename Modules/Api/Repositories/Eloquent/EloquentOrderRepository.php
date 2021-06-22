@@ -384,9 +384,9 @@ class EloquentOrderRepository implements OrderRepository
         // ship
         $orderData['ship_address_id'] = $requestParams['ship_address_id'];
         $orderData['ship_type_id'] = $shipType->id;
-        $orderData['ship_address'] = $shipType->address;
-        $orderData['ship_fullname'] = $shipType->fullname;
-        $orderData['ship_phone'] = $shipType->phone;
+        $orderData['ship_address'] = $shipAddress->address;
+        $orderData['ship_fullname'] = $shipAddress->fullname;
+        $orderData['ship_phone'] = $shipAddress->phone;
         $orderData['ship_province_id'] = $province->id;
         $orderData['ship_province_name'] = $province->name;
 
