@@ -851,6 +851,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		$str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
 		$str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
 		$str = preg_replace("/(Đ)/", 'D', $str);
+		$str = str_replace(' ', '_', $str);
 		return $str;
 	}
 
@@ -875,7 +876,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
     {
         // Đơn mua bán - placeOrderMultiProduct
         // Đơn sửa chữa bảo hành - placeMultipleOrder
-        $user = $this->getUserByPhone($requestParams);
+        $newUser = $this->getUserByPhone($requestParams);
 		$user = Auth::user();
 		$order = new Orders();
 		$order->order_type = Orders::TYPE_MUA_HANG;
@@ -883,7 +884,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		$order->shop_id = $user->shop_id;
 		$order->status = Orders::STATUS_ORDER_DONE;
 		$order->payment_status = Orders::PAYMENT_PAID_DONE;
-		$order->user_id = $user->id;
+		$order->user_id = $newUser->id;
 		$order->total_price = $requestParams['price'];
 		$order->discount = $requestParams['sale_price'];
 		$order->pay_price = (1 - $requestParams['sale_price']/100) * $requestParams['price'];
