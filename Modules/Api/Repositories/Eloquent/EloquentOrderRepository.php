@@ -243,6 +243,7 @@ class EloquentOrderRepository implements OrderRepository
         list($orderData, $orderProductData) = $this->parseOrderData($requestParams, $user, $shipType, $shipAddress, $province, $district, $phoenix);
         $orderProductData['product_title'] = $requestParams['product_title'];
         $orderData['shop_id'] = $requestParams['shop_id'];
+        $orderData['type_other'] = 1;
         $shop = Shop::find($requestParams['shop_id']);
         if (!$shop) {
             return false;
@@ -384,9 +385,9 @@ class EloquentOrderRepository implements OrderRepository
         // ship
         $orderData['ship_address_id'] = $requestParams['ship_address_id'];
         $orderData['ship_type_id'] = $shipType->id;
-        $orderData['ship_address'] = $shipType->address;
-        $orderData['ship_fullname'] = $shipType->fullname;
-        $orderData['ship_phone'] = $shipType->phone;
+        $orderData['ship_address'] = $shipAddress->address;
+        $orderData['ship_fullname'] = $shipAddress->fullname;
+        $orderData['ship_phone'] = $shipAddress->phone;
         $orderData['ship_province_id'] = $province->id;
         $orderData['ship_province_name'] = $province->name;
 
@@ -644,8 +645,15 @@ class EloquentOrderRepository implements OrderRepository
                     }
 
                     if ($cart) {
-						CartProduct::query()->where('cart_id', $cart->id)
-							->where('product_id', $product->id)->delete();
+                    	if ($productAttributeValue) {
+		                    CartProduct::query()->where('cart_id', $cart->id)
+			                    ->where('product_id', $product->id)
+			                    ->where('product_attribute_value_id', $productAttributeValue->id)->delete();
+	                    } else {
+		                    CartProduct::query()->where('cart_id', $cart->id)
+			                    ->where('product_id', $product->id)->delete();
+	                    }
+
 					}
 
                     $orderProducts[]= $orderProductTmp;

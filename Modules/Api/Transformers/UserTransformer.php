@@ -5,6 +5,7 @@ namespace Modules\Api\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
+use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\Rank;
 
 class UserTransformer extends JsonResource
@@ -24,7 +25,7 @@ class UserTransformer extends JsonResource
 	        'phone' => $this->phone,
 	        'gender' => $this->gender,
 	        'email' => $this->email,
-            'total_order' => 10,
+            'total_order' => $this->orderCount($this->id),
 	        'avatar' => $this->avatar? new MediaShortTransformer($this->avatar): null,
             'default_address' => $defaultAddress? new AddressTransformer($defaultAddress): null,
             'noti_not_seen' => $this->orderNotificationNotSeen->count(),
@@ -41,6 +42,9 @@ class UserTransformer extends JsonResource
      */
     public function defaultAddress($addresses) {
         return $addresses->firstWhere('default', 1);
+    }
+    public function orderCount($userId) {
+    	return Orders::query()->where('user_id', $userId)->count();
     }
 
 }

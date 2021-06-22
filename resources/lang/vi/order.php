@@ -8,6 +8,7 @@ return [
            'content cancel' => 'Đơn hàng :order_code đã được hủy thành công.',
            'content confirm' => 'Đơn sửa chữa :order_code đã được xác nhận, vui lòng gửi hàng sửa chữa tới cửa hàng.',
            'content fixing' => 'Đơn sửa chữa :order_code đã đến được cửa hàng.',
+           'content fixing other' => ' Đơn sửa chữa :order_code, được xác nhận sửa chữa trong thời gian :time, Chi phí: :price. Vui lòng kiểm tra và xác nhận',
            'content sending' => 'Đơn sửa chữa :order_code đã hoàn thành, vui lòng chờ cửa hàng trả sản phẩm.',
            'content done' => 'Đơn sửa chữa :order_code đã hoàn thành. Bạn hãy đánh giá sản phẩm giúp người khác hiểu hơn sản phẩm nhé.',
            'type' => 'suachua_:order_status',

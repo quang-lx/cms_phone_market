@@ -264,43 +264,6 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
     }
     public function repairFixing($model, $data)
     {
-        // $data_update=[];
-        // if($data['type']=='sua_chua'){
-        //     $data_update['total_price'] = $data['price'];
-        //     $data_update['pay_price'] = $data['price'];
-        //     $data_update['fix_time'] = $data['numberDate'];
-        //     $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
-        //     $data_update['status'] = Orders::STATUS_ORDER_FIXING;
-        //     $model->update($data_update);
-		// 	$data = [
-		// 		'title' => trans('order.notifications.sua_chua.title'),
-		// 		'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
-		// 		'fcm_token' => $model->user->fcm_token,
-		// 		'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
-		// 		'order_id' => $model->id
-		// 	];
-
-		// 	event(new ShopNotiCreated($data));
-		// 	event(new ShopUpdateOrderStatus([
-		// 		'title' => trans('order.notifications.sua_chua.title'),
-		// 		'content' => trans('order.notifications.sua_chua.content confirm', ['order_code' => $model->id]),
-		// 		'user_id' => $model->user->id,
-		// 		'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_FIXING]),
-		// 		'order_id' => $model->id
-		// 	]));
-
-
-		// 	event(new OrderStatusUpdated([
-		// 		'order_type' => $model->order_type,
-		// 		'order_id' => $model->id,
-		// 		'title' => $model->status_name,
-		// 		'old_status' => Orders::STATUS_ORDER_CONFIRMED,
-		// 		'new_status' => Orders::STATUS_ORDER_FIXING,
-		// 		'user_id' => null,
-		// 		'shop_id' => Auth::user()->shop_id
-		// 	]));
-
-        // }
         if ($model->status == $model::STATUS_ORDER_CONFIRMED && $model->order_type == $model::TYPE_SUA_CHUA) {
             $data_update =[
                 'status' => Orders::STATUS_ORDER_FIXING
@@ -347,6 +310,46 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         // $model->update($data_update);
     }
 
+	public function repairFixingOther($model, $data)
+    {
+		$data_update=[];
+        if($data['type']=='sua_chua'){
+            $data_update['total_price'] = $data['price'];
+            $data_update['pay_price'] = $data['price'];
+            $data_update['fix_time'] = $data['numberDate'];
+            $data_update['status'] = Orders::STATUS_ORDER_CREATED;
+            $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
+            $model->update($data_update);
+			$data_noti = [
+				'title' => trans('order.notifications.sua_chua.title'),
+				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'].' ngày','price'=>number_format($data['price']).'đ']),
+				'fcm_token' => $model->user->fcm_token,
+				'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+				'order_id' => $model->id
+			];
+
+			event(new ShopNotiCreated($data_noti));
+			event(new ShopUpdateOrderStatus([
+				'title' => trans('order.notifications.sua_chua.title'),
+				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'].' ngày','price'=>number_format($data['price']).'đ']),
+				'user_id' => $model->user->id,
+				'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+				'order_id' => $model->id
+			]));
+
+
+			event(new OrderStatusUpdated([
+				'order_type' => $model->order_type,
+				'order_id' => $model->id,
+				'title' => $model->status_name,
+				'old_status' => Orders::STATUS_ORDER_CONFIRMED,
+				'new_status' => Orders::STATUS_ORDER_CREATED,
+				'user_id' => null,
+				'shop_id' => Auth::user()->shop_id
+			]));
+
+        }
+	}
     public function repairSending($model, $data)
     {
         if ($model->status == $model::STATUS_ORDER_FIXING && $model->order_type == $model::TYPE_SUA_CHUA) {
