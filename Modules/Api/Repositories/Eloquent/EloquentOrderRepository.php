@@ -645,8 +645,15 @@ class EloquentOrderRepository implements OrderRepository
                     }
 
                     if ($cart) {
-						CartProduct::query()->where('cart_id', $cart->id)
-							->where('product_id', $product->id)->delete();
+                    	if ($productAttributeValue) {
+		                    CartProduct::query()->where('cart_id', $cart->id)
+			                    ->where('product_id', $product->id)
+			                    ->where('product_attribute_value_id', $productAttributeValue->id)->delete();
+	                    } else {
+		                    CartProduct::query()->where('cart_id', $cart->id)
+			                    ->where('product_id', $product->id)->delete();
+	                    }
+
 					}
 
                     $orderProducts[]= $orderProductTmp;

@@ -78,151 +78,147 @@ use Wildside\Userstamps\Userstamps;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCompanyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdminCompany($value)
  */
-class User extends Authenticatable implements MustVerifyEmail, JWTSubject
-{
-    use Notifiable, HasRoles, SoftDeletes, Userstamps, MediaRelation;
-    const TYPE_ADMIN = 1;
-    const TYPE_USER = 2;
-    const TYPE_SHOP = 3;
+class User extends Authenticatable implements MustVerifyEmail, JWTSubject {
+	use Notifiable, HasRoles, SoftDeletes, Userstamps, MediaRelation;
+	const TYPE_ADMIN = 1;
+	const TYPE_USER = 2;
+	const TYPE_SHOP = 3;
 
-    const STATUS_ACTIVE = 1;
-    const STATUS_LOCK = 2;
-    const STATUS_INACTIVE = 0;
+	const STATUS_ACTIVE = 1;
+	const STATUS_LOCK = 2;
+	const STATUS_INACTIVE = 0;
 
-    const ROLE_SHOP_ADMIN = 'shop_admin';
+	const ROLE_SHOP_ADMIN = 'shop_admin';
 
-    protected $table = 'users';
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
-        'fcm_token', 'lat', 'lng', 'status', 'phone', 'province_id', 'district_id', 'phoenix_id', 'is_admin_company', 'company_id', 'shop_id', 'rank_id', 'birthday', 'gender','rank_point'
-    ];
+	protected $table = 'users';
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'name', 'email', 'password', 'email_verified_at', 'activated', 'last_login', 'type', 'username', 'sms_verified_at', 'finish_reg',
+		'fcm_token', 'lat', 'lng', 'status', 'phone', 'province_id', 'district_id', 'phoenix_id', 'is_admin_company', 'company_id', 'shop_id', 'rank_id', 'birthday', 'gender', 'rank_point'
+	];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-
-    /**
-     * Lấy thông tin profile
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function profile()
-    {
-        return $this->hasOne(Profile::class, 'user_id', 'id');
-    }
+	/**
+	 * The attributes that should be hidden for arrays.
+	 *
+	 * @var array
+	 */
+	protected $hidden = [
+		'password', 'remember_token',
+	];
 
 
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [
-            'user_id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-        ];
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class, 'company_id');
-    }
+	/**
+	 * Lấy thông tin profile
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function profile() {
+		return $this->hasOne(Profile::class, 'user_id', 'id');
+	}
 
 
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id');
-    }
+	public function getJWTIdentifier() {
+		return $this->getKey();
+	}
 
-    public function getStatusNameAttribute($value)
-    {
-        $statusName = '';
-        switch ($this->status) {
-            case self::STATUS_LOCK:
-                $statusName = 'Khóa';
-                break;
-            case self::STATUS_ACTIVE:
-                $statusName = 'Hoạt động';
-                break;
-        }
-        return $statusName;
-    }
-    public function getStatusColorAttribute($value)
-    {
-        $statusColor = '';
-        switch ($this->status) {
-            case self::STATUS_LOCK:
-                $statusColor = '#F5ABAB';
-                break;
-            case self::STATUS_ACTIVE:
-                $statusColor = '#219653';
-                break;
-        }
-        return $statusColor;
-    }
-    public function getAvatarAttribute()
-    {
-        return $this->filesByZone('avatar')->first();
-    }
+	public function getJWTCustomClaims() {
+		return [
+			'user_id' => $this->id,
+			'name' => $this->name,
+			'email' => $this->email,
+		];
+	}
 
-    public function findCreatedBy()
-    {
-        return $this->find($this->created_by);
-    }
+	public function company() {
+		return $this->belongsTo(Company::class, 'company_id');
+	}
 
 
-    public function rank()
-    {
-       return $this->belongsTo(Rank::class,'rank_id');
-    }
+	public function shop() {
+		return $this->belongsTo(Shop::class, 'shop_id');
+	}
 
-    public function getGenderNameAttribute($value)
-    {
-        $gender_name = '';
-        switch ($this->gender) {
-            case 1:
-                $gender_name = 'Nam';
-                break;
-            case 2:
-                $gender_name = 'Nữ';
-                break;
-        }
-        return $gender_name;
-    }
+	public function orders() {
+		return $this->hasMany(Orders::class, 'user_id');
+	}
 
-    public function getThumbnailAttribute()
-    {
-        return $this->filesByZone('thumbnail')->first();
-    }
-    public function addresses() {
-        return $this->hasMany(Address::class, 'user_id', 'id');
-    }
-    public function defaultAddress() {
-        return $this->addresses()->where('default', 1)->first();
-    }
-    public function connectedAccount() {
-    	return $this->hasMany(ConnectedAccount::class, 'user_id');
-    }
+	public function getStatusNameAttribute($value) {
+		$statusName = '';
+		switch ($this->status) {
+			case self::STATUS_LOCK:
+				$statusName = 'Khóa';
+				break;
+			case self::STATUS_ACTIVE:
+				$statusName = 'Hoạt động';
+				break;
+		}
+		return $statusName;
+	}
 
-    public function orderNotifications() {
-    	return $this->hasMany(OrderUserNotification::class, 'user_id');
-    }
-    public function orderNotificationNotSeen() {
-    	return $this->orderNotifications()->where('seen', 0);
-    }
+	public function getStatusColorAttribute($value) {
+		$statusColor = '';
+		switch ($this->status) {
+			case self::STATUS_LOCK:
+				$statusColor = '#F5ABAB';
+				break;
+			case self::STATUS_ACTIVE:
+				$statusColor = '#219653';
+				break;
+		}
+		return $statusColor;
+	}
+
+	public function getAvatarAttribute() {
+		return $this->filesByZone('avatar')->first();
+	}
+
+	public function findCreatedBy() {
+		return $this->find($this->created_by);
+	}
+
+
+	public function rank() {
+		return $this->belongsTo(Rank::class, 'rank_id');
+	}
+
+	public function getGenderNameAttribute($value) {
+		$gender_name = '';
+		switch ($this->gender) {
+			case 1:
+				$gender_name = 'Nam';
+				break;
+			case 2:
+				$gender_name = 'Nữ';
+				break;
+		}
+		return $gender_name;
+	}
+
+	public function getThumbnailAttribute() {
+		return $this->filesByZone('thumbnail')->first();
+	}
+
+	public function addresses() {
+		return $this->hasMany(Address::class, 'user_id', 'id');
+	}
+
+	public function defaultAddress() {
+		return $this->addresses()->where('default', 1)->first();
+	}
+
+	public function connectedAccount() {
+		return $this->hasMany(ConnectedAccount::class, 'user_id');
+	}
+
+	public function orderNotifications() {
+		return $this->hasMany(OrderUserNotification::class, 'user_id');
+	}
+
+	public function orderNotificationNotSeen() {
+		return $this->orderNotifications()->where('seen', 0);
+	}
 }

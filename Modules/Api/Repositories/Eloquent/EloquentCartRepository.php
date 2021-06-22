@@ -63,8 +63,15 @@ class EloquentCartRepository implements CartRepository {
 
 					// neu quantity = 0 xoa sp khoi gio hang
 					if (!$quantity) {
-						CartProduct::query()->where('cart_id', $cart->id)
-							->where('product_id', $productData['product_id'])->delete();
+						if (isset($productData['product_attribute_value_id']) && !empty($productData['product_attribute_value_id'])) {
+							CartProduct::query()->where('cart_id', $cart->id)
+								->where('product_id', $productData['product_id'])
+								->where('product_attribute_value_id', $productData['product_attribute_value_id'])->delete();
+						} else {
+							CartProduct::query()->where('cart_id', $cart->id)
+								->where('product_id', $productData['product_id'])->delete();
+						}
+
 						continue;
 					}
 

@@ -9,7 +9,6 @@ use Modules\Media\Traits\MediaRelation;
 
 class CartProduct extends Model
 {
-    use  SoftDeletes;
 
     protected $table = 'cart_product';
     protected $fillable = [
