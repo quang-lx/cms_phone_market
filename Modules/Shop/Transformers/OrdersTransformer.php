@@ -15,7 +15,8 @@ class OrdersTransformer extends JsonResource
         $data = [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'user_name' => $this->user->name,
+            'user_name' => $this->user->username,
+            'phone' => $this->user->phone,
             'user' => $this->user,
             'company_id' => $this->company_id,
             'shop' => $this->shop,
@@ -31,6 +32,7 @@ class OrdersTransformer extends JsonResource
             'pay_price' => $this->pay_price,
             'type_other' => $this->type_other,
             'product_name' => $this->orderProducts->product_title,
+            'product_note' => $this->orderProducts->note,
 
             'ship_address_id' => $this->ship_address_id,
             'ship_province_id' => $this->ship_province_id,
@@ -40,9 +42,9 @@ class OrdersTransformer extends JsonResource
             'ship_phoenix_id' => $this->ship_phoenix_id,
             'ship_phoenix_name' => $this->ship_phoenix_name,
             'ship_address' => $this->ship_address,
-            'created_at' => $this->created_at->format('d-m-Y'),
+            'created_at' => $this->created_at->format('H:i d/m/Y'),
             'shop_done' => $this->shop_done,
-            'fix_time_date' => $this->fix_time_date,
+            'fix_time_date' => optional($this->fix_time_date)->format('H:i d/m/Y'),
 
              'urls' => [
                 'delete_url' => route('apishop.orders.destroy', $this->id),

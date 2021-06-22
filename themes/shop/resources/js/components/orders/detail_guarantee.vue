@@ -56,6 +56,12 @@
                       </div>
                       <div class="col-md-3">
                         <div><h4>Địa chỉ lấy hàng</h4></div>
+                         <div>
+                              {{ modelForm.user.name }}
+                            </div>
+                            <div>
+                              {{ modelForm.user.phone }}
+                            </div>
 
                         <div>
                           {{ modelForm.ship_province_name }}
@@ -84,28 +90,30 @@
                         </div>
                       </div>
 
-                      <div class="col-md-2">
-                        <div><h4>Thanh toán</h4></div>
-
-                        <div></div>
-                        <div><h4>Chi phí</h4></div>
-                        <div>
-                            <span v-currency="modelForm.pay_price"></span>
-                      </div>
-                      </div>
-
                       <div class="col-md-3">
-                        <div><h4>Trạng thái</h4></div>
+                        <div><h4>Trạng thái đơn hàng</h4></div>
                         <div>
                           <span>{{modelForm.status}}</span>
                             <p v-if="modelForm.shop_done == 1">(Người bán đã xác nhận giao hàng thành công)</p>
 
                         </div>
                       </div>
-                      <!-- <div class="col-md-12 mt-5">
-                            {{ $t("orders.label.description") }}:
-                            <div v-html="modelForm.description"></div>
-                        </div> -->
+                      <div class="col-md-2 mt-3">
+                        <div><h5>Sản phẩm bảo hành</h5></div>
+                        <div>
+                          <span>{{modelForm.product_name}}
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="col-md-3 mt-3">
+                        <div><h5>Hạn bảo hành</h5></div>
+                            <div v-html="modelForm.fix_time_date"></div>
+                        </div>
+                         <div class="col-md-3 mt-3">
+                        <div><h5>Tình trạng sản phẩm</h5></div>
+                            <div v-html="modelForm.product_note"></div>
+                        </div>
                        <div class="col-md-12 mt-4 text-right">
                           <status-guarantee :data="modelForm"></status-guarantee>
                       </div>
