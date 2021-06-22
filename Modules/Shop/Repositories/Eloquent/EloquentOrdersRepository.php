@@ -315,20 +315,21 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update['total_price'] = $data['price'];
             $data_update['pay_price'] = $data['price'];
             $data_update['fix_time'] = $data['numberDate'];
+            $data_update['status'] = Orders::STATUS_ORDER_CREATED;
             $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
             $model->update($data_update);
-			$data = [
+			$data_noti = [
 				'title' => trans('order.notifications.sua_chua.title'),
-				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'],'price'=>number_format($data['price']).'đ']),
+				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'].' ngày','price'=>number_format($data['price']).'đ']),
 				'fcm_token' => $model->user->fcm_token,
 				'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
 				'order_id' => $model->id
 			];
 
-			event(new ShopNotiCreated($data));
+			event(new ShopNotiCreated($data_noti));
 			event(new ShopUpdateOrderStatus([
 				'title' => trans('order.notifications.sua_chua.title'),
-				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'],'price'=>number_format($data['price']).'đ']),
+				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'].' ngày','price'=>number_format($data['price']).'đ']),
 				'user_id' => $model->user->id,
 				'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
 				'order_id' => $model->id
@@ -340,7 +341,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				'order_id' => $model->id,
 				'title' => $model->status_name,
 				'old_status' => Orders::STATUS_ORDER_CONFIRMED,
-				'new_status' => Orders::STATUS_ORDER_CONFIRMED,
+				'new_status' => Orders::STATUS_ORDER_CREATED,
 				'user_id' => null,
 				'shop_id' => Auth::user()->shop_id
 			]));

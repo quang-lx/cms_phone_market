@@ -103,8 +103,8 @@
                             <p v-if="
                               modelForm.order_type == 'sua_chua' &&
                               modelForm.type_other == 1 && modelForm.fix_time_date !=null &&
-                              modelForm.status_value == 'confirmed'
-                              ">(Chở khách hàng xác nhận trên app)</p>
+                              modelForm.status_value == 'created'
+                              ">(Chờ khách hàng xác nhận trên app)</p>
                         </div>
 
                       </div>
