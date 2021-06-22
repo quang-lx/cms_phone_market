@@ -4,7 +4,7 @@
         <div
             class="col-md-12"
             v-if="
-                data.order_type == 'sua_chua' && data.status_value == 'created'
+                data.order_type == 'sua_chua' && data.fix_time_date ==null && data.status_value == 'created'
             "
         >
             <el-button type="secondary" @click="cancelOrder">{{
