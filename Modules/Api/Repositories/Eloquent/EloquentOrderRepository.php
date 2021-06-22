@@ -243,6 +243,7 @@ class EloquentOrderRepository implements OrderRepository
         list($orderData, $orderProductData) = $this->parseOrderData($requestParams, $user, $shipType, $shipAddress, $province, $district, $phoenix);
         $orderProductData['product_title'] = $requestParams['product_title'];
         $orderData['shop_id'] = $requestParams['shop_id'];
+        $orderData['type_other'] = 1;
         $shop = Shop::find($requestParams['shop_id']);
         if (!$shop) {
             return false;
