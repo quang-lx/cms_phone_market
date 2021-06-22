@@ -14,6 +14,17 @@ return [
         'status' => 'Trạng thái',
         'detail_title' => 'Chi tiết đơn',
         'delivery_address' => 'Địa chỉ giao hàng',
+        // nhatdv1
+        'create' => 'Tạo mới',
+        'update' => 'Cập nhật',
+        'customer_name' => 'Tên khách hàng',
+        'created_at' => 'Thời gian tiếp nhận',
+        'category_id' => 'Danh mục hàng hóa',
+        'brand_id' => 'Nhãn hiệu',
+        'product_name' => 'Tên hàng hóa',
+        'price' => 'Giá',
+        'payment_method' => 'Hình thức thanh toán',
+        'phone' => 'Số điện thoại',
         'confirm' => [
             'cancel' => 'Hủy đơn hàng',
             'wait_client' => 'Xác nhận',
@@ -31,6 +42,7 @@ return [
             'fixing' => 'Sửa chữa xong',
             'warranting' => 'Bảo hành xong',
             'done' => 'Giao hàng thành công',
+            'save' => 'Tạo đơn',
         ]
 
     ],

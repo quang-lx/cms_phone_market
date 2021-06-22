@@ -335,7 +335,11 @@ Route::group(['prefix' => '/orders'], function ( ) {
         'middleware' => 'permission:shop.orders.detail'
     ]);
 
-    
+    Route::get('/buysell/create', [
+        'as' => 'shop.ordersbuysell.create',
+        'uses' => 'Orders\OrdersController@create',
+        'middleware' => 'permission:shop.ordersbuysell.create'
+    ]);
 
 
 });

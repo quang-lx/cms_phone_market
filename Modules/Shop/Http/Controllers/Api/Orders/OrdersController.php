@@ -210,4 +210,30 @@ class OrdersController extends ApiController
             'message' => trans('ch::orders.message.delete success'),
         ]);
     }
+
+    //nhatdv1 - Tạo mới đơn
+    public function storeBuysell(CreateOrdersRequest $request)
+    {
+        $params = [
+            "order_type" => 1, 
+            "status" => 1, 
+            "payment_status" => 1
+        ];
+        $this->ordersRepository->create(array_merge($request->all(),$params));
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.create success'),
+        ]);
+    }
+
+    public function updateBuysell(Orders $orders, UpdateOrdersRequest $request)
+    {
+        $this->ordersRepository->update($voucher, $request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
+        ]);
+    }
 }

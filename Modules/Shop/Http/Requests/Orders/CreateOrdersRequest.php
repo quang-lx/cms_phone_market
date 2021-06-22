@@ -8,7 +8,17 @@ class CreateOrdersRequest extends FormRequest
 {
     public function rules()
     {
-        return [];
+        $rules = [
+            'phone' => 'required',
+            'customer_name' => 'required',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'price' => 'required',
+            'created_at' => 'required',
+            'payment_method' => 'required',
+        ];
+
+        return $rules;
     }
 
     public function translationRules()
@@ -23,7 +33,17 @@ class CreateOrdersRequest extends FormRequest
 
     public function messages()
     {
-        return [];
+        $msg = [
+            'phone.required' => 'Số điện thoại là bắt buộc',
+            'customer_name.required' => 'Tên khách hàng là bắt buộc',
+            'category_id.required' => 'Chuyên mục là bắt buộc',
+            'brand_id.required' => 'Nhãn hiệu là bắt buộc',
+            'price.required' => 'Giá là bắt buộc',
+            'created_at.required' => 'Thời gian tiếp nhận là bắt buộc',
+            'payment_method.required' => 'Hình thức thanh toán là bắt buộc',
+
+        ];
+        return $msg;
     }
 
     public function translationMessages()

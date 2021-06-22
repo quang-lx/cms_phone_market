@@ -525,6 +525,17 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.guarantee_done',
         'uses' => 'Orders\OrdersController@guaranteeDone',
     ]);
+
+    //tao mới
+    Route::post('/', [
+        'as' => 'apishop.orders.storeBuysell',
+        'uses' => 'Orders\OrdersController@storeBuysell',
+    ]);
+
+    Route::post('/{orderId}/edit', [
+        'as' => 'apishop.orders.updateBuysell',
+        'uses' => 'Orders\OrdersController@updateBuysell',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
 
