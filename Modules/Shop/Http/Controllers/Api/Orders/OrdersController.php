@@ -6,6 +6,7 @@ use App\Events\OrderStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Mon\Entities\Orders;
+use Modules\Mon\Entities\User;
 use Modules\Shop\Http\Requests\Orders\CreateOrdersRequest;
 use Modules\Shop\Transformers\OrdersTransformer;
 use Modules\Shop\Transformers\OrdersBuySellTransformer;
@@ -214,12 +215,7 @@ class OrdersController extends ApiController
     //nhatdv1 - Tạo mới đơn
     public function storeBuysell(CreateOrdersRequest $request)
     {
-        $params = [
-            "order_type" => 1, 
-            "status" => 1, 
-            "payment_status" => 1
-        ];
-        $this->ordersRepository->create(array_merge($request->all(),$params));
+        $this->ordersRepository->storeBuySell($request->all());
 
         return response()->json([
             'errors' => false,
@@ -229,7 +225,7 @@ class OrdersController extends ApiController
 
     public function updateBuysell(Orders $orders, UpdateOrdersRequest $request)
     {
-        $this->ordersRepository->update($voucher, $request->all());
+        $this->ordersRepository->updateBuySell($voucher, $request->all());
 
         return response()->json([
             'errors' => false,

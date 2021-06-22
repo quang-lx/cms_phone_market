@@ -16,6 +16,7 @@ class CreateOrdersRequest extends FormRequest
             'price' => 'required',
             'created_at' => 'required',
             'payment_method' => 'required',
+            'product_id' => 'required',
         ];
 
         return $rules;
@@ -41,6 +42,7 @@ class CreateOrdersRequest extends FormRequest
             'price.required' => 'Giá là bắt buộc',
             'created_at.required' => 'Thời gian tiếp nhận là bắt buộc',
             'payment_method.required' => 'Hình thức thanh toán là bắt buộc',
+            'product_id.required' => 'Sản phẩm là bắt buộc',
 
         ];
         return $msg;

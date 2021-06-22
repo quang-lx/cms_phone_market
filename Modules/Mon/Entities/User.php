@@ -91,6 +91,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 
     const ROLE_SHOP_ADMIN = 'shop_admin';
 
+    const DEFAULT_PASS = '123456aA@';
+
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.
