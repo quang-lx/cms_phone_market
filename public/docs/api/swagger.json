@@ -100,6 +100,24 @@
                         "required": false,
                         "type": "string"
 
+                    },
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "default": "1",
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
+                    },
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "default": 10,
+                        "required": true,
+                        "type": "integer",
+                        "format": "text"
                     }
 
                 ],
