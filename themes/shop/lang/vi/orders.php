@@ -14,6 +14,7 @@ return [
         'status' => 'Trạng thái',
         'detail_title' => 'Chi tiết đơn',
         'delivery_address' => 'Địa chỉ giao hàng',
+        'fix_time_date' => 'Thời gian bảo hành',
         'confirm' => [
             'cancel' => 'Hủy đơn hàng',
             'wait_client' => 'Xác nhận',

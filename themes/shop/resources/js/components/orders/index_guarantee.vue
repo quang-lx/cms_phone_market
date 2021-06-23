@@ -16,7 +16,7 @@
                 </el-breadcrumb>
               </div>
               <div class="col-sm-9 text-right">
-                <div class="row">
+                <div class="row justify-content-end">
                   <div class="col-sm-3">
                     <el-date-picker @change="queryServer"
                         v-model="filter.searchDate"
@@ -28,7 +28,7 @@
                        >
                     </el-date-picker>
                   </div>
-                   <div class="col-sm-3">
+                   <div class="col-sm-3" clearable v-if="!this.currentShop">
                     <el-select v-model="filter.shop" @change="queryServer" placeholder="Lọc theo cửa hàng">
                       <el-option
                         v-for="item in listShop"
@@ -39,7 +39,7 @@
                     </el-select>
                   </div>
                    <div class="col-sm-3">
-                    <el-select v-model="filter.status" @change="queryServer" placeholder="Lọc theo trạng thái">
+                    <el-select v-model="filter.status" clearable @change="queryServer" placeholder="Lọc theo trạng thái">
                       <el-option
                         v-for="item in listStatus"
                         :key="item.value"
@@ -89,10 +89,14 @@
                     >
                     </el-table-column>
                     <el-table-column
-                      prop="user_name"
+                      prop=""
                       :label="$t('orders.label.user_name')"
                       sortable="custom"
                     >
+                    <template slot-scope="scope">
+                          <div> {{ scope.row.user_name }}</div>
+                          <div> {{ scope.row.phone }}</div>
+                     </template>
 
                     </el-table-column>
 
@@ -116,20 +120,17 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop="created_at"
-                      :label="$t('orders.label.created_at')"
+                      prop="fix_time_date"
+                      :label="$t('orders.label.fix_time_date')"
                       sortable="custom"
                     >
                     </el-table-column>
 
                     <el-table-column
-                      prop=""
-                      :label="$t('orders.label.pay_price')"
+                      prop="created_at"
+                      :label="$t('orders.label.created_at')"
                       sortable="custom"
                     >
-                    <template slot-scope="scope">
-                            <span v-currency="scope.row.pay_price"></span>
-                    </template>
                     </el-table-column>
 
                     <el-table-column
@@ -184,19 +185,37 @@ export default {
       listShop:[],
       listStatus: [
           {
-              value: 0,
+              value: 'created',
               label: 'Chưa xác nhận'
           },
           {
-              value: 1,
-              label: 'Xác nhận'
-          }
+              value: 'confirmed',
+              label: 'Chờ nhận hàng'
+          },
+          {
+              value: 'warranting',
+              label: 'Chờ bảo hành'
+          },
+          {
+              value: 'sending',
+              label: 'Chờ giao hàng'
+          },
+          {
+              value: 'done',
+              label: 'Thành công'
+          },
+          {
+              value: 'cancel',
+              label: 'Đã hủy'
+          },
       ],
       filter: {
           status: '',
           searchDate: '',
           shop: '',
-      }
+      },
+      currentShop : window.MonCMS.current_user.shop_id,
+
     };
   },
   methods: {

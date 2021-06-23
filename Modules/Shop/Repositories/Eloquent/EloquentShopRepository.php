@@ -56,6 +56,12 @@ class EloquentShopRepository extends BaseRepository implements ShopRepository
             });
         }
 
+        $user = Auth::user();
+		$query->where('company_id', $user->company_id);
+        if($user->shop_id) {
+			$query->where('id', $user->shop_id);
+		}
+
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
 
