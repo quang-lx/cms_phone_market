@@ -158,6 +158,14 @@
                     </el-table-column>
 
                     <el-table-column
+                      prop="pay_method_name"
+                      :label="$t('orders.label.pay_method_name')"
+                      sortable="custom"
+                    >
+
+                    </el-table-column>
+
+                    <el-table-column
                       prop="status"
                       :label="$t('orders.label.status')"
                       sortable="custom"
@@ -210,7 +218,7 @@ export default {
       listStatus: [
            {
               value: 'created',
-              label: 'Chưa xác nhận'
+              label: 'Chờ xác nhận'
           },
           {
               value: 'sending',

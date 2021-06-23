@@ -186,7 +186,7 @@ export default {
       listStatus: [
           {
               value: 'created',
-              label: 'Chưa xác nhận'
+              label: 'Chờ xác nhận'
           },
           {
               value: 'confirmed',
