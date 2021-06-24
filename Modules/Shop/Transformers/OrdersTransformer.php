@@ -62,41 +62,13 @@ class OrdersTransformer extends JsonResource
        $result = [];
        foreach ($order_status as $value) {
            $data = [
-                'status' => $this->getStatusNameAttribute($value['old_status']),
+                'title' =>  $value['title'],
                 'date' => $value['created_at']->format('H:i d/m/Y'),
            ];
            array_push($result,$data);
        }
        return $result;
     }
-    public function getStatusNameAttribute($status)
-	{
-		$statusName = '';
-		switch ($status) {
-			case Orders::STATUS_ORDER_CREATED:
-				$statusName = 'Gửi yêu cầu';
-				break;
-			case Orders::STATUS_ORDER_CONFIRMED:
-				$statusName = 'Xác nhận,sửa chữa';
-				break;
-			case Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM:
-				$statusName = 'Người dùng xác nhận';
-				break;
-			case Orders::STATUS_ORDER_FIXING:
-				$statusName = 'Gửi tới shop';
-				break;
-            case Orders::STATUS_ORDER_WARRANTING:
-                $statusName = 'Gửi tới shop';
-                break;
-			case Orders::STATUS_ORDER_SENDING:
-				$statusName = 'Shop gửi lại';
-				break;
-            case Orders::STATUS_ORDER_DONE:
-                $statusName = 'Nhận lại sản phẩm';
-                break;
-		}
-		return $statusName;
-	}
 
 
 }
