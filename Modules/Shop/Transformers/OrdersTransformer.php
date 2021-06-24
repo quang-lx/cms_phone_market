@@ -4,7 +4,7 @@ namespace Modules\Shop\Transformers;
 
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Modules\Mon\Entities\Orders;
 
 class OrdersTransformer extends JsonResource
 {
@@ -44,7 +44,9 @@ class OrdersTransformer extends JsonResource
             'ship_address' => $this->ship_address,
             'created_at' => $this->created_at->format('H:i d/m/Y'),
             'shop_done' => $this->shop_done,
-            'fix_time_date' => optional($this->fix_time_date)->format('H:i d/m/Y'),
+            'fix_time_date' => $this->fix_time_date,
+            'pay_method_name' => optional($this->paymentHistory)->pay_method_name,
+            'order_status_history' =>$this->orderStatusHistory($this->orderStatusHistory),
 
              'urls' => [
                 'delete_url' => route('apishop.orders.destroy', $this->id),
@@ -55,6 +57,46 @@ class OrdersTransformer extends JsonResource
 
         return $data;
     }
+    public function orderStatusHistory($order_status)
+    {
+       $result = [];
+       foreach ($order_status as $value) {
+           $data = [
+                'status' => $this->getStatusNameAttribute($value['old_status']),
+                'date' => $value['created_at']->format('H:i d/m/Y'),
+           ];
+           array_push($result,$data);
+       }
+       return $result;
+    }
+    public function getStatusNameAttribute($status)
+	{
+		$statusName = '';
+		switch ($status) {
+			case Orders::STATUS_ORDER_CREATED:
+				$statusName = 'Gửi yêu cầu';
+				break;
+			case Orders::STATUS_ORDER_CONFIRMED:
+				$statusName = 'Xác nhận,sửa chữa';
+				break;
+			case Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM:
+				$statusName = 'Người dùng xác nhận';
+				break;
+			case Orders::STATUS_ORDER_FIXING:
+				$statusName = 'Gửi tới shop';
+				break;
+            case Orders::STATUS_ORDER_WARRANTING:
+                $statusName = 'Gửi tới shop';
+                break;
+			case Orders::STATUS_ORDER_SENDING:
+				$statusName = 'Shop gửi lại';
+				break;
+            case Orders::STATUS_ORDER_DONE:
+                $statusName = 'Nhận lại sản phẩm';
+                break;
+		}
+		return $statusName;
+	}
 
 
 }

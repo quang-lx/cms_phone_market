@@ -3,6 +3,7 @@
 namespace Modules\Shop\Transformers;
 
 use Modules\Mon\Entities\Product;
+use Modules\Mon\Entities\Orders;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 
@@ -46,6 +47,7 @@ class OrdersBuySellTransformer extends JsonResource
             'ship_address' => $this->ship_address,
             'created_at' => $this->created_at->format('d-m-Y'),
             'shop_done' => $this->shop_done,
+            'order_status_history' =>$this->orderStatusHistory($this->orderStatusHistory),
 
              'urls' => [
                 'delete_url' => route('apishop.orders.destroy', $this->id),
@@ -56,6 +58,44 @@ class OrdersBuySellTransformer extends JsonResource
 
         return $data;
     }
+
+    public function orderStatusHistory($order_status)
+    {
+       $result = [];
+       foreach ($order_status as $value) {
+           $data = [
+                'status' => $this->getStatusNameAttribute($value['old_status']),
+                'date' => $value['created_at']->format('H:i d/m/Y'),
+           ];
+           array_push($result,$data);
+       }
+       return $result;
+    }
+
+    public function getStatusNameAttribute($status)
+	{
+		$statusName = '';
+		switch ($status) {
+			case Orders::STATUS_ORDER_CREATED:
+				$statusName = 'Xác nhận đơn hàng';
+				break;
+			case Orders::STATUS_ORDER_SENDING:
+				$statusName = 'Giao cho ĐVVC';
+				break;
+			case Orders::STATUS_ORDER_CONFIRMED:
+				$statusName = 'Đã giao';
+				break;
+			case Orders::STATUS_ORDER_DONE:
+				$statusName = 'Thành công';
+				break;
+			case Orders::STATUS_ORDER_CANCEL:
+				$statusName = 'Đã hủy';
+				break;
+		}
+		return $statusName;
+	}
+
+    
 
 
 }

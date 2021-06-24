@@ -15,6 +15,7 @@ return [
         'detail_title' => 'Chi tiết đơn',
         'delivery_address' => 'Địa chỉ giao hàng',
         'fix_time_date' => 'Thời gian bảo hành',
+        'pay_method_name' => 'Thanh toán',
         'confirm' => [
             'cancel' => 'Hủy đơn hàng',
             'wait_client' => 'Xác nhận',
