@@ -789,9 +789,14 @@ class EloquentOrderRepository implements OrderRepository
         if ($shopVoucherCode) {
             $shopVoucher = Voucher::query()->where('code', $shopVoucherCode)->first();
             list($shopVoucherDiscount) = $this->getVoucherAmount($shopVoucherCode, $shopId, $productsForVoucher);
-            $order->shop_voucher_id = optional($shopVoucher)->id;
-            $order->shop_voucher_code = $shopVoucherCode;
-            $order->shop_discount = $shopVoucherDiscount?? 0;
+            if ($shopVoucherDiscount) {
+	            $order->shop_voucher_id = optional($shopVoucher)->id;
+	            $order->shop_voucher_code = $shopVoucherCode;
+	            $order->shop_discount = $shopVoucherDiscount?? 0;
+	            $shopVoucher->total_used++;
+	            $shopVoucher->save();
+            }
+
         }
 
         $sysVoucherCode = $requestParams['system_voucher_code']?? null;
@@ -799,9 +804,15 @@ class EloquentOrderRepository implements OrderRepository
         if ($sysVoucherCode) {
             $sysVoucher = Voucher::query()->where('code', $sysVoucherCode)->first();
             list($sysVoucherDiscount) = $this->getVoucherAmount($sysVoucherCode, $shopId, $productsForVoucher);
-            $order->shop_voucher_id = optional($sysVoucher)->id;
-            $order->shop_voucher_code = $sysVoucherCode;
-            $order->sys_discount = $sysVoucherDiscount?? 0;
+
+            if ($sysVoucherDiscount) {
+	            $order->shop_voucher_id = optional($sysVoucher)->id;
+	            $order->shop_voucher_code = $sysVoucherCode;
+	            $order->sys_discount = $sysVoucherDiscount?? 0;
+
+	            $sysVoucher->total_used++;
+	            $sysVoucher->save();
+            }
         }
 
         $order->discount = $shopVoucherDiscount + $sysVoucherDiscount;

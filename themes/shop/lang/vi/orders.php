@@ -27,6 +27,8 @@ return [
         'payment_method' => 'Hình thức thanh toán',
         'phone' => 'Số điện thoại',
         'total_price' => 'Tổng tiền',
+        'fix_time_date' => 'Thời gian bảo hành',
+        'pay_method_name' => 'Thanh toán',
         'confirm' => [
             'cancel' => 'Hủy đơn hàng',
             'wait_client' => 'Xác nhận',

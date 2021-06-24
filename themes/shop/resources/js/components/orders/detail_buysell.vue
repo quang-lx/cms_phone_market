@@ -44,9 +44,9 @@
                       <div class="col-md-2">
                         <div class="row">
                           <div class="col-md-12">
-                            <div><h4>Thông tin user</h4></div>
+                            <div><h4>Thông tin user đặt hàng</h4></div>
                             <div>
-                              {{ modelForm.user.name }}
+                              {{ modelForm.user.username }}
                             </div>
                             <div>
                               {{ modelForm.user.phone }}
@@ -55,7 +55,13 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <div><h4>Địa chỉ lấy hàng</h4></div>
+                        <div><h4>Địa chỉ giao hàng</h4></div>
+                        <div>
+                              {{ modelForm.user.name }}
+                            </div>
+                            <div>
+                              {{ modelForm.user.phone }}
+                            </div>
 
                         <div>
                           {{ modelForm.ship_province_name }}
@@ -71,7 +77,7 @@
                         </div>
                       </div>
                       <div class="col-md-2">
-                        <div><h4>Đặt sửa tại</h4></div>
+                        <div><h4>Đặt hàng tại</h4></div>
 
                         <div>
                           {{ modelForm.shop.name }}
@@ -95,7 +101,11 @@
                       </div>
 
                       <div class="col-md-3">
-                        <div><h4>Trạng thái</h4></div>
+                        <div><h4>Trạng thái đơn hàng</h4></div>
+                        <div v-for="(item, index) in modelForm.order_status_history" :key="index">
+                            <span>{{item.status}}</span>
+                            <span>({{item.date}})</span>
+                        </div>
                          <div>
                           <span>{{modelForm.status}}</span>
                             <p v-if="modelForm.shop_done == 1">(Người bán đã xác nhận giao hàng thành công)</p>

@@ -4,7 +4,7 @@
         <div
             class="col-md-12"
             v-if="
-                data.order_type == 'sua_chua' && data.fix_time_date ==null && data.status_value == 'created'
+                data.order_type == 'sua_chua' && data.status_value == 'created'
             "
         >
             <el-button type="secondary" @click="cancelOrder">{{
@@ -12,6 +12,17 @@
             }}</el-button>
             <el-button type="primary" @click="waitClient">{{
                 $t("orders.label.button.wait_client")
+            }}</el-button>
+        </div>
+          <!-- xác nhận đơn hàng từ app-->
+        <div
+            class="col-md-12"
+            v-if="
+                data.order_type == 'sua_chua' &&   data.type_other == 1  && data.fix_time_date !=null && data.status_value == 'wait_client'
+            "
+        >
+            <el-button type="secondary" @click="cancelOrder">{{
+                $t("orders.label.button.cancel")
             }}</el-button>
         </div>
         <!-- nhận hàng thường -->

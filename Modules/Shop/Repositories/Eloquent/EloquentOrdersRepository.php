@@ -317,14 +317,14 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             $data_update['total_price'] = $data['price'];
             $data_update['pay_price'] = $data['price'];
             $data_update['fix_time'] = $data['numberDate'];
-            $data_update['status'] = Orders::STATUS_ORDER_CREATED;
+            $data_update['status'] = Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM;
             $data_update['fix_time_date'] = Carbon::now()->addDays($data['numberDate'])->toDateTimeString();
             $model->update($data_update);
 			$data_noti = [
 				'title' => trans('order.notifications.sua_chua.title'),
 				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'].' ngày','price'=>number_format($data['price']).'đ']),
 				'fcm_token' => $model->user->fcm_token,
-				'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+				'type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM]),
 				'order_id' => $model->id
 			];
 
@@ -333,7 +333,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				'title' => trans('order.notifications.sua_chua.title'),
 				'content' => trans('order.notifications.sua_chua.content fixing other', ['order_code' => $model->id,'time'=>$data['numberDate'].' ngày','price'=>number_format($data['price']).'đ']),
 				'user_id' => $model->user->id,
-				'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_CONFIRMED]),
+				'noti_type' => trans('order.notifications.sua_chua.type', ['order_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM]),
 				'order_id' => $model->id
 			]));
 
@@ -343,7 +343,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				'order_id' => $model->id,
 				'title' => $model->status_name,
 				'old_status' => Orders::STATUS_ORDER_CONFIRMED,
-				'new_status' => Orders::STATUS_ORDER_CREATED,
+				'new_status' => Orders::STATUS_ORDER_WAIT_CLIENT_CONFIRM,
 				'user_id' => null,
 				'shop_id' => Auth::user()->shop_id
 			]));

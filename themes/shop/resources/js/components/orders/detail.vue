@@ -44,9 +44,9 @@
                       <div class="col-md-2">
                         <div class="row">
                           <div class="col-md-12">
-                            <div><h4>Thông tin user</h4></div>
+                            <div><h5>Thông tin user đặt hàng</h5></div>
                             <div>
-                              {{ modelForm.user.name }}
+                              {{ modelForm.user.username }}
                             </div>
                             <div>
                               {{ modelForm.user.phone }}
@@ -55,8 +55,13 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <div><h4>Địa chỉ lấy hàng</h4></div>
-
+                        <div><h5>Địa chỉ lấy hàng</h5></div>
+                        <div>
+                          {{ modelForm.user.name }}
+                        </div>
+                        <div>
+                          {{ modelForm.user.phone }}
+                        </div>
                         <div>
                           {{ modelForm.ship_province_name }}
                         </div>
@@ -71,7 +76,7 @@
                         </div>
                       </div>
                       <div class="col-md-2">
-                        <div><h4>Đặt sửa tại</h4></div>
+                        <div><h5>Đặt sửa tại</h5></div>
 
                         <div>
                           {{ modelForm.shop.name }}
@@ -85,17 +90,21 @@
                       </div>
 
                       <div class="col-md-2">
-                        <div><h4>Thanh toán</h4></div>
+                        <div><h5>Thanh toán</h5></div>
 
                         <div></div>
-                        <div><h4>Chi phí</h4></div>
+                        <div><h5>Chi phí</h5></div>
                         <div>
                             <span v-currency="modelForm.pay_price"></span>
                       </div>
                       </div>
 
                       <div class="col-md-3">
-                        <div><h4>Trạng thái</h4></div>
+                        <div><h5>Trạng thái đơn hàng</h5></div>
+                        <div v-for="(item, index) in modelForm.order_status_history" :key="index">
+                            <span>{{item.status}}</span>
+                            <span>({{item.date}})</span>
+                        </div>
                         <div>
                           <span>{{modelForm.status}}
                           </span>
@@ -103,15 +112,24 @@
                             <p v-if="
                               modelForm.order_type == 'sua_chua' &&
                               modelForm.type_other == 1 && modelForm.fix_time_date !=null &&
-                              modelForm.status_value == 'created'
+                              modelForm.status_value == 'wait_client'
                               ">(Chờ khách hàng xác nhận trên app)</p>
                         </div>
 
                       </div>
-                      <!-- <div class="col-md-12 mt-5">
-                            {{ $t("orders.label.description") }}:
-                            <div v-html="modelForm.description"></div>
-                        </div> -->
+
+                      <div class="col-md-3 mt-3">
+                        <div><h5>Sản phẩm sửa chữa</h5></div>
+                        <div>
+                          <span>{{modelForm.product_name}}
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="col-md-9 mt-3">
+                        <div><h5>Thực trạng sản phẩm</h5></div>
+                            <div v-html="modelForm.product_note"></div>
+                        </div>
                       <div class="col-md-12 mt-4 text-right">
                           <status-repair :data="modelForm"></status-repair>
                       </div>
