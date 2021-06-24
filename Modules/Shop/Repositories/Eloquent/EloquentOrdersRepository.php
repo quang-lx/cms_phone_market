@@ -885,9 +885,14 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		$order->status = Orders::STATUS_ORDER_DONE;
 		$order->payment_status = Orders::PAYMENT_PAID_DONE;
 		$order->user_id = $newUser->id;
-		$order->total_price = $requestParams['price'];
-		$order->discount = $requestParams['sale_price'];
-		$order->pay_price = (1 - $requestParams['sale_price']/100) * $requestParams['price'];
+		$totalPrice = $discount = $payPrice = 0;
+		foreach ($requestParams['products'] as $product) {
+			$totalPrice += $product['amount'] * $product['price'];
+			$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+		}
+		$order->total_price = $totalPrice;
+		$order->discount = $discount;
+		$order->pay_price = $totalPrice - $discount;
 		$order->save();
     }
 }

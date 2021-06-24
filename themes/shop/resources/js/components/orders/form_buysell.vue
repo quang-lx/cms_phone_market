@@ -87,44 +87,93 @@
                                     ></div>
                                   </el-form-item>
                                 </div>
+                              </div>
+                            </div>
+                        </div>
 
-                                <div class="col-md-12 check-discount-product hide">
-                                  <el-form-item
-                                    :label="$t('orders.label.product_id')"
-                                    :class="{
-                                      'el-form-item is-error': form.errors.has('product_id'),
-                                    }"
-                                  >
-                                    <el-autocomplete
-                                      prefix-icon="el-icon-search"
-                                      v-model="modelForm.product_key"
-                                      :fetch-suggestions="onSearchProduct"
-                                      placeholder="Tìm sản phẩm"
-                                      @select="handleSelect"
-                                      clearable
-                                    ></el-autocomplete>
-                                    <div
-                                      class="el-form-item__error"
-                                      v-if="form.errors.has('product_id')"
-                                      v-text="form.errors.first('product_id')"
-                                    ></div>
-                                  </el-form-item>
-                                </div>
+                        <div class="card">
+                          <div class="card-header"  >
+                              <h3 class="card-title">Danh sách sản phẩm</h3>
+                              <div class="card-tools">
+                                  <el-button size="mini" type="warning"  icon="el-icon-plus" @click="addMoreInfo">Thêm</el-button>
 
-                                <div class="col-md-6">
+                              </div>
+                          </div>
+                          <div class="card-body">
+                              <div class="row mt-2" v-for="(pinfo,key) in modelForm.products" :key="key">
+                                  <div class="col-md-4">
+                                      <!-- <el-autocomplete
+                                        prefix-icon="el-icon-search"
+                                        v-model="pinfo.id"
+                                        :fetch-suggestions="onSearchProduct"
+                                        placeholder="Tìm sản phẩm"
+                                        @select="((item)=>{handleSelect(item, key)})"
+                                        clearable
+                                      ></el-autocomplete> -->
+                                      <el-select
+                                          v-model="pinfo.id"
+                                          allow-create
+                                          filterable
+                                          @change="handleSelect(key, pinfo.id)"
+                                          placeholder="Chọn sản phẩm">
+                                          <el-option
+                                              v-for="item in list_product"
+                                              :key="item.id"
+                                              :label="item.name"
+                                              :value="item.id">
+                                          </el-option>
+                                      </el-select>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <el-select
+                                          v-model="pinfo.attribute_id"
+                                          allow-create
+                                          filterable
+                                          :disabled="true"
+                                          placeholder="Thuộc tính">
+                                          <el-option
+                                              v-for="item in list_attribute"
+                                              :key="item.id"
+                                              :label="item.name"
+                                              :value="item.id">
+                                          </el-option>
+                                      </el-select>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <el-select
+                                          v-model="pinfo.attribute_value_id"
+                                          allow-create
+                                          filterable
+                                          @change="changeAttribute(key)"
+                                          placeholder="Giá trị thuộc tính">
+                                          <el-option
+                                              v-for="item in list_attribute_values[key]"
+                                              :key="item.id"
+                                              :label="item.name"
+                                              :value="item.id">
+                                          </el-option>
+                                      </el-select>
+                                  </div>
+                                  <div
+                                      class="col-md-1   text-right d-flex justify-content-end align-items-center">
+                                      <i class="el-icon-circle-close" style="color:red; cursor:pointer"
+                                          @click="removeInfo(key)"></i>
+                                  </div>
+
+                                  <div class="col-md-4 mt-10">
                                     <el-form-item :label="$t('orders.label.price')" 
                                                   :class="{'el-form-item is-error': form.errors.has('price') }">
-                                        <cleave v-model="modelForm.price" :options="options" 
+                                        <cleave v-model="pinfo.price" :options="options" 
                                             class="form-control" name="price" :disabled="true"></cleave>
                                         <div class="el-form-item__error"
                                               v-if="form.errors.has('price')"
                                               v-text="form.errors.first('price')"></div>
                                     </el-form-item>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4 mt-10">
                                     <el-form-item :label="$t('product.label.sale_price')" 
                                                   :class="{'el-form-item is-error': form.errors.has('sale_price') }">
-                                        <cleave v-model="modelForm.sale_price" :options="options_odd_number" 
+                                        <cleave v-model="pinfo.sale_price" :options="options_odd_number" 
                                             class="form-control" name="sale_price" :disabled="true"></cleave>
                                         <div class="el-form-item__error"
                                               v-if="form.errors.has('sale_price')"
@@ -132,109 +181,22 @@
                                     </el-form-item>
                                 </div>
 
+                                <div class="col-md-3 mt-10">
+                                    <el-form-item :label="$t('product.label.amount')" 
+                                                  :class="{'el-form-item is-error': form.errors.has('amount') }">
+                                        <!-- <cleave v-model="pinfo.amount" :options="options" 
+                                            class="form-control" name="amount" onValueChanged="reloadTotalPrice()"></cleave> -->
+                                          <el-input v-model="pinfo.amount" v-on:keyup.enter="reloadTotalPrice()"></el-input>
+
+                                        <div class="el-form-item__error"
+                                              v-if="form.errors.has('amount')"
+                                              v-text="form.errors.first('amount')"></div>
+                                    </el-form-item>
+                                </div>
 
                               </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <el-form-item
-                                    :label="$t('product.label.attribute extend')"
-                                    :class="{
-                                      'el-form-item is-error': form.errors.has('list_attribute'),
-                                    }"
-                                >
-                                    <el-select clearable
-                                        v-model="modelForm.attribute_id"
-                                        placeholder=""
-                                        :disabled="true"
-                                    >
-                                        <el-option
-                                            v-for="item in list_attribute"
-                                            :key="item.id"
-                                            :label="item.name"
-                                            :value="item.id"
-                                        >
-                                        </el-option>
-                                    </el-select>
-                                    <div
-                                        class="el-form-item__error"
-                                        v-if="form.errors.has('list_attribute')"
-                                        v-text="form.errors.first('list_attribute')"
-                                    ></div>
-                                </el-form-item>
-
-                            </div>
-                            <div class="card-body" v-if="modelForm.attribute_selected">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h3 class = "card-title">{{modelForm.attribute_selected.name}}</h3>
-                                                <div class="card-tools" >
-                                                    <el-select
-                                                        v-model="value_id"
-                                                        :disabled="values.length == 0"
-                                                    >
-                                                        <el-option
-                                                            v-if="values.length> 0 "
-                                                            v-for="item in values"
-                                                            :key="item.id"
-                                                            :label="item.name"
-                                                            :value="item.id"
-                                                        >
-                                                        </el-option>
-                                                    </el-select>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-2 col-sm-6"> </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        Giá
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        Chiết khấu (%)
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        Số lượng
-                                                    </div>
-                                                    <div
-                                                        class="col-md-1 col-sm-6 text-right d-flex justify-content-end align-items-center">
-
-                                                    </div>
-                                                </div>
-                                                <div class="row"
-                                                      v-for="(itemValue, valueKey) in modelForm.attribute_selected.values"
-                                                      :key="valueKey">
-                                                    <div class="col-12 mt-2">
-                                                        <div class="row">
-                                                            <div class="col-md-2 col-sm-6"> {{itemValue.name}}</div>
-                                                            <div class="col-md-3 col-sm-6">
-                                                                <cleave v-model="itemValue.price" :options="options" class="form-control" name="price" :disabled="true"></cleave>
-                                                            </div>
-                                                            <div class="col-md-3 col-sm-6">
-                                                                <cleave v-model="itemValue.sale_price" :options="options" class="form-control" name="sale_price" :disabled="true"></cleave>
-                                                            </div>
-                                                            <div class="col-md-3 col-sm-6">
-                                                              <cleave v-model="itemValue.amount" :options="options" class="form-control" name="amount"></cleave>
-
-                                                            </div>
-                                                            <div
-                                                                class="col-md-1 col-sm-6 text-right d-flex justify-content-end align-items-center">
-                                                                <i class="el-icon-circle-close" style="color:red; cursor:pointer"
-                                                                    @click="removeAttributeValue(itemValue.id)"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                          </div>
+                      </div>
                     </div>
 
                     <div class="col-md-4">
@@ -307,6 +269,16 @@
                                               v-text="form.errors.first('payment_method')"></div>
                                     </el-form-item>
                                   </div>
+
+                                  <div class="col-md-12">
+                                    <el-form-item :label="$t('orders.label.total_price')"
+                                                  :class="{'el-form-item is-error': form.errors.has(  'total_money') }">
+
+                                        <cleave v-model="modelForm.total_price" :options="options" 
+                                            class="form-control" name="total_price" :disabled="true"></cleave>
+                                       
+                                    </el-form-item>
+                                  </div>
                                 </div>
                             </div>
                         </div>
@@ -371,12 +343,12 @@ export default {
         customer_name: '',
         category_id: [],
         brand_id: '',
-        price: '',
-        sale_price: '',
         created_at: new Date(),
         payment_method: 1,
         product_id: '',
         attribute_selected: null,
+        products: [],
+        total_price: 0,
       },
       brandArr: [],
       paymentMethodArr: [],
@@ -387,9 +359,24 @@ export default {
       list_attribute: [],
       list_information: [],
       value_id: '',
+      list_attribute_values: [],
+      list_product: [],
     };
   },
   methods: {
+    removeInfo(index) {
+        this.modelForm.products.splice(index,1);
+      },
+    addMoreInfo() {
+        this.modelForm.products.push({
+          id: '',
+          attribute_id: '',
+          attribute_value_id: '',
+          price: '',
+          sale_price: '',
+          amount: '',
+        })
+      },
     onSearchProduct(queryString, cb) {
       this.fetchProduct(queryString);
       cb(this.productSearchResult);
@@ -407,17 +394,19 @@ export default {
       axios
         .get(route("apishop.product.index", _.merge(properties, {})))
         .then((response) => {
-          this.productSearchResult = response.data.data;
+          this.list_product = response.data.data;
         });
     },
-    handleSelect(item) {
-      //add thêm vào biến products lưu danh sách các product đc giảm giá
-      // this.modelForm.products.push(item);
-      this.modelForm.product_id = item.id;
-      this.modelForm.price = item.price;
-      this.modelForm.sale_price = item.sale_price;
-      this.modelForm.attribute_selected = item.attribute_selected;
-      console.log(this.modelForm.attribute_selected);
+    handleSelect(key, pid) {
+      this.list_product.forEach(product => {
+        if (product.id == pid){
+          let item = product;
+          item.amount = 0;
+          this.modelForm.products[key] = (item);
+          this.list_attribute_values[key] = item.attribute_selected.values;
+        }
+      });
+      
     },
     onSubmit() {
       this.form = new Form(_.merge(this.modelForm, {}));
@@ -431,7 +420,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "shop.ordersbuysell.index" });
+          // this.$router.push({ name: "shop.ordersbuysell.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -534,9 +523,26 @@ export default {
         this.modelForm.attribute_selected.values.splice(valueIndex, 1)
       }
     },
+
+    changeAttribute(key){
+      console.log(key, this.modelForm.products);
+      let attributeSelectedValue = this.modelForm.products[key].attribute_selected.values;
+      let attributeSelectedId = this.modelForm.products[key].attribute_value_id;
+      
+      attributeSelectedValue.forEach(value => {
+        if (value.id == attributeSelectedId){
+          this.modelForm.products[key].price = value.price;
+          this.modelForm.products[key].sale_price = value.sale_price;
+        }
+      });
+    },
+    reloadTotalPrice(){
+      console.log('reloadTotalPrice');
+    }
   },
   mounted() {
     this.fetchCategory();
+    this.fetchProduct();
     this.fetchBrand();
     this.fetchPaymentMethod();
     this.fetchData();
@@ -571,5 +577,8 @@ export default {
         overflow-y: auto;
         display: flex;
         flex-direction: column;
+    }
+    .mt-10 {
+      margin-top: 10px;
     }
 </style>

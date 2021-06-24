@@ -26,6 +26,7 @@ return [
         'sale_price' => 'Chiết khấu',
         'payment_method' => 'Hình thức thanh toán',
         'phone' => 'Số điện thoại',
+        'total_price' => 'Tổng tiền',
         'confirm' => [
             'cancel' => 'Hủy đơn hàng',
             'wait_client' => 'Xác nhận',
