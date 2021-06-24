@@ -255,7 +255,15 @@
                         "name": "new_status",
                         "description": "new_status",
                         "required": true,
-                        "type": "integer"
+                        "type": "string"
+
+                    },
+                    {
+                        "in": "formData",
+                        "name": "note",
+                        "description": "mo ta",
+                        "required": false,
+                        "type": "string"
 
                     }
 

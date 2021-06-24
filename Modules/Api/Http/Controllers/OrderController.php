@@ -257,7 +257,8 @@ class OrderController extends ApiController
 				'old_status' => $oldStatus,
 				'new_status' => $newStatus,
 				'user_id' => Auth::user()->id,
-				'shop_id' => null
+				'shop_id' => null,
+				'note' => $request->get('note')
 			]));
 
 			$shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $order->order_type, $order->status), null);

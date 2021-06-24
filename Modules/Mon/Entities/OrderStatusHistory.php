@@ -17,7 +17,8 @@ class OrderStatusHistory extends Model
         'new_status',
         'user_id',
         'shop_id',
-	    'order_type'
+	    'order_type',
+	    'note'
     ];
 
 
