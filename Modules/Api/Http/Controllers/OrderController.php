@@ -276,7 +276,7 @@ class OrderController extends ApiController
 			return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 		} else {
 			$order->status = $newStatus;
-			return $this->respond([], trans('api::messages.status not allow update', ['status' => $order->getStatusNameAttribute($newStatus)]), ErrorCode::ERR422);
+			return $this->respond([], trans('api::messages.validate.status not allow update', ['status' => $order->getStatusNameAttribute($newStatus)]), ErrorCode::ERR422);
 		}
 	}
 
