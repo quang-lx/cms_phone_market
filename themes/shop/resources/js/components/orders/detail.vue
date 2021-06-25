@@ -90,7 +90,8 @@
                       </div>
 
                       <div class="col-md-2">
-                        <div><h5>Thanh toán</h5></div>
+                        <div><h5>Thông tin thanh toán</h5></div>
+                            {{ modelForm.pay_method_name }}
 
                         <div></div>
                         <div><h5>Chi phí</h5></div>
@@ -102,7 +103,7 @@
                       <div class="col-md-3">
                         <div><h5>Trạng thái đơn hàng</h5></div>
                         <div v-for="(item, index) in modelForm.order_status_history" :key="index">
-                            <span>{{item.status}}</span>
+                            <span>{{item.title}}</span>
                             <span>({{item.date}})</span>
                         </div>
                         <div>

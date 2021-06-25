@@ -74,6 +74,16 @@ class EloquentVtProductRepository extends BaseRepository implements VtProductRep
        
     }
 
+    public function checkAmountVtProduct($model)
+    {
+        $vt_amount_product = $model->vtShopProduct()->selectRaw('sum(amount) as total')->first()->total;
+        if ((int)$vt_amount_product>0) {
+           return true;
+        }
+        return false;
+
+    }
+
     public function destroy($model)
     {
         $model->delete();

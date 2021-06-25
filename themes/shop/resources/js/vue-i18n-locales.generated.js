@@ -579,6 +579,224 @@ export default {
             "order mua hang": "Đơn hàng mua hàng"
         },
         "storageproduct": {
+        "permission": {
+            "label": {
+                "id": "ID",
+                "name": "Tên chức năng",
+                "guard_name": "Guard name",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "create_permission": "Thêm mới",
+                "update_permission": "Cập nhật",
+                "permissions": "Danh sách chức năng"
+            },
+            "message": {
+                "create success": "Thêm mới chức năng thành công.",
+                "update success": "Cập nhật chức năng thành công.",
+                "delete success": "Xóa chức năng thành công."
+            },
+            "group_mapping": {
+                "admins": "Quản trị viên",
+                "category": "Danh mục",
+                "dashboard": "Trang admin",
+                "login": "Đăng nhập",
+                "media": "Media",
+                "news": "Tin tức",
+                "roles": "Nhóm quyền",
+                "permissions": "Chức năng",
+                "users": "Người dùng"
+            }
+        },
+        "pinformation": {
+            "label": {
+                "pinformation": "Thông tin",
+                "id": "ID",
+                "title": "Tiêu đề",
+                "create_title": "Tạo thông tin",
+                "update_title": "Cập nhật thông tin",
+                "detail_title": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo thông tin thành công.",
+                "update success": "Cập nhật thông tin thành công.",
+                "delete success": "Xóa thông tin thành công."
+            }
+        },
+        "product": {
+            "label": {
+                "id": "ID",
+                "name": "Tên sản phẩm",
+                "description": "Mô tả",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "create_product": "Thêm sản phẩm",
+                "update_product": "Chỉnh sửa sản phẩm",
+                "list": "Quản lý sản phẩm",
+                "manager": "Quản lý sản phẩm",
+                "btn_add_product": "Thêm sản phẩm",
+                "updated_by": "Người cập nhật",
+                "status": "Trạng thái sẵn sàng",
+                "p_state": "Tình trạng sản phẩm",
+                "p_weight": "Cân nặng (gram)",
+                "s_long": "Chiều dài (cm)",
+                "s_width": "Chiều rộng (cm)",
+                "s_height": "Chiều cao (cm)",
+                "brand_id": "Thương hiệu",
+                "sku": "SKU",
+                "amount": "Số lượng",
+                "price": "Giá bán",
+                "sale_price": "Chiết khấu (%)",
+                "category_id": "Danh mục",
+                "problem_id": "Vấn đề sửa chữa",
+                "company_id": "Cửa hàng",
+                "shop_name": "Chi nhánh",
+                "image": "Ảnh",
+                "type": "Loại sản phẩm",
+                "fix_time": "Thời gian sửa chữa (ngày)",
+                "warranty_time": "Bảo hành (tháng)",
+                "attribute extend": "Thuộc tính mở rộng",
+                "shop_id": "Chi nhánh"
+            },
+            "list": {
+                "status": "Trạng thái"
+            },
+            "message": {
+                "create success": "Tạo sản phẩm thành công.",
+                "update success": "Cập nhật sản phẩm thành công.",
+                "delete success": "Xóa sản phẩm thành công.",
+                "not allow self delete": "Không cho phép xóa sản phẩm bạn đang đăng nhập."
+            }
+        },
+        "profile": {
+            "label": {
+                "profile": "Profile"
+            }
+        },
+        "role": {
+            "label": {
+                "id": "ID",
+                "name": "Tên nhóm",
+                "description": "Mô tả",
+                "guard_name": "Guard name",
+                "created_at": "Ngày tạo",
+                "updated_at": "Ngày cập nhật",
+                "create_role": "Thêm mới",
+                "update_role": "Cập nhật",
+                "roles": "Nhóm quyền",
+                "permissions": "Danh sách chức năng",
+                "list_permissions": "Danh sách chức năng",
+                "selected_permissions": "Chức năng đã chọn",
+                "information": "Thông tin nhóm quyền",
+                "assign": "Gán",
+                "remove": "Hủy"
+            },
+            "message": {
+                "create success": "Thêm mới nhóm quyền thành công.",
+                "update success": "Cập nhật nhóm quyền thành công.",
+                "delete success": "Xóa nhóm quyền thành công.",
+                "add permissions success": "Gán chức năng thành công",
+                "remove permissions success": "Bỏ chức năng thành công"
+            },
+            "allow": "Chọn",
+            "deny": "Từ chối",
+            "allow all": "Chọn tất cả",
+            "deny all": "Từ chối tất cả"
+        },
+        "shop": {
+            "label": {
+                "manager": "Quản lý chi nhánh cửa hàng",
+                "created_at": "Ngày tạo",
+                "title": "Thêm chi nhánh",
+                "create_new": "Tạo mới",
+                "update_shop": "Cập nhật",
+                "create_shop": "Thêm mới",
+                "name": "Tên chi nhánh",
+                "address": "Địa chỉ",
+                "phone": "Liên hệ",
+                "email": "Email",
+                "status": "Trạng thái",
+                "id": "Mã đơn",
+                "received_at": "Thời gian chuyển",
+                "shop_id": "Kho chuyển",
+                "to_shop_id": "Kho nhận",
+                "shop_name": "Kho chuyển",
+                "to_shop_name": "Kho nhận",
+                "products": "Danh sách vật tư",
+                "type": "Loại đơn",
+                "shop_admin": "CỬA HÀNG"
+            },
+            "button": {
+                "save": "Nhập kho"
+            },
+            "message": {
+                "id": "ID"
+            },
+            "message": {
+                "create success": "Thêm mới chi nhánh thành công.",
+                "update success": "Cập nhật chi nhánh thành công.",
+                "delete success": "Xóa chi nhánh thành công."
+            }
+        },
+        "shopcategory": {
+            "label": {
+                "shopcategory": "Danh mục shop",
+                "id": "ID",
+                "name": "Tên",
+                "status": "Trạng thái"
+            },
+            "message": {
+                "update success": "Cập nhật hình thức vận chuyển thành công."
+            }
+        },
+        "shopshiptype": {
+            "label": {
+                "shopshiptype": "Hình thức vận chuyển",
+                "id": "ID",
+                "name": "Tên",
+                "status": "Trạng thái"
+            },
+            "message": {
+                "update success": "Cập nhật hình thức vận chuyển thành công."
+            }
+        },
+        "sidebar": {
+            "system administration": "Quản trị",
+            "roles and permission": "Roles and permission",
+            "admins": "Tài khoản quản trị",
+            "users": "Người dùng",
+            "roles": "Nhóm quyền",
+            "permissions": "Quyền",
+            "media": "Media",
+            "alarm group": "DM cảnh báo",
+            "alarmlevel": "Mức độ",
+            "alarmtype": "Sự cố",
+            "news group": "Tin tức",
+            "category": "Danh mục tin",
+            "news": "Tin tức",
+            "warning": "Cảnh báo",
+            "fbnotification": "Notification",
+            "banner": "Banner",
+            "shop management": "Quản lý chi nhánh",
+            "user management": "Quản lý tài khoản",
+            "product management": "Quản lý sản phẩm",
+            "information": "Thông tin cửa hàng",
+            "voucher management": "Quản lý khuyến mại",
+            "attribute": "Thuộc tính",
+            "product information": "Thông tính chi tiết",
+            "vat tu": "Vật tư",
+            "vtcategory": "Danh mục",
+            "vtproduct": "Vật tư",
+            "transfer management": "Xuất/chuyển kho",
+            "storage product": "Nhập kho",
+            "vtshopproduct": "Nhập lẻ linh kiện",
+            "vtimportexcel": "Nhập linh kiện",
+            "ship type": "Hình thức vận chuyển",
+            "order": "Đơn hàng",
+            "order sua chua": "Đơn hàng sửa chữa",
+            "order bao hanh": "Đơn hàng bảo hành",
+            "order mua hang": "Đơn hàng mua hàng"
+        },
+        "storageproduct": {
             "label": {
                 "manager": "Quản lý nhập kho",
                 "created_at": "Ngày tạo",
@@ -723,7 +941,9 @@ export default {
             "message": {
                 "create success": "Tạo Danh mục vật tư  thành công.",
                 "update success": "Cập nhật Danh mục vật tư  thành công.",
-                "delete success": "Xóa Danh mục vật tư  thành công."
+                "delete success": "Xóa Danh mục vật tư  thành công.",
+                "delete parent false": " Danh mục chứa danh mục con, không thể xóa.",
+                "delete vtproduct false": " Danh mục chứa linh kiện, không thể xóa."
             }
         },
         "vtimportexcel": {
@@ -770,7 +990,8 @@ export default {
                 "create success": "Tạo Linh kiện  thành công.",
                 "import success": "Import Linh kiện  thành công.",
                 "update success": "Cập nhật Linh kiện  thành công.",
-                "delete success": "Xóa Linh kiện  thành công."
+                "delete success": "Xóa Linh kiện  thành công.",
+                "delete vtproduct false": "Không thể xóa linh kiện đã nhập kho."
             }
         },
         "vtshopproduct": {

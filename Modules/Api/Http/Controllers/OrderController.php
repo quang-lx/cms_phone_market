@@ -247,7 +247,7 @@ class OrderController extends ApiController
 		$newStatus = $request->get('new_status');
 
 		$validOrderStatus = Orders::getValidNextStatus();
-		if (isset($validOrderStatus[$orderType][$oldStatus]) && in_array($validOrderStatus[$orderType][$oldStatus], $newStatus)) {
+		if (isset($validOrderStatus[$orderType][$oldStatus]) && in_array($newStatus, $validOrderStatus[$orderType][$oldStatus])) {
 			$order->status = $newStatus;
 			$order->save();
 			event(new OrderStatusUpdated([
@@ -276,7 +276,7 @@ class OrderController extends ApiController
 			return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 		} else {
 			$order->status = $newStatus;
-			return $this->respond([], trans('api.messages.status not allow update', ['status' => $order->getStatusNameAttribute($newStatus)]), ErrorCode::ERR422);
+			return $this->respond([], trans('api::messages.validate.status not allow update', ['status' => $order->getStatusNameAttribute($newStatus)]), ErrorCode::ERR422);
 		}
 	}
 

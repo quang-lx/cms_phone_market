@@ -64,36 +64,13 @@ class OrdersBuySellTransformer extends JsonResource
        $result = [];
        foreach ($order_status as $value) {
            $data = [
-                'status' => $this->getStatusNameAttribute($value['old_status']),
+                'title' => $value['title'],
                 'date' => $value['created_at']->format('H:i d/m/Y'),
            ];
            array_push($result,$data);
        }
        return $result;
     }
-
-    public function getStatusNameAttribute($status)
-	{
-		$statusName = '';
-		switch ($status) {
-			case Orders::STATUS_ORDER_CREATED:
-				$statusName = 'Xác nhận đơn hàng';
-				break;
-			case Orders::STATUS_ORDER_SENDING:
-				$statusName = 'Giao cho ĐVVC';
-				break;
-			case Orders::STATUS_ORDER_CONFIRMED:
-				$statusName = 'Đã giao';
-				break;
-			case Orders::STATUS_ORDER_DONE:
-				$statusName = 'Thành công';
-				break;
-			case Orders::STATUS_ORDER_CANCEL:
-				$statusName = 'Đã hủy';
-				break;
-		}
-		return $statusName;
-	}
 
     
 

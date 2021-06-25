@@ -233,7 +233,6 @@
                     "application/xml"
                 ],
                 "consumes": [
-                    "application/json",
                     "application/x-www-form-urlencoded"
                 ],
                 "security": [
@@ -247,24 +246,25 @@
                         "name": "order",
                         "description": "order id",
                         "required": true,
-                        "type": "integer"
-
+                        "type": "integer",
+                        "format": "text"
                     },
                     {
                         "in": "formData",
                         "name": "new_status",
                         "description": "new_status",
                         "required": true,
-                        "type": "string"
-
+                        "type": "string",
+                        "format": "text"
                     },
                     {
                         "in": "formData",
                         "name": "note",
                         "description": "mo ta",
                         "required": false,
-                        "type": "string"
 
+                        "type": "string",
+                        "format": "text"
                     }
 
                 ],

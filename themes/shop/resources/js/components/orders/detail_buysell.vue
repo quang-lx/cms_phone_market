@@ -92,18 +92,14 @@
 
                       <div class="col-md-2">
                         <div><h4>Thanh toán</h4></div>
-
+                            {{ modelForm.pay_method_name }}
                         <div></div>
-                        <div><h4>Chi phí</h4></div>
-                        <div>
-                          <span v-currency="modelForm.pay_price"></span>
-                        </div>
                       </div>
 
                       <div class="col-md-3">
                         <div><h4>Trạng thái đơn hàng</h4></div>
                         <div v-for="(item, index) in modelForm.order_status_history" :key="index">
-                            <span>{{item.status}}</span>
+                            <span>{{item.title}}</span>
                             <span>({{item.date}})</span>
                         </div>
                          <div>
