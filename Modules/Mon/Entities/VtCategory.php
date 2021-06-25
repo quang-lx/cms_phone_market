@@ -22,4 +22,8 @@ class VtCategory extends Model
     {
         return $this->filesByZone('thumbnail')->first();
     }
+
+    public function vtProduct(){
+        return $this->hasMany(VtProduct::class,'vt_category_id');
+    }
 }

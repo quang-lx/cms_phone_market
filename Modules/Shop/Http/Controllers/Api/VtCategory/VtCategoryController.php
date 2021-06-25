@@ -73,7 +73,23 @@ class VtCategoryController extends ApiController
 
     public function destroy(VtCategory $vtcategory)
     {
-        $this->vtcategoryRepository->destroy($vtcategory);
+        if ($this->vtcategoryRepository->checkExistChild($vtcategory))
+        {
+            return response()->json([
+                'errors' => true,
+                'message' => trans('ch::vtcategory.message.delete parent false'),
+            ]);
+        }
+
+        if ($this->vtcategoryRepository->checkExistVtProduct($vtcategory))
+        {
+            return response()->json([
+                'errors' => true,
+                'message' => trans('ch::vtcategory.message.delete vtproduct false'),
+            ]);
+        }
+
+        // $this->vtcategoryRepository->destroy($vtcategory);
 
         return response()->json([
             'errors' => false,

@@ -92,12 +92,8 @@
 
                       <div class="col-md-2">
                         <div><h4>Thanh toán</h4></div>
-
+                            {{ modelForm.pay_method_name }}
                         <div></div>
-                        <div><h4>Chi phí</h4></div>
-                        <div>
-                          <span v-currency="modelForm.pay_price"></span>
-                        </div>
                       </div>
 
                       <div class="col-md-3">
