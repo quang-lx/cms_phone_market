@@ -74,6 +74,13 @@ class VtProductController extends ApiController
 
     public function destroy(VtProduct $vtproduct)
     {
+        if ($this->vtproductRepository->checkAmountVtProduct($vtproduct))
+        {
+            return response()->json([
+                'errors' => true,
+                'message' => trans('ch::vtproduct.message.delete vtproduct false'),
+            ]);
+        }
         $this->vtproductRepository->destroy($vtproduct);
 
         return response()->json([

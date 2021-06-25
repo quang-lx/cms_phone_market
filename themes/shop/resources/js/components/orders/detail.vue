@@ -90,7 +90,8 @@
                       </div>
 
                       <div class="col-md-2">
-                        <div><h5>Thanh toán</h5></div>
+                        <div><h5>Thông tin thanh toán</h5></div>
+                            {{ modelForm.pay_method_name }}
 
                         <div></div>
                         <div><h5>Chi phí</h5></div>

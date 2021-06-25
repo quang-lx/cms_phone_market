@@ -91,4 +91,24 @@ class EloquentVtCategoryRepository extends BaseRepository implements VtCategoryR
         return array_slice($data, $from, $per_page);
     }
 
+    public function checkExistChild($model)
+    {
+        $child = $model->where('parent_id',$model->id)->get();
+        if (count($child)>0) {
+           return true;
+        }
+        return false;
+
+    }
+
+    public function checkExistVtProduct($model)
+    {
+        $vtproduct = $model->vtProduct()->get();
+        if (count($vtproduct)>0) {
+           return true;
+        }
+        return false;
+
+    }
+
 }

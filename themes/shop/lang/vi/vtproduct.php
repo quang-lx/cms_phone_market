@@ -20,6 +20,7 @@ return [
         'import success' => 'Import Linh kiện  thành công.',
         'update success' => 'Cập nhật Linh kiện  thành công.',
         'delete success' => 'Xóa Linh kiện  thành công.',
+        'delete vtproduct false' => 'Không thể xóa linh kiện đã nhập kho.',
     ]
 
 ];
