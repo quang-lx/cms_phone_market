@@ -233,7 +233,6 @@
                     "application/xml"
                 ],
                 "consumes": [
-                    "application/json",
                     "application/x-www-form-urlencoded"
                 ],
                 "security": [
