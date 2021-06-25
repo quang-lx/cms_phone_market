@@ -102,7 +102,7 @@
                       <div class="col-md-3">
                         <div><h5>Trạng thái đơn hàng</h5></div>
                         <div v-for="(item, index) in modelForm.order_status_history" :key="index">
-                            <span>{{item.status}}</span>
+                            <span>{{item.title}}</span>
                             <span>({{item.date}})</span>
                         </div>
                         <div>
