@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\User;
+use Modules\Mon\Entities\OrderProduct;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Modules\Api\Entities\ErrorCode;
 
 class EloquentOrdersRepository extends BaseRepository implements OrdersRepository
 {
@@ -876,23 +880,46 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
     {
         // Đơn mua bán - placeOrderMultiProduct
         // Đơn sửa chữa bảo hành - placeMultipleOrder
-        $newUser = $this->getUserByPhone($requestParams);
-		$user = Auth::user();
-		$order = new Orders();
-		$order->order_type = Orders::TYPE_MUA_HANG;
-		$order->company_id = $user->company_id;
-		$order->shop_id = $user->shop_id;
-		$order->status = Orders::STATUS_ORDER_DONE;
-		$order->payment_status = Orders::PAYMENT_PAID_DONE;
-		$order->user_id = $newUser->id;
-		$totalPrice = $discount = $payPrice = 0;
-		foreach ($requestParams['products'] as $product) {
-			$totalPrice += $product['amount'] * $product['price'];
-			$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
-		}
-		$order->total_price = $totalPrice;
-		$order->discount = $discount;
-		$order->pay_price = $totalPrice - $discount;
-		$order->save();
+		DB::beginTransaction();
+        try {
+			$newUser = $this->getUserByPhone($requestParams);
+			$user = Auth::user();
+			$order = new Orders();
+			$order->order_type = Orders::TYPE_MUA_HANG;
+			$order->company_id = $user->company_id;
+			$order->shop_id = $user->shop_id;
+			$order->status = Orders::STATUS_ORDER_DONE;
+			$order->payment_status = Orders::PAYMENT_PAID_DONE;
+			$order->user_id = $newUser->id;
+			$totalPrice = $discount = $payPrice = 0;
+			foreach ($requestParams['products'] as $product) {
+				$totalPrice += $product['amount'] * $product['price'];
+				$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+			}
+			$order->total_price = $totalPrice;
+			$order->discount = $discount;
+			$order->pay_price = $totalPrice - $discount;
+			$order->save();
+
+			// Lưu order_product
+			foreach ($requestParams['products'] as $product) {
+				$orderProduct = new OrderProduct();
+				$orderProduct->order_id = $order->id;
+				$orderProduct->product_id = $product['id'];
+				$orderProduct->product_attribute_value_id  = $product['attribute_value_id'];
+				$orderProduct->quantity = $product['amount'];
+				$orderProduct->price = $product['price'];
+				$orderProduct->price_sale = $product['sale_price'];
+				$orderProduct->save();
+			}
+
+			DB::commit();
+
+		} catch (\Exception $exception) {
+			var_dump($exception->getMessage());die;
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
+        }
     }
 }

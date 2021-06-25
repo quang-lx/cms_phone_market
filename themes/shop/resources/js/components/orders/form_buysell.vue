@@ -101,30 +101,45 @@
                           </div>
                           <div class="card-body">
                               <div class="row mt-2" v-for="(pinfo,key) in modelForm.products" :key="key">
-                                  <div class="col-md-4">
-                                      <!-- <el-autocomplete
-                                        prefix-icon="el-icon-search"
-                                        v-model="pinfo.id"
-                                        :fetch-suggestions="onSearchProduct"
-                                        placeholder="Tìm sản phẩm"
-                                        @select="((item)=>{handleSelect(item, key)})"
-                                        clearable
-                                      ></el-autocomplete> -->
+                                <div class="col-md-4">
+                                  <el-form-item :label="$t('orders.label.category_id')" 
+                                                  :class="{'el-form-item is-error': form.errors.has('category_id') }">
                                       <el-select
-                                          v-model="pinfo.id"
+                                          v-model="pinfo.category_id"
                                           allow-create
                                           filterable
-                                          @change="handleSelect(key, pinfo.id)"
-                                          placeholder="Chọn sản phẩm">
+                                          @change="handleSelectCategory(key, pinfo.category_id)"
+                                          placeholder="Chọn Danh mục">
                                           <el-option
-                                              v-for="item in list_product"
+                                              v-for="item in category_tree_data"
                                               :key="item.id"
                                               :label="item.name"
                                               :value="item.id">
                                           </el-option>
                                       </el-select>
+                                  </el-form-item>
                                   </div>
                                   <div class="col-md-4">
+                                    <el-form-item :label="$t('orders.label.product')" 
+                                                  :class="{'el-form-item is-error': form.errors.has('product') }">
+                                      <el-select
+                                          v-model="pinfo.id"
+                                          allow-create
+                                          filterable
+                                          @change="handleSelectProduct(key, pinfo.id)"
+                                          placeholder="Chọn sản phẩm">
+                                          <el-option
+                                              v-for="item in list_product[key]"
+                                              :key="item.id"
+                                              :label="item.name"
+                                              :value="item.id">
+                                          </el-option>
+                                      </el-select>
+                                    </el-form-item>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <el-form-item :label="$t('orders.label.attribute')" 
+                                                  :class="{'el-form-item is-error': form.errors.has('attribute') }">
                                       <el-select
                                           v-model="pinfo.attribute_id"
                                           allow-create
@@ -138,8 +153,17 @@
                                               :value="item.id">
                                           </el-option>
                                       </el-select>
+                                    </el-form-item>
                                   </div>
-                                  <div class="col-md-3">
+                                  
+                                  <div
+                                      class="col-md-1   text-right d-flex justify-content-end align-items-center">
+                                      <i class="el-icon-circle-close" style="color:red; cursor:pointer"
+                                          @click="removeInfo(key)"></i>
+                                  </div>
+                                  <div class="col-md-4 mt-15">
+                                    <el-form-item :label="$t('orders.label.attribute_value')" 
+                                                  :class="{'el-form-item is-error': form.errors.has('attribute_value') }">
                                       <el-select
                                           v-model="pinfo.attribute_value_id"
                                           allow-create
@@ -153,14 +177,10 @@
                                               :value="item.id">
                                           </el-option>
                                       </el-select>
-                                  </div>
-                                  <div
-                                      class="col-md-1   text-right d-flex justify-content-end align-items-center">
-                                      <i class="el-icon-circle-close" style="color:red; cursor:pointer"
-                                          @click="removeInfo(key)"></i>
+                                    </el-form-item>
                                   </div>
 
-                                  <div class="col-md-4 mt-10">
+                                  <div class="col-md-4 mt-15">
                                     <el-form-item :label="$t('orders.label.price')" 
                                                   :class="{'el-form-item is-error': form.errors.has('price') }">
                                         <cleave v-model="pinfo.price" :options="options" 
@@ -170,7 +190,7 @@
                                               v-text="form.errors.first('price')"></div>
                                     </el-form-item>
                                 </div>
-                                <div class="col-md-4 mt-10">
+                                <div class="col-md-3 mt-15">
                                     <el-form-item :label="$t('product.label.sale_price')" 
                                                   :class="{'el-form-item is-error': form.errors.has('sale_price') }">
                                         <cleave v-model="pinfo.sale_price" :options="options_odd_number" 
@@ -181,18 +201,18 @@
                                     </el-form-item>
                                 </div>
 
-                                <div class="col-md-3 mt-10">
+                                <div class="col-md-4 mt-15">
                                     <el-form-item :label="$t('product.label.amount')" 
                                                   :class="{'el-form-item is-error': form.errors.has('amount') }">
-                                        <!-- <cleave v-model="pinfo.amount" :options="options" 
-                                            class="form-control" name="amount" onValueChanged="reloadTotalPrice()"></cleave> -->
-                                          <el-input v-model="pinfo.amount" v-on:keyup.enter="reloadTotalPrice()"></el-input>
+                                        <cleave v-model="pinfo.amount" :options="options" 
+                                            class="form-control" name="amount"></cleave>
 
                                         <div class="el-form-item__error"
                                               v-if="form.errors.has('amount')"
                                               v-text="form.errors.first('amount')"></div>
                                     </el-form-item>
                                 </div>
+                                <el-divider></el-divider>
 
                               </div>
                           </div>
@@ -200,31 +220,6 @@
                     </div>
 
                     <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12 ">
-                                        <el-form-item :label="$t('orders.label.category_id')"
-                                                      :class="{'el-form-item is-error': form.errors.has('category_id') }">
-                                            <div class="tree-container">
-
-                                                <el-checkbox-group v-model="modelForm.category_id"  class="problem-container">
-                                                    <el-checkbox v-for="(item,key) in category_tree_data" :key="key"
-                                                                  :label="item.id"> {{item.name}}
-                                                    </el-checkbox>
-                                                </el-checkbox-group>
-                                            </div>
-
-                                            <div class="el-form-item__error"
-                                                  v-if="form.errors.has('category_id')"
-                                                  v-text="form.errors.first('category_id')"></div>
-                                        </el-form-item>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -274,9 +269,8 @@
                                     <el-form-item :label="$t('orders.label.total_price')"
                                                   :class="{'el-form-item is-error': form.errors.has(  'total_money') }">
 
-                                        <cleave v-model="modelForm.total_price" :options="options" 
+                                        <cleave v-model="getTotalPrice" :options="options" 
                                             class="form-control" name="total_price" :disabled="true"></cleave>
-                                       
                                     </el-form-item>
                                   </div>
                                 </div>
@@ -341,12 +335,9 @@ export default {
       modelForm: {
         phone: '',
         customer_name: '',
-        category_id: [],
         brand_id: '',
         created_at: new Date(),
         payment_method: 1,
-        product_id: '',
-        attribute_selected: null,
         products: [],
         total_price: 0,
       },
@@ -360,52 +351,56 @@ export default {
       list_information: [],
       value_id: '',
       list_attribute_values: [],
+      total_price: 0,
       list_product: [],
     };
   },
   methods: {
     removeInfo(index) {
         this.modelForm.products.splice(index,1);
+        this.list_product.splice(index,1);
       },
     addMoreInfo() {
         this.modelForm.products.push({
+          category_id: '',
           id: '',
           attribute_id: '',
           attribute_value_id: '',
           price: '',
           sale_price: '',
           amount: '',
-        })
+        });
       },
-    onSearchProduct(queryString, cb) {
-      this.fetchProduct(queryString);
-      cb(this.productSearchResult);
-    },
-    fetchProduct(queryString) {
+    fetchProduct(key, catId) {
       const properties = {
         page: 0,
         per_page: 1000,
-        search: queryString,
         source: 'voucher',
-        shop_id: this.currentShop
+        shop_id: this.currentShop,
+        category_id: catId
       
       };
 
       axios
         .get(route("apishop.product.index", _.merge(properties, {})))
         .then((response) => {
-          this.list_product = response.data.data;
+          this.list_product.push(response.data.data);
         });
     },
-    handleSelect(key, pid) {
-      this.list_product.forEach(product => {
+    handleSelectProduct(key, pid) {
+      this.list_product[key].forEach(product => {
         if (product.id == pid){
           let item = product;
           item.amount = 0;
+          item.category_id = this.modelForm.products[key].category_id;
           this.modelForm.products[key] = (item);
           this.list_attribute_values[key] = item.attribute_selected.values;
         }
       });
+      
+    },
+    handleSelectCategory(key, catId) {
+      this.fetchProduct(key, catId);
       
     },
     onSubmit() {
@@ -420,7 +415,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          // this.$router.push({ name: "shop.ordersbuysell.index" });
+          this.$router.push({ name: "shop.ordersbuysell.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -517,15 +512,7 @@ export default {
       });
     },
 
-    removeAttributeValue(attribute_value_id) {
-      const valueIndex = _.findIndex(this.modelForm.attribute_selected.values, {id: attribute_value_id})
-      if (valueIndex !== -1) {
-        this.modelForm.attribute_selected.values.splice(valueIndex, 1)
-      }
-    },
-
     changeAttribute(key){
-      console.log(key, this.modelForm.products);
       let attributeSelectedValue = this.modelForm.products[key].attribute_selected.values;
       let attributeSelectedId = this.modelForm.products[key].attribute_value_id;
       
@@ -536,13 +523,9 @@ export default {
         }
       });
     },
-    reloadTotalPrice(){
-      console.log('reloadTotalPrice');
-    }
   },
   mounted() {
     this.fetchCategory();
-    this.fetchProduct();
     this.fetchBrand();
     this.fetchPaymentMethod();
     this.fetchData();
@@ -557,6 +540,48 @@ export default {
         }
       }
       return []
+    },
+
+    // getTotalPrice: function () {
+    //   let payPrice = 0;
+    //   let totalPrice = 0;
+    //   let discount = 0;
+    //   if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
+    //     this.modelForm.products.forEach(product => {
+    //       totalPrice += parseInt(product['amount']) * parseInt(product['price']);
+    //       discount += (parseInt(product['sale_price'])/100) * parseInt(product['price']) * parseInt(product['amount']);
+    //     });
+    //     payPrice = totalPrice - discount;
+    //   }
+    //   return payPrice;
+    // },
+
+    getTotalPrice: {
+
+      get: function () {
+        return this.modelForm.total_price;
+      },
+
+      set: function () {
+        let payPrice = 0;
+        let totalPrice = 0;
+        let discount = 0;
+        console.log('nhatdv1');
+        console.log(this.modelForm.products);
+        console.log(this.modelForm.products.length);
+        if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
+        // if (this.modelForm.products){
+          this.modelForm.products.forEach(product => {
+            totalPrice += parseInt(product['amount']) * parseInt(product['price']);
+            discount += (parseInt(product['sale_price'])/100) * parseInt(product['price']) * parseInt(product['amount']);
+          });
+          payPrice = totalPrice - discount;
+          console.log(totalPrice);
+          console.log(discount);
+          console.log(payPrice);
+        }
+        this.modelForm.total_price = payPrice;
+      }
     }
   },
 };
@@ -578,7 +603,7 @@ export default {
         display: flex;
         flex-direction: column;
     }
-    .mt-10 {
-      margin-top: 10px;
+    .mt-15 {
+      margin-top: 15px;
     }
 </style>

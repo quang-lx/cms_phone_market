@@ -346,6 +346,9 @@ export default {
                 "total_price": "Tổng tiền",
                 "fix_time_date": "Thời gian bảo hành",
                 "pay_method_name": "Thanh toán",
+                "attribute_value": "Giá trị thuộc tính",
+                "attribute": "Thuộc tính",
+                "product": "Sản phẩm",
                 "confirm": {
                     "cancel": "Hủy đơn hàng",
                     "wait_client": "Xác nhận",
