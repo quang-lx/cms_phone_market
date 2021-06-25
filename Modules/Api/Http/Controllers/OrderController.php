@@ -247,7 +247,7 @@ class OrderController extends ApiController
 		$newStatus = $request->get('new_status');
 
 		$validOrderStatus = Orders::getValidNextStatus();
-		if (isset($validOrderStatus[$orderType][$oldStatus]) && in_array($validOrderStatus[$orderType][$oldStatus], $newStatus)) {
+		if (isset($validOrderStatus[$orderType][$oldStatus]) && in_array($newStatus, $validOrderStatus[$orderType][$oldStatus])) {
 			$order->status = $newStatus;
 			$order->save();
 			event(new OrderStatusUpdated([
