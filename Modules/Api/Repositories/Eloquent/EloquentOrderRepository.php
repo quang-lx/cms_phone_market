@@ -495,12 +495,10 @@ class EloquentOrderRepository implements OrderRepository
             $productAttributeValue = $product['product_attribute_id'] ?? null;
             $attributeModel = ProductAttributeValue::find($productAttributeValue);
             $voucherAmount = $this->calVoucherAmount($shopId, $voucher, $model, $attributeModel);
-            if ($voucherAmount && $voucher->discount_type == Voucher::DISCOUNT_PERCENT) {
+            if ($voucherAmount ) {
                 $voucherTotalAmount += $voucherAmount * $quantity;
             }
-            if ($voucherAmount && $voucher->discount_type == Voucher::DISCOUNT_PRICE) {
-                $voucherTotalAmount = $voucherAmount;
-            }
+
         }
         return [$voucherTotalAmount, null];
     }
@@ -764,7 +762,7 @@ class EloquentOrderRepository implements OrderRepository
                 $orderProductData['price_sale'] =  $productPrice;
             }
             //TODO price
-            $totalPrice += $productPrice;
+            $totalPrice += $productPrice*$productData['quantity'];
 
             if ($order) {
                 $orderProductData['order_id'] = $order->id;
@@ -806,8 +804,8 @@ class EloquentOrderRepository implements OrderRepository
             list($sysVoucherDiscount) = $this->getVoucherAmount($sysVoucherCode, $shopId, $productsForVoucher);
 
             if ($sysVoucherDiscount) {
-	            $order->shop_voucher_id = optional($sysVoucher)->id;
-	            $order->shop_voucher_code = $sysVoucherCode;
+	            $order->sys_voucher_id = optional($sysVoucher)->id;
+	            $order->sys_voucher_code = $sysVoucherCode;
 	            $order->sys_discount = $sysVoucherDiscount?? 0;
 
 	            $sysVoucher->total_used++;
