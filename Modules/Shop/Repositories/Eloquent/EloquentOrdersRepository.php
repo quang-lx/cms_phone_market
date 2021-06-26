@@ -861,14 +861,15 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
 	public function getUserByPhone($params) {
     	$query = User::query();
-        $user = $query->where('phone', $params['phone'])->first();
+        $user = $query->where('phone', validate_isdn($params['phone']))->first();
         if ($user){
             return $user;
         } else {
             $user = new User();
-            $user->phone = $params['phone'];
+            $user->phone = validate_isdn($params['phone']);
             $user->name = $params['customer_name'];
             $user->type = User::TYPE_USER;
+            $user->status = User::STATUS_INACTIVE;
             $user->username = $this->stripVN($params['customer_name']);
             $user->password = Hash::make(User::DEFAULT_PASS);
             $user->save();

@@ -204,8 +204,9 @@
                                 <div class="col-md-4 mt-15">
                                     <el-form-item :label="$t('product.label.amount')" 
                                                   :class="{'el-form-item is-error': form.errors.has('amount') }">
-                                        <cleave v-model="pinfo.amount" :options="options" 
-                                            class="form-control" name="amount"></cleave>
+                                        <input v-model="pinfo.amount" 
+                                            class="form-control" name="amount" 
+                                            v-on:keyup="updateTotalPrice"/>
 
                                         <div class="el-form-item__error"
                                               v-if="form.errors.has('amount')"
@@ -269,7 +270,7 @@
                                     <el-form-item :label="$t('orders.label.total_price')"
                                                   :class="{'el-form-item is-error': form.errors.has(  'total_money') }">
 
-                                        <cleave v-model="getTotalPrice" :options="options" 
+                                        <cleave v-model="modelForm.total_price" :options="options" 
                                             class="form-control" name="total_price" :disabled="true"></cleave>
                                     </el-form-item>
                                   </div>
@@ -359,6 +360,8 @@ export default {
     removeInfo(index) {
         this.modelForm.products.splice(index,1);
         this.list_product.splice(index,1);
+        this.list_attribute_values.splice(index,1);
+        this.updateTotalPrice();
       },
     addMoreInfo() {
         this.modelForm.products.push({
@@ -384,7 +387,8 @@ export default {
       axios
         .get(route("apishop.product.index", _.merge(properties, {})))
         .then((response) => {
-          this.list_product.push(response.data.data);
+          this.list_product.splice(key,1);
+          this.list_product[key] = response.data.data;
         });
     },
     handleSelectProduct(key, pid) {
@@ -433,17 +437,17 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "shop.pinformation.index" });
+          this.$router.push({ name: "shop.ordersbuysell.index" });
         })
         .catch(() => {});
     },
 
     fetchData() {
       let routeUri = "";
-      if (this.$route.params.pinformationId !== undefined) {
+      if (this.$route.params.orderId !== undefined) {
         this.loading = true;
-        routeUri = route("apishop.pinformation.find", {
-          pinformation: this.$route.params.pinformationId,
+        routeUri = route("apishop.ordersbuysell.find", {
+          orderId: this.$route.params.orderId,
         });
         axios.get(routeUri).then((response) => {
           this.loading = false;
@@ -522,7 +526,24 @@ export default {
           this.modelForm.products[key].sale_price = value.sale_price;
         }
       });
+      this.updateTotalPrice();
     },
+
+    updateTotalPrice(){
+      let payPrice = 0;
+        let totalPrice = 0;
+        let discount = 0;
+        if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
+          for(let i = 0; i < this.modelForm.products.length; i++){
+            totalPrice += parseInt(this.modelForm.products[i].amount) * parseInt(this.modelForm.products[i].price);
+            discount += (parseInt(this.modelForm.products[i].sale_price)/100) * parseInt(this.modelForm.products[i].price) 
+              * parseInt(this.modelForm.products[i].amount);
+          }
+
+          payPrice = totalPrice - discount;
+        }
+        this.modelForm.total_price = payPrice;
+    }
   },
   mounted() {
     this.fetchCategory();
@@ -542,47 +563,31 @@ export default {
       return []
     },
 
-    // getTotalPrice: function () {
-    //   let payPrice = 0;
-    //   let totalPrice = 0;
-    //   let discount = 0;
-    //   if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
-    //     this.modelForm.products.forEach(product => {
-    //       totalPrice += parseInt(product['amount']) * parseInt(product['price']);
-    //       discount += (parseInt(product['sale_price'])/100) * parseInt(product['price']) * parseInt(product['amount']);
-    //     });
-    //     payPrice = totalPrice - discount;
+    // getTotalPrice: {
+    //   //Không dùng được computed do lúc khởi tạo chưa có products
+
+    //   get: function () {
+    //     return this.modelForm.total_price;
+    //   },
+
+    //   set: function () {
+    //     let payPrice = 0;
+    //     let totalPrice = 0;
+    //     let discount = 0;
+    //     console.log('nhatdv1');
+    //     console.log(this.modelForm.products);
+    //     console.log(this.modelForm.products.length);
+    //     if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
+    //       for(let i = 0; i < this.modelForm.products; i++){
+    //         totalPrice += parseInt(this.modelForm.products[i].amount) * parseInt(this.modelForm.products[i].price);
+    //         discount += (parseInt(this.modelForm.products[i].sale_price)/100) * parseInt(this.modelForm.products[i].price) 
+    //           * parseInt(this.modelForm.products[i].amount);
+    //       }
+    //       payPrice = totalPrice - discount;
+    //     }
+    //     this.modelForm.total_price = payPrice;
     //   }
-    //   return payPrice;
-    // },
-
-    getTotalPrice: {
-
-      get: function () {
-        return this.modelForm.total_price;
-      },
-
-      set: function () {
-        let payPrice = 0;
-        let totalPrice = 0;
-        let discount = 0;
-        console.log('nhatdv1');
-        console.log(this.modelForm.products);
-        console.log(this.modelForm.products.length);
-        if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
-        // if (this.modelForm.products){
-          this.modelForm.products.forEach(product => {
-            totalPrice += parseInt(product['amount']) * parseInt(product['price']);
-            discount += (parseInt(product['sale_price'])/100) * parseInt(product['price']) * parseInt(product['amount']);
-          });
-          payPrice = totalPrice - discount;
-          console.log(totalPrice);
-          console.log(discount);
-          console.log(payPrice);
-        }
-        this.modelForm.total_price = payPrice;
-      }
-    }
+    // }
   },
 };
 </script>
