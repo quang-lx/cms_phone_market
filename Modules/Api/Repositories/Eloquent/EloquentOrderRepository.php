@@ -422,6 +422,7 @@ class EloquentOrderRepository implements OrderRepository
 
         $orderData['status'] = Orders::STATUS_ORDER_CREATED;
         $orderData['payment_status'] = 0;
+        $orderData['product_id'] = $product->id;
         $orderData['order_type'] = $requestParams['order_type'];
         $orderData['ship_fee'] = 0;
         $orderData['discount'] = 0;
