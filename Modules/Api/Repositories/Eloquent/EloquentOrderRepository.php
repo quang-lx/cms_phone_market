@@ -428,6 +428,7 @@ class EloquentOrderRepository implements OrderRepository
 
         $orderProductData['quantity'] = $requestParams['quantity'];
         $orderProductData['note'] = $requestParams['note'] ?? '';
+        $orderProductData['product_id'] = $product->id;
 
 
         return [$orderData, $orderProductData];
