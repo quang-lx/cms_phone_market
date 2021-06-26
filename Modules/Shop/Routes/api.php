@@ -530,6 +530,17 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.guarantee_done',
         'uses' => 'Orders\OrdersController@guaranteeDone',
     ]);
+
+    //tao mới
+    Route::post('/', [
+        'as' => 'apishop.orders.storeBuysell',
+        'uses' => 'Orders\OrdersController@storeBuysell',
+    ]);
+
+    Route::post('/{orderId}/edit', [
+        'as' => 'apishop.orders.updateBuysell',
+        'uses' => 'Orders\OrdersController@updateBuysell',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/shopcategories')->group(function (){
 
@@ -585,7 +596,32 @@ Route::middleware('auth:api')->prefix('/shopordernotifications')->group(function
         'uses' => 'ShopOrderNotification\ShopOrderNotificationController@update',
     ]);
 });
+Route::middleware('auth:api')->prefix('/paymentmethods')->group(function (){
+
+    Route::get('/', [
+        'as' => 'apishop.paymentmethod.index',
+        'uses' => 'PaymentMethod\PaymentMethodController@index',
+    ]);
+    Route::post('/{paymentmethod}/edit', [
+            'as' => 'api.paymentmethod.update',
+            'uses' => 'PaymentMethod\PaymentMethodController@update',
+        ]);
+   Route::get('/{paymentmethod}', [
+              'as' => 'api.paymentmethod.find',
+              'uses' => 'PaymentMethod\PaymentMethodController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.paymentmethod.store',
+        'uses' => 'PaymentMethod\PaymentMethodController@store',
+    ]);
+
+    Route::delete('/{paymentmethod}', [
+        'as' => 'api.paymentmethod.destroy',
+        'uses' => 'PaymentMethod\PaymentMethodController@destroy',
+    ]);
+});
 // append
+
 
 
 

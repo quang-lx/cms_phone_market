@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Modules\Mon\Entities\Orders;
+use Modules\Mon\Entities\User;
+use Modules\Mon\Entities\OrderProduct;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Modules\Api\Entities\ErrorCode;
 
 class EloquentOrdersRepository extends BaseRepository implements OrdersRepository
 {
@@ -831,5 +837,90 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'errors' => true,
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
+    }
+
+	function stripVN($str) {
+		$str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+		$str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+		$str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+		$str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+		$str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+		$str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+		$str = preg_replace("/(đ)/", 'd', $str);
+	
+		$str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
+		$str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
+		$str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
+		$str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", 'O', $str);
+		$str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
+		$str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
+		$str = preg_replace("/(Đ)/", 'D', $str);
+		$str = str_replace(' ', '_', $str);
+		return $str;
+	}
+
+	public function getUserByPhone($params) {
+    	$query = User::query();
+        $user = $query->where('phone', validate_isdn($params['phone']))->first();
+        if ($user){
+            return $user;
+        } else {
+            $user = new User();
+            $user->phone = validate_isdn($params['phone']);
+            $user->name = $params['customer_name'];
+            $user->type = User::TYPE_USER;
+            $user->status = User::STATUS_INACTIVE;
+            $user->username = $this->stripVN($params['customer_name']);
+            $user->password = Hash::make(User::DEFAULT_PASS);
+            $user->save();
+            return $user;
+        }
+	}
+
+    public function storeBuySell($requestParams)
+    {
+        // Đơn mua bán - placeOrderMultiProduct
+        // Đơn sửa chữa bảo hành - placeMultipleOrder
+		DB::beginTransaction();
+        try {
+			$newUser = $this->getUserByPhone($requestParams);
+			$user = Auth::user();
+			$order = new Orders();
+			$order->order_type = Orders::TYPE_MUA_HANG;
+			$order->company_id = $user->company_id;
+			$order->shop_id = $user->shop_id;
+			$order->status = Orders::STATUS_ORDER_DONE;
+			$order->payment_status = Orders::PAYMENT_PAID_DONE;
+			$order->user_id = $newUser->id;
+			$totalPrice = $discount = $payPrice = 0;
+			foreach ($requestParams['products'] as $product) {
+				$totalPrice += $product['amount'] * $product['price'];
+				$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+			}
+			$order->total_price = $totalPrice;
+			$order->discount = $discount;
+			$order->pay_price = $totalPrice - $discount;
+			$order->save();
+
+			// Lưu order_product
+			foreach ($requestParams['products'] as $product) {
+				$orderProduct = new OrderProduct();
+				$orderProduct->order_id = $order->id;
+				$orderProduct->product_id = $product['id'];
+				$orderProduct->product_attribute_value_id  = $product['attribute_value_id'];
+				$orderProduct->quantity = $product['amount'];
+				$orderProduct->price = $product['price'];
+				$orderProduct->price_sale = $product['sale_price'];
+				$orderProduct->save();
+			}
+
+			DB::commit();
+
+		} catch (\Exception $exception) {
+			var_dump($exception->getMessage());die;
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
+        }
     }
 }
