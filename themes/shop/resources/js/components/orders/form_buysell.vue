@@ -39,7 +39,15 @@
                                       'el-form-item is-error': form.errors.has('phone'),
                                     }"
                                   >
-                                    <el-input v-model="modelForm.phone" type="number"></el-input>
+                                    <!-- <el-input v-model="modelForm.phone" type="number"></el-input> -->
+                                    <el-autocomplete
+                                      prefix-icon="el-icon-search"
+                                      v-model="modelForm.phone"
+                                      :fetch-suggestions="querySearch"
+                                      placeholder="Nhập số điện thoại"
+                                      @select="handleSelect"
+                                      clearable
+                                    ></el-autocomplete>
                                     <div
                                       class="el-form-item__error"
                                       v-if="form.errors.has('phone')"
@@ -169,6 +177,7 @@
                                           allow-create
                                           filterable
                                           @change="changeAttribute(key)"
+                                          :disabled="pinfo.attribute_selected ? false: true"
                                           placeholder="Giá trị thuộc tính">
                                           <el-option
                                               v-for="item in list_attribute_values[key]"
@@ -230,6 +239,7 @@
 
                                         <el-select v-model="modelForm.brand_id"
                                                     :placeholder="$t('orders.label.brand_id')"
+                                                    @change="changeBrand()"
                                                     filterable style="width: 100% !important">
                                             <el-option
                                                 v-for="item in brandArr"
@@ -354,9 +364,13 @@ export default {
       list_attribute_values: [],
       total_price: 0,
       list_product: [],
+      userSearchResult: [],
     };
   },
   methods: {
+    changeBrand(){
+      this.modelForm.products = [];
+    },
     removeInfo(index) {
         this.modelForm.products.splice(index,1);
         this.list_product.splice(index,1);
@@ -380,8 +394,9 @@ export default {
         per_page: 1000,
         source: 'voucher',
         shop_id: this.currentShop,
-        category_id: catId
-      
+        category_id: catId,
+        brand_id: this.modelForm.brand_id,
+        type: 1
       };
 
       axios
@@ -397,13 +412,23 @@ export default {
           let item = product;
           item.amount = 0;
           item.category_id = this.modelForm.products[key].category_id;
+          this.modelForm.products.splice(key,1);
           this.modelForm.products[key] = (item);
-          this.list_attribute_values[key] = item.attribute_selected.values;
+          if (item.attribute_selected){
+            this.list_attribute_values.splice(key,1);
+            this.list_attribute_values[key] = item.attribute_selected.values;
+          }
         }
       });
       
     },
     handleSelectCategory(key, catId) {
+      if (typeof this.list_product[key] != 'undefined'){
+        this.list_product.splice(key,1);
+        this.list_attribute_values.splice(key,1);
+        this.modelForm.products[key].id = '';
+        
+      }
       this.fetchProduct(key, catId);
       
     },
@@ -543,7 +568,35 @@ export default {
           payPrice = totalPrice - discount;
         }
         this.modelForm.total_price = payPrice;
-    }
+    },
+    querySearch(queryString, cb) {
+      this.fetchUserByPhone(queryString);
+      cb(this.userSearchResult);
+      // cb([{'id':1,'value':'test1'},{'id':2,'value':'test2'}]);
+    },
+
+    fetchUserByPhone(queryString) {
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        phone: queryString
+      
+      };
+
+      axios
+        .get(route("api.user.index", _.merge(properties, {})))
+        .then((response) => {
+          this.userSearchResult = response.data.data;
+          this.userSearchResult.forEach(user => {
+            user.value = user.phone;
+          });
+        });
+    },
+
+    handleSelect(item) {
+      this.modelForm.phone = item.phone;
+      this.modelForm.customer_name = item.name;
+    },
   },
   mounted() {
     this.fetchCategory();
@@ -562,32 +615,6 @@ export default {
       }
       return []
     },
-
-    // getTotalPrice: {
-    //   //Không dùng được computed do lúc khởi tạo chưa có products
-
-    //   get: function () {
-    //     return this.modelForm.total_price;
-    //   },
-
-    //   set: function () {
-    //     let payPrice = 0;
-    //     let totalPrice = 0;
-    //     let discount = 0;
-    //     console.log('nhatdv1');
-    //     console.log(this.modelForm.products);
-    //     console.log(this.modelForm.products.length);
-    //     if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
-    //       for(let i = 0; i < this.modelForm.products; i++){
-    //         totalPrice += parseInt(this.modelForm.products[i].amount) * parseInt(this.modelForm.products[i].price);
-    //         discount += (parseInt(this.modelForm.products[i].sale_price)/100) * parseInt(this.modelForm.products[i].price) 
-    //           * parseInt(this.modelForm.products[i].amount);
-    //       }
-    //       payPrice = totalPrice - discount;
-    //     }
-    //     this.modelForm.total_price = payPrice;
-    //   }
-    // }
   },
 };
 </script>

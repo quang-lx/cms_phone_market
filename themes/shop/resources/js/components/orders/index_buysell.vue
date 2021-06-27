@@ -28,7 +28,7 @@
                        >
                     </el-date-picker>
                   </div>
-                   <div class="col-sm-3">
+                   <div class="col-sm-2">
                     <el-select v-model="filter.shop" clearable v-if="!this.currentShop" @change="queryServer" placeholder="Lọc theo cửa hàng">
                       <el-option
                         v-for="item in listShop"
@@ -38,7 +38,7 @@
                       </el-option>
                     </el-select>
                   </div>
-                   <div class="col-sm-3">
+                   <div class="col-sm-2">
                     <el-select v-model="filter.status" clearable @change="queryServer" placeholder="Lọc theo trạng thái">
                       <el-option
                         v-for="item in listStatus"
@@ -56,6 +56,14 @@
                       placeholder="Mã đơn hàng/SĐT user"
                     >
                     </el-input>
+                  </div>
+
+                  <div class="col-sm-2">
+                    <router-link :to="{name: 'shop.ordersbuysell.create'}">
+                        <el-button type="primary" class="btn btn-flat" style="width:100%">
+                            {{ $t('orders.label.create') }}
+                        </el-button>
+                    </router-link>
                   </div>
                 </div>
               </div>

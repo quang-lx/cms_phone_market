@@ -12,7 +12,6 @@ class CreateOrdersRequest extends FormRequest
         $rules = [
             'phone' => 'required',
             'customer_name' => 'required',
-            'brand_id' => 'required',
             'created_at' => 'required',
             'payment_method' => 'required',
             'products' => 'required'
@@ -56,7 +55,6 @@ class CreateOrdersRequest extends FormRequest
         $msg = [
             'phone.required' => 'Số điện thoại là bắt buộc',
             'customer_name.required' => 'Tên khách hàng là bắt buộc',
-            'brand_id.required' => 'Thương hiệu là bắt buộc',
             'created_at.required' => 'Thời gian tiếp nhận là bắt buộc',
             'payment_method.required' => 'Hình thức thanh toán là bắt buộc',
             'products.required' => 'Sản phẩm là bắt buộc',
