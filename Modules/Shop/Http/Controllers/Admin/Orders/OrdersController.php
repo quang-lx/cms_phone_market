@@ -35,6 +35,11 @@ class OrdersController extends AdminController
         return $this->view('shop::orders.create');
     }
 
+    public function createRepair()
+    {
+        return $this->view('shop::orders.create');
+    }
+
 
 
     /**
