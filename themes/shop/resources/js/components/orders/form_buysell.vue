@@ -39,7 +39,15 @@
                                       'el-form-item is-error': form.errors.has('phone'),
                                     }"
                                   >
-                                    <el-input v-model="modelForm.phone" type="number"></el-input>
+                                    <!-- <el-input v-model="modelForm.phone" type="number"></el-input> -->
+                                    <el-autocomplete
+                                      prefix-icon="el-icon-search"
+                                      v-model="modelForm.phone"
+                                      :fetch-suggestions="querySearch"
+                                      placeholder="Nhập số điện thoại"
+                                      @select="handleSelect"
+                                      clearable
+                                    ></el-autocomplete>
                                     <div
                                       class="el-form-item__error"
                                       v-if="form.errors.has('phone')"
@@ -356,6 +364,7 @@ export default {
       list_attribute_values: [],
       total_price: 0,
       list_product: [],
+      userSearchResult: [],
     };
   },
   methods: {
@@ -559,7 +568,35 @@ export default {
           payPrice = totalPrice - discount;
         }
         this.modelForm.total_price = payPrice;
-    }
+    },
+    querySearch(queryString, cb) {
+      this.fetchUserByPhone(queryString);
+      cb(this.userSearchResult);
+      // cb([{'id':1,'value':'test1'},{'id':2,'value':'test2'}]);
+    },
+
+    fetchUserByPhone(queryString) {
+      const properties = {
+        page: 0,
+        per_page: 1000,
+        phone: queryString
+      
+      };
+
+      axios
+        .get(route("api.user.index", _.merge(properties, {})))
+        .then((response) => {
+          this.userSearchResult = response.data.data;
+          this.userSearchResult.forEach(user => {
+            user.value = user.phone;
+          });
+        });
+    },
+
+    handleSelect(item) {
+      this.modelForm.phone = item.phone;
+      this.modelForm.customer_name = item.name;
+    },
   },
   mounted() {
     this.fetchCategory();

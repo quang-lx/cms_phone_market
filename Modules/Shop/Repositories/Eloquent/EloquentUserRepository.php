@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
 
 class EloquentUserRepository extends BaseRepository implements UserRepository
 {
+    const MOBILE_9x = 2;
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
@@ -42,6 +43,11 @@ class EloquentUserRepository extends BaseRepository implements UserRepository
                     ->orWhere('phone', 'LIKE', "%{$keyword}%")
                     ->orWhere('email', 'LIKE', "%{$keyword}%");
             });
+        }
+
+        if ($request->get('phone') !== null) {
+            $phone = validate_mobile_number($request->get('phone'), self::MOBILE_9x);
+            $query->where('phone', 'LIKE', '%'.$phone.'%');
         }
 
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
