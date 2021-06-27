@@ -536,6 +536,11 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
         'as' => 'apishop.orders.storeBuysell',
         'uses' => 'Orders\OrdersController@storeBuysell',
     ]);
+    
+    Route::post('/', [
+        'as' => 'apishop.orders.storeRepair',
+        'uses' => 'Orders\OrdersController@storeRepair',
+    ]);
 
     Route::post('/{orderId}/edit', [
         'as' => 'apishop.orders.updateBuysell',

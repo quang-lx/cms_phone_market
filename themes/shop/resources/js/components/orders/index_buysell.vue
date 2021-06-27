@@ -15,40 +15,10 @@
                   </el-breadcrumb-item>
                 </el-breadcrumb>
               </div>
-              <div class="col-sm-9 text-right">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <el-date-picker @change="queryServer"
-                        v-model="filter.searchDate"
-                        type="daterange"
-                        start-placeholder="Start date"
-                        end-placeholder="End date"
-                         format="dd/MM/yyyy"
-                    value-format="yyyy-MM-dd"
-                       >
-                    </el-date-picker>
-                  </div>
-                   <div class="col-sm-2">
-                    <el-select v-model="filter.shop" clearable v-if="!this.currentShop" @change="queryServer" placeholder="Lọc theo cửa hàng">
-                      <el-option
-                        v-for="item in listShop"
-                        :key="item.id"
-                        :label="item.name"
-                        :value="item.id">
-                      </el-option>
-                    </el-select>
-                  </div>
-                   <div class="col-sm-2">
-                    <el-select v-model="filter.status" clearable @change="queryServer" placeholder="Lọc theo trạng thái">
-                      <el-option
-                        v-for="item in listStatus"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                      </el-option>
-                    </el-select>
-                  </div>
-                   <div class="col-sm-3">
+              <div class="col-sm-9">
+                <div class="row pull-right">
+                  
+                   <div class="col-8">
                     <el-input
                       prefix-icon="el-icon-search"
                       @keyup.native="performSearch"
@@ -58,7 +28,7 @@
                     </el-input>
                   </div>
 
-                  <div class="col-sm-2">
+                  <div class="col-4">
                     <router-link :to="{name: 'shop.ordersbuysell.create'}">
                         <el-button type="primary" class="btn btn-flat" style="width:100%">
                             {{ $t('orders.label.create') }}
@@ -67,6 +37,40 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div class="row pull-right search-block">
+                <div class="offset-sm-3 col-sm-3">
+                    <el-date-picker @change="queryServer"
+                        v-model="filter.searchDate"
+                        type="daterange"
+                        start-placeholder="Start date"
+                        end-placeholder="End date"
+                        format="dd/MM/yyyy"
+                        value-format="yyyy-MM-dd"
+                       >
+                    </el-date-picker>
+                  </div>
+                   <div class="col-sm-3">
+                    <el-select v-model="filter.shop" clearable v-if="!this.currentShop" @change="queryServer" placeholder="Lọc theo cửa hàng">
+                      <el-option
+                        v-for="item in listShop"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </div>
+                   <div class="col-sm-3">
+                    <el-select v-model="filter.status" clearable @change="queryServer" placeholder="Lọc theo trạng thái">
+                      <el-option
+                        v-for="item in listStatus"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </div>
             </div>
           </div>
         </div>
@@ -299,6 +303,10 @@ export default {
 <style scoped>
 .el-input__inner{
     width: 100% !important;
+}
+
+.search-block {
+    margin-top: 10px;
 }
 
 </style>

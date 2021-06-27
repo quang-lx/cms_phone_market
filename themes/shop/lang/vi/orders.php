@@ -32,6 +32,9 @@ return [
         'attribute_value' => 'Giá trị thuộc tính',
         'attribute' => 'Thuộc tính',
         'product' => 'Sản phẩm',
+        'product_title' => 'Tên sản phẩm lỗi',
+        'product_detail' => 'Mô tả chi tiết lỗi',
+        'problem_id' => 'Vấn đề sửa chữa',
         'confirm' => [
             'cancel' => 'Hủy đơn hàng',
             'wait_client' => 'Xác nhận',

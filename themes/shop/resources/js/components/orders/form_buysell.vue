@@ -73,6 +73,28 @@
                                 </div>
 
                                 <div class="col-md-12">
+                                    <el-form-item :label="$t('orders.label.brand_id')"
+                                                  :class="{'el-form-item is-error': form.errors.has(  'brand_id') }">
+
+                                        <el-select v-model="modelForm.brand_id"
+                                                    :placeholder="$t('orders.label.brand_id')"
+                                                    @change="changeBrand()"
+                                                    filterable style="width: 100% !important">
+                                            <el-option
+                                                v-for="item in brandArr"
+                                                :key="'brand'+ item.id"
+                                                :label="item.name"
+                                                :value="item.id">
+                                            </el-option>
+
+                                        </el-select>
+                                        <div class="el-form-item__error"
+                                              v-if="form.errors.has('brand_id')"
+                                              v-text="form.errors.first('brand_id')"></div>
+                                    </el-form-item>
+                                  </div>
+
+                                <div class="col-md-12">
                                   <el-form-item
                                     :label="$t('orders.label.created_at')"
                                     :class="{
@@ -233,28 +255,6 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                  <div class="col-md-12">
-                                    <el-form-item :label="$t('orders.label.brand_id')"
-                                                  :class="{'el-form-item is-error': form.errors.has(  'brand_id') }">
-
-                                        <el-select v-model="modelForm.brand_id"
-                                                    :placeholder="$t('orders.label.brand_id')"
-                                                    @change="changeBrand()"
-                                                    filterable style="width: 100% !important">
-                                            <el-option
-                                                v-for="item in brandArr"
-                                                :key="'brand'+ item.id"
-                                                :label="item.name"
-                                                :value="item.id">
-                                            </el-option>
-
-                                        </el-select>
-                                        <div class="el-form-item__error"
-                                              v-if="form.errors.has('brand_id')"
-                                              v-text="form.errors.first('brand_id')"></div>
-                                    </el-form-item>
-                                  </div>
-
                                   <div class="col-md-12">
                                     <el-form-item :label="$t('orders.label.payment_method')"
                                                   :class="{'el-form-item is-error': form.errors.has(  'payment_method') }">
