@@ -473,7 +473,7 @@ class EloquentOrderRepository implements OrderRepository
         if ($voucher->shop_id && $voucher->shop_id != $shopId) {
             return [false, 'Mã giảm giá không hợp lệ'];
         }
-        if ($voucher->total_used > $voucher->total) {
+        if ($voucher->total_used + 1 > $voucher->total) {
             return [false, 'Mã giảm giá hết lượt sử dụng'];
         }
 
@@ -509,7 +509,7 @@ class EloquentOrderRepository implements OrderRepository
         if ($voucher->shop_id && $voucher->shop_id != $shopId) {
             return false;
         }
-        if ($voucher->total_used > $voucher->total) {
+        if ($voucher->total_used +1 > $voucher->total) {
             return false;
         }
         if ($voucher->type == Voucher::TYPE_DISCOUNT_PRODUCT) {
@@ -787,6 +787,9 @@ class EloquentOrderRepository implements OrderRepository
         $shopVoucherDiscount = 0;
         if ($shopVoucherCode) {
             $shopVoucher = Voucher::query()->where('code', $shopVoucherCode)->first();
+            if ($shopVoucher->require_min_amount && $shopVoucher->require_min_amount > $totalPrice) {
+                return -1;
+            }
             list($shopVoucherDiscount) = $this->getVoucherAmount($shopVoucherCode, $shopId, $productsForVoucher);
             if ($shopVoucherDiscount) {
 	            $order->shop_voucher_id = optional($shopVoucher)->id;
