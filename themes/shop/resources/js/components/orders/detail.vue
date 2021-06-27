@@ -90,10 +90,9 @@
                       </div>
 
                       <div class="col-md-2">
-                        <div><h5>Thông tin thanh toán</h5></div>
+                        <div><h5>Thanh toán</h5></div>
                             {{ modelForm.pay_method_name }}
 
-                        <div></div>
                         <div><h5>Chi phí</h5></div>
                         <div>
                             <span v-currency="modelForm.pay_price"></span>
@@ -119,17 +118,15 @@
 
                       </div>
 
-                      <div class="col-md-3 mt-3">
-                        <div><h5>Sản phẩm sửa chữa</h5></div>
-                        <div>
+                      <div class="col-md-12 mt-3">
+                          <span>Sản phẩm sửa chữa: </span>
                           <span>{{modelForm.product_name}}
                           </span>
-                        </div>
 
                       </div>
-                      <div class="col-md-9 mt-3">
-                        <div><h5>Thực trạng sản phẩm</h5></div>
-                            <div v-html="modelForm.product_note"></div>
+                      <div class="col-md-12 mt-3">
+                        <span>Thực trạng sản phẩm: </span>
+                            <span v-html="modelForm.product_note"></span>
                         </div>
                       <div class="col-md-12 mt-4 text-right">
                           <status-repair :data="modelForm"></status-repair>
