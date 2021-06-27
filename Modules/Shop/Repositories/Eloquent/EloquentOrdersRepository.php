@@ -911,6 +911,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				$orderProduct->quantity = $product['amount'];
 				$orderProduct->price = $product['price'];
 				$orderProduct->price_sale = $product['sale_price'];
+				$orderProduct->product_title = $product['name'];
 				$orderProduct->save();
 			}
 
