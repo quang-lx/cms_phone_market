@@ -907,7 +907,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				$orderProduct = new OrderProduct();
 				$orderProduct->order_id = $order->id;
 				$orderProduct->product_id = $product['id'];
-				$orderProduct->product_attribute_value_id  = $product['attribute_value_id'];
+				$orderProduct->product_attribute_value_id  = isset($product['attribute_value_id']) ? $product['attribute_value_id'] : null;
 				$orderProduct->quantity = $product['amount'];
 				$orderProduct->price = $product['price'];
 				$orderProduct->price_sale = $product['sale_price'];
