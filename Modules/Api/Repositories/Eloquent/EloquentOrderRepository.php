@@ -745,7 +745,7 @@ class EloquentOrderRepository implements OrderRepository
             }
 
             $orderProductData['product_title'] = $product->name;
-            $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
+
             $orderProductData['quantity'] = $productData['quantity'];
             $orderProductData['price'] = $product->price;
             $orderProductData['price_sale'] = $productPrice;
@@ -753,7 +753,7 @@ class EloquentOrderRepository implements OrderRepository
             $orderProductData['note'] = $requestParams['note'] ?? '';
 
             if ($productAttributeValue) {
-
+				$orderProductData['product_attribute_value_id'] = $productAttributeValue->id;
                 $productPrice = $productAttributeValue->price;
                 if ($productAttributeValue->sale_price) {
                     $productPrice = $productPrice * (100 - $productAttributeValue->sale_price) / 100;
