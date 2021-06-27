@@ -89,7 +89,7 @@ class VtCategoryController extends ApiController
             ]);
         }
 
-        // $this->vtcategoryRepository->destroy($vtcategory);
+        $this->vtcategoryRepository->destroy($vtcategory);
 
         return response()->json([
             'errors' => false,
