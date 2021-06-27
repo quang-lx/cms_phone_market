@@ -142,7 +142,7 @@
                         <el-table-column
                           prop=""
                           label="Tên sản phẩm"
-                          sortable="custom"
+                          
                         >
                           <template slot-scope="scope">
                             <img
@@ -156,16 +156,26 @@
                             <span>{{ scope.row.name }}</span>
                           </template>
                         </el-table-column>
-                        <el-table-column prop="" label="Giá" sortable="custom">
+                        <el-table-column prop="" label="Giá" >
                           <template slot-scope="scope">
                             <span v-currency="scope.row.price_product"></span>
+                          </template>
+                        </el-table-column>
+
+                         <el-table-column
+                          prop=""
+                          label="Thuộc tính"
+                          
+                        >
+                          <template slot-scope="scope">
+                            <span v-number="scope.row.attr_value"></span>
                           </template>
                         </el-table-column>
 
                         <el-table-column
                           prop=""
                           label="Số lượng"
-                          sortable="custom"
+                          
                         >
                           <template slot-scope="scope">
                             <span v-number="scope.row.quantity"></span>
@@ -175,10 +185,10 @@
                         <el-table-column
                           prop=""
                           label="Tổng tiền"
-                          sortable="custom"
+                          
                         >
                           <template slot-scope="scope">
-                            <span v-currency="scope.row.price_sale"></span>
+                            <span v-currency="scope.row.price_amount"></span>
                           </template>
                         </el-table-column>
                       </el-table>
@@ -186,13 +196,13 @@
                   </div>
                   <div class="col-md-12 mt-4">
                     <div class="row">
-                      <div class="col-md-8"></div>
-                      <div class="col-md-4">
-                        <table>
+                      <div class="col-md-6"></div>
+                      <div class="col-md-6">
+                        <table class="w-100">
                           <tbody>
                             <tr>
-                              <th scope="row" class="w-75">Tạm tính</th>
-                              <td>
+                              <th scope="row" style="width: 60%;">Tạm tính</th>
+                              <td style="width: 40%;">
                                 <span v-currency="modelForm.total_price"></span>
                               </td>
                             </tr>
@@ -204,7 +214,7 @@
                             </tr>
                             <tr>
                               <th scope="row">Giảm giá</th>
-                              <span v-currency="modelForm.discount"></span>
+                              <span v-currency="modelForm.discount"></span><span v-if="modelForm.sys_voucher_code">({{modelForm.sys_voucher_code}})</span>
                               <td></td>
                             </tr>
                             <tr>

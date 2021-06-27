@@ -44,7 +44,7 @@ class OrdersTransformer extends JsonResource
             'ship_address' => $this->ship_address,
             'created_at' => $this->created_at->format('H:i d/m/Y'),
             'shop_done' => $this->shop_done,
-            'fix_time_date' => $this->fix_time_date,
+            'fix_time_date' => optional($this->orderProducts->product)->warranty_time,
             'pay_method_name' => optional($this->paymentHistory)->pay_method_name,
             'order_status_history' =>$this->orderStatusHistory($this->orderStatusHistory),
 
