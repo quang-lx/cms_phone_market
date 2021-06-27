@@ -19,7 +19,7 @@ class OrdersBuySellTransformer extends JsonResource
             $value->name = $value->product->name;
             $value->price_product = $value->price_sale;
             $value->price_amount = $value->price_sale*$value->quantity;
-            $value->attr_value = optional($value->productValue->attributeValues)->name;
+            $value->attr_value = optional(optional($value->productValue)->attributeValues)->name;
         }
         $data = [
             'id' => $this->id,
