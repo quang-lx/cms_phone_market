@@ -31,6 +31,9 @@ class Orders extends Model
 	const ORDER_DONE_WAIT_CLIENT_CONFIRM = 0;
 	const ORDER_DONE = 1;
 
+	const TYPE_SUA_CHUA_PRODUCT_EXIST = 1;
+	const TYPE_SUA_CHUA_PRODUCT_OTHER = 2;
+
 
 	protected $table = 'orders';
 	protected $fillable = [

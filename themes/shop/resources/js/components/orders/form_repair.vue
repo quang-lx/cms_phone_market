@@ -148,7 +148,7 @@
                               <div class="row mt-2" v-for="(pinfo,key) in modelForm.products" :key="key">
                                 <div class="col-md-4">
                                   <el-form-item :label="$t('orders.label.problem_id')" 
-                                                  :class="{'el-form-item is-error': form.errors.has('category_id') }">
+                                                  :class="{'el-form-item is-error': form.errors.has('problem_id') }">
                                       <el-select
                                           v-model="pinfo.problem_id"
                                           allow-create
@@ -297,6 +297,19 @@
                                       </div>
                                   </el-form-item>
                                 </div>
+
+                                <div class="col-md-11">
+                                    <el-form-item :label="$t('orders.label.pay_price')"
+                                                  :class="{'el-form-item is-error': form.errors.has(  'pay_price') }">
+
+                                        <cleave v-model="pinfo.pay_price" :options="options" v-on:keyup.native="updateTotalPrice"
+                                            class="form-control" name="pay_price"></cleave>
+                                        <div class="el-form-item__error"
+                                            v-if="form.errors.has('pay_price')"
+                                            v-text="form.errors.first('pay_price')">
+                                        </div>
+                                    </el-form-item>
+                                  </div>
                                   
                                 <div
                                     class="col-md-1   text-right d-flex justify-content-end align-items-center">
@@ -476,15 +489,20 @@ export default {
           amount: '',
           product_title: '',
           product_detail: '',
+          pay_price: '',
         });
       },
     fetchProduct(key, catId) {
+      console.log(this.modelForm.products[key].problem_id);
+      console.log(this.modelForm.products);
+      console.log(key);
       const properties = {
         page: 0,
         per_page: 1000,
         source: 'voucher',
         shop_id: this.currentShop,
         category_id: catId,
+        problem_id: this.modelForm.products[key].problem_id,
         brand_id: this.modelForm.brand_id,
         type: 2, //Sửa chữa
       };
@@ -646,14 +664,20 @@ export default {
     },
 
     updateTotalPrice(){
-      let payPrice = 0;
+        let payPrice = 0;
         let totalPrice = 0;
         let discount = 0;
         if (typeof this.modelForm.products !== 'undefined' && this.modelForm.products.length > 0){
           for(let i = 0; i < this.modelForm.products.length; i++){
-            totalPrice += parseInt(this.modelForm.products[i].amount) * parseInt(this.modelForm.products[i].price);
-            discount += (parseInt(this.modelForm.products[i].sale_price)/100) * parseInt(this.modelForm.products[i].price) 
-              * parseInt(this.modelForm.products[i].amount);
+            if (this.modelForm.type_product == 1){
+              totalPrice += parseInt(this.modelForm.products[i].amount) * parseInt(this.modelForm.products[i].price);
+              discount += (parseInt(this.modelForm.products[i].sale_price)/100) * parseInt(this.modelForm.products[i].price) 
+                * parseInt(this.modelForm.products[i].amount);
+            } else {
+              totalPrice += parseInt(this.modelForm.products[i].pay_price);
+              discount += 0;
+            }
+            
           }
 
           payPrice = totalPrice - discount;

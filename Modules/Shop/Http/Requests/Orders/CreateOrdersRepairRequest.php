@@ -40,6 +40,10 @@ class CreateOrdersRepairRequest extends FormRequest
                     if (!$product['problem_id']){
                         $validator->errors()->add('products', 'Vui lòng chọn vấn đề sửa chữa');
                     }
+                } else {
+                    if (!is_numeric($product['pay_price'])){
+                        $validator->errors()->add('pay_price', 'Vui lòng nhập số tiền cần thanh toán');
+                    }
                 }
             }
 

@@ -328,7 +328,7 @@ export default {
                 "product_name": "Sản phẩm",
                 "shop_id": "Cửa hàng",
                 "created_at": "Thời gian tiếp nhận",
-                "pay_price": "Tổng tiền",
+                "pay_price": "Chi phí sửa chữa",
                 "0": "order_type",
                 "status": "Trạng thái",
                 "detail_title": "Chi tiết đơn",
