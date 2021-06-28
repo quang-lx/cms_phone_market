@@ -108,7 +108,7 @@
                         <div>
                           <span>{{modelForm.status}}
                           </span>
-                            <p v-if="modelForm.shop_done == 1">(Người bán đã xác nhận giao hàng thành công)</p>
+                            <p v-if="modelForm.shop_done == 1  && modelForm.status_value!='done' ">(Người bán đã xác nhận giao hàng thành công)</p>
                             <p v-if="
                               modelForm.order_type == 'sua_chua' &&
                               modelForm.type_other == 1 && modelForm.fix_time_date !=null &&
