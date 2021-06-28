@@ -208,6 +208,9 @@
                                               :value="item.id">
                                           </el-option>
                                       </el-select>
+                                      <div class="el-form-item__error"
+                                              v-if="form.errors.has('attribute_value')"
+                                              v-text="form.errors.first('attribute_value')"></div>
                                     </el-form-item>
                                   </div>
 
