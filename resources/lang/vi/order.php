@@ -28,7 +28,7 @@ return [
 	       'content created' => 'Đặt hàng thành công, vui lòng chờ người bán xác nhận đơn hàng :order_code.',
             'content confirm' => 'Đơn hàng :order_code đã được xác nhận, vui lòng chờ người bán giao hàng',
             'content cancel' => 'Đơn hàng :order_code đã được hủy bởi người bán.',
-            'content sending' => 'Đơn hàng :order_code đã hoàn thành. Bạn hãy đánh giá sản phẩm giúp người khác hiểu hơn sản phẩm nhé.',
+            'content done' => 'Đơn hàng :order_code đã hoàn thành. Bạn hãy đánh giá sản phẩm giúp người khác hiểu hơn sản phẩm nhé.',
 
             'type' => 'banhang_:order_status',
             'title' => 'Đơn bán hàng'
