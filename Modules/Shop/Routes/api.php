@@ -532,12 +532,12 @@ Route::middleware('auth:api')->prefix('/orders')->group(function (){
     ]);
 
     //tao mới
-    Route::post('/', [
+    Route::post('/storeBuysell', [
         'as' => 'apishop.orders.storeBuysell',
         'uses' => 'Orders\OrdersController@storeBuysell',
     ]);
     
-    Route::post('/', [
+    Route::post('/storeRepair', [
         'as' => 'apishop.orders.storeRepair',
         'uses' => 'Orders\OrdersController@storeRepair',
     ]);
