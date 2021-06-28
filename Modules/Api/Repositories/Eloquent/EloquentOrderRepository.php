@@ -494,6 +494,9 @@ class EloquentOrderRepository implements OrderRepository
                 return [false, 'Chưa chọn sản phẩm'];
             }
             $model = Product::find($product['id']);
+			if ($shopId && $model && $model->shop_id != $shopId) {
+				return [false, 'Mã giảm giá không hợp lệ'];
+			}
             $productAttributeValue = $product['product_attribute_id'] ?? null;
             $attributeModel = ProductAttributeValue::find($productAttributeValue);
             $voucherAmount = $this->calVoucherAmount($shopId, $voucher, $model, $attributeModel);
@@ -510,6 +513,9 @@ class EloquentOrderRepository implements OrderRepository
         if ($voucher->shop_id && $voucher->shop_id != $shopId) {
             return false;
         }
+        if ($product && $product->shop_id != $shopId) {
+        	return false;
+		}
         if ($voucher->total_used +1 > $voucher->total) {
             return false;
         }
