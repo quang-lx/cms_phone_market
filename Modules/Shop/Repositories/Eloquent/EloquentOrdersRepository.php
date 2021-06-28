@@ -801,18 +801,18 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             ];
 	        $model->update($data_update);
 	        $data = [
-		        'title' => trans('order.notifications.bao_hanh.title'),
-		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content done', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
-		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
-		        'title' => trans('order.notifications.bao_hanh.title'),
-		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
-		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content done', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
 
 		        'user_id' => $model->user->id,
 		        'order_id' => $model->id

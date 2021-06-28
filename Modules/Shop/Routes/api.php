@@ -600,6 +600,11 @@ Route::middleware('auth:api')->prefix('/shopordernotifications')->group(function
         'as' => 'apishop.shopordernotification.update',
         'uses' => 'ShopOrderNotification\ShopOrderNotificationController@update',
     ]);
+
+    Route::get('/count_unread_notice', [
+        'as' => 'apishop.shopordernotification.count_unread_notice',
+        'uses' => 'ShopOrderNotification\ShopOrderNotificationController@countUnreadNotice',
+    ]);
 });
 Route::middleware('auth:api')->prefix('/paymentmethods')->group(function (){
 

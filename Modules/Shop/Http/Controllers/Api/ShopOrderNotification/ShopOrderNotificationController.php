@@ -75,4 +75,9 @@ class ShopOrderNotificationController extends ApiController
             'message' => trans('backend::shopordernotification.message.delete success'),
         ]);
     }
+
+    public function countUnreadNotice()
+    {
+        return $this->shopordernotificationRepository->countUnreadNotice();
+    }
 }

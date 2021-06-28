@@ -3,7 +3,7 @@
     <a class="nav-link" href="#" @click.prevent="showNotification">
       <i class="el-icon-bell"></i>
       <span class="badge badge-danger navbar-badge">{{
-        this.list_notification.length
+        this.count_unread_notice
       }}</span>
     </a>
     <el-drawer
@@ -27,7 +27,7 @@
               <h3 class="dropdown-item-title">
                 {{ item.title }}
               </h3>
-              <p class="text-sm">{{ item.content }}</p>
+              <p class="text-sm white-space">{{ item.content }}</p>
               <p class="text-sm text-muted">
                 <i class="far fa-clock mr-1"></i> {{time2TimeAgo(item.created_at)}}
               </p>
@@ -51,7 +51,8 @@ export default {
       list_notification: [],
       page: 1,
       count_page: 1,
-      per_page: 7
+      per_page: 7,
+      count_unread_notice:0
     };
   },
   methods: {
@@ -110,6 +111,7 @@ export default {
           default:
             break;
         }
+        data.seen =1;
     },
 
     redirectRouteDetailOrder(type,id) {
@@ -180,10 +182,20 @@ export default {
     if (seconds < 60) {
        return seconds + " giây trước";
     }
-}
+},
+countUnreadNotice() {
+      axios
+        .get(
+          route("apishop.shopordernotification.count_unread_notice")
+        )
+        .then((response) => {
+          this.count_unread_notice = response.data;
+        });
+    },
   },
   mounted() {
     this.fetchNotification();
+    setInterval(this.countUnreadNotice, 5000);
     setInterval(this.fetchNotification, 5000000);
   },
 };
@@ -192,5 +204,9 @@ export default {
 <style>
 .bg-noti{
   background-color: #efeeee;
+}
+
+.white-space{
+      white-space: normal;
 }
 </style>
