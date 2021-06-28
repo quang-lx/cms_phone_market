@@ -8,8 +8,8 @@
               <el-breadcrumb-item>
                 <a href="/shop-admin">{{ $t("mon.breadcrumb.home") }}</a>
               </el-breadcrumb-item>
-              <el-breadcrumb-item :to="{ name: 'shop.ordersbuysell.index' }"
-                >{{ $t("orders.label.buysell") }}
+              <el-breadcrumb-item :to="{ name: 'shop.orders.index' }"
+                >{{ $t("orders.label.orders") }}
               </el-breadcrumb-item>
               <el-breadcrumb-item> {{ $t(pageTitle) }} </el-breadcrumb-item>
             </el-breadcrumb>
@@ -117,6 +117,21 @@
                                     ></div>
                                   </el-form-item>
                                 </div>
+
+                                <div class="col-md-12">
+                                  <el-form-item label="Loại sản phẩm">
+                                    <el-radio-group v-model="modelForm.type_product">
+                                      <el-radio
+                                        v-for="item in list_type_product"
+                                        :key="item.id"
+                                        :value="item.value"
+                                        :label="item.id"
+                                        @change="changeTypeProduct()"
+                                        >{{ item.value }}</el-radio
+                                      >
+                                    </el-radio-group>
+                                  </el-form-item>
+                                </div>
                               </div>
                             </div>
                         </div>
@@ -129,8 +144,26 @@
 
                               </div>
                           </div>
-                          <div class="card-body">
+                          <div class="card-body" v-if="modelForm.type_product == 1">
                               <div class="row mt-2" v-for="(pinfo,key) in modelForm.products" :key="key">
+                                <div class="col-md-4">
+                                  <el-form-item :label="$t('orders.label.problem_id')" 
+                                                  :class="{'el-form-item is-error': form.errors.has('category_id') }">
+                                      <el-select
+                                          v-model="pinfo.problem_id"
+                                          allow-create
+                                          filterable
+                                          placeholder="Chọn vấn đề sửa chữa">
+                                          <el-option
+                                              v-for="item in list_problem"
+                                              :key="item.id"
+                                              :label="item.title"
+                                              :value="item.id">
+                                          </el-option>
+                                      </el-select>
+                                  </el-form-item>
+                                </div>
+
                                 <div class="col-md-4">
                                   <el-form-item :label="$t('orders.label.category_id')" 
                                                   :class="{'el-form-item is-error': form.errors.has('category_id') }">
@@ -148,8 +181,8 @@
                                           </el-option>
                                       </el-select>
                                   </el-form-item>
-                                  </div>
-                                  <div class="col-md-4">
+                                </div>
+                                  <div class="col-md-3">
                                     <el-form-item :label="$t('orders.label.product')" 
                                                   :class="{'el-form-item is-error': form.errors.has('product') }">
                                       <el-select
@@ -167,7 +200,14 @@
                                       </el-select>
                                     </el-form-item>
                                   </div>
-                                  <div class="col-md-3">
+
+                                  <div
+                                      class="col-md-1   text-right d-flex justify-content-end align-items-center">
+                                      <i class="el-icon-circle-close" style="color:red; cursor:pointer"
+                                          @click="removeInfo(key)"></i>
+                                  </div>
+
+                                  <div class="col-md-4 mt-15">
                                     <el-form-item :label="$t('orders.label.attribute')" 
                                                   :class="{'el-form-item is-error': form.errors.has('attribute') }">
                                       <el-select
@@ -186,11 +226,6 @@
                                     </el-form-item>
                                   </div>
                                   
-                                  <div
-                                      class="col-md-1   text-right d-flex justify-content-end align-items-center">
-                                      <i class="el-icon-circle-close" style="color:red; cursor:pointer"
-                                          @click="removeInfo(key)"></i>
-                                  </div>
                                   <div class="col-md-4 mt-15">
                                     <el-form-item :label="$t('orders.label.attribute_value')" 
                                                   :class="{'el-form-item is-error': form.errors.has('attribute_value') }">
@@ -211,7 +246,7 @@
                                     </el-form-item>
                                   </div>
 
-                                  <div class="col-md-4 mt-15">
+                                  <div class="col-md-3 mt-15">
                                     <el-form-item :label="$t('orders.label.price')" 
                                                   :class="{'el-form-item is-error': form.errors.has('price') }">
                                         <cleave v-model="pinfo.price" :options="options" 
@@ -221,7 +256,7 @@
                                               v-text="form.errors.first('price')"></div>
                                     </el-form-item>
                                 </div>
-                                <div class="col-md-3 mt-15">
+                                <div class="col-md-4 mt-15">
                                     <el-form-item :label="$t('product.label.sale_price')" 
                                                   :class="{'el-form-item is-error': form.errors.has('sale_price') }">
                                         <cleave v-model="pinfo.sale_price" :options="options_odd_number" 
@@ -244,6 +279,42 @@
                                               v-text="form.errors.first('amount')"></div>
                                     </el-form-item>
                                 </div>
+                                <el-divider></el-divider>
+
+                              </div>
+                          </div>
+
+                          <div class="card-body" v-else>
+                              <div class="row mt-2" v-for="(pinfo,key) in modelForm.products" :key="key">
+                                <div class="col-md-11">
+                                  <el-form-item :label="$t('orders.label.product_title')" 
+                                                  :class="{'el-form-item is-error': form.errors.has('product_title') }">
+                                      <el-input v-model="pinfo.product_title"
+                                              :rows="3"></el-input>
+                                      <div class="el-form-item__error"
+                                            v-if="form.errors.has('product_title')"
+                                            v-text="form.errors.first('product_title')">
+                                      </div>
+                                  </el-form-item>
+                                </div>
+                                  
+                                <div
+                                    class="col-md-1   text-right d-flex justify-content-end align-items-center">
+                                    <i class="el-icon-circle-close" style="color:red; cursor:pointer"
+                                        @click="removeInfo(key)"></i>
+                                </div>
+                                <div class="col-md-11 mt-15">
+                                  <el-form-item :label="$t('orders.label.product_detail')" 
+                                                :class="{'el-form-item is-error': form.errors.has('product_detail') }">
+                                    <el-input v-model="pinfo.product_detail" type="textarea"
+                                              :rows="3"></el-input>
+                                      <div class="el-form-item__error"
+                                            v-if="form.errors.has('product_detail')"
+                                            v-text="form.errors.first('product_detail')">
+                                      </div>
+                                  </el-form-item>
+                                </div>
+
                                 <el-divider></el-divider>
 
                               </div>
@@ -351,6 +422,7 @@ export default {
         payment_method: 1,
         products: [],
         total_price: 0,
+        type_product: 1,
       },
       brandArr: [],
       paymentMethodArr: [],
@@ -365,11 +437,26 @@ export default {
       total_price: 0,
       list_product: [],
       userSearchResult: [],
+      list_type_product: [
+        {
+          id: 1,
+          value: "Sản phẩm có sẵn",
+        },
+        {
+          id: 2,
+          value: "Sản phẩm khác",
+        },
+      ]
     };
   },
   methods: {
     changeBrand(){
       this.modelForm.products = [];
+      this.modelForm.total_price = 0;
+    },
+    changeTypeProduct(){
+      this.modelForm.products = [];
+      this.modelForm.total_price = 0;
     },
     removeInfo(index) {
         this.modelForm.products.splice(index,1);
@@ -379,6 +466,7 @@ export default {
       },
     addMoreInfo() {
         this.modelForm.products.push({
+          problem_id: '',
           category_id: '',
           id: '',
           attribute_id: '',
@@ -386,6 +474,8 @@ export default {
           price: '',
           sale_price: '',
           amount: '',
+          product_title: '',
+          product_detail: '',
         });
       },
     fetchProduct(key, catId) {
@@ -396,7 +486,7 @@ export default {
         shop_id: this.currentShop,
         category_id: catId,
         brand_id: this.modelForm.brand_id,
-        type: 1
+        type: 2, //Sửa chữa
       };
 
       axios
@@ -412,6 +502,7 @@ export default {
           let item = product;
           item.amount = 0;
           item.category_id = this.modelForm.products[key].category_id;
+          item.problem_id = this.modelForm.products[key].problem_id;
           this.modelForm.products.splice(key,1);
           this.modelForm.products[key] = (item);
           if (item.attribute_selected){
@@ -444,7 +535,7 @@ export default {
             type: "success",
             message: response.message,
           });
-          this.$router.push({ name: "shop.ordersbuysell.index" });
+          this.$router.push({ name: "shop.orders.index" });
         })
         .catch((error) => {
           this.loading = false;
@@ -462,7 +553,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$router.push({ name: "shop.ordersbuysell.index" });
+          this.$router.push({ name: "shop.orders.index" });
         })
         .catch(() => {});
     },
@@ -471,7 +562,7 @@ export default {
       let routeUri = "";
       if (this.$route.params.orderId !== undefined) {
         this.loading = true;
-        routeUri = route("apishop.ordersbuysell.find", {
+        routeUri = route("apishop.orders.find", {
           orderId: this.$route.params.orderId,
         });
         axios.get(routeUri).then((response) => {
@@ -486,11 +577,11 @@ export default {
 
     getRoute() {
       if (this.$route.params.orderId !== undefined) {
-        return route("apishop.orders.updateBuysell", {
+        return route("apishop.orders.updateRepair", {
           orderId: this.$route.params.orderId,
         });
       }
-      return route("apishop.orders.storeBuysell");
+      return route("apishop.orders.storeRepair");
     },
 
       fetchCategory() {

@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\User;
 use Modules\Shop\Http\Requests\Orders\CreateOrdersRequest;
+use Modules\Shop\Http\Requests\Orders\CreateOrdersRepairRequest;
 use Modules\Shop\Transformers\OrdersTransformer;
 use Modules\Shop\Transformers\OrdersBuySellTransformer;
 use Modules\Shop\Http\Requests\Orders\UpdateOrdersRequest;
@@ -225,6 +226,16 @@ class OrdersController extends ApiController
     public function storeBuysell(CreateOrdersRequest $request)
     {
         $this->ordersRepository->storeBuySell($request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.create success'),
+        ]);
+    }
+
+    public function storeRepair(CreateOrdersRepairRequest $request)
+    {
+        $this->ordersRepository->storeRepair($request->all());
 
         return response()->json([
             'errors' => false,

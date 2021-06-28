@@ -907,7 +907,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				$orderProduct = new OrderProduct();
 				$orderProduct->order_id = $order->id;
 				$orderProduct->product_id = $product['id'];
-				$orderProduct->product_attribute_value_id  = $product['attribute_value_id'];
+				$orderProduct->product_attribute_value_id  = isset($product['attribute_value_id']) ? $product['attribute_value_id'] : null;
 				$orderProduct->quantity = $product['amount'];
 				$orderProduct->price = $product['price'];
 				$orderProduct->price_sale = $product['sale_price'];
@@ -918,10 +918,56 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			DB::commit();
 
 		} catch (\Exception $exception) {
-			var_dump($exception->getMessage());die;
             Log::info($exception->getMessage());
             DB::rollBack();
             return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
         }
     }
+
+	public function storeRepair($requestParams)
+    {
+		DB::beginTransaction();
+        try {
+			$newUser = $this->getUserByPhone($requestParams);
+			$user = Auth::user();
+			$order = new Orders();
+			$order->order_type = Orders::TYPE_SUA_CHUA;
+			$order->company_id = $user->company_id;
+			$order->shop_id = $user->shop_id;
+			$order->status = Orders::STATUS_ORDER_DONE;
+			$order->payment_status = Orders::PAYMENT_PAID_DONE;
+			$order->user_id = $newUser->id;
+			$totalPrice = $discount = $payPrice = 0;
+			foreach ($requestParams['products'] as $product) {
+				$totalPrice += $product['amount'] * $product['price'];
+				$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+			}
+			$order->total_price = $totalPrice;
+			$order->discount = $discount;
+			$order->pay_price = $totalPrice - $discount;
+			$order->save();
+
+			// Lưu order_product
+			foreach ($requestParams['products'] as $product) {
+				$orderProduct = new OrderProduct();
+				$orderProduct->order_id = $order->id;
+				$orderProduct->product_id = isset($product['id']) ? $product['id'] : null;
+				$orderProduct->product_attribute_value_id  = isset($product['attribute_value_id']) ? $product['attribute_value_id'] : null;
+				$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
+				$orderProduct->price = isset($product['price']) ? $product['price'] : 0;
+				$orderProduct->price_sale = isset($product['sale_price']) ? $product['sale_price'] : 0;
+				$orderProduct->product_title = isset($product['product_title']) ? $product['product_title'] : $product['name'];
+				$orderProduct->note = isset($product['product_detail']) ? $product['product_detail'] : null;
+				$orderProduct->save();
+			}
+
+			DB::commit();
+
+		} catch (\Exception $exception) {
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
+        }
+    }
+
 }

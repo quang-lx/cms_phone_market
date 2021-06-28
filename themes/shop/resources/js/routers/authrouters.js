@@ -54,6 +54,7 @@ import OrderBuySellList from './../components/orders/index_buysell';
 import OrderBuySellDetail from './../components/orders/detail_buysell';
 import OrderGuaranteeDetail  from './../components/orders/detail_guarantee';
 import OrderBuySellForm from './../components/orders/form_buysell';
+import OrderRepairForm from './../components/orders/form_repair';
 
 import VtShopProductForm from './../components/vtshopproduct/form';
 import VtShopProductList from './../components/vtshopproduct/index';
@@ -395,6 +396,15 @@ export default [
         path: '/shop-admin/orders/buysell/create',
         name: 'shop.ordersbuysell.create',
         component: OrderBuySellForm,
+        props: {
+            pageTitle: 'orders.label.create',
+        },
+    },
+
+    {
+        path: '/shop-admin/orders/create',
+        name: 'shop.ordersrepair.create',
+        component: OrderRepairForm,
         props: {
             pageTitle: 'orders.label.create',
         },

@@ -341,6 +341,12 @@ Route::group(['prefix' => '/orders'], function ( ) {
         'middleware' => 'permission:shop.ordersbuysell.create'
     ]);
 
+    Route::get('/create', [
+        'as' => 'shop.ordersrepair.create',
+        'uses' => 'Orders\OrdersController@createRepair',
+        'middleware' => 'permission:shop.ordersrepair.create'
+    ]);
+
 
 });
 Route::group(['prefix' => '/shopcategory'], function ( ) {
