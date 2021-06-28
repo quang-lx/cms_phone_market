@@ -38,7 +38,6 @@ class CartTransformer extends JsonResource
     		if ($shopIndex >= 0) {
 			     $shops[$shopIndex]['products'][] = new CartProductTransformer($cartProduct);
 		    } else {
-			    $shops[$cartProduct->shop_id] = [];
 			    $shopRow = [];
 			    $shopRow['shop_id']= $cartProduct->shop_id;
 			    $shopRow['shop_name']= $cartProduct->shop_name;
