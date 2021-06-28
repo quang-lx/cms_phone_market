@@ -493,9 +493,6 @@ export default {
         });
       },
     fetchProduct(key, catId) {
-      console.log(this.modelForm.products[key].problem_id);
-      console.log(this.modelForm.products);
-      console.log(key);
       const properties = {
         page: 0,
         per_page: 1000,
