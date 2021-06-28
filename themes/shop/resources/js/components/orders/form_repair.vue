@@ -161,7 +161,11 @@
                                               :value="item.id">
                                           </el-option>
                                       </el-select>
+                                      <div class="el-form-item__error"
+                                              v-if="form.errors.has('problem_id')"
+                                              v-text="form.errors.first('problem_id')"></div>
                                   </el-form-item>
+                                  
                                 </div>
 
                                 <div class="col-md-4">
@@ -243,6 +247,9 @@
                                               :value="item.id">
                                           </el-option>
                                       </el-select>
+                                      <div class="el-form-item__error"
+                                              v-if="form.errors.has('attribute_value')"
+                                              v-text="form.errors.first('attribute_value')"></div>
                                     </el-form-item>
                                   </div>
 
