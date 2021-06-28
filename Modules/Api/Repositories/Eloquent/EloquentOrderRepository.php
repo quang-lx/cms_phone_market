@@ -444,6 +444,7 @@ class EloquentOrderRepository implements OrderRepository
         if ($status = $request->get('status')) {
             $query->where('status', $status);
         }
+        $query->orderByDesc('id');
         return $query->paginate($request->get('per_page', 10));
 
     }
