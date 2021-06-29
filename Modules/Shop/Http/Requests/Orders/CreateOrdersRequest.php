@@ -30,9 +30,11 @@ class CreateOrdersRequest extends FormRequest
             
             foreach ($products as $product){
                 if (!$product['amount']){
-                    $validator->errors()->add('products', 'Thông tin sản phẩm không hợp lệ');
+                    $validator->errors()->add('amount', 'Vui lòng chọn số lượng sản phẩm');
                 }
-                
+                if (!empty($product['attribute_selected']['values']) && empty($product['attribute_value_id'])){
+                    $validator->errors()->add('attribute_value', 'Vui lòng chọn Giá trị thuộc tính');
+                }
             }
 
         });

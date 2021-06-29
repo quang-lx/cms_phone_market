@@ -34,13 +34,21 @@ class CreateOrdersRepairRequest extends FormRequest
             foreach ($products as $product){
                 if ($typeProduct == Product::TYPE_PRODUCT){
                     if (!$product['amount']){
-                        $validator->errors()->add('products', 'Vui lòng nhập số lượng sản phẩm');
+                        $validator->errors()->add('amount', 'Vui lòng nhập số lượng sản phẩm');
                     }
     
                     if (!$product['problem_id']){
-                        $validator->errors()->add('products', 'Vui lòng chọn vấn đề sửa chữa');
+                        $validator->errors()->add('problem_id', 'Vui lòng chọn vấn đề sửa chữa');
+                    }
+                    if (!empty($product['attribute_selected']['values']) && empty($product['attribute_value_id'])){
+                        $validator->errors()->add('attribute_value', 'Vui lòng chọn Giá trị thuộc tính');
+                    }
+                } else {
+                    if (!is_numeric($product['pay_price'])){
+                        $validator->errors()->add('pay_price', 'Vui lòng nhập số tiền cần thanh toán');
                     }
                 }
+
             }
 
         });
