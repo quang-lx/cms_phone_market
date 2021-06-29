@@ -14,6 +14,7 @@ class OrderStatusHistoryTransformer extends JsonResource
 
         $data = [
 	        'title' => $this->title,
+	        'note' => $this->note,
 	        'old_status' => $this->old_status,
 	        'new_status' => $this->new_status,
 	        'user_id' => $this->user_id,

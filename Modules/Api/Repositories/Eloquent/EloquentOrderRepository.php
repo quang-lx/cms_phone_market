@@ -189,6 +189,7 @@ class EloquentOrderRepository implements OrderRepository
     {
         list($orderData, $orderProductData) = $this->parseOrderDataBaoHanh($requestParams, $user, $product);
         $orderProductData['product_title'] = $product->name;
+        $orderProductData['warranty_time'] = Carbon::now()->addMonths($product->warranty_time);
         $orderData['company_id'] = $product->company_id;
         $orderData['shop_id'] = $product->shop_id;
 
@@ -406,6 +407,7 @@ class EloquentOrderRepository implements OrderRepository
 
         $orderProductData['quantity'] = $requestParams['quantity']?? 0;
         $orderProductData['note'] = $requestParams['note'] ?? '';
+        $orderProductData['user_id'] = $user->id;
 
 
         return [$orderData, $orderProductData];
@@ -426,6 +428,7 @@ class EloquentOrderRepository implements OrderRepository
         $orderData['ship_fee'] = 0;
         $orderData['discount'] = 0;
 
+        $orderProductData['user_id'] =  $user->id;
         $orderProductData['quantity'] = $requestParams['quantity'];
         $orderProductData['note'] = $requestParams['note'] ?? '';
         $orderProductData['product_id'] = $product->id;

@@ -60,7 +60,13 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
 
             $query->where('shop_id', $shop_id);
         }
-
+		$user = Auth::user();
+        if ($user) {
+        	$query->where('type', Product::TYPE_PRODUCT);
+        	$query->whereHas('orderProducts', function ($q) use ($user) {
+        		$q->where('user_id', $user->id);
+	        });
+        }
 
         if ($keyword = $request->get('q')) {
             $query->whereRaw("MATCH (name) AGAINST (?  IN BOOLEAN MODE)", $this->fullTextWildcards($keyword));

@@ -95,6 +95,9 @@ class Product extends Model {
 	public function problems() {
 		return $this->belongsToMany(Problem::class, 'product_problem', 'product_id', 'problem_id');
 	}
+	public function orderProducts() {
+		return $this->hasMany(OrderProduct::class, 'product_id');
+	}
 
 	public function getStatusNameAttribute($value) {
 		$statusName = '';
@@ -148,7 +151,7 @@ class Product extends Model {
 		}else{
 			$amount_name = 'Không';
 		}
-		
+
 		return $amount_name;
 	}
 
