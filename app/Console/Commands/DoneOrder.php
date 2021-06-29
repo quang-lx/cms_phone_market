@@ -48,6 +48,7 @@ class DoneOrder extends Command {
 						$orderProduct->save();
 					}
 					$order->save();
+					DB::commit();
 				} catch (\Exception $exception) {
 					DB::rollBack();
 				}
