@@ -281,7 +281,7 @@ class OrderController extends ApiController
 				if ($order->order_type == Orders::TYPE_MUA_HANG && $newStatus = Orders::STATUS_ORDER_DONE) {
 					$orderProducts = $order->allOrderProducts;
 					foreach ($orderProducts as $orderProduct) {
-						$orderProduct->warranty_time = Carbon::now()->addMonths(3);
+						$orderProduct->warranty_time = Carbon::now()->addMonths($orderProduct->product->warranty_time);
 						$orderProduct->save();
 					}
 				}
