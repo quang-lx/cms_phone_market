@@ -46,11 +46,17 @@ Vue.component('NotificationComponent', NotificationComponent);
 Vue.directive("currency", {
     bind(el, binding, vnode) {
       el.innerHTML =binding.value.toLocaleString('ja-JP')+' đ'
+    },
+    update(el, binding, vnode) {
+      el.innerHTML =binding.value.toLocaleString('ja-JP')+' đ'
     }
 });
 
 Vue.directive("number", {
     bind(el, binding, vnode) {
+      el.innerHTML = binding.value.toLocaleString()
+    },
+    update(el, binding, vnode) {
       el.innerHTML = binding.value.toLocaleString()
     }
 });

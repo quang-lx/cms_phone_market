@@ -821,8 +821,8 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'order_id' => $model->id,
 		        'order_type' => $model->order_type,
 		        'title' => $model->status_name,
-		        'old_status' => Orders::STATUS_ORDER_FIXING,
-		        'new_status' => Orders::STATUS_ORDER_FIXING,
+		        'old_status' => Orders::STATUS_ORDER_SENDING,
+		        'new_status' => Orders::STATUS_ORDER_SENDING,
 		        'user_id' => null,
 		        'shop_id' => Auth::user()->shop_id
 	        ]));
