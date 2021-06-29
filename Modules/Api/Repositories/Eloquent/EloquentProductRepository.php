@@ -72,6 +72,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
     public function listByService(Request $request)
     {
         $query = $this->model->query();
+        $query->where('type', Product::TYPE_REPAIR);
         if ($category_id = $request->get('category_id')) {
 
             $query->whereHas('pcategories', function ($q) use ($category_id) {
