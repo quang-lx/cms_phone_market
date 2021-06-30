@@ -214,7 +214,7 @@
                             </tr>
                             <tr>
                               <th scope="row">Giảm giá</th>
-                              <span v-currency="modelForm.discount"></span><span v-if="modelForm.sys_voucher_code">({{modelForm.sys_voucher_code}})</span>
+                              <span v-currency="modelForm.discount"></span><span class="ml-1" v-if="modelForm.sys_voucher_code">({{modelForm.sys_voucher_code}})</span><span  class="ml-1" v-if="modelForm.shop_voucher_code">({{modelForm.shop_voucher_code}})</span>
                               <td></td>
                             </tr>
                             <tr>

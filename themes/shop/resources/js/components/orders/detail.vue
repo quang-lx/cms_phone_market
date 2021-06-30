@@ -128,6 +128,21 @@
                         <span>Thực trạng sản phẩm: </span>
                             <span v-html="modelForm.product_note"></span>
                         </div>
+                          <div class="row mt-5 w-100">
+                        <p class="col-12"> Ảnh/Video</p>
+                       
+                          <div class="col-3"
+                            v-for="(item, index) in modelForm.files"
+                            :key="index"
+                          >
+                          <video class="w-100"  v-if="item.media_type == 'video'" :src="item.path_string" controls></video>
+                            <img v-else
+                              :src="item.path_string"
+                              class="w-100"
+                              style="object-ielseit: contain"
+                            />
+                          </div>
+                      </div>
                       <div class="col-md-12 mt-4 text-right">
                           <status-repair :data="modelForm"></status-repair>
                       </div>
