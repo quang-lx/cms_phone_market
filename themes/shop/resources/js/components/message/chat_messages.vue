@@ -209,9 +209,9 @@
           text: new_message,
           type: this.type_text,
           user: {
-            _id: user_id,
+            _id: this.current_shop_id,
             avatar: 'https://placeimg.com/140/140/any',
-            name: user_name
+            name: this.current_username
           }
 
         });
