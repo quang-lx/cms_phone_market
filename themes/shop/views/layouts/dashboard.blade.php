@@ -88,17 +88,24 @@
 </div><!-- ./wrapper -->
 <script>
     window.MonCMS = {
-
-        locales: {!! json_encode(supported_locales()) !!},
-        currentLocale: '{{app()->getLocale() }}',
-        adminPrefix: 'shop-admin',
-        filesystem: '{{ config('config.filesystem.default') }}',
-        translations: '',
-        editorUploadUrl: '{{route('api.media.editor.store')}}',
-
-        multipleLanguage: '{{config('mon.multiple_languages')}}',
-        permissions: {!! json_encode($permissions) !!},
-        permissionDenied: '{{trans('shop::mon.message.permission_denied')}}',
+      locales: {!! json_encode(supported_locales()) !!},
+      currentLocale: '{{app()->getLocale() }}',
+      adminPrefix: 'shop-admin',
+      googleApiKey: '{{env('GOOGLE_API_KEY')}}',
+      appUrl: '{{env('APP_URL')}}',
+      filesystem: '{{ config('config.filesystem.default') }}',
+      translations: '',
+      editorUploadUrl: '{{route('api.media.editor.store')}}',
+      user_token: '{{ $jwt_token }}',
+      multipleLanguage: '{{config('mon.multiple_languages')}}',
+      permissions: {!! json_encode($permissions) !!},
+      permissionDenied: '{{trans('shop::mon.message.permission_denied')}}',
+      current_user: {!! json_encode($currentUser)!!},
+      imageType: {!! json_encode(config('imagetype.images'))!!},
+      companyId: '{!! $currentUser->company_id !!}',
+      {{--shopId: '{!! $currentUser->shop_id !!}',--}}
+      shopId: '1',
+      current_username: '{!! $currentUser->username !!}',
 
     };
 
