@@ -120,16 +120,6 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop=""
-                      :label="$t('orders.label.fix_time_date')"
-                      sortable="custom"
-                    >
-                     <template slot-scope="scope">
-                          <div> {{ scope.row.fix_time_date }} tháng</div> 
-                     </template>
-                    </el-table-column>
-
-                    <el-table-column
                       prop="created_at"
                       :label="$t('orders.label.created_at')"
                       sortable="custom"

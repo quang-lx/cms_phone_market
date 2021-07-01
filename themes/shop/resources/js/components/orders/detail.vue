@@ -56,12 +56,12 @@
                       </div>
                       <div class="col-md-3">
                         <div><h5>Địa chỉ lấy hàng</h5></div>
-                        <div>
-                          {{ modelForm.user.name }}
-                        </div>
-                        <div>
-                          {{ modelForm.user.phone }}
-                        </div>
+                          <div>
+                            {{ modelForm.ship_fullname }}
+                          </div>
+                          <div>
+                            {{ modelForm.ship_phone }}
+                          </div>
                         <div>
                           {{ modelForm.ship_province_name }}
                         </div>
