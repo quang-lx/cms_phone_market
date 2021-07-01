@@ -893,13 +893,15 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			$order->payment_status = Orders::PAYMENT_PAID_DONE;
 			$order->user_id = $newUser->id;
 			$totalPrice = $discount = $payPrice = 0;
-			foreach ($requestParams['products'] as $product) {
-				$totalPrice += $product['amount'] * $product['price'];
-				$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
-			}
-			$order->total_price = $totalPrice;
-			$order->discount = $discount;
-			$order->pay_price = $totalPrice - $discount;
+			// foreach ($requestParams['products'] as $product) {
+			// 	$totalPrice += $product['amount'] * $product['price'];
+			// 	$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+			// }
+			// $order->total_price = $totalPrice;
+			// $order->discount = $discount;
+			$order->total_price = $requestParams['total_price'];
+			$order->discount = 0;
+			$order->pay_price = $requestParams['total_price'];
 			$order->save();
 
 			// Lưu order_product
@@ -938,19 +940,18 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			$order->payment_status = Orders::PAYMENT_PAID_DONE;
 			$order->user_id = $newUser->id;
 			$totalPrice = $discount = $payPrice = 0;
-			foreach ($requestParams['products'] as $product) {
-				if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
-					$totalPrice += $product['amount'] * $product['price'];
-					$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
-				} else {
-					$totalPrice += $product['pay_price'];
-					$discount += 0;
-				}
-				
-			}
-			$order->total_price = $totalPrice;
-			$order->discount = $discount;
-			$order->pay_price = $totalPrice - $discount;
+			// foreach ($requestParams['products'] as $product) {
+			// 	if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
+			// 		$totalPrice += $product['amount'] * $product['price'];
+			// 		$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+			// 	} else {
+			// 		$totalPrice += $product['pay_price'];
+			// 		$discount += 0;
+			// 	}
+			// }
+			$order->total_price = $requestParams['total_price'];
+			$order->discount = 0;
+			$order->pay_price = $requestParams['total_price'];
 			$order->save();
 
 			// Lưu order_product
