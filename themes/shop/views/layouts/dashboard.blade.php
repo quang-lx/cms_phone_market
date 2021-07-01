@@ -104,7 +104,7 @@
       imageType: {!! json_encode(config('imagetype.images'))!!},
       companyId: '{!! $currentUser->company_id !!}',
       {{--shopId: '{!! $currentUser->shop_id !!}',--}}
-      shopId: '84',
+      shopId: '1',
       current_username: '{!! $currentUser->username !!}',
 
     };

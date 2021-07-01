@@ -62,7 +62,8 @@
                 <div class="chat-input">
                     <form>
                         <input type="text" id="chat-input" placeholder="Send a message..." v-model="item.new_message"/>
-                        <button type="button" class="chat-submit" id="chat-submit" @click="sendChat(item.user_id, item.new_message)"><i
+                        <button type="button" class="chat-submit" id="chat-submit"
+                                @click="sendChat(item.user_id, item.name, item.new_message)"><i
                             class="material-icons">send</i>
                         </button>
                     </form>
@@ -103,9 +104,8 @@
         return refDb
       },
 
-      dbClientInsert() {
-        let refDb = 'chats/users/' + this.chat_client_id + '/'
-        return refDb
+      dbClientRef() {
+        return 'chats/users/'
       },
       chatGroup() {
         if (this.box_chat.length === 0) return []
@@ -167,28 +167,57 @@
         });
 
       },
-      sendChat(user_id, new_message) {
-        if (new_message === null || new_message=='') return
+      sendChat(user_id, user_name, new_message) {
+        if (new_message === null || new_message == '') return
+        // insert table shops
         const path = this.dbRef + user_id + '/'
         const dbRefLastMsg = firebase.database().ref(path);
         dbRefLastMsg.update({
-          lastMessage: new_message
+          lastMessage: new_message,
 
         });
         const patShopChat = this.dbRef + user_id + '/chat';
         const dbShopChat = firebase.database().ref(patShopChat);
         let newShopChatData = dbShopChat.push()
+        const currentTimestamp = this.getTimeStamp()
         newShopChatData.set({
+          _id: currentTimestamp,
+          createdAt: currentTimestamp,
           text: new_message,
           type: this.type_text,
           user: {
             _id: this.current_shop_id,
-            text: new_message,
             avatar: 'https://placeimg.com/140/140/any',
             name: this.current_username
           }
 
         });
+
+        //insert table user
+        const userPath = this.dbClientRef + user_id + '/'
+        const dbUserRefLastMsg = firebase.database().ref(userPath);
+        dbUserRefLastMsg.update({
+          lastMessage: new_message,
+
+        });
+        const patUserChat = userPath + this.current_shop_id + '/chat';
+        const dbUserChat = firebase.database().ref(patUserChat);
+        let newUserChatData = dbUserChat.push()
+        newUserChatData.set({
+          _id: currentTimestamp,
+          createdAt: currentTimestamp,
+          text: new_message,
+          type: this.type_text,
+          user: {
+            _id: user_id,
+            avatar: 'https://placeimg.com/140/140/any',
+            name: user_name
+          }
+
+        });
+      },
+      getTimeStamp() {
+        return new Date().getTime()
       }
 
     },
