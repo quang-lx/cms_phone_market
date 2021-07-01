@@ -155,6 +155,45 @@ if (!function_exists('validate_isdn')) {
         return $valid_number;
     }
 }
+
+if (!function_exists('validate_mobile_number')) {
+    function validate_mobile_number($mobileNumber, $typeFormat = 0)
+    {
+        $valid_number = '';
+
+        // Remove string "+"
+        $mobileNumber = str_replace('+84', '84', $mobileNumber);
+        /**
+         * $typeFormat == 0: 8491xxxxxx
+         * $typeFormat == 1: 091xxxxxx
+         * $typeFormat == 2: 91xxxxxx
+         */
+        if (preg_match('/^(84|0|)(92|188|186|52|56|58|99|199|59|96|97|98|162|163|164|165|166|167|168|169|32|33|34|35|36|37|38|39|91|94|123|124|125|127|129|83|84|85|86|81|82|87|90|93|120|121|122|126|128|70|79|77|76|78|88|89)[0-9]?$/', $mobileNumber, $matches)) {
+            if ($typeFormat == 0) {
+                if ($matches[1] == '0' || $matches[1] == '') {
+                    $valid_number = preg_replace('/^(0|)/', '84', $mobileNumber);
+                } else {
+                    $valid_number = $mobileNumber;
+                }
+            } else if ($typeFormat == 1) {
+                if ($matches[1] == '84' || $matches[1] == '') {
+                    $valid_number = preg_replace('/^(84|)/', '0', $mobileNumber);
+                } else {
+                    $valid_number = $mobileNumber;
+                }
+            } else if ($typeFormat == 2) {
+                if ($matches[1] == '84' || $matches[1] == '0') {
+                    $valid_number = preg_replace('/^(84|0)/', '', $mobileNumber);
+                } else {
+                    $valid_number = $mobileNumber;
+                }
+            }
+        }
+
+        return $valid_number;
+    }
+}
+
 if (!function_exists('gen_sms_token')) {
     function gen_sms_token() {
         return 2021;

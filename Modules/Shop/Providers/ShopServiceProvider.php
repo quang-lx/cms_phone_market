@@ -292,7 +292,15 @@ class ShopServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Shop\Repositories\PaymentMethodRepository',
+            function () {
+                $repository = new \Modules\Shop\Repositories\Eloquent\EloquentPaymentMethodRepository(new \Modules\Mon\Entities\PaymentMethod());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

@@ -120,13 +120,6 @@
                     </el-table-column>
 
                     <el-table-column
-                      prop="fix_time_date"
-                      :label="$t('orders.label.fix_time_date')"
-                      sortable="custom"
-                    >
-                    </el-table-column>
-
-                    <el-table-column
                       prop="created_at"
                       :label="$t('orders.label.created_at')"
                       sortable="custom"

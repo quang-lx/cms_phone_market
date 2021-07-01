@@ -5,7 +5,7 @@ namespace Modules\Shop\Transformers;
 use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Orders;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Modules\Mon\Entities\ProductAttributeValue;
 
 class OrdersBuySellTransformer extends JsonResource
 {
@@ -17,7 +17,9 @@ class OrdersBuySellTransformer extends JsonResource
         foreach ($list_product as $key => $value) {
             $value->thumbnail = $value->product->thumbnail;
             $value->name = $value->product->name;
-            $value->price_product = $value->product->price;
+            $value->price_product = $value->price_sale;
+            $value->price_amount = $value->price_sale*$value->quantity;
+            $value->attr_value = optional(optional($value->productValue)->attributeValues)->name;
         }
         $data = [
             'id' => $this->id,
@@ -48,6 +50,13 @@ class OrdersBuySellTransformer extends JsonResource
             'created_at' => $this->created_at->format('d-m-Y'),
             'shop_done' => $this->shop_done,
             'order_status_history' =>$this->orderStatusHistory($this->orderStatusHistory),
+            'pay_method_name' => optional($this->paymentHistory)->pay_method_name,
+
+            'shop_voucher_id' => $this->shop_voucher_id,
+            'shop_voucher_code' => $this->shop_voucher_code,
+            'shop_discount'=> $this->shop_discount,
+            'sys_voucher_id'=> $this->sys_voucher_id,
+            'sys_voucher_code'=> $this->sys_voucher_code,
 
              'urls' => [
                 'delete_url' => route('apishop.orders.destroy', $this->id),

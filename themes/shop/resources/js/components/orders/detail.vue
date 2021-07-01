@@ -56,12 +56,12 @@
                       </div>
                       <div class="col-md-3">
                         <div><h5>Địa chỉ lấy hàng</h5></div>
-                        <div>
-                          {{ modelForm.user.name }}
-                        </div>
-                        <div>
-                          {{ modelForm.user.phone }}
-                        </div>
+                          <div>
+                            {{ modelForm.ship_fullname }}
+                          </div>
+                          <div>
+                            {{ modelForm.ship_phone }}
+                          </div>
                         <div>
                           {{ modelForm.ship_province_name }}
                         </div>
@@ -90,10 +90,9 @@
                       </div>
 
                       <div class="col-md-2">
-                        <div><h5>Thông tin thanh toán</h5></div>
+                        <div><h5>Thanh toán</h5></div>
                             {{ modelForm.pay_method_name }}
 
-                        <div></div>
                         <div><h5>Chi phí</h5></div>
                         <div>
                             <span v-currency="modelForm.pay_price"></span>
@@ -109,7 +108,7 @@
                         <div>
                           <span>{{modelForm.status}}
                           </span>
-                            <p v-if="modelForm.shop_done == 1">(Người bán đã xác nhận giao hàng thành công)</p>
+                            <p v-if="modelForm.shop_done == 1  && modelForm.status_value!='done' ">(Người bán đã xác nhận giao hàng thành công)</p>
                             <p v-if="
                               modelForm.order_type == 'sua_chua' &&
                               modelForm.type_other == 1 && modelForm.fix_time_date !=null &&
@@ -119,18 +118,31 @@
 
                       </div>
 
-                      <div class="col-md-3 mt-3">
-                        <div><h5>Sản phẩm sửa chữa</h5></div>
-                        <div>
+                      <div class="col-md-12 mt-3">
+                          <span>Sản phẩm sửa chữa: </span>
                           <span>{{modelForm.product_name}}
                           </span>
-                        </div>
 
                       </div>
-                      <div class="col-md-9 mt-3">
-                        <div><h5>Thực trạng sản phẩm</h5></div>
-                            <div v-html="modelForm.product_note"></div>
+                      <div class="col-md-12 mt-3">
+                        <span>Thực trạng sản phẩm: </span>
+                            <span v-html="modelForm.product_note"></span>
                         </div>
+                          <div class="row mt-5 w-100">
+                        <p class="col-12"> Ảnh/Video</p>
+                       
+                          <div class="col-3"
+                            v-for="(item, index) in modelForm.files"
+                            :key="index"
+                          >
+                          <video class="w-100"  v-if="item.media_type == 'video'" :src="item.path_string" controls></video>
+                            <img v-else
+                              :src="item.path_string"
+                              class="w-100"
+                              style="object-ielseit: contain"
+                            />
+                          </div>
+                      </div>
                       <div class="col-md-12 mt-4 text-right">
                           <status-repair :data="modelForm"></status-repair>
                       </div>

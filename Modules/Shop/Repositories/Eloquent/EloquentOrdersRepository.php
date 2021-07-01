@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Modules\Mon\Entities\Orders;
+use Modules\Mon\Entities\User;
+use Modules\Mon\Entities\OrderProduct;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Modules\Api\Entities\ErrorCode;
 
 class EloquentOrdersRepository extends BaseRepository implements OrdersRepository
 {
@@ -795,18 +801,18 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             ];
 	        $model->update($data_update);
 	        $data = [
-		        'title' => trans('order.notifications.bao_hanh.title'),
-		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content done', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
-		        'type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
-		        'title' => trans('order.notifications.bao_hanh.title'),
-		        'content' => trans('order.notifications.bao_hanh.content done', ['order_code' => $model->id]),
-		        'noti_type' => trans('order.notifications.bao_hanh.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+		        'title' => trans('order.notifications.ban_hang.title'),
+		        'content' => trans('order.notifications.ban_hang.content done', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
 
 		        'user_id' => $model->user->id,
 		        'order_id' => $model->id
@@ -815,8 +821,8 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		        'order_id' => $model->id,
 		        'order_type' => $model->order_type,
 		        'title' => $model->status_name,
-		        'old_status' => Orders::STATUS_ORDER_FIXING,
-		        'new_status' => Orders::STATUS_ORDER_FIXING,
+		        'old_status' => Orders::STATUS_ORDER_SENDING,
+		        'new_status' => Orders::STATUS_ORDER_SENDING,
 		        'user_id' => null,
 		        'shop_id' => Auth::user()->shop_id
 	        ]));
@@ -832,4 +838,151 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
     }
+
+	function stripVN($str) {
+		$str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+		$str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+		$str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+		$str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+		$str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+		$str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+		$str = preg_replace("/(đ)/", 'd', $str);
+	
+		$str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
+		$str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
+		$str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
+		$str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", 'O', $str);
+		$str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
+		$str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
+		$str = preg_replace("/(Đ)/", 'D', $str);
+		$str = str_replace(' ', '_', $str);
+		return $str;
+	}
+
+	public function getUserByPhone($params) {
+    	$query = User::query();
+        $user = $query->where('phone', validate_isdn($params['phone']))->first();
+        if ($user){
+            return $user;
+        } else {
+            $user = new User();
+            $user->phone = validate_isdn($params['phone']);
+            $user->name = $params['customer_name'];
+            $user->type = User::TYPE_USER;
+            $user->status = User::STATUS_INACTIVE;
+            $user->username = $this->stripVN($params['customer_name']);
+            $user->password = Hash::make(User::DEFAULT_PASS);
+            $user->save();
+            return $user;
+        }
+	}
+
+    public function storeBuySell($requestParams)
+    {
+        // Đơn mua bán - placeOrderMultiProduct
+        // Đơn sửa chữa bảo hành - placeMultipleOrder
+		DB::beginTransaction();
+        try {
+			$newUser = $this->getUserByPhone($requestParams);
+			$user = Auth::user();
+			$order = new Orders();
+			$order->order_type = Orders::TYPE_MUA_HANG;
+			$order->company_id = $user->company_id;
+			$order->shop_id = $user->shop_id;
+			$order->status = Orders::STATUS_ORDER_DONE;
+			$order->payment_status = Orders::PAYMENT_PAID_DONE;
+			$order->user_id = $newUser->id;
+			$totalPrice = $discount = $payPrice = 0;
+			foreach ($requestParams['products'] as $product) {
+				$totalPrice += $product['amount'] * $product['price'];
+				$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+			}
+			$order->total_price = $totalPrice;
+			$order->discount = $discount;
+			$order->pay_price = $totalPrice - $discount;
+			$order->save();
+
+			// Lưu order_product
+			foreach ($requestParams['products'] as $product) {
+				$orderProduct = new OrderProduct();
+				$orderProduct->order_id = $order->id;
+				$orderProduct->product_id = $product['id'];
+				$orderProduct->product_attribute_value_id  = isset($product['attribute_value_id']) ? $product['attribute_value_id'] : null;
+				$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
+				$orderProduct->price = isset($product['price']) ? $product['price'] : 0;
+				$orderProduct->price_sale = isset($product['sale_price']) ? self::getPayPrice($product['price'],$product['sale_price']) : 0;
+				$orderProduct->product_title = $product['name'];
+				$orderProduct->save();
+			}
+
+			DB::commit();
+
+		} catch (\Exception $exception) {
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
+        }
+    }
+
+	public function storeRepair($requestParams)
+    {
+		DB::beginTransaction();
+        try {
+			$newUser = $this->getUserByPhone($requestParams);
+			$user = Auth::user();
+			$order = new Orders();
+			$order->order_type = Orders::TYPE_SUA_CHUA;
+			$order->company_id = $user->company_id;
+			$order->shop_id = $user->shop_id;
+			$order->status = Orders::STATUS_ORDER_DONE;
+			$order->payment_status = Orders::PAYMENT_PAID_DONE;
+			$order->user_id = $newUser->id;
+			$totalPrice = $discount = $payPrice = 0;
+			foreach ($requestParams['products'] as $product) {
+				if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
+					$totalPrice += $product['amount'] * $product['price'];
+					$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
+				} else {
+					$totalPrice += $product['pay_price'];
+					$discount += 0;
+				}
+				
+			}
+			$order->total_price = $totalPrice;
+			$order->discount = $discount;
+			$order->pay_price = $totalPrice - $discount;
+			$order->save();
+
+			// Lưu order_product
+			foreach ($requestParams['products'] as $product) {
+				$orderProduct = new OrderProduct();
+				$orderProduct->order_id = $order->id;
+				$orderProduct->product_id = isset($product['id']) ? $product['id'] : null;
+				$orderProduct->product_attribute_value_id  = isset($product['attribute_value_id']) ? $product['attribute_value_id'] : null;
+				if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
+					$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
+				} else {
+					$orderProduct->quantity = 1; //Đơn sản phẩm khác ko chọn số lượng, default = 1
+				}
+				$orderProduct->price = isset($product['price']) ? $product['price'] : 0;
+				$orderProduct->price_sale = isset($product['sale_price']) ? self::getPayPrice($product['price'],$product['sale_price']) : 0;
+				$orderProduct->product_title = isset($product['product_title']) ? $product['product_title'] : $product['name'];
+				$orderProduct->note = isset($product['product_detail']) ? $product['product_detail'] : null;
+				$orderProduct->save();
+			}
+
+			DB::commit();
+
+		} catch (\Exception $exception) {
+            Log::info($exception->getMessage());
+            DB::rollBack();
+            return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
+        }
+		
+    }
+
+	public static function getPayPrice($basePrice, $discount){
+		return round(((100 - $discount)/100) * $basePrice);
+	}
+
 }

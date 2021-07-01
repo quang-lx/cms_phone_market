@@ -26,9 +26,13 @@ class Orders extends Model
 
 	const PAYMENT_NOT_PAID = 0;
 	const PAYMENT_PAID = 0;
+	const PAYMENT_PAID_DONE = 1;
 
 	const ORDER_DONE_WAIT_CLIENT_CONFIRM = 0;
 	const ORDER_DONE = 1;
+
+	const TYPE_SUA_CHUA_PRODUCT_EXIST = 1;
+	const TYPE_SUA_CHUA_PRODUCT_OTHER = 2;
 
 
 	protected $table = 'orders';

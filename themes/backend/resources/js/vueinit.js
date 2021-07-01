@@ -42,15 +42,21 @@ Vue.component('SingleMedia', SingleMedia);
 Vue.component('MediaManager', MediaManager);
 
 Vue.directive("currency", {
-    bind(el, binding, vnode) {
-      el.innerHTML =binding.value.toLocaleString('ja-JP')+' đ'
-    }
+  bind(el, binding, vnode) {
+    el.innerHTML =binding.value.toLocaleString('ja-JP')+' đ'
+  },
+  update(el, binding, vnode) {
+    el.innerHTML =binding.value.toLocaleString('ja-JP')+' đ'
+  }
 });
 
 Vue.directive("number", {
-    bind(el, binding, vnode) {
-      el.innerHTML = binding.value.toLocaleString()
-    }
+  bind(el, binding, vnode) {
+    el.innerHTML = binding.value.toLocaleString()
+  },
+  update(el, binding, vnode) {
+    el.innerHTML = binding.value.toLocaleString()
+  }
 });
 
 const currentLocale = window.MonCMS.currentLocale;

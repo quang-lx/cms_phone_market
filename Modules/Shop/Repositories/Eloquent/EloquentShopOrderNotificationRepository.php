@@ -34,4 +34,11 @@ class EloquentShopOrderNotificationRepository extends BaseRepository implements 
         $model->update($data);
         return $model;
     }
+
+    public function countUnreadNotice()
+    {
+        $query = $this->newQueryBuilder();
+        $query->where('shop_id', Auth::user()->shop_id);
+        return count($query->where('seen',0)->get());
+    }
 }

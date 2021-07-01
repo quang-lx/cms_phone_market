@@ -41,7 +41,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="row">
-                      <div class="col-md-2">
+                      <div class="col-md-3">
                         <div class="row">
                           <div class="col-md-12">
                             <div><h4>Thông tin user</h4></div>
@@ -57,10 +57,10 @@
                       <div class="col-md-3">
                         <div><h4>Địa chỉ lấy hàng</h4></div>
                          <div>
-                              {{ modelForm.user.name }}
+                              {{ modelForm.ship_fullname }}
                             </div>
                             <div>
-                              {{ modelForm.user.phone }}
+                              {{ modelForm.ship_phone }}
                             </div>
 
                         <div>
@@ -76,8 +76,8 @@
                           {{ modelForm.ship_address }}
                         </div>
                       </div>
-                      <div class="col-md-2">
-                        <div><h4>Đặt sửa tại</h4></div>
+                      <div class="col-md-3">
+                        <div><h4>Đặt bảo hành tại</h4></div>
 
                         <div>
                           {{ modelForm.shop.name }}
@@ -98,26 +98,35 @@
                         </div>
                         <div>
                           <span>{{modelForm.status}}</span>
-                            <p v-if="modelForm.shop_done == 1">(Người bán đã xác nhận giao hàng thành công)</p>
+                            <p v-if="modelForm.shop_done == 1  && modelForm.status_value!='done'">(Người bán đã xác nhận giao hàng thành công)</p>
 
                         </div>
                       </div>
-                      <div class="col-md-2 mt-3">
-                        <div><h5>Sản phẩm bảo hành</h5></div>
-                        <div>
+                      <div class="col-md-12 mt-3">
+                        <span>Sản phẩm bảo hành: </span>
                           <span>{{modelForm.product_name}}
                           </span>
-                        </div>
 
                       </div>
-                      <div class="col-md-3 mt-3">
-                        <div><h5>Hạn bảo hành</h5></div>
-                            <div v-html="modelForm.fix_time_date"></div>
+                         <div class="col-md-12 mt-3">
+                       <span>Tình trạng sản phẩm: </span>
+                            <span v-html="modelForm.product_note"></span>
                         </div>
-                         <div class="col-md-3 mt-3">
-                        <div><h5>Tình trạng sản phẩm</h5></div>
-                            <div v-html="modelForm.product_note"></div>
-                        </div>
+                         <div class="row mt-5 w-100">
+                        <p class="col-12"> Ảnh/Video</p>
+                       
+                          <div class="col-3"
+                            v-for="(item, index) in modelForm.files"
+                            :key="index"
+                          >
+                          <video class="w-100"  v-if="item.media_type == 'video'" :src="item.path_string" controls></video>
+                            <img v-else
+                              :src="item.path_string"
+                              class="w-100"
+                              style="object-ielseit: contain"
+                            />
+                          </div>
+                      </div>
                        <div class="col-md-12 mt-4 text-right">
                           <status-guarantee :data="modelForm"></status-guarantee>
                       </div>

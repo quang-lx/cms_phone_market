@@ -206,28 +206,28 @@
                                                                          v-if="form.errors.has('password_confirmation')"
                                                                          v-text="form.errors.first('password_confirmation')"></div>
                                                                 </el-form-item>
+                                                              
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </el-tab-pane>
-                                                <el-tab-pane :label="$t('user.tabs.roles')">
-                                                    <el-checkbox style="margin-bottom:20px"
+                                                              <el-form-item
+                                                                    :label="$t('user.label.roles')">
+                                                                     <el-checkbox style="margin-bottom:20px"
                                                                  :indeterminate="isIndeterminate"
                                                                  v-model="checkAll"
                                                                  @change="handleCheckAllChange" border
                                                                  size="medium">
-                                                        {{ $t('mon.all') }}
-                                                    </el-checkbox>
+                                                                        {{ $t('mon.all') }}
+                                                                    </el-checkbox>
 
-                                                    <el-checkbox-group v-model="modelForm.roles"
-                                                                       @change="handleCheckedChange">
-                                                        <el-checkbox v-for="item in roles" :label="item.id"
-                                                                     :key="'role-'+ item.id"
-                                                                     border size="medium">{{item.name}}
-                                                        </el-checkbox>
-                                                    </el-checkbox-group>
-
-
+                                                                    <el-checkbox-group v-model="modelForm.roles"
+                                                                                    @change="handleCheckedChange">
+                                                                        <el-checkbox v-for="item in roles" :label="item.id"
+                                                                                    :key="'role-'+ item.id"
+                                                                                    border size="medium">{{item.name}}
+                                                                        </el-checkbox>
+                                                                    </el-checkbox-group>
+                                                                    </el-form-item>
+                                                        </div>
+                                                    </div>
                                                 </el-tab-pane>
 
 

@@ -4,8 +4,9 @@ namespace Modules\Shop\Http\Requests\Orders;
 
 use Illuminate\Foundation\Http\FormRequest;
 use \Illuminate\Validation\Validator;
+use Modules\Mon\Entities\Product;
 
-class CreateOrdersRequest extends FormRequest
+class CreateOrdersRepairRequest extends FormRequest
 {
     public function rules()
     {
@@ -14,7 +15,8 @@ class CreateOrdersRequest extends FormRequest
             'customer_name' => 'required',
             'created_at' => 'required',
             'payment_method' => 'required',
-            'products' => 'required'
+            'products' => 'required',
+            'type_product' => 'required',
         ];
 
         return $rules;
@@ -23,18 +25,30 @@ class CreateOrdersRequest extends FormRequest
     public function withValidator(Validator $validator)
     {
         $products = $this->products;
-        $validator->after(function ($validator) use ($products) {
+        $typeProduct = $this->type_product;
+        $validator->after(function ($validator) use ($products, $typeProduct) {
             if (!count($products)){
                 $validator->errors()->add('products', 'Thông tin sản phẩm không hợp lệ');
             }
             
             foreach ($products as $product){
-                if (!$product['amount']){
-                    $validator->errors()->add('amount', 'Vui lòng chọn số lượng sản phẩm');
+                if ($typeProduct == Product::TYPE_PRODUCT){
+                    if (!$product['amount']){
+                        $validator->errors()->add('amount', 'Vui lòng nhập số lượng sản phẩm');
+                    }
+    
+                    if (!$product['problem_id']){
+                        $validator->errors()->add('problem_id', 'Vui lòng chọn vấn đề sửa chữa');
+                    }
+                    if (!empty($product['attribute_selected']['values']) && empty($product['attribute_value_id'])){
+                        $validator->errors()->add('attribute_value', 'Vui lòng chọn Giá trị thuộc tính');
+                    }
+                } else {
+                    if (!is_numeric($product['pay_price'])){
+                        $validator->errors()->add('pay_price', 'Vui lòng nhập số tiền cần thanh toán');
+                    }
                 }
-                if (!empty($product['attribute_selected']['values']) && empty($product['attribute_value_id'])){
-                    $validator->errors()->add('attribute_value', 'Vui lòng chọn Giá trị thuộc tính');
-                }
+
             }
 
         });
@@ -60,6 +74,7 @@ class CreateOrdersRequest extends FormRequest
             'created_at.required' => 'Thời gian tiếp nhận là bắt buộc',
             'payment_method.required' => 'Hình thức thanh toán là bắt buộc',
             'products.required' => 'Sản phẩm là bắt buộc',
+            'type_product.required' => 'Sản phẩm là bắt buộc',
 
         ];
         return $msg;

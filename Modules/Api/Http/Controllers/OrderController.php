@@ -4,8 +4,11 @@ namespace Modules\Api\Http\Controllers;
 
 use App\Events\OrderStatusUpdated;
 use App\Events\UserUpdateOrderStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\AddressRepository;
@@ -248,32 +251,47 @@ class OrderController extends ApiController
 
 		$validOrderStatus = Orders::getValidNextStatus();
 		if (isset($validOrderStatus[$orderType][$oldStatus]) && in_array($newStatus, $validOrderStatus[$orderType][$oldStatus])) {
-			$order->status = $newStatus;
-			$order->save();
-			event(new OrderStatusUpdated([
-				'order_id' => $order->id,
-				'order_type' => $order->order_type,
-				'title' => $order->getStatusNameAttribute($newStatus),
-				'old_status' => $oldStatus,
-				'new_status' => $newStatus,
-				'user_id' => Auth::user()->id,
-				'shop_id' => null,
-				'note' => $request->get('note')
-			]));
-
-			$shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $order->order_type, $order->status), null);
-
-			if ($shopNotiArr && is_array($shopNotiArr)) {
-				event(new UserUpdateOrderStatus([
+			try {
+				DB::beginTransaction();
+				$order->status = $newStatus;
+				$order->save();
+				event(new OrderStatusUpdated([
 					'order_id' => $order->id,
-					'title' => $shopNotiArr['title'],
-					'content' => sprintf($shopNotiArr['content'], $order->id),
-					'shop_id' => $order->id,
-					'order_status' => $order->status,
 					'order_type' => $order->order_type,
+					'title' => $order->getStatusNameAttribute($newStatus),
+					'old_status' => $oldStatus,
+					'new_status' => $newStatus,
+					'user_id' => Auth::user()->id,
+					'shop_id' => null,
+					'note' => $request->get('note')
 				]));
+
+				$shopNotiArr = config(sprintf('shopnoti.shop_notifications.%s.%s', $order->order_type, $order->status), null);
+
+				if ($shopNotiArr && is_array($shopNotiArr)) {
+					event(new UserUpdateOrderStatus([
+						'order_id' => $order->id,
+						'title' => $shopNotiArr['title'],
+						'content' => sprintf($shopNotiArr['content'], $order->id),
+						'shop_id' => $order->id,
+						'order_status' => $order->status,
+						'order_type' => $order->order_type,
+					]));
+				}
+				if ($order->order_type == Orders::TYPE_MUA_HANG && $newStatus = Orders::STATUS_ORDER_DONE) {
+					$orderProducts = $order->allOrderProducts;
+					foreach ($orderProducts as $orderProduct) {
+						$orderProduct->warranty_time = Carbon::now()->addMonths($orderProduct->product->warranty_time);
+						$orderProduct->save();
+					}
+				}
+				DB::commit();
+				return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+			} catch (\Exception $exception) {
+				Log::error($exception->getMessage());
+				DB::rollBack();
 			}
-			return $this->respond([], ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+
 		} else {
 			$order->status = $newStatus;
 			return $this->respond([], trans('api::messages.validate.status not allow update', ['status' => $order->getStatusNameAttribute($newStatus)]), ErrorCode::ERR422);

@@ -6,7 +6,9 @@ use App\Events\OrderStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Mon\Entities\Orders;
+use Modules\Mon\Entities\User;
 use Modules\Shop\Http\Requests\Orders\CreateOrdersRequest;
+use Modules\Shop\Http\Requests\Orders\CreateOrdersRepairRequest;
 use Modules\Shop\Transformers\OrdersTransformer;
 use Modules\Shop\Transformers\OrdersBuySellTransformer;
 use Modules\Shop\Http\Requests\Orders\UpdateOrdersRequest;
@@ -217,6 +219,37 @@ class OrdersController extends ApiController
         return response()->json([
             'errors' => false,
             'message' => trans('ch::orders.message.delete success'),
+        ]);
+    }
+
+    //nhatdv1 - Tạo mới đơn
+    public function storeBuysell(CreateOrdersRequest $request)
+    {
+        $this->ordersRepository->storeBuySell($request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.create success'),
+        ]);
+    }
+
+    public function storeRepair(CreateOrdersRepairRequest $request)
+    {
+        $this->ordersRepository->storeRepair($request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.create success'),
+        ]);
+    }
+
+    public function updateBuysell(Orders $orders, UpdateOrdersRequest $request)
+    {
+        $this->ordersRepository->updateBuySell($voucher, $request->all());
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::orders.message.update success'),
         ]);
     }
 }

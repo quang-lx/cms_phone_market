@@ -21,7 +21,9 @@ class OrderProduct extends Model
         'price',
         'price_sale',
         'note',
-        'product_img_id'
+        'product_img_id',
+	    'user_id',
+	    'warranty_time'
     ];
 
     public function product() {

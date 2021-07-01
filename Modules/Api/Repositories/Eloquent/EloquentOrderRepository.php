@@ -189,6 +189,7 @@ class EloquentOrderRepository implements OrderRepository
     {
         list($orderData, $orderProductData) = $this->parseOrderDataBaoHanh($requestParams, $user, $product);
         $orderProductData['product_title'] = $product->name;
+
         $orderData['company_id'] = $product->company_id;
         $orderData['shop_id'] = $product->shop_id;
 
@@ -406,6 +407,7 @@ class EloquentOrderRepository implements OrderRepository
 
         $orderProductData['quantity'] = $requestParams['quantity']?? 0;
         $orderProductData['note'] = $requestParams['note'] ?? '';
+        $orderProductData['user_id'] = $user->id;
 
 
         return [$orderData, $orderProductData];
@@ -426,6 +428,7 @@ class EloquentOrderRepository implements OrderRepository
         $orderData['ship_fee'] = 0;
         $orderData['discount'] = 0;
 
+        $orderProductData['user_id'] =  $user->id;
         $orderProductData['quantity'] = $requestParams['quantity'];
         $orderProductData['note'] = $requestParams['note'] ?? '';
         $orderProductData['product_id'] = $product->id;
@@ -444,6 +447,7 @@ class EloquentOrderRepository implements OrderRepository
         if ($status = $request->get('status')) {
             $query->where('status', $status);
         }
+        $query->orderByDesc('id');
         return $query->paginate($request->get('per_page', 10));
 
     }
@@ -473,7 +477,7 @@ class EloquentOrderRepository implements OrderRepository
         if ($voucher->shop_id && $voucher->shop_id != $shopId) {
             return [false, 'Mã giảm giá không hợp lệ'];
         }
-        if ($voucher->total_used > $voucher->total) {
+        if ($voucher->total_used + 1 > $voucher->total) {
             return [false, 'Mã giảm giá hết lượt sử dụng'];
         }
 
@@ -493,6 +497,9 @@ class EloquentOrderRepository implements OrderRepository
                 return [false, 'Chưa chọn sản phẩm'];
             }
             $model = Product::find($product['id']);
+			if ($shopId && $model && $model->shop_id != $shopId) {
+				return [false, 'Mã giảm giá không hợp lệ'];
+			}
             $productAttributeValue = $product['product_attribute_id'] ?? null;
             $attributeModel = ProductAttributeValue::find($productAttributeValue);
             $voucherAmount = $this->calVoucherAmount($shopId, $voucher, $model, $attributeModel);
@@ -509,7 +516,10 @@ class EloquentOrderRepository implements OrderRepository
         if ($voucher->shop_id && $voucher->shop_id != $shopId) {
             return false;
         }
-        if ($voucher->total_used > $voucher->total) {
+        if ($product && $product->shop_id != $shopId) {
+        	return false;
+		}
+        if ($voucher->total_used +1 > $voucher->total) {
             return false;
         }
         if ($voucher->type == Voucher::TYPE_DISCOUNT_PRODUCT) {
@@ -745,7 +755,7 @@ class EloquentOrderRepository implements OrderRepository
             }
 
             $orderProductData['product_title'] = $product->name;
-            $orderProductData['product_attribute_value_id'] = $requestParams['product_attribute_value_id'] ?? null;
+
             $orderProductData['quantity'] = $productData['quantity'];
             $orderProductData['price'] = $product->price;
             $orderProductData['price_sale'] = $productPrice;
@@ -753,7 +763,7 @@ class EloquentOrderRepository implements OrderRepository
             $orderProductData['note'] = $requestParams['note'] ?? '';
 
             if ($productAttributeValue) {
-
+				$orderProductData['product_attribute_value_id'] = $productAttributeValue->id;
                 $productPrice = $productAttributeValue->price;
                 if ($productAttributeValue->sale_price) {
                     $productPrice = $productPrice * (100 - $productAttributeValue->sale_price) / 100;
@@ -787,6 +797,9 @@ class EloquentOrderRepository implements OrderRepository
         $shopVoucherDiscount = 0;
         if ($shopVoucherCode) {
             $shopVoucher = Voucher::query()->where('code', $shopVoucherCode)->first();
+            if ($shopVoucher->require_min_amount && $shopVoucher->require_min_amount > $totalPrice) {
+                return -1;
+            }
             list($shopVoucherDiscount) = $this->getVoucherAmount($shopVoucherCode, $shopId, $productsForVoucher);
             if ($shopVoucherDiscount) {
 	            $order->shop_voucher_id = optional($shopVoucher)->id;

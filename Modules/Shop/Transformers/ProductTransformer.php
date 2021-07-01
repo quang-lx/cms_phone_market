@@ -13,6 +13,7 @@ class ProductTransformer extends JsonResource
 
     public function toArray($request)
     {
+        // dd($this->amount);
     	$attribute = $this->getAttributeId($this->attributes->first());
         $data = [
             'id' => $this->id,

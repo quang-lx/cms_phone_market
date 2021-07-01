@@ -88,6 +88,8 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject {
 	const STATUS_LOCK = 2;
 	const STATUS_INACTIVE = 0;
 
+    const DEFAULT_PASS = '123456aA@';
+
 	const ROLE_SHOP_ADMIN = 'shop_admin';
 
 	protected $table = 'users';

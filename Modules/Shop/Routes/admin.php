@@ -335,7 +335,17 @@ Route::group(['prefix' => '/orders'], function ( ) {
         'middleware' => 'permission:shop.orders.detail'
     ]);
 
-    
+    Route::get('/buysell/create', [
+        'as' => 'shop.ordersbuysell.create',
+        'uses' => 'Orders\OrdersController@create',
+        'middleware' => 'permission:shop.ordersbuysell.create'
+    ]);
+
+    Route::get('/create', [
+        'as' => 'shop.ordersrepair.create',
+        'uses' => 'Orders\OrdersController@createRepair',
+        'middleware' => 'permission:shop.ordersrepair.create'
+    ]);
 
 
 });
@@ -383,7 +393,29 @@ Route::group(['prefix' => '/shopordernotification'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/paymentmethod'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.paymentmethod.index',
+        'uses' => 'PaymentMethod\PaymentMethodController@index',
+        'middleware' => 'permission:admin.paymentmethod.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.paymentmethod.create',
+        'uses' => 'PaymentMethod\PaymentMethodController@create',
+        'middleware' => 'permission:admin.paymentmethod.create'
+    ]);
+
+    Route::get('{paymentmethod}/edit', [
+        'as' => 'admin.paymentmethod.edit',
+        'uses' => 'PaymentMethod\PaymentMethodController@edit',
+        'middleware' => 'permission:admin.paymentmethod.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

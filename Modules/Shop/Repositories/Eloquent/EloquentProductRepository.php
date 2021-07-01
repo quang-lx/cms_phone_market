@@ -239,6 +239,11 @@ class EloquentProductRepository extends BaseRepository implements ProductReposit
 			$query->where('brand_id', $brandId);
 		}
 
+		if ($request->get('type') !== null) {
+			$type = $request->get('type');
+			$query->where('type', $type);
+		}
+
 		if ($request->get('source') == 'voucher') {
 			$query->select('product.*', 'product.name AS value');
 		}

@@ -15,16 +15,39 @@
                   </el-breadcrumb-item>
                 </el-breadcrumb>
               </div>
-              <div class="col-sm-9 text-right">
-                <div class="row">
-                  <div class="col-sm-3">
+              <div class="col-sm-9">
+                <div class="row pull-right">
+                  
+                   <div class="col-8">
+                    <el-input
+                      prefix-icon="el-icon-search"
+                      @keyup.native="performSearch"
+                      v-model="searchQuery"
+                      placeholder="Mã đơn hàng/SĐT user"
+                    >
+                    </el-input>
+                  </div>
+
+                  <div class="col-4">
+                    <router-link :to="{name: 'shop.ordersbuysell.create'}">
+                        <el-button type="primary" class="btn btn-flat" style="width:100%">
+                            {{ $t('orders.label.create') }}
+                        </el-button>
+                    </router-link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row pull-right search-block">
+                <div class="offset-sm-3 col-sm-3">
                     <el-date-picker @change="queryServer"
                         v-model="filter.searchDate"
                         type="daterange"
                         start-placeholder="Start date"
                         end-placeholder="End date"
-                         format="dd/MM/yyyy"
-                    value-format="yyyy-MM-dd"
+                        format="dd/MM/yyyy"
+                        value-format="yyyy-MM-dd"
                        >
                     </el-date-picker>
                   </div>
@@ -48,17 +71,6 @@
                       </el-option>
                     </el-select>
                   </div>
-                   <div class="col-sm-3">
-                    <el-input
-                      prefix-icon="el-icon-search"
-                      @keyup.native="performSearch"
-                      v-model="searchQuery"
-                      placeholder="Mã đơn hàng/SĐT user"
-                    >
-                    </el-input>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -291,6 +303,10 @@ export default {
 <style scoped>
 .el-input__inner{
     width: 100% !important;
+}
+
+.search-block {
+    margin-top: 10px;
 }
 
 </style>

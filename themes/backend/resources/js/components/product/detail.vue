@@ -180,21 +180,20 @@
                           </span>
                         </div>
                       </div>
-                      <div class="col-md-12 mt-5">
-                        Ảnh/Video
-                        <div>
-                          <span
+                      <div class="row mt-5 w-100">
+                        <p class="col-12"> Ảnh/Video</p>
+                       
+                          <div class="col-3"
                             v-for="(item, index) in modelForm.files"
                             :key="index"
                           >
-                            <img
+                          <video class="w-100"  v-if="item.media_type == 'video'" :src="item.path_string" controls></video>
+                            <img v-else
                               :src="item.path_string"
-                              width="100"
-                              height="100"
+                              class="w-100"
                               style="object-ielseit: contain"
                             />
-                          </span>
-                        </div>
+                          </div>
                       </div>
                       <div class="col-md-12">
                         {{ $t("product.label.description") }}:
