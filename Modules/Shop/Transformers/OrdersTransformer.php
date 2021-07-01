@@ -41,6 +41,8 @@ class OrdersTransformer extends JsonResource
             'ship_district_name' => $this->ship_district_name,
             'ship_phoenix_id' => $this->ship_phoenix_id,
             'ship_phoenix_name' => $this->ship_phoenix_name,
+            'ship_fullname' => $this->ship_fullname,
+            'ship_phone' => $this->ship_phone,
             'ship_address' => $this->ship_address,
             'created_at' => $this->created_at->format('H:i d/m/Y'),
             'shop_done' => $this->shop_done,

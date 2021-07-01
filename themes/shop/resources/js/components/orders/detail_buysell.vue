@@ -56,11 +56,11 @@
                       </div>
                       <div class="col-md-3">
                         <div><h4>Địa chỉ giao hàng</h4></div>
-                        <div>
-                              {{ modelForm.user.name }}
+                      <div>
+                              {{ modelForm.ship_fullname }}
                             </div>
                             <div>
-                              {{ modelForm.user.phone }}
+                              {{ modelForm.ship_phone }}
                             </div>
 
                         <div>

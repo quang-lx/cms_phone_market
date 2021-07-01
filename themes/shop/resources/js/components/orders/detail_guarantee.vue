@@ -57,10 +57,10 @@
                       <div class="col-md-3">
                         <div><h4>Địa chỉ lấy hàng</h4></div>
                          <div>
-                              {{ modelForm.user.name }}
+                              {{ modelForm.ship_fullname }}
                             </div>
                             <div>
-                              {{ modelForm.user.phone }}
+                              {{ modelForm.ship_phone }}
                             </div>
 
                         <div>
@@ -77,7 +77,7 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <div><h4>Đặt sửa tại</h4></div>
+                        <div><h4>Đặt bảo hành tại</h4></div>
 
                         <div>
                           {{ modelForm.shop.name }}
@@ -108,10 +108,6 @@
                           </span>
 
                       </div>
-                      <div class="col-md-12 mt-3">
-                        <span>Hạn bảo hành: </span>
-                            <span v-html="modelForm.fix_time_date"></span> tháng
-                        </div>
                          <div class="col-md-12 mt-3">
                        <span>Tình trạng sản phẩm: </span>
                             <span v-html="modelForm.product_note"></span>
