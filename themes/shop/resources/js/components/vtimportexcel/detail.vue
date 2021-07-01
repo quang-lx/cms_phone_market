@@ -99,10 +99,13 @@
                             >
                             </el-table-column>
                             <el-table-column
-                              prop="amount"
+                              prop=""
                                :label="$t('vtimportproduct.label.amount')"
                               sortable="custom"
                             >
+                            <template slot-scope="scope">
+                                                <span v-number="scope.row.amount"></span>
+                                            </template>
                             </el-table-column>
                           </el-table>
                         </div>
