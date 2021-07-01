@@ -411,13 +411,16 @@
         border: medium none;
         color: #4c4c4c;
         font-size: 15px;
-        min-height: 48px;
+        min-height: 60px;
         width: 100%;
+        padding: 10px;
     }
 
     .type_msg {
         border-top: 1px solid #c4c4c4;
-        position: relative;
+        position: fixed;
+        bottom: 8%;
+        width: 60%;
     }
 
     .msg_send_btn {
@@ -429,7 +432,7 @@
         font-size: 17px;
         height: 33px;
         position: absolute;
-        right: 0;
+        right: 8px;
         top: 11px;
         width: 33px;
     }
