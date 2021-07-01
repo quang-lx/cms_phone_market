@@ -103,7 +103,9 @@
       current_user: {!! json_encode($currentUser)!!},
       imageType: {!! json_encode(config('imagetype.images'))!!},
       companyId: '{!! $currentUser->company_id !!}',
-      shopId: '{!! $currentUser->shop_id !!}',
+      {{--shopId: '{!! $currentUser->shop_id !!}',--}}
+      shopId: '84',
+      current_username: '{!! $currentUser->username !!}',
 
     };
 
