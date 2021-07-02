@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <a class="dropdown-item" href="#" @click.prevent="showBoxChat(index)"
+                    <a class="dropdown-item" :class="{ active_chat : chat_user_id == index }"  href="#" @click.prevent="showBoxChat(index)"
                        v-for="(item, index) in list_user" v-bind:key=index>
                         <!-- Message Start -->
                         <div class="media">
@@ -419,7 +419,7 @@
     .type_msg {
         border-top: 1px solid #c4c4c4;
         position: fixed;
-        bottom: 8%;
+        bottom: 2%;
         width: 60%;
     }
 
@@ -442,7 +442,7 @@
     }
 
     .msg_history {
-        height: 516px;
+        height: 570px;
         overflow-y: auto;
     }
 
