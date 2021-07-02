@@ -4,9 +4,16 @@ namespace Modules\Mon\Entities;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Modules\Media\Traits\MediaRelation;
 use Modules\Mon\Traits\CommonModel;
 use Wildside\Userstamps\Userstamps;
+
+/**
+ * Class Product
+ * @method available()
+ * @package Modules\Mon\Entities
+ */
 
 class Product extends Model {
 	use  SoftDeletes, MediaRelation, CommonModel, Userstamps;
@@ -157,5 +164,17 @@ class Product extends Model {
 
 	public function getThumbnailAttribute() {
 		return $this->filesByZone('product_collection')->first();
+	}
+
+	public function scopeAvailable($query) {
+
+		return $query->where(function ($q) {
+			/** @var \Illuminate\Database\Eloquent\Builder $q */
+			$q->orWhere('amount', '>', 0);
+			$q->orWhereHas('productAttributeValues', function ($q) {
+				$q->where('amount', '>', 0);
+			});
+		});
+
 	}
 }

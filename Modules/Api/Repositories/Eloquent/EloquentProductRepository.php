@@ -25,6 +25,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
     public function listByCategory(Request $request, $includeSub = false)
     {
         $query = $this->model->query();
+        $query->available();
         if ($category_id = $request->get('category_id')) {
 
             if ($includeSub) {
@@ -164,7 +165,7 @@ class EloquentProductRepository extends ApiBaseRepository implements ProductRepo
     public function listByShop(Request $request, $shop_id)
     {
         $query = $this->model->query();
-
+		$query->available();
         $query->where('shop_id', $shop_id);
 
         if ($keyword = $request->get('q')) {
