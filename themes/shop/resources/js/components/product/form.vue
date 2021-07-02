@@ -239,7 +239,7 @@
                                         <div class="col-md-12 ">
                                             <el-form-item :label="$t('product.label.type')"
                                                           :class="{'el-form-item is-error': form.errors.has('type') }">
-                                                <el-radio-group v-model="modelForm.type">
+                                                <el-radio-group v-model="modelForm.type" @change="changeProductType">
                                                     <el-radio v-for = "(item, key) in list_type" :label="item.value" :key="key">{{item.label}}</el-radio>
 
                                                 </el-radio-group>
@@ -284,7 +284,7 @@
                                                 <div class="tree-container">
 
                                                     <el-checkbox-group v-model="modelForm.category_id"  class="problem-container" @change="changeCategory">
-                                                        <el-checkbox v-for="(item,key) in category_tree_data" :key="key"
+                                                        <el-checkbox v-for="(item,key) in category_by_product_type" :key="key"
                                                                      :label="item.id"> {{item.name}}
                                                         </el-checkbox>
                                                     </el-checkbox-group>
@@ -650,6 +650,28 @@
 
       };
     },
+      computed: {
+          values: function() {
+              if (this.modelForm.attribute_id) {
+                  const index = _.findIndex(this.list_attribute,{id: this.modelForm.attribute_id});
+                  if (index !== -1) {
+                      const values  = this.list_attribute[index].values
+                      return values.filter(item => _.findIndex(this.modelForm.attribute_selected.values, {id: item.id}) === -1)
+                  }
+              }
+              return []
+          },
+          category_by_product_type() {
+              if (this.modelForm.type == '1') {
+                  return this.category_tree_data.filter(item => item.type == 'product')
+              } else if (this.modelForm.type == '2') {
+                  return this.category_tree_data.filter(item => item.type == 'service')
+
+              } else {
+                  return []
+              }
+          }
+      },
     methods: {
       onSubmit() {
         this.form = new Form(_.merge(this.modelForm, {}));
@@ -817,6 +839,9 @@
 
             });
       },
+        changeProductType() {
+          this.modelForm.category_id = []
+        }
     },
     mounted() {
 
@@ -832,18 +857,7 @@
       }
 
     },
-    computed: {
-      values: function() {
-        if (this.modelForm.attribute_id) {
-          const index = _.findIndex(this.list_attribute,{id: this.modelForm.attribute_id});
-          if (index !== -1) {
-            const values  = this.list_attribute[index].values
-            return values.filter(item => _.findIndex(this.modelForm.attribute_selected.values, {id: item.id}) === -1)
-          }
-        }
-        return []
-      }
-    },
+
 
   }
 </script>
