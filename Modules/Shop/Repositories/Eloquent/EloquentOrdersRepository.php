@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Modules\Mon\Entities\Orders;
 use Modules\Mon\Entities\User;
 use Modules\Mon\Entities\OrderProduct;
+use Modules\Mon\Entities\PaymentHistory;
+use Modules\Mon\Entities\PaymentMethod;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -879,8 +881,6 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 
     public function storeBuySell($requestParams)
     {
-        // Đơn mua bán - placeOrderMultiProduct
-        // Đơn sửa chữa bảo hành - placeMultipleOrder
 		DB::beginTransaction();
         try {
 			$newUser = $this->getUserByPhone($requestParams);
@@ -893,16 +893,20 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			$order->payment_status = Orders::PAYMENT_PAID_DONE;
 			$order->user_id = $newUser->id;
 			$totalPrice = $discount = $payPrice = 0;
-			// foreach ($requestParams['products'] as $product) {
-			// 	$totalPrice += $product['amount'] * $product['price'];
-			// 	$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
-			// }
-			// $order->total_price = $totalPrice;
-			// $order->discount = $discount;
 			$order->total_price = $requestParams['total_price'];
 			$order->discount = 0;
 			$order->pay_price = $requestParams['total_price'];
+			$order->payment_history_id = $requestParams['payment_method'];
 			$order->save();
+
+			$paymentHistory = new PaymentHistory();
+			$paymentMethod = PaymentMethod::find($requestParams['payment_method']);
+			$paymentHistory->user_id = $user->id;
+			$paymentHistory->payment_method_id = $requestParams['payment_method'];
+			$paymentHistory->pay_amount = $requestParams['total_price'];
+			$paymentHistory->pay_method_name = $paymentMethod->name;
+			$paymentHistory->save();
+			
 
 			// Lưu order_product
 			foreach ($requestParams['products'] as $product) {
@@ -940,19 +944,19 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			$order->payment_status = Orders::PAYMENT_PAID_DONE;
 			$order->user_id = $newUser->id;
 			$totalPrice = $discount = $payPrice = 0;
-			// foreach ($requestParams['products'] as $product) {
-			// 	if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
-			// 		$totalPrice += $product['amount'] * $product['price'];
-			// 		$discount += ($product['sale_price']/100) * $product['price'] * $product['amount'];
-			// 	} else {
-			// 		$totalPrice += $product['pay_price'];
-			// 		$discount += 0;
-			// 	}
-			// }
 			$order->total_price = $requestParams['total_price'];
 			$order->discount = 0;
 			$order->pay_price = $requestParams['total_price'];
+			$order->payment_history_id = $requestParams['payment_method'];
 			$order->save();
+
+			$paymentHistory = new PaymentHistory();
+			$paymentMethod = PaymentMethod::find($requestParams['payment_method']);
+			$paymentHistory->user_id = $user->id;
+			$paymentHistory->payment_method_id = $requestParams['payment_method'];
+			$paymentHistory->pay_amount = $requestParams['total_price'];
+			$paymentHistory->pay_method_name = $paymentMethod->name;
+			$paymentHistory->save();
 
 			// Lưu order_product
 			foreach ($requestParams['products'] as $product) {
