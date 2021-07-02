@@ -9,7 +9,7 @@
             :visible.sync="drawer"
             :direction="direction"
             :append-to-body="true"
-            size="84%"
+            size="87%"
         >
             <div class="row">
                 <div class="col-9">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <a class="dropdown-item" href="#" @click.prevent="showBoxChat(index)"
+                    <a class="dropdown-item" :class="{ active_chat : chat_user_id == index }"  href="#" @click.prevent="showBoxChat(index)"
                        v-for="(item, index) in list_user" v-bind:key=index>
                         <!-- Message Start -->
                         <div class="media">
@@ -411,13 +411,16 @@
         border: medium none;
         color: #4c4c4c;
         font-size: 15px;
-        min-height: 48px;
+        min-height: 60px;
         width: 100%;
+        padding: 10px;
     }
 
     .type_msg {
         border-top: 1px solid #c4c4c4;
-        position: relative;
+        position: fixed;
+        bottom: 2%;
+        width: 64%;
     }
 
     .msg_send_btn {
@@ -429,7 +432,7 @@
         font-size: 17px;
         height: 33px;
         position: absolute;
-        right: 0;
+        right: 8px;
         top: 11px;
         width: 33px;
     }
@@ -439,8 +442,12 @@
     }
 
     .msg_history {
-        height: 516px;
-        overflow-y: auto;
+    position: fixed;
+    top: 84px;
+    bottom: 100px;
+    overflow: auto;
+    background: #fff;
+    width: 64%;
     }
 
     /* .mesgs {
