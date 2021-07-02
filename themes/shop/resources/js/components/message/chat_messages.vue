@@ -9,7 +9,7 @@
             :visible.sync="drawer"
             :direction="direction"
             :append-to-body="true"
-            size="84%"
+            size="87%"
         >
             <div class="row">
                 <div class="col-9">
@@ -420,7 +420,7 @@
         border-top: 1px solid #c4c4c4;
         position: fixed;
         bottom: 2%;
-        width: 60%;
+        width: 64%;
     }
 
     .msg_send_btn {
@@ -442,8 +442,12 @@
     }
 
     .msg_history {
-        height: 570px;
-        overflow-y: auto;
+    position: fixed;
+    top: 84px;
+    bottom: 100px;
+    overflow: auto;
+    background: #fff;
+    width: 64%;
     }
 
     /* .mesgs {
