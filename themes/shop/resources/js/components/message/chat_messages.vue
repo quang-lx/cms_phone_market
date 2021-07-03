@@ -71,7 +71,7 @@
       </div>
       <el-drawer
         size="100%"
-        :with-header="false"
+        :title=""
         :append-to-body="true"
         :visible.sync="dialogImgVisible">
         <img :src="img_selected" style="width:100%"/>
