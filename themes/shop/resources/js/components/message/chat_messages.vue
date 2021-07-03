@@ -24,7 +24,7 @@
                                         <div class="received_withd_msg">
                                             <p v-if="chat.type === type_text"> {{chat.text}}</p>
                                             <p v-if="chat.type === type_img"> : <img :src="chat.image" width="100"/></p>
-                                            <span class="time_date"> 11:01 AM    |    June 9</span></div>
+                                            <span class="time_date">  {{getDateDisplay(item.createdAt)}}</span></div>
                                     </div>
                                 </div>
                                 <div class="outgoing_msg" v-else>
@@ -212,7 +212,13 @@
         return new Date().getTime()
       },
         getDateDisplay(timestamp) {
-          return  moment.unix(timestamp/1000).format("DD/MM/YYYY HH:mm");
+          var day = '';
+          try {
+              day = moment.unix(timestamp/1000).format("DD/MM/YYYY HH:mm");;
+          } catch (e) {
+
+          }
+          return  day
 
         },
       holdBoxChat() {
