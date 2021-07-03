@@ -131,6 +131,11 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
 		'uses' => 'UserController@notifications',
 		'as' => 'apife.user.notifications',
 	]);
+
+	Route::get('point-history', [
+		'uses' => 'UserController@pointHistory',
+		'as' => 'apife.user.pointHistory',
+	]);
 });
 
 

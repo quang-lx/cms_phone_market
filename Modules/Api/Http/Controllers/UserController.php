@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\OrderUserNotiRepository;
+use Modules\Api\Repositories\UserPointRepository;
 use Modules\Api\Transformers\OrderUserNotiTransformer;
+use Modules\Api\Transformers\UserPointTransformer;
 use Modules\Api\Transformers\UserTransformer;
 use Modules\Mon\Auth\Contracts\Authentication;
 use Modules\Mon\Http\Controllers\ApiController;
@@ -18,11 +20,17 @@ class UserController extends ApiController
 
 	/** @var OrderUserNotiRepository */
 	public $orderUserNoti;
-	public function __construct(Authentication $auth, OrderUserNotiRepository $orderUserNoti)
+
+
+	/** @var UserPointRepository */
+	public $userPointRepository;
+
+	public function __construct(Authentication $auth, OrderUserNotiRepository $orderUserNoti,UserPointRepository $userPointRepository)
 	{
 		parent::__construct($auth);
 
 		$this->orderUserNoti = $orderUserNoti;
+		$this->userPointRepository = $userPointRepository;
 	}
     public function update(Request $request)
     {
@@ -111,5 +119,10 @@ class UserController extends ApiController
 	public function notifications(Request $request) {
 		$notifications = $this->orderUserNoti->getList($request);
 		return $this->respond(OrderUserNotiTransformer::collection($notifications),ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+	}
+
+	public function pointHistory(Request $request) {
+		$points = $this->userPointRepository->serverPagingFor($request);
+		return $this->respond(UserPointTransformer::collection($points),ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
 }

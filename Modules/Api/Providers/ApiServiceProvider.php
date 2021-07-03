@@ -25,6 +25,7 @@ use Modules\Api\Repositories\Eloquent\EloquentProductRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentSearchRepository;
+use Modules\Api\Repositories\Eloquent\EloquentUserPointRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
 use Modules\Api\Repositories\OrderRepository;
 use Modules\Api\Repositories\OrderUserNotiRepository;
@@ -35,6 +36,7 @@ use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
+use Modules\Api\Repositories\UserPointRepository;
 use Modules\Api\Repositories\VoucherRepository;
 use Modules\Mon\Entities\Address;
 use Modules\Mon\Entities\Cart;
@@ -46,6 +48,7 @@ use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
 use Modules\Mon\Entities\RatingShop;
 use Modules\Mon\Entities\ShipType;
+use Modules\Mon\Entities\UserPointHistory;
 use Modules\Mon\Entities\Voucher;
 
 class ApiServiceProvider extends ServiceProvider
@@ -245,5 +248,11 @@ class ApiServiceProvider extends ServiceProvider
 			    return new EloquentOrderUserNotiRepository(new OrderUserNotification());
 		    }
 	    );
+		$this->app->bind(
+			UserPointRepository::class,
+			function () {
+				return new EloquentUserPointRepository(new UserPointHistory());
+			}
+		);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
 use Modules\Mon\Entities\FbNotification;
 use Modules\Mon\Entities\Orders;
+use Modules\Mon\Entities\UserPointHistory;
 
 # Imports the Google Cloud client library
 
@@ -48,6 +49,7 @@ class DoneOrder extends Command {
 							$orderProduct->warranty_time = Carbon::now()->addMonths($orderProduct->product->warranty_time);
 							$orderProduct->save();
 						}
+						UserPointHistory::createFromOrder($order);
 					}
 
 					$order->save();
