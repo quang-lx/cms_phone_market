@@ -484,7 +484,7 @@
                                                            :placeholder="$t('product.label.brand_id')"
                                                            filterable style="width: 100% !important">
                                                     <el-option
-                                                        v-for="item in brandArr"
+                                                        v-for="item in brand_by_product_type"
                                                         :key="'brand'+ item.id"
                                                         :label="item.name"
                                                         :value="item.id">
@@ -670,6 +670,16 @@
               } else {
                   return []
               }
+          },
+          brand_by_product_type() {
+              if (this.modelForm.type == '1') {
+                  return this.brandArr.filter(item => item.type == 'product')
+              } else if (this.modelForm.type == '2') {
+                  return this.brandArr.filter(item => item.type == 'service')
+
+              } else {
+                  return []
+              }
           }
       },
     methods: {
@@ -841,6 +851,7 @@
       },
         changeProductType() {
           this.modelForm.category_id = []
+          this.modelForm.brand_id = null
         }
     },
     mounted() {
