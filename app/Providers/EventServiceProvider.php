@@ -13,6 +13,7 @@ use App\Listeners\HandleEventVtTransHistoryCreated;
 use App\Listeners\InsertOrderStatusHistory;
 use App\Listeners\InsertOrderUserNotification;
 use App\Listeners\InsertShopOrderNotification;
+use App\Listeners\InsertUserPointHistory;
 use App\Listeners\PushNotiWhenAdminNotiCreated;
 use App\Listeners\PushNotiWhenSHopNotiCreated;
 use App\Listeners\SendSmsToUserRegistered;
@@ -42,7 +43,8 @@ class EventServiceProvider extends ServiceProvider
 		    PushNotiWhenShopNotiCreated::class
 	    ],
 		OrderStatusUpdated::class => [
-			InsertOrderStatusHistory::class
+			InsertOrderStatusHistory::class,
+			InsertUserPointHistory::class
 		],
 		UserUpdateOrderStatus::class => [
 			InsertShopOrderNotification::class

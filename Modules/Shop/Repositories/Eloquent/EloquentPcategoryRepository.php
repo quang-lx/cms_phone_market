@@ -50,7 +50,7 @@ class EloquentPcategoryRepository extends BaseRepository implements PcategoryRep
                 $type = $request->get('type');
                 $query->where('type', $type);
             }
-			$categories = $query->select('id','name')->whereNull('parent_id')->get()->toArray();
+			$categories = $query->select('id','name', 'type')->whereNull('parent_id')->get()->toArray();
 			return ($categories);
 		}
 

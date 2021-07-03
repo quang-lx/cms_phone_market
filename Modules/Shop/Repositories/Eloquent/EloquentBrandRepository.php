@@ -19,7 +19,7 @@ class EloquentBrandRepository extends BaseRepository implements BrandRepository
 			$type = $request->get('type');
 			$query->where('type', $type);
 		}
-        $categories = $query->select('id','name')->get()->toArray();
+        $categories = $query->select('id','name','type')->get()->toArray();
         return ($categories);
     }
 

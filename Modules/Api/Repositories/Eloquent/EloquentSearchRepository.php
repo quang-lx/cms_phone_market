@@ -28,6 +28,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             // search in product
 
             $query = Product::query();
+			$query->available();
             // filter
             if ($category_id = $request->get('category_id')) {
 
@@ -73,7 +74,7 @@ class EloquentSearchRepository extends ApiBaseRepository implements SearchReposi
             // search in product
 
             $query = Product::query();
-
+			$query->available();
             // filter
 	        if ($shop_id = $request->get('shop_id')) {
 

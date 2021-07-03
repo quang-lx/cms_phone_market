@@ -97,7 +97,9 @@
     current_user: {!! json_encode($currentUser)!!},
     imageType: {!! json_encode(config('imagetype.images'))!!},
     companyId: '{!! $currentUser->company_id !!}',
-    shopId: '{!! $currentUser->shop_id !!}',
+      shopId: '{!! $currentUser->shop_id !!}',
+    shopAvatar: '{!! ($currentUser->shop && $currentUser->shop->thumbnail)? optional(optional($currentUser->shop)->thumbnail)->path_string: env('SHOP_AVATAR_DEFAULT','http://210.245.38.160:8081/storage/media/202107/67ff39fc-cbcd-4934-93e4-81905052cb98_s.png') !!}',
+      current_username:   '{!! optional($currentUser->shop)->name !!}',
 
   };
 
