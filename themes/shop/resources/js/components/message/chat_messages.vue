@@ -84,6 +84,7 @@
         direction: "rtl",
         chat_client_id: null,
         current_shop_id: window.MonCMS.shopId,
+        current_shop_avatar: window.MonCMS.shopAvatar,
         current_username: window.MonCMS.current_username,
         list_user: [],
         chat_user_id: null,
@@ -178,7 +179,7 @@
           type: this.type_text,
           user: {
             _id: this.current_shop_id,
-            avatar: 'https://placeimg.com/140/140/any',
+            avatar: this.current_shop_avatar,
             name: this.current_username
           }
 
@@ -201,7 +202,7 @@
           type: this.type_text,
           user: {
             _id: this.current_shop_id,
-            avatar: 'https://placeimg.com/140/140/any',
+            avatar: this.current_shop_avatar,
             name: this.current_username
           }
 
