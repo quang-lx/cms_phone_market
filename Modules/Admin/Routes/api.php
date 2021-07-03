@@ -710,7 +710,32 @@ Route::middleware('auth:api')->prefix('/dashboards')->group(function (){
     ]);
    
 });
+Route::middleware('auth:api')->prefix('/gifts')->group(function (){
+
+    Route::get('/', [
+        'as' => 'api.gift.index',
+        'uses' => 'Gift\GiftController@index',
+    ]);
+    Route::post('/{gift}/edit', [
+            'as' => 'api.gift.update',
+            'uses' => 'Gift\GiftController@update',
+        ]);
+   Route::get('/{gift}', [
+              'as' => 'api.gift.find',
+              'uses' => 'Gift\GiftController@find',
+          ]);
+    Route::post('/', [
+        'as' => 'api.gift.store',
+        'uses' => 'Gift\GiftController@store',
+    ]);
+
+    Route::delete('/{gift}', [
+        'as' => 'api.gift.destroy',
+        'uses' => 'Gift\GiftController@destroy',
+    ]);
+});
 // append
+
 
 
 

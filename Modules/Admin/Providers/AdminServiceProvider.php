@@ -302,7 +302,15 @@ class AdminServiceProvider extends ServiceProvider
                 return $repository;
             }
         );
+        $this->app->bind(
+            'Modules\Admin\Repositories\GiftRepository',
+            function () {
+                $repository = new \Modules\Admin\Repositories\Eloquent\EloquentGiftRepository(new \Modules\Mon\Entities\Gift());
+                return $repository;
+            }
+        );
 // add bindings
+
 
 
 

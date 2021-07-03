@@ -402,22 +402,22 @@ export default {
         },
         "fbnotification": {
             "label": {
-                "fbnotification": "Quản lý notification",
+                "gift": "Quản lý gift",
                 "id": "ID",
-                "title": "Tiêu đề noti",
-                "content": "Nội dung",
-                "topic": "Hệ điều hành",
+                "name": "Tên quà tặng",
+                "point": "Số điểm",
+                "amount": "Số lượng",
                 "scheduled_at": "Thời gian gửi",
                 "sent": "Trạng thái",
                 "updated_at": "Ngày cập nhật",
-                "create_title": "Tạo notification",
-                "update_title": "Cập nhật notification",
+                "create_title": "Tạo gift",
+                "update_title": "Cập nhật gift",
                 "detail_title": "Chi tiết"
             },
             "message": {
-                "create success": "Tạo notification thành công.",
-                "update success": "Cập nhật notification thành công.",
-                "delete success": "Xóa notification thành công."
+                "create success": "Tạo gift thành công.",
+                "update success": "Cập nhật gift thành công.",
+                "delete success": "Xóa gift thành công."
             }
         },
         "attribute": {
@@ -454,6 +454,28 @@ export default {
                 "create success": "Tạo Quận huyện thành công.",
                 "update success": "Cập nhật Quận huyện thành công.",
                 "delete success": "Xóa Quận huyện thành công."
+            }
+        },
+        "gift": {
+            "label": {
+                "gift": "Quản lý gift",
+                "id": "ID",
+                "name": "Tên quà tặng",
+                "image": "Ảnh",
+                "point": "Số điểm",
+                "amount": "Số lượng",
+                "status": "Trạng thái",
+                "description": "Chi tiết",
+                "created_by": "Người tạo",
+                "created_at": "Ngày tạo",
+                "create_title": "Tạo gift",
+                "update_title": "Cập nhật gift",
+                "detail_title": "Chi tiết"
+            },
+            "message": {
+                "create success": "Tạo gift thành công.",
+                "update success": "Cập nhật gift thành công.",
+                "delete success": "Xóa gift thành công."
             }
         },
         "category": {
