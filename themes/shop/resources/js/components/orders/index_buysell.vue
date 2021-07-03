@@ -40,7 +40,7 @@
             </div>
 
             <div class="row pull-right search-block">
-                <div class="offset-sm-3 col-sm-3">
+                <div :class="this.currentShop ? 'offset-sm-4 col-sm-4' : 'offset-sm-3 col-sm-3'">
                     <el-date-picker @change="queryServer"
                         v-model="filter.searchDate"
                         type="daterange"
@@ -51,8 +51,8 @@
                        >
                     </el-date-picker>
                   </div>
-                   <div class="col-sm-3">
-                    <el-select v-model="filter.shop" clearable v-if="!this.currentShop" @change="queryServer" placeholder="Lọc theo cửa hàng">
+                   <div class="col-sm-3" v-if="!this.currentShop">
+                    <el-select v-model="filter.shop" clearable @change="queryServer" placeholder="Lọc theo cửa hàng">
                       <el-option
                         v-for="item in listShop"
                         :key="item.id"
@@ -61,7 +61,7 @@
                       </el-option>
                     </el-select>
                   </div>
-                   <div class="col-sm-3">
+                   <div :class="this.currentShop ? 'col-sm-4' : 'col-sm-3'">
                     <el-select v-model="filter.status" clearable @change="queryServer" placeholder="Lọc theo trạng thái">
                       <el-option
                         v-for="item in listStatus"
