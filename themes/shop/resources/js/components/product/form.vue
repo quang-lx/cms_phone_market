@@ -765,7 +765,7 @@
           this.category_tree_data = response.data.categories_tree;
           this.list_problem = response.data.list_problem;
           this.list_attribute = response.data.list_attribute;
-          // this.list_attribute = this.removeDefaultPrice(response.data.list_attribute);
+          this.list_attribute = this.removeDefaultPrice(response.data.list_attribute);
           this.list_information = response.data.list_information;
 
         });
@@ -777,15 +777,15 @@
 
               });
         },
-        // removeDefaultPrice(listAttribute){
-        //   listAttribute.forEach(attr => {
-        //     attr.values.forEach(element => {
-        //       element.price = '';
-        //     });
-        //   });
+        removeDefaultPrice(listAttribute){
+          listAttribute.forEach(attr => {
+            attr.values.forEach(element => {
+              element.price = '';
+            });
+          });
 
-        //   return listAttribute;
-        // },
+          return listAttribute;
+        },
       updateValue: function (value) {
         // update parent data so that we can still v-model on the parent
         this.$emit('input', value);

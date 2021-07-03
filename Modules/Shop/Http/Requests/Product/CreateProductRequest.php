@@ -4,6 +4,7 @@ namespace Modules\Shop\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class CreateProductRequest extends FormRequest
 {
@@ -32,6 +33,24 @@ class CreateProductRequest extends FormRequest
         return $rules;
     }
 
+    public function withValidator(Validator $validator)
+    {
+        $attributeSelected = $this->attribute_selected;
+        $validator->after(function ($validator) use ($attributeSelected) {
+            if (count($attributeSelected['values'])){
+                foreach ($attributeSelected['values'] as $values){
+                    if (!$values['price']){
+                        $validator->errors()->add('price_attribute', 'Vui lòng nhập giá thuộc tính');
+                    }
+    
+                }
+            }
+
+        });
+        
+        return $validator;                     
+    }
+
     public function translationRules()
     {
         return [];
@@ -51,7 +70,7 @@ class CreateProductRequest extends FormRequest
             's_long.numeric' => 'Chiều dài yêu cầu nhập số',
             's_width.numeric' => 'Chiều rộng yêu cầu nhập số',
             's_height.numeric' => 'Chiều cao yêu cầu nhập số',
-            'brand_id.required' => 'Nhãn hiệu là bắt buộc',
+            'brand_id.required' => 'Thương hiệu là bắt buộc',
             'sku.required' => 'SKU là bắt buộc',
             'sku.unique' => 'SKU không được trùng lặp',
             'amount.required' => 'Số lượng là bắt buộc',

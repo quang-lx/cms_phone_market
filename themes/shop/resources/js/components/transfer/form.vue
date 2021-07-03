@@ -87,12 +87,13 @@
                               ),
                             }"
                           >
-                            <el-radio-group v-model="modelForm.type" :disabled="!modelForm.isEdit">
+                            <el-radio-group v-model="modelForm.type">
                               <el-radio
                                 v-for="item in listType"
                                 :key="item.value"
                                 :value="item.value"
                                 :label="item.value"
+                                :disabled="!modelForm.isEdit && modelForm.type != item.value"
                                 >{{ item.label }}</el-radio>
                             </el-radio-group>
                           </el-form-item>

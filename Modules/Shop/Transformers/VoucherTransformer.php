@@ -36,6 +36,7 @@ class VoucherTransformer extends JsonResource
             'use_condition' => $this->use_condition,
             'description' => $this->description,
             'thumbnail' => $this->thumbnail,
+            'created_by' => $this->created_by,
 
 
              'urls' => [

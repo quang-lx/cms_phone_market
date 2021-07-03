@@ -67,9 +67,9 @@ class EloquentStorageProductRepository extends BaseRepository implements Storage
 		$query->where('company_id', $companyId);
         if ($shopId){
             $query->where('to_shop_id', $shopId);
+            $query->where('type', StorageProduct::TYPE_MOVE);
         }
-        $query->where('type', StorageProduct::TYPE_MOVE);
-
+        
         if ($request->get('order_by') !== null && $request->get('order') !== 'null') {
             $order = $request->get('order') === 'ascending' ? 'asc' : 'desc';
 
