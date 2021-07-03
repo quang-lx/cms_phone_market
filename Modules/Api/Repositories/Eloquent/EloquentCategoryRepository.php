@@ -24,7 +24,13 @@ class EloquentCategoryRepository implements CategoryRepository
 		return $this->model->query()->where('parent_id', $catId)->get();
 	}
 	public function listByServiceType(Request $request) {
-		return $this->model->query()->where('type', Pcategory::TYPE_SERVICE)->get();
+		if ($request->get('shop_id')) {
+			return $this->model->query()->where('type', Pcategory::TYPE_SERVICE)->get();
+		} else {
+			return $this->model->query()->where('type', Pcategory::TYPE_SERVICE)
+				->whereNotIn('id', [84,])->get();
+		}
+
 	}
 
 	public function listProblemByCat(Request $request, $catId) {
