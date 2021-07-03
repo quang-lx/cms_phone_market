@@ -69,14 +69,14 @@
           </a>
         </div>
       </div>
-
+      <el-drawer
+        :with-header="false"
+        :append-to-body="true"
+        :visible.sync="dialogImgVisible">
+        <img :src="img_selected" style="width:100%"/>
+      </el-drawer>
     </el-drawer>
-    <el-dialog
-      :title="false"
-      :visible.sync="dialogImgVisible"
-      width="75%">
-      <img :src="img_selected" style="width:100%"/>
-    </el-dialog>
+
 
   </div>
 </template>
