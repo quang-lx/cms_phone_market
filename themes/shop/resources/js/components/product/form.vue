@@ -89,6 +89,11 @@
                                                             @fileSorted="fileSorted($event, 'modelForm')"
                                                             entity="Modules\Mon\Entities\Product"
                                                             :entity-id="$route.params.productId"></multiple-media>
+                                            <div
+                                              class="el-form-item__error"
+                                              v-if="form.errors.has('medias_multi')"
+                                              v-text="form.errors.first('medias_multi')"
+                                          ></div>
                                         </div>
                                     </div>
                                 </div>

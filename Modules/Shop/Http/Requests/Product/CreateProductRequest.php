@@ -25,6 +25,7 @@ class CreateProductRequest extends FormRequest
             'sale_price' => 'numeric|min:0|max:100',
             'type' => 'required',
             'warranty_time' => 'required',
+            'medias_multi' => 'required',
         ];
         if (!Auth::user()->shop_id){
             $rules['shop_id'] = 'required';
@@ -37,7 +38,7 @@ class CreateProductRequest extends FormRequest
     {
         $attributeSelected = $this->attribute_selected;
         $validator->after(function ($validator) use ($attributeSelected) {
-            if (count($attributeSelected['values'])){
+            if ($attributeSelected && count($attributeSelected['values'])){
                 foreach ($attributeSelected['values'] as $values){
                     if (!$values['price']){
                         $validator->errors()->add('price_attribute', 'Vui lòng nhập giá thuộc tính');
@@ -81,6 +82,7 @@ class CreateProductRequest extends FormRequest
             'sale_price.max' => 'Giá khuyến mãi lớn nhất là 100%',
             'type.required' => 'Loại sản phẩm là bắt buộc',
             'warranty_time.required' => 'Thời gian bảo hành là bắt buộc',
+            'medias_multi.required' => 'Vui lòng chọn ảnh sản phẩm',
 
         ];
         if (!Auth::user()->shop_id){
