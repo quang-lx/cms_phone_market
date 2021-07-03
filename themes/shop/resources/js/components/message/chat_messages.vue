@@ -74,7 +74,10 @@
         title=""
         :append-to-body="true"
         :visible.sync="dialogImgVisible">
-        <img :src="img_selected" style="width:100%"/>
+        <div style="text-align: center">
+          <img :src="img_selected" style="object-fit: contain"/>
+        </div>
+
       </el-drawer>
     </el-drawer>
 
