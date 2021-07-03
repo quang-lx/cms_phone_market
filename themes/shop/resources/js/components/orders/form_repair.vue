@@ -610,7 +610,7 @@ export default {
         const properties = {
           page: 0,
           per_page: 1000,
-
+          type: 'service'
         };
 
         axios.get(route('apishop.product.tree', _.merge(properties, {})))
@@ -628,7 +628,7 @@ export default {
       const properties = {
         page: 0,
         per_page: 1000,
-
+        type: 'service'
       };
 
       axios.get(route('apishop.brand.index', _.merge(properties, {})))
