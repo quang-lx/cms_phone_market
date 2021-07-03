@@ -45,6 +45,6 @@ class EloquentPInformationRepository extends BaseRepository implements PInformat
     }
 
 	public function listAll() {
-    	return $this->all();
+    	return $this->model->orderBy('title', 'asc')->get();
 	}
 }

@@ -454,7 +454,8 @@ export default {
                 "fix_time": "Thời gian sửa chữa (ngày)",
                 "warranty_time": "Bảo hành (tháng)",
                 "attribute extend": "Thuộc tính mở rộng",
-                "shop_id": "Chi nhánh"
+                "shop_id": "Chi nhánh",
+                "detail_info": "Thông tin chi tiết"
             },
             "list": {
                 "status": "Trạng thái"
