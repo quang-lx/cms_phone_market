@@ -212,7 +212,7 @@
         return new Date().getTime()
       },
         getDateDisplay(timestamp) {
-          return  moment.unix(timestamp).format("MM/DD/YYYY HH:mm");
+          return  moment.unix(timestamp/1000).format("DD/MM/YYYY HH:mm");
 
         },
       holdBoxChat() {
