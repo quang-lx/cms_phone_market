@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Log;
  */
 class UserPointHistory extends Model
 {
-    use  SoftDeletes;
 
     const STATUS_LOCK = 0;
     const STATUS_ACTIVE = 1;
