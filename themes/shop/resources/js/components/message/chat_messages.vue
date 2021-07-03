@@ -31,7 +31,7 @@
                                     <div class="sent_msg">
                                         <p v-if="chat.type === type_text"> {{chat.text}}</p>
                                         <p v-if="chat.type === type_img"> : <img :src="chat.image" width="100"/></p>
-                                        <span class="time_date"> 11:01 AM    |    June 9</span></div>
+                                        <span class="time_date"> {{getDateDisplay(chat.createdAt)}}</span></div>
                                 </div>
                             </template>
 
@@ -59,7 +59,7 @@
                                     <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                                 </h3>
                                 <p class="text-sm">{{item.lastMessage}}</p>
-                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{getDateDisplay(item.createdAt)}}</p>
                             </div>
                         </div>
                         <!-- Message End -->
@@ -75,6 +75,7 @@
 <script>
   import firebase from '../../firebase'
   import _ from 'lodash'
+  import moment from 'moment'
 
   export default {
     data() {
@@ -210,6 +211,10 @@
       getTimeStamp() {
         return new Date().getTime()
       },
+        getDateDisplay(timestamp) {
+          return  moment.unix(timestamp).format("MM/DD/YYYY HH:mm");
+
+        },
       holdBoxChat() {
         this.drawer = true
       },
