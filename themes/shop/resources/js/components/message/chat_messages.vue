@@ -24,7 +24,7 @@
                                         <div class="received_withd_msg">
                                             <p v-if="chat.type === type_text"> {{chat.text}}</p>
                                             <p v-if="chat.type === type_img"> : <img :src="chat.image" width="100"/></p>
-                                            <span class="time_date">  {{getDateDisplay(item.createdAt)}}</span></div>
+                                            <span class="time_date">  {{getDateDisplay(chat.createdAt)}}</span></div>
                                     </div>
                                 </div>
                                 <div class="outgoing_msg" v-else>
