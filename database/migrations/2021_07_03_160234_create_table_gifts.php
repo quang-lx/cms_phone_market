@@ -20,6 +20,8 @@ class CreateTableGifts extends Migration
             $table->integer('amount');
             $table->integer('used_amount')->default(0)->nullable();
             $table->smallInteger('status')->default(0)->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }
