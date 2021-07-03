@@ -185,13 +185,13 @@
         });
 
         //insert table user
-        const userPath = this.dbClientRef + user_id + '/'
+        const userPath = this.dbClientRef + user_id + '/'+ this.current_shop_id+'/';
         const dbUserRefLastMsg = firebase.database().ref(userPath);
         dbUserRefLastMsg.update({
           lastMessage: new_message,
 
         });
-        const patUserChat = userPath + this.current_shop_id + '/chat';
+        const patUserChat = userPath + 'chat';
         const dbUserChat = firebase.database().ref(patUserChat);
         let newUserChatData = dbUserChat.push()
         newUserChatData.set({
