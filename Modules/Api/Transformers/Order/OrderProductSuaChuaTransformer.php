@@ -22,7 +22,7 @@ class OrderProductSuaChuaTransformer extends JsonResource
             'quantity' => $this->quantity,
             'price' => $this->price,
             'price_sale' => $this->price_sale,
-            'product_thumbnail' => $this->productThumbnail? new MediaShortTransformer($this->productThumbnail): null
+			'product_thumbnail' => $this->thumbnail? new MediaShortTransformer($this->thumbnail): null
         ];
 
 
