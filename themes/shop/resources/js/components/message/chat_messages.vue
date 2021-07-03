@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a class="nav-link" href="#" @click.prevent="showListUser">
+        <a class="nav-link" href="#" @click.prevent="showListUser" v-if="current_shop_id">
             <i class="far fa-comments"></i>
             <span class="badge badge-danger navbar-badge">{{this.list_user.length}}</span>
         </a>
