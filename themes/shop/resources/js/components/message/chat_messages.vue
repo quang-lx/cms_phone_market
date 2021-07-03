@@ -70,6 +70,7 @@
         </div>
       </div>
       <el-drawer
+        size="100%"
         :with-header="false"
         :append-to-body="true"
         :visible.sync="dialogImgVisible">
