@@ -210,7 +210,8 @@
                           ),
                         }"
                       >
-                          <cleave v-model="modelForm.discount_amount" :options="options" class="form-control" name="discount_amount"></cleave>
+                          <cleave v-model="modelForm.discount_amount" :options="options" 
+                            class="form-control" name="discount_amount" :disabled="!modelForm.isEdit"></cleave>
 
                         <div
                           class="el-form-item__error"
@@ -230,7 +231,8 @@
                         }"
                       >
 
-                          <cleave v-model="modelForm.require_min_amount" :options="options" class="form-control" name="require_min_amount"></cleave>
+                          <cleave v-model="modelForm.require_min_amount" :options="options" 
+                            class="form-control" name="require_min_amount" :disabled="!this.modelForm.isEdit"></cleave>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('require_min_amount')"
@@ -247,7 +249,8 @@
                         }"
                       >
 
-                          <cleave v-model="modelForm.total" :options="options" class="form-control" name="total"></cleave>
+                          <cleave v-model="modelForm.total" :options="options" 
+                            class="form-control" name="total" :disabled="!this.modelForm.isEdit"></cleave>
                         <div
                           class="el-form-item__error"
                           v-if="form.errors.has('total')"
@@ -464,7 +467,8 @@ export default {
         rawValueTrimPrefix: true,
         numeralIntegerScale: 12,
         numeralDecimalScale: 0
-      }
+      },
+      currentUser : window.MonCMS.current_user.id,
     };
   },
   methods: {
@@ -521,6 +525,9 @@ export default {
           this.modelForm = response.data.data;
           if (this.modelForm.type == '2'){
             $('.check-discount-product').removeClass('hide show').addClass("show");
+          }
+          if (this.currentUser != response.data.data.created_by){
+            this.modelForm.isEdit = false;
           }
           
         });

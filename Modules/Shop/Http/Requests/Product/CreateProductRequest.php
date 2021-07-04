@@ -4,6 +4,7 @@ namespace Modules\Shop\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class CreateProductRequest extends FormRequest
 {
@@ -24,12 +25,31 @@ class CreateProductRequest extends FormRequest
             'sale_price' => 'numeric|min:0|max:100',
             'type' => 'required',
             'warranty_time' => 'required',
+            'medias_multi' => 'required',
         ];
         if (!Auth::user()->shop_id){
             $rules['shop_id'] = 'required';
         }
 
         return $rules;
+    }
+
+    public function withValidator(Validator $validator)
+    {
+        $attributeSelected = $this->attribute_selected;
+        $validator->after(function ($validator) use ($attributeSelected) {
+            if ($attributeSelected && count($attributeSelected['values'])){
+                foreach ($attributeSelected['values'] as $values){
+                    if (!$values['price']){
+                        $validator->errors()->add('price_attribute', 'Vui lòng nhập giá thuộc tính');
+                    }
+    
+                }
+            }
+
+        });
+        
+        return $validator;                     
     }
 
     public function translationRules()
@@ -51,7 +71,7 @@ class CreateProductRequest extends FormRequest
             's_long.numeric' => 'Chiều dài yêu cầu nhập số',
             's_width.numeric' => 'Chiều rộng yêu cầu nhập số',
             's_height.numeric' => 'Chiều cao yêu cầu nhập số',
-            'brand_id.required' => 'Nhãn hiệu là bắt buộc',
+            'brand_id.required' => 'Thương hiệu là bắt buộc',
             'sku.required' => 'SKU là bắt buộc',
             'sku.unique' => 'SKU không được trùng lặp',
             'amount.required' => 'Số lượng là bắt buộc',
@@ -62,6 +82,7 @@ class CreateProductRequest extends FormRequest
             'sale_price.max' => 'Giá khuyến mãi lớn nhất là 100%',
             'type.required' => 'Loại sản phẩm là bắt buộc',
             'warranty_time.required' => 'Thời gian bảo hành là bắt buộc',
+            'medias_multi.required' => 'Vui lòng chọn ảnh sản phẩm',
 
         ];
         if (!Auth::user()->shop_id){

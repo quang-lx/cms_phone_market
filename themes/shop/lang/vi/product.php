@@ -12,7 +12,7 @@ return [
         'manager' => 'Quản lý sản phẩm',
         'btn_add_product' => 'Thêm sản phẩm',
         'updated_by' => 'Người cập nhật',
-        'status' => 'Trạng thái sẵn sàng',
+        'status' => 'Trạng thái sản phẩm',
         'p_state' => 'Tình trạng sản phẩm',
         'p_weight' => 'Cân nặng (gram)',
         's_long' => 'Chiều dài (cm)',
@@ -33,6 +33,7 @@ return [
         'warranty_time' => 'Bảo hành (tháng)',
         'attribute extend' => 'Thuộc tính mở rộng',
         'shop_id' => 'Chi nhánh',
+        'detail_info' => 'Thông tin chi tiết',
     ],
     'list' => [
         'status' => 'Trạng thái',
