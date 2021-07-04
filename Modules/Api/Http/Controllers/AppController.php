@@ -13,6 +13,7 @@ use Modules\Api\Repositories\PaymentMethodRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Api\Repositories\VoucherRepository;
 use Modules\Api\Transformers\DistrictTransformer;
+use Modules\Api\Transformers\GiftTransformer;
 use Modules\Api\Transformers\PhoenixesTransformer;
 use Modules\Api\Transformers\ProvinceTransformer;
 use Modules\Api\Transformers\ShipTypeTransformer;
@@ -115,7 +116,7 @@ class AppController extends ApiController
 	public function gifts(Request $request)
 	{
 		$data = $this->giftRepo->serverPagingFor($request);
-		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
+		return $this->respond(GiftTransformer::collection($data), ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 
 	}
     protected function getOrderSetting()
