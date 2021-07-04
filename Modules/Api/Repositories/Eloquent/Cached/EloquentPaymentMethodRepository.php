@@ -32,7 +32,7 @@ class EloquentPaymentMethodRepository  implements PaymentMethodRepository
 		if ($shopId) {
 			$cacheKey = sprintf(CacheKey::PAYMENT_METHOD_SHOP, $shopId);
 		}
-		return  Cache::rememberForever($cacheKey, function () use ($shopId) {
+		return  Cache::tags(CacheKey::TAG_PAYMENT_METHOD)->rememberForever($cacheKey, function () use ($shopId) {
 			$data = PaymentMethod::query()->get();
 			return PaymentMethodTransformer::collection($data);
 

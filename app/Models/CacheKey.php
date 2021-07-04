@@ -24,11 +24,13 @@ class CacheKey
     const RANK_ALL = 'RANK_ALL';
     const RANK_DETAIL = 'RANK_%s_DETAIL';
 
+    const TAG_SHIP_TYPE = 'TAG_SHIP_TYPE';
     const SHIP_TYPE_ALL = 'SHIP_TYPE_ALL';
     const SHIP_TYPE_SHOP = 'SHIP_TYPE_SHOP_%s';
 
     const PAYMENT_METHOD_ALL = 'PAYMENT_METHOD_ALL';
     const PAYMENT_METHOD_SHOP = 'PAYMENT_METHOD_SHOP_%s';
+    const TAG_PAYMENT_METHOD = 'TAG_PAYMENT_METHOD';
 
     const VOUCHER_ALL = 'VOUCHER_ALL';
     const VOUCHER_SHOP = 'VOUCHER_SHOP_%s';

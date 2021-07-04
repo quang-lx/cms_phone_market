@@ -15,14 +15,14 @@ class EloquentShipTypeRepository extends BaseRepository implements ShipTypeRepos
 	public function create($data)
 	{
 		$model = $this->model->create($data);
-		Cache::forget(CacheKey::SHIP_TYPE_ALL);
+		Cache::forget(CacheKey::TAG_SHIP_TYPE);
 		return $model;
 	}
 
 	public function update($model, $data)
 	{
 		$model->update($data);
-		Cache::forget(CacheKey::SHIP_TYPE_ALL);
+		Cache::forget(CacheKey::TAG_SHIP_TYPE);
 		return $model;
 	}
     public function serverPagingFor(Request $request, $relations = null)

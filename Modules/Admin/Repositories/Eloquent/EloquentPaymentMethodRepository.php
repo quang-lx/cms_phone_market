@@ -13,14 +13,14 @@ class EloquentPaymentMethodRepository extends BaseRepository implements PaymentM
 	public function create($data)
 	{
 		$model = $this->model->create($data);
-		Cache::forget(CacheKey::PAYMENT_METHOD_ALL);
+		Cache::forget(CacheKey::TAG_PAYMENT_METHOD);
 		return $model;
 	}
 
 	public function update($model, $data)
 	{
 		$model->update($data);
-		Cache::forget(CacheKey::PAYMENT_METHOD_ALL);
+		Cache::forget(CacheKey::TAG_PAYMENT_METHOD);
 		return $model;
 	}
     public function serverPagingFor(Request $request, $relations = null)
