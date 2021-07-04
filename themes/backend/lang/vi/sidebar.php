@@ -55,5 +55,6 @@ return [
     'order' => 'Đơn hàng',
     'order sua chua' => 'Đơn hàng sửa chữa',
     'order bao hanh' => 'Đơn hàng bảo hành',
+    'gift management' => 'Đổi quà',
 
 ];

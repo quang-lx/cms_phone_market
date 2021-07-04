@@ -284,6 +284,20 @@ class UserSidebarExtender extends AbstractAdminSidebar {
 
 
 		});
+		$menu->group('gifts management', function (Group $group) {
+			$group->hideHeading(true);
+			$group->item(trans('backend::sidebar.gift management'), function (Item $item) {
+				$item->icon('fa fa-gifts');
+				$item->weight(10);
+				$item->authorize(
+					$this->auth->hasAccess('admin.gift.index')
+				);
+				$item->route('admin.gift.index');
+
+			});
+
+
+		});
 		$menu->group('noti', function (Group $group) {
 			$group->hideHeading(true);
 			$group->item(trans('backend::sidebar.fbnotification'), function (Item $item) {
