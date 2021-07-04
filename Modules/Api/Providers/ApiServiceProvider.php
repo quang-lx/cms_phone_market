@@ -53,6 +53,7 @@ use Modules\Mon\Entities\Product;
 use Modules\Mon\Entities\Rating;
 use Modules\Mon\Entities\RatingShop;
 use Modules\Mon\Entities\ShipType;
+use Modules\Mon\Entities\UserGift;
 use Modules\Mon\Entities\UserPointHistory;
 use Modules\Mon\Entities\Voucher;
 
@@ -269,7 +270,7 @@ class ApiServiceProvider extends ServiceProvider
 		$this->app->bind(
 			UserGiftRepository::class,
 			function () {
-				return new EloquentUserGiftRepository(new Gift());
+				return new EloquentUserGiftRepository(new UserGift());
 			}
 		);
     }
