@@ -16,8 +16,6 @@ class AddAttributeIntoGiftsTable extends Migration
         Schema::table('gifts', function (Blueprint $table) {
             $table->text('description')->nullable();
             $table->softDeletes();
-            $table->bigInteger('created_by')->nullable();
-            $table->bigInteger('updated_by')->nullable();
             $table->bigInteger('deleted_by')->nullable();
         });
     }
