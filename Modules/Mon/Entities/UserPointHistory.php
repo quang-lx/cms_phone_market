@@ -2,6 +2,7 @@
 
 namespace Modules\Mon\Entities;
 
+use App\Jobs\UpdateUserPoint;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -53,6 +54,7 @@ class UserPointHistory extends Model
 						'title' => $title,
 						'point' => (int)$point
 					]);
+					dispatch(new UpdateUserPoint($order->user_id, (int)$point));
 				}
 			}
 		} catch (\Exception $exception) {
