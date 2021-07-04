@@ -161,7 +161,7 @@
 
                     <el-table-column
                       prop=""
-                      :label="$t('orders.label.pay_price')"
+                      :label="$t('orders.label.pay_price_buy_sell')"
                       sortable="custom"
                     >
                     <template slot-scope="scope">

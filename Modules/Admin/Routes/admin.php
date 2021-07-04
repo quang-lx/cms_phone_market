@@ -613,7 +613,29 @@ Route::group(['prefix' => '/fbnotification'], function ( ) {
 
 
 });
+Route::group(['prefix' => '/gift'], function ( ) {
+
+    Route::get('/', [
+        'as' => 'admin.gift.index',
+        'uses' => 'Gift\GiftController@index',
+        'middleware' => 'permission:admin.gift.index'
+    ]);
+    Route::get('create', [
+        'as' => 'admin.gift.create',
+        'uses' => 'Gift\GiftController@create',
+        'middleware' => 'permission:admin.gift.create'
+    ]);
+
+    Route::get('{gift}/edit', [
+        'as' => 'admin.gift.edit',
+        'uses' => 'Gift\GiftController@edit',
+        'middleware' => 'permission:admin.gift.edit'
+    ]);
+
+
+});
 // append
+
 
 
 

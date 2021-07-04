@@ -76,6 +76,9 @@ import PaymentMethodForm from './../components/paymentmethod/form';
 import FbNotificationList from './../components/fbnotification/index';
 import FbNotificationForm from './../components/fbnotification/form';
 
+import GiftList from './../components/gift/index';
+import GiftForm from './../components/gift/form';
+
 const currentLocale = '/' + window.MonCMS.currentLocale;
 
 export default [
@@ -643,6 +646,29 @@ export default [
         component: FbNotificationForm,
         props: {
             pageTitle: 'fbnotification.label.update_title',
+        },
+    },
+
+    // gift
+    {
+        path: '/admin/gift',
+        name: 'admin.gift.index',
+        component: GiftList,
+    },
+    {
+        path: '/admin/gift/create',
+        name: 'admin.gift.create',
+        component: GiftForm,
+        props: {
+            pageTitle: 'gift.label.create_title',
+        },
+    },
+    {
+        path: '/admin/gift/:giftId/edit',
+        name: 'admin.gift.edit',
+        component: GiftForm,
+        props: {
+            pageTitle: 'Gift.label.update_title',
         },
     },
  
