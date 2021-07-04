@@ -3876,7 +3876,23 @@
                     "application/x-www-form-urlencoded"
                 ],
                 "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    },
 
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "per_page",
+                        "required": false,
+                        "type": "integer",
+                        "format": "text"
+                    }
 
                 ],
                 "responses": {
