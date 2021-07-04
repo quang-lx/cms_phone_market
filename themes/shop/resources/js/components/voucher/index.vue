@@ -122,6 +122,10 @@
 
                                         <el-table-column prop="actions" width="130">
                                             <template slot-scope="scope">
+                                                <el-switch v-model="scope.row.status" 
+                                                    :disabled="(currentShop != null && scope.row.shop_id != currentShop) || scope.row.company_id != currentCompany"
+                                                    @change="changeStatus(scope.row.id)">
+                                                </el-switch>
                                                 <edit-button
                                                   :to="{name: 'shop.voucher.edit', params: {voucherId: scope.row.id}}"></edit-button>
                                                 <delete-button :scope="scope" :rows="data"></delete-button>
@@ -170,6 +174,8 @@
                     locale: window.MonCMS.currentLocale || 'en'
                 },
                 listLocales: window.MonCMS.locales,
+                currentShop : window.MonCMS.current_user.shop_id,
+                currentCompany : window.MonCMS.current_user.company_id,
 
 
             };
@@ -203,6 +209,42 @@
                 this.meta.current_page = 0;
                 this.queryServer({})
             },
+
+            changeStatus(voucherId) {
+                this.$confirm('Bạn có chắc muốn thay đổi trạng thái khuyến mại này không?', this.$t('mon.modal.title'), {
+                    confirmButtonText: 'Đồng ý?',
+                    cancelButtonText: 'Hủy bỏ',
+                    type: 'warning',
+                })
+                    .then(() => {
+                        const properties = {
+                            page: this.meta.current_page,
+                            per_page: this.meta.per_page,
+                            order_by: this.order_meta.order_by,
+                            order: this.order_meta.order,
+                            voucher_id: voucherId,
+                        };
+
+                        axios.post(route('api.voucher.changeStatus', properties))
+                            .then((response) => {
+                                console.log(response);
+                                this.$message({
+                                    type: 'success',
+                                    message: response.data.message,
+                                });
+                                // window.location.reload();
+                            });
+                        })
+                    .catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: 'Hủy bỏ!',
+                        });
+                        window.location.reload();
+                    });
+
+                
+            }
 
 
         },

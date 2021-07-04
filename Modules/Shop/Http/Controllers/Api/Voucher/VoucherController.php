@@ -30,6 +30,16 @@ class VoucherController extends ApiController
         $this->voucherRepository = $voucher;
     }
 
+    public function changeStatus(Request $request)
+    {
+        $this->voucherRepository->changeStatus($request);
+
+        return response()->json([
+            'errors' => false,
+            'message' => trans('ch::voucher.message.update success'),
+        ]);
+    }
+
 
     public function index(Request $request)
     {

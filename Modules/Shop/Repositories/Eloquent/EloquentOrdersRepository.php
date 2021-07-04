@@ -914,7 +914,9 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				$orderProduct = new OrderProduct();
 				$orderProduct->order_id = $order->id;
 				$orderProduct->product_id = $product['id'];
-				$orderProduct->product_attribute_value_id  = $this->getProductAttributeValueId($product['attribute_value_id'], $product['attribute_id'], $product['id']);
+				if (isset($product['attribute_value_id']) && isset($product['attribute_id'])){
+					$orderProduct->product_attribute_value_id  = $this->getProductAttributeValueId($product['attribute_value_id'], $product['attribute_id'], $product['id']);
+				}
 				$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
 				$orderProduct->price = isset($product['price']) ? $product['price'] : 0;
 				$orderProduct->price_sale = isset($product['sale_price']) ? self::getPayPrice($product['price'],$product['sale_price']) : 0;
@@ -965,7 +967,10 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				$orderProduct = new OrderProduct();
 				$orderProduct->order_id = $order->id;
 				$orderProduct->product_id = isset($product['id']) ? $product['id'] : null;
-				$orderProduct->product_attribute_value_id  = $this->getProductAttributeValueId($product['attribute_value_id'], $product['attribute_id'], $product['id']);
+				if (isset($product['attribute_value_id']) && isset($product['attribute_id'])){
+					$orderProduct->product_attribute_value_id  = $this->getProductAttributeValueId($product['attribute_value_id'], $product['attribute_id'], $product['id']);
+				}
+				
 				if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
 					$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
 				} else {
