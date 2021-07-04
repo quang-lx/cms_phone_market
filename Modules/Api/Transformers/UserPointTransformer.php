@@ -20,6 +20,7 @@ class UserPointTransformer extends JsonResource
             'product_name' => $this->product_name,
             'title' => $this->title,
             'point' => $this->point,
+            'point_display' => $this->point> 0? '+'.$this->point: $this->point,
             'created_at'=> optional($this->created_at)->format('d/m/Y'),
         ];
 

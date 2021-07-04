@@ -62,4 +62,5 @@ class UserPointHistory extends Model
 		}
 
 	}
+
 }
