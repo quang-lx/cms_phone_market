@@ -698,7 +698,8 @@ export default {
       const properties = {
         page: 0,
         per_page: 1000,
-        phone: queryString
+        phone: queryString,
+        not_check_company: true
       
       };
 
@@ -707,7 +708,7 @@ export default {
         .then((response) => {
           this.userSearchResult = response.data.data;
           this.userSearchResult.forEach(user => {
-            user.value = user.phone;
+            user.value = user.phone + ' - ' + user.name;
           });
         });
     },
