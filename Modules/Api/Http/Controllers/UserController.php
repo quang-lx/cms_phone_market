@@ -36,6 +36,7 @@ class UserController extends ApiController
 
 		$this->orderUserNoti = $orderUserNoti;
 		$this->userPointRepository = $userPointRepository;
+		$this->giftRepo = $giftRepo;
 	}
     public function update(Request $request)
     {
