@@ -15,6 +15,7 @@ use Modules\Mon\Entities\User;
 use Modules\Mon\Entities\OrderProduct;
 use Modules\Mon\Entities\PaymentHistory;
 use Modules\Mon\Entities\PaymentMethod;
+use Modules\Mon\Entities\ProductAttributeValue;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -885,6 +886,15 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         try {
 			$newUser = $this->getUserByPhone($requestParams);
 			$user = Auth::user();
+
+			$paymentHistory = new PaymentHistory();
+			$paymentMethod = PaymentMethod::find($requestParams['payment_method']);
+			$paymentHistory->user_id = $user->id;
+			$paymentHistory->payment_method_id = $requestParams['payment_method'];
+			$paymentHistory->pay_amount = $requestParams['total_price'];
+			$paymentHistory->pay_method_name = $paymentMethod->name;
+			$paymentHistory->save();
+
 			$order = new Orders();
 			$order->order_type = Orders::TYPE_MUA_HANG;
 			$order->company_id = $user->company_id;
@@ -896,24 +906,15 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			$order->total_price = $requestParams['total_price'];
 			$order->discount = 0;
 			$order->pay_price = $requestParams['total_price'];
-			$order->payment_history_id = $requestParams['payment_method'];
+			$order->payment_history_id = $paymentHistory->id;
 			$order->save();
-
-			$paymentHistory = new PaymentHistory();
-			$paymentMethod = PaymentMethod::find($requestParams['payment_method']);
-			$paymentHistory->user_id = $user->id;
-			$paymentHistory->payment_method_id = $requestParams['payment_method'];
-			$paymentHistory->pay_amount = $requestParams['total_price'];
-			$paymentHistory->pay_method_name = $paymentMethod->name;
-			$paymentHistory->save();
-			
 
 			// Lưu order_product
 			foreach ($requestParams['products'] as $product) {
 				$orderProduct = new OrderProduct();
 				$orderProduct->order_id = $order->id;
 				$orderProduct->product_id = $product['id'];
-				$orderProduct->product_attribute_value_id  = isset($product['attribute_value_id']) ? $product['attribute_value_id'] : null;
+				$orderProduct->product_attribute_value_id  = $this->getProductAttributeValueId($product['attribute_value_id'], $product['attribute_id'], $product['id']);
 				$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
 				$orderProduct->price = isset($product['price']) ? $product['price'] : 0;
 				$orderProduct->price_sale = isset($product['sale_price']) ? self::getPayPrice($product['price'],$product['sale_price']) : 0;
@@ -936,6 +937,15 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         try {
 			$newUser = $this->getUserByPhone($requestParams);
 			$user = Auth::user();
+
+			$paymentHistory = new PaymentHistory();
+			$paymentMethod = PaymentMethod::find($requestParams['payment_method']);
+			$paymentHistory->user_id = $user->id;
+			$paymentHistory->payment_method_id = $requestParams['payment_method'];
+			$paymentHistory->pay_amount = $requestParams['total_price'];
+			$paymentHistory->pay_method_name = $paymentMethod->name;
+			$paymentHistory->save();
+
 			$order = new Orders();
 			$order->order_type = Orders::TYPE_SUA_CHUA;
 			$order->company_id = $user->company_id;
@@ -947,23 +957,15 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 			$order->total_price = $requestParams['total_price'];
 			$order->discount = 0;
 			$order->pay_price = $requestParams['total_price'];
-			$order->payment_history_id = $requestParams['payment_method'];
+			$order->payment_history_id = $paymentHistory->id;
 			$order->save();
-
-			$paymentHistory = new PaymentHistory();
-			$paymentMethod = PaymentMethod::find($requestParams['payment_method']);
-			$paymentHistory->user_id = $user->id;
-			$paymentHistory->payment_method_id = $requestParams['payment_method'];
-			$paymentHistory->pay_amount = $requestParams['total_price'];
-			$paymentHistory->pay_method_name = $paymentMethod->name;
-			$paymentHistory->save();
 
 			// Lưu order_product
 			foreach ($requestParams['products'] as $product) {
 				$orderProduct = new OrderProduct();
 				$orderProduct->order_id = $order->id;
 				$orderProduct->product_id = isset($product['id']) ? $product['id'] : null;
-				$orderProduct->product_attribute_value_id  = isset($product['attribute_value_id']) ? $product['attribute_value_id'] : null;
+				$orderProduct->product_attribute_value_id  = $this->getProductAttributeValueId($product['attribute_value_id'], $product['attribute_id'], $product['id']);
 				if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
 					$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
 				} else {
@@ -985,6 +987,17 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
         }
 		
     }
+
+	public function getProductAttributeValueId($product_attribute_value_id, $attribute_id, $product_id){
+		if ($product_attribute_value_id && $attribute_id && $product_id){
+			$record = ProductAttributeValue::query()->where('value_id', $product_attribute_value_id)
+				->where('attribute_id', $attribute_id)->where('product_id', $product_id)->first();
+			return $record->id;
+		} else {
+			return '';
+		}
+		
+	}
 
 	public static function getPayPrice($basePrice, $discount){
 		return round(((100 - $discount)/100) * $basePrice);

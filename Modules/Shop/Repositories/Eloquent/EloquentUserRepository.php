@@ -18,10 +18,14 @@ class EloquentUserRepository extends BaseRepository implements UserRepository
     public function serverPagingFor(Request $request, $relations = null)
     {
         $query = $this->newQueryBuilder();
+        $notCheckCompany = $request->get('not_check_company');
         if ($relations) {
             $query = $query->with($relations);
         }
-        $query->where('company_id', Auth::user()->company_id);
+        if (!$notCheckCompany){
+            $query->where('company_id', Auth::user()->company_id);
+        }
+        
         if (Auth::user()->shop_id){
             $query->where('shop_id', Auth::user()->shop_id);
         }
