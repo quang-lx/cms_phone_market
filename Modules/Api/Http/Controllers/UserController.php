@@ -142,7 +142,7 @@ class UserController extends ApiController
 		/** @var Gift $gift */
 		$gift = Gift::find($request->get('gift_id'));
 		if(!$gift){
-			return $this->respond([], trans('api::messages.validate.attribute is required', ['attribute' => 'Quà tặng']), ErrorCode::ERR08);
+			return $this->respond([], trans('api::messages.validate.gift not found', ['attribute' => 'Quà tặng']), ErrorCode::ERR08);
 		}
 		if($gift->used_amount >= $gift->amount){
 			return $this->respond([], trans('api::messages.validate.gift not enough', ['attribute' => 'Quà tặng']), ErrorCode::ERR08);
