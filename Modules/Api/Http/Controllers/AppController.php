@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\AreaRepository;
+use Modules\Api\Repositories\GiftRepository;
 use Modules\Api\Repositories\PaymentMethodRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
 use Modules\Api\Repositories\VoucherRepository;
@@ -34,8 +35,11 @@ class AppController extends ApiController
     /** @var VoucherRepository */
     public $voucherRepo;
 
+	/** @var GiftRepository */
+	public $giftRepo;
+
     public function __construct(Authentication $auth, AreaRepository $areaRepository, ShipTypeRepository $shipTypeRepo, PaymentMethodRepository $paymentMethodRepo,
-                                VoucherRepository $voucherRepo)
+                                VoucherRepository $voucherRepo, GiftRepository $giftRepo)
     {
         parent::__construct($auth);
 
@@ -43,6 +47,7 @@ class AppController extends ApiController
         $this->shipTypeRepo = $shipTypeRepo;
         $this->paymentMethodRepo = $paymentMethodRepo;
         $this->voucherRepo = $voucherRepo;
+        $this->giftRepo = $giftRepo;
     }
 
     public function provinces()
@@ -107,7 +112,12 @@ class AppController extends ApiController
         return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 
     }
+	public function gifts(Request $request)
+	{
+		$data = $this->giftRepo->serverPagingFor($request);
+		return $this->respond($data, ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 
+	}
     protected function getOrderSetting()
     {
         $orderSetting = Cache::rememberForever(CacheKey::ORDER_SETTING, function () {

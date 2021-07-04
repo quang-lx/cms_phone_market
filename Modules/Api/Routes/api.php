@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/app')->group(function () {
+	Route::get('/gifts', [
+		'as' => 'api.app.gifts',
+		'uses' => 'AppController@gifts',
+	]);
     Route::get('/setting', [
         'as' => 'api.app.setting',
         'uses' => 'AppController@setting',
