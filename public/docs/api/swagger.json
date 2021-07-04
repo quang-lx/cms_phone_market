@@ -2581,7 +2581,7 @@
             "get": {
 
                 "tags": [
-                    "gifts"
+                    "app"
                 ],
                 "summary": "Danh sach gifts",
                 "description": "Danh sach gifts",
