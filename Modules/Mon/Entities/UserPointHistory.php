@@ -38,7 +38,7 @@ class UserPointHistory extends Model
 	public static function createFromOrder($order) {
 		try {
 			if ($order && $order->order_type == Orders::TYPE_MUA_HANG) {
-				$orderProducts = $order->orderProducts;
+				$orderProducts = $order->allOrderProducts;
 				foreach ($orderProducts as $orderProduct) {
 					$productName = $orderProduct->product_title;
 					$productId = $orderProduct->product_id;
