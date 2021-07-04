@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Api\Entities\ErrorCode;
 use Modules\Api\Repositories\GiftRepository;
 use Modules\Api\Repositories\OrderUserNotiRepository;
+use Modules\Api\Repositories\UserGiftRepository;
 use Modules\Api\Repositories\UserPointRepository;
 use Modules\Api\Transformers\OrderUserNotiTransformer;
 use Modules\Api\Transformers\UserPointTransformer;
@@ -27,16 +28,16 @@ class UserController extends ApiController
 	/** @var UserPointRepository */
 	public $userPointRepository;
 
-	/** @var GiftRepository */
-	public $giftRepo;
+	/** @var UserGiftRepository */
+	public $userGiftRepo;
 
-	public function __construct(Authentication $auth, OrderUserNotiRepository $orderUserNoti,UserPointRepository $userPointRepository, GiftRepository $giftRepo)
+	public function __construct(Authentication $auth, OrderUserNotiRepository $orderUserNoti,UserPointRepository $userPointRepository, UserGiftRepository $userGiftRepo)
 	{
 		parent::__construct($auth);
 
 		$this->orderUserNoti = $orderUserNoti;
 		$this->userPointRepository = $userPointRepository;
-		$this->giftRepo = $giftRepo;
+		$this->userGiftRepo = $userGiftRepo;
 	}
     public function update(Request $request)
     {
@@ -153,7 +154,7 @@ class UserController extends ApiController
 			return $this->respond([], trans('api::messages.validate.user point not enough', ['attribute' => 'Quà tặng']), ErrorCode::ERR08);
 
 		}
-		$data = $this->giftRepo->create($user, $gift);
+		$data = $this->userGiftRepo->create($user, $gift);
 		if ($data) {
 			return $this->respond([],ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 		} else {
@@ -163,7 +164,7 @@ class UserController extends ApiController
 	}
 
 	public function myGifts(Request $request) {
-		$points = $this->giftRepo->serverPagingFor($request);
+		$points = $this->userGiftRepo->serverPagingFor($request);
 		return $this->respond(UserPointTransformer::collection($points),ErrorCode::SUCCESS_MSG, ErrorCode::SUCCESS);
 	}
 }
