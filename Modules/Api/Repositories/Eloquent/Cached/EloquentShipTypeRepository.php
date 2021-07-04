@@ -29,7 +29,7 @@ class EloquentShipTypeRepository  implements ShipTypeRepository
 		if ($shopId) {
 			$cacheKey = sprintf(CacheKey::SHIP_TYPE_SHOP, $shopId);
 		}
-		return  Cache::rememberForever($cacheKey, function () use ($shopId) {
+		return  Cache::tags(CacheKey::TAG_SHIP_TYPE)->rememberForever($cacheKey, function () use ($shopId) {
 			if ($shopId) {
 				$subQuery = ShopShipType::query()->where('shop_id', $shopId);
 				$subQuery->where('status', ShopShipType::TYPE_OFF)->select('ship_type_id');
