@@ -140,6 +140,14 @@ Route::middleware(['auth:api'])->prefix('user')->group(function ($router) {
 		'uses' => 'UserController@pointHistory',
 		'as' => 'apife.user.pointHistory',
 	]);
+	Route::get('my-gifts', [
+		'uses' => 'UserController@myGifts',
+		'as' => 'apife.user.myGifts',
+	]);
+	Route::post('exchange-gift', [
+		'uses' => 'UserController@exchangeGift',
+		'as' => 'apife.user.exchangeGift',
+	]);
 });
 
 

@@ -26,6 +26,7 @@ use Modules\Api\Repositories\Eloquent\EloquentProductRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingRepository;
 use Modules\Api\Repositories\Eloquent\EloquentRatingShopRepository;
 use Modules\Api\Repositories\Eloquent\EloquentSearchRepository;
+use Modules\Api\Repositories\Eloquent\EloquentUserGiftRepository;
 use Modules\Api\Repositories\Eloquent\EloquentUserPointRepository;
 use Modules\Api\Repositories\GiftRepository;
 use Modules\Api\Repositories\HomeSettingRepository;
@@ -38,6 +39,7 @@ use Modules\Api\Repositories\RatingRepository;
 use Modules\Api\Repositories\RatingShopRepository;
 use Modules\Api\Repositories\SearchRepository;
 use Modules\Api\Repositories\ShipTypeRepository;
+use Modules\Api\Repositories\UserGiftRepository;
 use Modules\Api\Repositories\UserPointRepository;
 use Modules\Api\Repositories\VoucherRepository;
 use Modules\Mon\Entities\Address;
@@ -261,6 +263,13 @@ class ApiServiceProvider extends ServiceProvider
 			GiftRepository::class,
 			function () {
 				return new EloquentGiftRepository(new Gift());
+			}
+		);
+
+		$this->app->bind(
+			UserGiftRepository::class,
+			function () {
+				return new EloquentUserGiftRepository(new Gift());
 			}
 		);
     }
