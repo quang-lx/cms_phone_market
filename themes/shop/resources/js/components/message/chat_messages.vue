@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-9">
           <div class="mesgs" style="display: block" v-if="boxChat" @click="holdBoxChat">
-            <div class="msg_history">
+            <div class="msg_history" id="msg_history">
               <template v-for="(chat,chatIdx) in chatGroup.chats">
 
 
@@ -142,7 +142,10 @@
     created() {
       this.getListChatClient()
     },
-
+    mounted() {
+      var objDiv = document.getElementById("msg_history");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    },
     methods: {
       showPopupImg(img) {
         this.img_selected = img
