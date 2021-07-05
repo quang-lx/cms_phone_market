@@ -108,7 +108,7 @@
                             "
                           ></div>
                         </div>
-                         <div class="col-md-12">
+                         <!-- <div class="col-md-12">
                           <el-form-item
                             :label="$t('gift.label.description')"
                             :class="{
@@ -123,7 +123,30 @@
                             ></div>
 
                           </el-form-item>
-                        </div>
+                        </div> -->
+                          <div class="col-md-12">
+                  <el-form-item
+                    :label="$t('gift.label.description')"
+                    :class="{
+                      'el-form-item is-error': form.errors.has('description'),
+                    }"
+                  >
+                    <div slot="label">
+                      <label class="el-form-item__label">{{
+                        $t("gift.label.description")
+                      }}</label>
+                    </div>
+                    <tinymce
+                      v-model="modelForm.description"
+                      :height="500"
+                    ></tinymce>
+                    <div
+                      class="el-form-item__error"
+                      v-if="form.errors.has('description')"
+                      v-text="form.errors.first('description')"
+                    ></div>
+                  </el-form-item>
+                </div>
                           <div class="col-md-6">
                           <el-form-item
                             :label="$t('gift.label.status')"
@@ -178,6 +201,7 @@ import axios from "axios";
 import Form from "form-backend-validation";
 import SingleFileSelector from "../../mixins/SingleFileSelector.js";
 import Cleave from 'vue-cleave-component';
+import Tinymce from "../utils/Tinymce";
 
 export default {
   props: {
@@ -186,7 +210,8 @@ export default {
   },
   mixins: [SingleFileSelector],
   components: {
-      Cleave
+      Cleave,
+      Tinymce
     },
   data() {
     return {

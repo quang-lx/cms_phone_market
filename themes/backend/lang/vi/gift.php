@@ -1,7 +1,7 @@
 <?php
 return [
     'label' => [
-        'gift' => 'Quản lý gift',
+        'quà tặng' => 'Quản lý quà tặng',
         'id' => 'ID',
         'name' => 'Tên quà tặng',
         'image' => 'Ảnh',
@@ -12,15 +12,15 @@ return [
         'created_by' => 'Người tạo',
         'created_at' => 'Ngày tạo',
 
-        'create_title' => 'Tạo gift',
-        'update_title' => 'Cập nhật gift',
+        'create_title' => 'Tạo quà tặng',
+        'update_title' => 'Cập nhật quà tặng',
         'detail_title' => 'Chi tiết'
     ],
 
     'message' => [
-        'create success' => 'Tạo gift thành công.',
-        'update success' => 'Cập nhật gift thành công.',
-        'delete success' => 'Xóa gift thành công.',
+        'create success' => 'Tạo quà tặng thành công.',
+        'update success' => 'Cập nhật quà tặng thành công.',
+        'delete success' => 'Xóa quà tặng thành công.',
     ]
 
 ];

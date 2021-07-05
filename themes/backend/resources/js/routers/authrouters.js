@@ -668,7 +668,7 @@ export default [
         name: 'admin.gift.edit',
         component: GiftForm,
         props: {
-            pageTitle: 'Gift.label.update_title',
+            pageTitle: 'gift.label.update_title',
         },
     },
  
