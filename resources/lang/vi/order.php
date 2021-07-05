@@ -24,7 +24,7 @@ return [
             'type' => 'baohanh_:order_status',
             'title' => 'Đơn bảo hành'
        ],
-       'ban_hang'=>[
+       'mua_hang'=>[
 	       'content created' => 'Đặt hàng thành công, vui lòng chờ người bán xác nhận đơn hàng :order_code.',
             'content confirm' => 'Đơn hàng :order_code đã được xác nhận, vui lòng chờ người bán giao hàng.',
             'content cancel' => 'Đơn hàng :order_code đã được hủy bởi người bán.',
