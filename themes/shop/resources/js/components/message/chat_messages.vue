@@ -141,7 +141,8 @@
     },
     created() {
       this.getListChatClient(),
-          setTimeout(function(){ var objDiv = document.getElementById("msg_history");
+          setInterval(function(){ var objDiv = document.getElementById("msg_history");
+            if (objDiv)
             objDiv.scrollTop = objDiv.scrollHeight;},1000)
     },
 
