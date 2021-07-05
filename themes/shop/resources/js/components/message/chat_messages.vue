@@ -140,7 +140,9 @@
 
     },
     created() {
-      this.getListChatClient()
+      this.getListChatClient(),
+          setTimeout(function(){ var objDiv = document.getElementById("msg_history");
+            objDiv.scrollTop = objDiv.scrollHeight;},1000)
     },
 
     methods: {
@@ -179,7 +181,6 @@
             item.key = doc.key
             this.list_user.push(item)
           });
-          this.scrollChatToBottom()
         });
 
       },
@@ -259,7 +260,6 @@
         } else {
           this.boxChat = false
         }
-        this.scrollChatToBottom()
       },
     }
   };
