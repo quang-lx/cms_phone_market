@@ -27,6 +27,7 @@ class VoucherTransformer extends JsonResource
             'updated_at' => $this->updated_at->format('H:i d/m/Y'),
             'updated_by' =>$this->updated_by,
             'shop_id' =>$this->shop_id,
+            'company_id' =>$this->company_id,
             'actived_at' => $this->actived_at,
             'expired_at' => $this->expired_at,
             'total' => $this->total,
@@ -37,6 +38,7 @@ class VoucherTransformer extends JsonResource
             'description' => $this->description,
             'thumbnail' => $this->thumbnail,
             'created_by' => $this->created_by,
+            'status' => $this->status ? true : false,
 
 
              'urls' => [

@@ -17,6 +17,10 @@ class Voucher extends Model
 
     const DISCOUNT_PRICE = 1;
     const DISCOUNT_PERCENT = 2;
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
     protected $casts = [
         'actived_at' => 'datetime',
         'expired_at' => 'datetime',
@@ -45,6 +49,7 @@ class Voucher extends Model
         'deleted_at',
         'created_at',
         'updated_at',
+        'status',
     ];
 
     public function company()
@@ -81,14 +86,21 @@ class Voucher extends Model
         $statusName = '';
         $start = strtotime($this->actived_at);
         $end = strtotime($this->expired_at);
-        if (time() < $start){
-            $statusName.='Sắp diễn ra: ';
-        } else if (time() <= $end){
-            $statusName.='Đang diễn ra: ';
+        $status = $this->status ;
+
+        if (!$status){
+            $statusName = 'Không hiệu lực';
         } else {
-            $statusName.='Đã kết thúc: ';
+            if (time() < $start){
+                $statusName.='Sắp diễn ra: ';
+            } else if (time() <= $end){
+                $statusName.='Đang diễn ra: ';
+            } else {
+                $statusName.='Đã kết thúc: ';
+            }
+            $statusName.= sprintf('%s - %s', date('d/m/Y', $start), date('d/m/Y', $end));
         }
-        $statusName.= sprintf('%s - %s', date('d/m/Y', $start), date('d/m/Y', $end));
+        
         return $statusName;
     }
 

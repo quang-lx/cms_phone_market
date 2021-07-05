@@ -213,6 +213,11 @@ Route::middleware('auth:api')->prefix('/brands')->group(function (){
 });
 Route::middleware('auth:api')->prefix('/vouchers')->group(function (){
 
+    Route::post('/changeStatus', [
+        'as' => 'api.voucher.changeStatus',
+        'uses' => 'Voucher\VoucherController@changeStatus',
+    ]);
+
     Route::get('/', [
         'as' => 'api.voucher.index',
         'uses' => 'Voucher\VoucherController@index',

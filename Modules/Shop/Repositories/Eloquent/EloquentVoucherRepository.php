@@ -10,10 +10,19 @@ use \Modules\Mon\Repositories\Eloquent\BaseRepository;
 use Illuminate\Support\Facades\Auth;
 use Modules\Shop\Events\Voucher\VoucherWasCreated;
 use Modules\Shop\Events\Voucher\VoucherWasUpdated;
+use Modules\Mon\Entities\Voucher;
 
 
 class EloquentVoucherRepository extends BaseRepository implements VoucherRepository
 {
+    public function changeStatus(Request $request)
+    {
+        $id = $request->get('voucher_id');
+        $voucherInfo = Voucher::find($id);
+        $voucherInfo->status = !$voucherInfo->status;
+        $voucherInfo->save();
+        return $voucherInfo;
+    }
 
     public function create($data)
     {

@@ -99,7 +99,7 @@
                           >
                             <el-select
                               v-model="modelForm.shop_id"
-                              :placeholder="$t('storageproduct.label.shop_id')"
+                              :placeholder="modelForm.shop_id ? $t('storageproduct.label.shop_id') : modelForm.company_name"
                               filterable
                               style="width: 100% !important"
                             >
@@ -351,6 +351,7 @@ export default {
         .then((response) => {
           this.loading = false;
           this.modelForm = response.data.data;
+          console.log(this.modelForm);
         });
     },
 
