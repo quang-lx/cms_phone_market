@@ -16,7 +16,8 @@ class HomeProductTransformer extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'discount' => 15,
+	        'sale_price' => $this->price - ($this->sale_price * $this->price)/100,
+	        'discount' => $this->sale_price,
 	        'thumbnail' => $this->thumbnail?  new MediaShortTransformer($this->thumbnail): null
 
         ];
