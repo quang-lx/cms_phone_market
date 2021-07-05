@@ -1,7 +1,7 @@
 <?php
 return [
     'label' => [
-        'quà tặng' => 'Quản lý quà tặng',
+        'gift' => 'Quản lý quà tặng',
         'id' => 'ID',
         'name' => 'Tên quà tặng',
         'image' => 'Ảnh',
