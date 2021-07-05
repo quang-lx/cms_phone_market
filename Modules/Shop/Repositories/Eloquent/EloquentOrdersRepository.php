@@ -267,7 +267,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
 
-        
+
     }
     public function repairFixing($model, $data)
     {
@@ -451,10 +451,10 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
     }
-    
 
-    
-    
+
+
+
 
     // đơn hàng bảo hành thông báo
 
@@ -551,7 +551,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             'message' => 'Lỗi trạng thái cập nhật',
         ],422);
 
-        
+
     }
     public function guaranteeWarranting($model, $data)
     {
@@ -706,18 +706,18 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 	        $model->update($data_update);
 
 	        $data = [
-		        'title' => trans('order.notifications.ban_hang.title'),
-		        'content' => trans('order.notifications.ban_hang.content cancel', ['order_code' => $model->id]),
+		        'title' => trans('order.notifications.mua_hang.title'),
+		        'content' => trans('order.notifications.mua_hang.content cancel', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
-		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+		        'type' => trans('order.notifications.mua_hang.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
-		        'title' => trans('order.notifications.ban_hang.title'),
-		        'content' => trans('order.notifications.ban_hang.content cancel', ['order_code' => $model->id]),
-		        'noti_type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
+		        'title' => trans('order.notifications.mua_hang.title'),
+		        'content' => trans('order.notifications.mua_hang.content cancel', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.mua_hang.type', ['order_status' => Orders::STATUS_ORDER_CANCEL]),
 
 		        'user_id' => $model->user->id,
 		        'order_id' => $model->id
@@ -755,18 +755,18 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 	        $model->update($data_update);
 
 	        $data = [
-		        'title' => trans('order.notifications.ban_hang.title'),
-		        'content' => trans('order.notifications.ban_hang.content confirm', ['order_code' => $model->id]),
+		        'title' => trans('order.notifications.mua_hang.title'),
+		        'content' => trans('order.notifications.mua_hang.content confirm', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
-		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+		        'type' => trans('order.notifications.mua_hang.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
-		        'title' => trans('order.notifications.ban_hang.title'),
-		        'content' => trans('order.notifications.ban_hang.content confirm', ['order_code' => $model->id]),
-		        'noti_type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
+		        'title' => trans('order.notifications.mua_hang.title'),
+		        'content' => trans('order.notifications.mua_hang.content confirm', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.mua_hang.type', ['order_status' => Orders::STATUS_ORDER_SENDING]),
 
 		        'user_id' => $model->user->id,
 		        'order_id' => $model->id
@@ -804,18 +804,18 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             ];
 	        $model->update($data_update);
 	        $data = [
-		        'title' => trans('order.notifications.ban_hang.title'),
-		        'content' => trans('order.notifications.ban_hang.content done', ['order_code' => $model->id]),
+		        'title' => trans('order.notifications.mua_hang.title'),
+		        'content' => trans('order.notifications.mua_hang.content done', ['order_code' => $model->id]),
 		        'fcm_token' => $model->user->fcm_token,
 		        'order_id' => $model->id,
-		        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+		        'type' => trans('order.notifications.mua_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
 	        ];
 
 	        event(new ShopNotiCreated($data));
 	        event(new ShopUpdateOrderStatus([
-		        'title' => trans('order.notifications.ban_hang.title'),
-		        'content' => trans('order.notifications.ban_hang.content done', ['order_code' => $model->id]),
-		        'noti_type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
+		        'title' => trans('order.notifications.mua_hang.title'),
+		        'content' => trans('order.notifications.mua_hang.content done', ['order_code' => $model->id]),
+		        'noti_type' => trans('order.notifications.mua_hang.type', ['order_status' => Orders::STATUS_ORDER_DONE]),
 
 		        'user_id' => $model->user->id,
 		        'order_id' => $model->id
@@ -850,7 +850,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		$str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
 		$str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
 		$str = preg_replace("/(đ)/", 'd', $str);
-	
+
 		$str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
 		$str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
 		$str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
@@ -970,7 +970,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 				if (isset($product['attribute_value_id']) && isset($product['attribute_id'])){
 					$orderProduct->product_attribute_value_id  = $this->getProductAttributeValueId($product['attribute_value_id'], $product['attribute_id'], $product['id']);
 				}
-				
+
 				if ($requestParams['type_product'] == Orders::TYPE_SUA_CHUA_PRODUCT_EXIST){
 					$orderProduct->quantity = isset($product['amount']) ? $product['amount'] : 0;
 				} else {
@@ -990,7 +990,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
             DB::rollBack();
             return [trans('api::messages.order.internal server error'), ErrorCode::ERR500];
         }
-		
+
     }
 
 	public function getProductAttributeValueId($product_attribute_value_id, $attribute_id, $product_id){
@@ -1001,7 +1001,7 @@ class EloquentOrdersRepository extends BaseRepository implements OrdersRepositor
 		} else {
 			return '';
 		}
-		
+
 	}
 
 	public static function getPayPrice($basePrice, $discount){

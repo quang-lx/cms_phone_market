@@ -708,11 +708,11 @@ class EloquentOrderRepository implements OrderRepository
 		        }
 
 		        $data = [
-			        'title' => trans('order.notifications.ban_hang.title'),
-			        'content' => trans('order.notifications.ban_hang.content created', ['order_code' => $orderCreated->id]),
+			        'title' => trans('order.notifications.mua_hang.title'),
+			        'content' => trans('order.notifications.mua_hang.content created', ['order_code' => $orderCreated->id]),
 			        'fcm_token' => $user->fcm_token,
 			        'order_id' => $orderCreated->id,
-			        'type' => trans('order.notifications.ban_hang.type', ['order_status' => Orders::STATUS_ORDER_CREATED]),
+			        'type' => trans('order.notifications.mua_hang.type', ['order_status' => Orders::STATUS_ORDER_CREATED]),
 		        ];
 
 		        event(new ShopNotiCreated($data));
