@@ -142,11 +142,12 @@
     created() {
       this.getListChatClient()
     },
-    mounted() {
-      var objDiv = document.getElementById("msg_history");
-      objDiv.scrollTop = objDiv.scrollHeight;
-    },
+
     methods: {
+      scrollChatToBottom() {
+        var objDiv = document.getElementById("msg_history");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      },
       showPopupImg(img) {
         this.img_selected = img
         this.dialogImgVisible = true
@@ -178,11 +179,12 @@
             item.key = doc.key
             this.list_user.push(item)
           });
+          this.scrollChatToBottom()
         });
 
       },
       sendChat(user_id, user_name, new_message) {
-        console.log(new_message, user_name, user_id)
+
         if (new_message === null || new_message == '') return
         // insert table shops
         const path = this.dbRef + user_id + '/'
@@ -257,6 +259,7 @@
         } else {
           this.boxChat = false
         }
+        this.scrollChatToBottom()
       },
     }
   };
