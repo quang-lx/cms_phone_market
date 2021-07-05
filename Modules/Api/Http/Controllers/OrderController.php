@@ -4,6 +4,7 @@ namespace Modules\Api\Http\Controllers;
 
 use App\Events\OrderStatusUpdated;
 use App\Events\ShopNotiCreated;
+use App\Events\ShopUpdateOrderStatus;
 use App\Events\UserUpdateOrderStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -290,6 +291,14 @@ class OrderController extends ApiController
 					];
 
 					event(new ShopNotiCreated($data));
+					event(new ShopUpdateOrderStatus([
+						'title' => trans(sprintf('order.notifications.%s.title', $order->order_type)),
+						'content' => trans(sprintf('order.notifications.%s.content done', $order->order_type), ['order_code' => $order->id]),
+						'noti_type' => trans(sprintf('order.notifications.%s.type', $order->order_type), ['order_status' => Orders::STATUS_ORDER_DONE]),
+
+						'user_id' => $order->user_id,
+						'order_id' => $order->id
+					]));
 				}
 				if ($order->order_type == Orders::TYPE_MUA_HANG && $newStatus = Orders::STATUS_ORDER_DONE) {
 					$orderProducts = $order->allOrderProducts;
