@@ -12,6 +12,7 @@ mix.scripts([
     'assets/js/vueinit.js',
 ], 'assets/js/app.js');
 mix.copyDirectory('resources/images', 'assets/images');
+mix.copyDirectory('resources/vendor/login-layout', 'assets/login-layout');
 
 /**
  * Copy node module

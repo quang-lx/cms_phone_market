@@ -1,0 +1,464 @@
+.call-now {
+  left: 0;
+  bottom: 48px;
+  height: 60px;
+  min-width: 200px;
+  position: fixed;
+  background-color: var(--main-color);;
+  border-radius: 0 25px 25px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,.8);
+  z-index: 998;
+  padding: 5px;
+}
+.call-now .btn-call-now i {
+   position: absolute;
+   color:var(--main-color);;
+   background-color: #fff;
+   font-size: 35px;
+   right: 0;
+   height: 50px;
+   width: 50px;
+   line-height: 50px;
+   text-align: center;
+   border-radius: 50%;
+   border: 1px solid var(--main-color);;
+ }
+ .links>li>a:before, i[class^="icon-"], i[class*=" icon-"] {
+    font-family: 'fl-icons' !important;
+    speak: none !important;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    position: relative;
+    line-height: 1.2;
+  }
+  .call-now .btn-call-now p {
+     color: #fff;
+     font-size: 14px;
+     min-width: 150px;
+     text-align: center;
+     vertical-align: middle;
+     display: inline-block;
+   }
+   .call-now .btn-call-now strong {
+      display: block;
+      font-size: 18px;
+    }
+.phonering-alo-phone {
+  position:fixed;
+  visibility:hidden;
+  background-color:transparent;
+  width:200px;
+  height:200px;
+  cursor:pointer;
+  z-index:200000!important;
+  -webkit-backface-visibility:hidden;
+  -webkit-transform:translateZ(0);
+  transition:visibility .5s;
+  left: 79px !important;
+  bottom: -24px !important;
+  display:block
+}
+
+.phonering-alo-phone.phonering-alo-show {
+  visibility:visible
+}
+
+.phonering-alo-phone.phonering-alo-static {
+  opacity:.6
+}
+
+.phonering-alo-phone.phonering-alo-hover,.phonering-alo-phone:hover {
+  opacity:1
+}
+
+.phonering-alo-ph-circle {
+  width:160px;
+  height:160px;
+  top:20px;
+  left:20px;
+  position:absolute;
+  background-color:transparent;
+  border-radius:100% !important;
+  border:2px solid rgba(30,30,30,0.4);
+  opacity:.1;
+  -webkit-animation:phonering-alo-circle-anim 1.2s infinite ease-in-out;
+  animation:phonering-alo-circle-anim 1.2s infinite ease-in-out;
+  transition:all .5s;
+  -webkit-transform-origin:50% 50%;
+  -ms-transform-origin:50% 50%;
+  transform-origin:50% 50%
+}
+
+.phonering-alo-phone.phonering-alo-active .phonering-alo-ph-circle {
+  -webkit-animation:phonering-alo-circle-anim 1.1s infinite ease-in-out!important;
+  animation:phonering-alo-circle-anim 1.1s infinite ease-in-out!important
+}
+
+.phonering-alo-phone.phonering-alo-static .phonering-alo-ph-circle {
+  -webkit-animation:phonering-alo-circle-anim 2.2s infinite ease-in-out!important;
+  animation:phonering-alo-circle-anim 2.2s infinite ease-in-out!important
+}
+
+.phonering-alo-phone.phonering-alo-hover .phonering-alo-ph-circle,.phonering-alo-phone:hover .phonering-alo-ph-circle {
+  border-color:#00aff2;
+  opacity:.5
+}
+
+.phonering-alo-phone.phonering-alo-green.phonering-alo-hover .phonering-alo-ph-circle,.phonering-alo-phone.phonering-alo-green:hover .phonering-alo-ph-circle {
+  border-color:#75eb50 ;
+  opacity:.5
+}
+
+.phonering-alo-phone.phonering-alo-green .phonering-alo-ph-circle {
+  border-color:var(--main-color);;
+  opacity:.5
+}
+
+.phonering-alo-phone.phonering-alo-gray.phonering-alo-hover .phonering-alo-ph-circle,.phonering-alo-phone.phonering-alo-gray:hover .phonering-alo-ph-circle {
+  border-color:#ccc;
+  opacity:.5
+}
+
+.phonering-alo-phone.phonering-alo-gray .phonering-alo-ph-circle {
+  border-color:#75eb50 ;
+  opacity:.5
+}
+
+.phonering-alo-ph-circle-fill {
+  width:100px;
+  height:100px;
+  top:50px;
+  left:50px;
+  position:absolute;
+  background-color: #000;
+  border-radius:100% !important;
+  border:2px solid transparent;
+  -webkit-animation:phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+  animation:phonering-alo-circle-fill-anim 2.3s infinite ease-in-out;
+  transition:all .5s;
+  -webkit-transform-origin:50% 50%;
+  -ms-transform-origin:50% 50%;
+  transform-origin:50% 50%
+}
+
+.phonering-alo-phone.phonering-alo-active .phonering-alo-ph-circle-fill {
+  -webkit-animation:phonering-alo-circle-fill-anim 1.7s infinite ease-in-out!important;
+  animation:phonering-alo-circle-fill-anim 1.7s infinite ease-in-out!important
+}
+
+.phonering-alo-phone.phonering-alo-static .phonering-alo-ph-circle-fill {
+  -webkit-animation:phonering-alo-circle-fill-anim 2.3s infinite ease-in-out!important;
+  animation:phonering-alo-circle-fill-anim 2.3s infinite ease-in-out!important;
+  opacity:0!important
+}
+
+.phonering-alo-phone.phonering-alo-hover .phonering-alo-ph-circle-fill,.phonering-alo-phone:hover .phonering-alo-ph-circle-fill {
+  background-color:rgba(0,175,242,0.5);
+  opacity:.75!important
+}
+
+.phonering-alo-phone.phonering-alo-green.phonering-alo-hover .phonering-alo-ph-circle-fill,.phonering-alo-phone.phonering-alo-green:hover .phonering-alo-ph-circle-fill {
+  background-color:rgba(117,235,80,0.5);
+  opacity:.75!important
+}
+
+.phonering-alo-phone.phonering-alo-green .phonering-alo-ph-circle-fill {
+  background-color:#e67e22;
+}
+
+.phonering-alo-phone.phonering-alo-gray.phonering-alo-hover .phonering-alo-ph-circle-fill,.phonering-alo-phone.phonering-alo-gray:hover .phonering-alo-ph-circle-fill {
+  background-color:rgba(204,204,204,0.5);
+  opacity:.75!important
+}
+
+.phonering-alo-phone.phonering-alo-gray .phonering-alo-ph-circle-fill {
+  background-color:rgba(117,235,80,0.5);
+  opacity:.75!important
+}
+
+.phonering-alo-ph-img-circle {
+  width:60px;
+  height:60px;
+  top:70px;
+  left:70px;
+  position:absolute;
+  background:rgba(30,30,30,0.1) url("https://namdinhweb.net/wp-content/uploads/2018/07/icon-desktop-phone.png") no-repeat center center;
+  border-radius:100% !important;
+  border:2px solid transparent;
+  -webkit-animation:phonering-alo-circle-img-anim 1s infinite ease-in-out;
+  animation:phonering-alo-circle-img-anim 1s infinite ease-in-out;
+  -webkit-transform-origin:50% 50%;
+  -ms-transform-origin:50% 50%;
+  transform-origin:50% 50%
+}
+
+.phonering-alo-phone.phonering-alo-active .phonering-alo-ph-img-circle {
+  -webkit-animation:phonering-alo-circle-img-anim 1s infinite ease-in-out!important;
+  animation:phonering-alo-circle-img-anim 1s infinite ease-in-out!important
+}
+
+.phonering-alo-phone.phonering-alo-static .phonering-alo-ph-img-circle {
+  -webkit-animation:phonering-alo-circle-img-anim 0 infinite ease-in-out!important;
+  animation:phonering-alo-circle-img-anim 0 infinite ease-in-out!important
+}
+
+.phonering-alo-phone.phonering-alo-hover .phonering-alo-ph-img-circle,.phonering-alo-phone:hover .phonering-alo-ph-img-circle {
+  background-color:#00aff2
+}
+
+.phonering-alo-phone.phonering-alo-green.phonering-alo-hover .phonering-alo-ph-img-circle,.phonering-alo-phone.phonering-alo-green:hover .phonering-alo-ph-img-circle {
+  background-color:#75eb50;
+}
+
+.phonering-alo-phone.phonering-alo-green .phonering-alo-ph-img-circle {
+  border: 3px solid white;
+  background-color: var(--main-color);
+}
+
+.phonering-alo-phone.phonering-alo-gray.phonering-alo-hover .phonering-alo-ph-img-circle,.phonering-alo-phone.phonering-alo-gray:hover .phonering-alo-ph-img-circle {
+  background-color:#ccc
+}
+
+.phonering-alo-phone.phonering-alo-gray .phonering-alo-ph-img-circle {
+  background-color:#75eb50
+}
+
+@-webkit-keyframes phonering-alo-circle-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(.5) skew(1deg);
+    -webkit-opacity:.1
+  }
+
+  30% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    -webkit-opacity:.5
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    -webkit-opacity:.1
+  }
+}
+
+@-webkit-keyframes phonering-alo-circle-fill-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.2
+  }
+
+  50% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    opacity:.2
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.2
+  }
+}
+
+@-webkit-keyframes phonering-alo-circle-img-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg)
+  }
+
+  10% {
+    -webkit-transform:rotate(-25deg) scale(1) skew(1deg)
+  }
+
+  20% {
+    -webkit-transform:rotate(25deg) scale(1) skew(1deg)
+  }
+
+  30% {
+    -webkit-transform:rotate(-25deg) scale(1) skew(1deg)
+  }
+
+  40% {
+    -webkit-transform:rotate(25deg) scale(1) skew(1deg)
+  }
+
+  50% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg)
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg)
+  }
+}
+
+@-webkit-keyframes fadeInRight {
+  0% {
+    opacity:0;
+    -webkit-transform:translate3d(100%,0,0);
+    -ms-transform:translate3d(100%,0,0);
+    transform:translate3d(100%,0,0)
+  }
+
+  100% {
+    opacity:1;
+    -webkit-transform:none;
+    -ms-transform:none;
+    transform:none
+  }
+}
+
+
+@-webkit-keyframes phonering-alo-circle-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(.5) skew(1deg);
+    transform:rotate(0) scale(.5) skew(1deg);
+    opacity:.1
+  }
+
+  30% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.5
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg);
+    opacity:.1
+  }
+}
+
+@keyframes phonering-alo-circle-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(.5) skew(1deg);
+    transform:rotate(0) scale(.5) skew(1deg);
+    opacity:.1
+  }
+
+  30% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.5
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg);
+    opacity:.1
+  }
+}
+
+@-webkit-keyframes phonering-alo-circle-fill-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.2
+  }
+
+  50% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg);
+    opacity:.2
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.2
+  }
+}
+
+@keyframes phonering-alo-circle-fill-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.2
+  }
+
+  50% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg);
+    opacity:.2
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(.7) skew(1deg);
+    transform:rotate(0) scale(.7) skew(1deg);
+    opacity:.2
+  }
+}
+
+@-webkit-keyframes phonering-alo-circle-img-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg)
+  }
+
+  10% {
+    -webkit-transform:rotate(-25deg) scale(1) skew(1deg);
+    transform:rotate(-25deg) scale(1) skew(1deg)
+  }
+
+  20% {
+    -webkit-transform:rotate(25deg) scale(1) skew(1deg);
+    transform:rotate(25deg) scale(1) skew(1deg)
+  }
+
+  30% {
+    -webkit-transform:rotate(-25deg) scale(1) skew(1deg);
+    transform:rotate(-25deg) scale(1) skew(1deg)
+  }
+
+  40% {
+    -webkit-transform:rotate(25deg) scale(1) skew(1deg);
+    transform:rotate(25deg) scale(1) skew(1deg)
+  }
+
+  50% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg)
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg)
+  }
+}
+
+@keyframes phonering-alo-circle-img-anim {
+  0% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg)
+  }
+
+  10% {
+    -webkit-transform:rotate(-25deg) scale(1) skew(1deg);
+    transform:rotate(-25deg) scale(1) skew(1deg)
+  }
+
+  20% {
+    -webkit-transform:rotate(25deg) scale(1) skew(1deg);
+    transform:rotate(25deg) scale(1) skew(1deg)
+  }
+
+  30% {
+    -webkit-transform:rotate(-25deg) scale(1) skew(1deg);
+    transform:rotate(-25deg) scale(1) skew(1deg)
+  }
+
+  40% {
+    -webkit-transform:rotate(25deg) scale(1) skew(1deg);
+    transform:rotate(25deg) scale(1) skew(1deg)
+  }
+
+  50% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg)
+  }
+
+  100% {
+    -webkit-transform:rotate(0) scale(1) skew(1deg);
+    transform:rotate(0) scale(1) skew(1deg)
+  }
+}
