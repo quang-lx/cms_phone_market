@@ -109,6 +109,9 @@
         img_selected: null
       };
     },
+     updated() {
+              this.setScollBottom();
+    },
     computed: {
 
       dbRef() {
@@ -129,6 +132,7 @@
         const chats = Object.values(this.list_user[this.chat_user_id].chat)
         const avatar = this.list_user[this.chat_user_id].avatar
         const name = this.list_user[this.chat_user_id].name
+     
         return {
           avatar: avatar,
           name: name,
@@ -139,11 +143,9 @@
       }
 
     },
-    created() {
-      this.getListChatClient(),
-          setInterval(function(){ var objDiv = document.getElementById("msg_history");
-            if (objDiv)
-            objDiv.scrollTop = objDiv.scrollHeight;},1000)
+    mounted() {
+      this.getListChatClient()
+     
     },
 
     methods: {
@@ -165,10 +167,13 @@
         setTimeout(() => {
           document.getElementsByClassName('v-modal')[0].classList.remove('v-modal')
         }, 100);
+        
       },
       showBoxChat(index) {
         this.boxChat = true;
         this.chat_user_id = index
+     
+
       },
       removeBoxChat(index) {
         this.chat_user_id = null
@@ -183,7 +188,8 @@
             this.list_user.push(item)
           });
         });
-
+     
+      
       },
       sendChat(user_id, user_name, new_message) {
 
@@ -234,6 +240,8 @@
           }
 
         });
+        this.setScollBottom()
+        
       },
       getTimeStamp() {
         return new Date().getTime()
@@ -252,6 +260,10 @@
       holdBoxChat() {
         this.drawer = true
       },
+
+      setScollBottom(){
+        $('#msg_history').animate({ scrollTop:$('#msg_history').prop('scrollHeight')});
+      }
 
     },
     watch: {
